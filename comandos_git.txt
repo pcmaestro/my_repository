@@ -1,7 +1,9 @@
 
 git init comentario_de_creacion_de_proyecto // creamos proyecto en local
 
-git clone /path/nombre_repositorio_github // para clonar el repositorio remoto en local
+git clone /path/nombre_repositorio_github // para clonar el repositorio remoto en local (luego nos metemos en él
+	e incluimos los cambios que deseamos realizar en el proyecto)
+
 git clone username@host : /path/nombre_repositorio_github // para clonar el repositorio en una maquina remota
 
 git add nombre_fichero // pasamos de workspace a stage area en local
