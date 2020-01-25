@@ -17,6 +17,8 @@ git push -u origin master // subir los commits al GITHUB (master es el nombre de
 
 git pull // actualiza el workspace con el commit mas nuevo
 
+git checkout nº_de_commit nombre_archivo  // trae al workspace la versión de un fichero de un determinado commit
+
 git checkout -b nombre_nueva rama // crea una rama y nos lleva ella
 git checkout nombre_rama // para cambiar de una rama a otra
 git merge nombre_rama // fusiona una rama con la rama que tengamos activa
