@@ -1,0 +1,53 @@
+La coma (,) -  se aplica para unir varios identificadores y aplicarles la mismas clave:valor
+
+Selectores descendentes , se ponen sin comas separados por un espacio,  leyendolos de dentro hacia afuera
+
+	Ej con estos
+
+	<div> </div> selecciona un bloque
+	<span> </span> selecciona un trozo de texto en una linea
+
+	div span p {}   todos los parrafos dentro de un span que esté dentro de un div
+
+	<div> y <span> se pueden anidar dentro de otros <div> y <span>
+
+Selector de clase ( el mas usado en la práctica)
+
+	Definimos un estilo,  por ej  .miestilo{}
+		
+		<div class="miestilo">
+
+	El atributo class lo podemos aplicar a cualquier etiqueta de la página
+
+	Podemos aplicar varias clases a	 la vez en una etiqueta, por ej
+	.gran{}
+	.error{}
+
+	<div class="gran error">  ,  esto aplicará a la selección lo que haya definido en ambas clases ( hay que evitar crear conflictos)
+
+Selector de ID ( para aplicar estilo a un único elemento)
+
+	Le añadimos un ID a un elemento ( ej . <div id="elemento1"> ,  <p id="elemento2"> 
+	
+	Definimos el estilo para ese ID
+	
+	#elemento1{}
+	#elemento2{}
+
+PSEUDO-CLASES para selectores :  ver https://developer.mozilla.org/es/docs/Web/CSS/Pseudo-classes
+
+Combinación de selectores :
+
+	Siempre hay que leerlos desde dentro hacia afuera , podemos mezclar elementos con IDs y con clases para aplicar
+	estilo
+
+	Ej , ul#MenuPrincipal li.destacado a#inicio{}  ,   aqui hay 3 bloques de selectores descendentes separados por 
+	espacios ,  leyendo de adentro hacia afuera , <a id="inicio" > , dentro de un <li class="destacado"> , que a su vez
+	está dentro de una <ul id="MenuPrincipal">
+	
+	
+
+Nuevos selectores de CSS3 :
+
+a[href^="mailto:" {}  en este caso ,  todos los href que sean un mailto , que estén dentro de un <a> , el simbolo ^ significaría "y"
+
