@@ -1,0 +1,168 @@
+<!DOCTYPE html5>
+<html>
+
+<head> 
+
+    <style type="text/css">
+
+            body{
+                background-color: silver;
+                                            }
+            table{
+                    background-color: orange;
+                    width: 100%                    
+                                     
+                                            }
+            .clase1{
+                color:white;
+                background-color: blue;
+                text-align: center;
+                
+                                            }
+
+            #id1{
+                text-align: right;
+                                            }
+            
+            #id2{
+                width: 100%;
+                                            }
+
+            #id3{
+                width: 100px;
+                height: 200px;
+                                            }
+    </style>
+
+</head>
+
+    <body>
+
+    <form action="#" method=get>
+        
+
+            <table>
+                <tr>
+                   <td colspan="2"> 
+                    <div class="clase1"> <h1> DATOS DE PERSONAL </h1> </div>
+                   </td>
+                </tr>
+            <br/>
+                <tr>
+                    <td id="id1">
+                        <label for="nombre"> Nombre: </label>
+                    </td>
+                
+                    <td id="id2">        
+                        <input type="text" name="nombre"/>
+                    </td>
+                </tr>
+
+             <tr>
+                 <td id="id1">   
+                    <label for="sexo"> Sexo </label>
+                </td>
+                <td>
+                    <input type="checkbox" name="sexo"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td id="id1">
+                    <label for="categoria"> Categoría :</label>
+                </td>
+
+                <td>
+                    <select name="categoria">                
+                        <option value="1"> Funcionario</option>
+                        <option value="2"> Otra cosa </option>
+                    </select>
+                </td>
+
+           
+
+            
+                <tr>
+                    <td rowspan="3" id="id1"> Estado Civil </td>
+                    <td>
+                        
+                        <input type="radio" name="casado"/>
+                        <label for="casado"> Casado </label>
+                    </td>
+                </tr>   
+
+                <tr>
+                    <td>
+                        
+                        <input type="radio" name="soltero"/>
+                        <label for="solero"> Soltero </label>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        
+                        <input type="radio" name="pareja-hecho"/>
+                        <label for="pareja-hecho"> Pareja de Hecho </label>                        
+                    </td>
+                </tr>
+                      
+            
+                <tr>
+                    <td id="id1">  Cargo: </td> 
+                    <td>
+                        <select size="4" multiple>
+                            <option value="1"> Gerente</option>
+                            <option value="2"> Administrador</option>
+                            <option value="3"> Contador </option>
+                            <option value="4"> Asistente </option>        
+                        </select>
+                    </td>   
+                 </tr>
+                 <tr>
+                    <td id="id1">
+                        <label for="upload"> Foto:</label>
+                    </td>
+                    <td>
+                        <input type="file" name="upload" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td id="id1">
+                        <label for="observaciones"> Observaciones: </label>
+                    </td>
+                    <td id="3">
+                        <textarea rows="5" cols="100" name="observaciones"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="id1">
+                        <label for="fecha"> Fecha de Registro : </label>
+                    </td>
+                    <td>
+                        <input type="date" name="fecha"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td id="id1">
+                        <label for="remuneracion"> Remuneración: </label>
+                    </td>
+                    <td>
+                        <input type="text" name="remuneracion"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="clase1">
+                            <input type="submit" value="Enviar Cambios"/> <input type="reset" value="Reestablecer"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        
+    </body>
+</html>
