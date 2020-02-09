@@ -1,0 +1,13 @@
+/* ORACLE- Creación de indice unico */
+
+CREATE UNIQUE INDEX IX1_EMPLOYEE_ID
+ON EMPLEADOS (EMPLOYEE_ID)
+
+/* ORACLE - Creación de indice que admite duplicados */
+
+CREATE INDEX IX2_JOB_ID
+ON EMPLEADOS (JOB_ID)
+
+
+
+

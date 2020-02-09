@@ -1,0 +1,5 @@
+/* ORACLE - Copiar una tabla */
+
+CREATE TABLE PAISES AS
+SELECT *
+FROM HR.COUNTRIES;

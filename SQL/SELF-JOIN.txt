@@ -1,0 +1,11 @@
+/* ORACLE - Ejemplo de inner Join de la tabla EMPLOYESS (esquema HR) consigo misma para indicar cuantos empleados
+tiene cada responsable, y cuales son los nombres y apellidos de dichos responsables */
+
+
+SELECT COUNT(E.MANAGER_ID) AS NUM_EMPLEADOS, E.MANAGER_ID, E1.FIRST_NAME, E1.LAST_NAME 
+FROM HR.EMPLOYEES E 
+JOIN HR.EMPLOYEES E1 
+ON E.MANAGER_ID = E1.EMPLOYEE_ID 
+WHERE E.MANAGER_ID IS NOT NULL 
+GROUP BY E.MANAGER_ID, E1.FIRST_NAME, E1.LAST_NAME 
+ORDER BY E.MANAGER_ID
