@@ -1,0 +1,21 @@
+/* Averiguar ID y nombre del producto que más ingresos ha generado */
+
+SELECT I.PRODUCT_ID, P.PRODUCT_NAME, SUM(I.QUANTITY * I.UNIT_PRICE) AS VENTAS_TOTALES  
+  
+FROM CO.ORDER_ITEMS I 
+  
+JOIN CO.PRODUCTS P 
+ 
+ON I.PRODUCT_ID = P.PRODUCT_ID 
+  
+GROUP BY I.PRODUCT_ID, P.PRODUCT_NAME 
+ 
+HAVING SUM(I.QUANTITY * I.UNIT_PRICE) >= ALL (SELECT SUM(I.QUANTITY * I.UNIT_PRICE) 
+  
+                                                FROM CO.ORDER_ITEMS I 
+                                                  
+                                                JOIN CO.PRODUCTS P 
+                                                 
+                                                ON I.PRODUCT_ID = P.PRODUCT_ID 
+                                                  
+                                                GROUP BY I.PRODUCT_ID, P.PRODUCT_NAME)
