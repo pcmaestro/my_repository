@@ -1,0 +1,42 @@
+Un fichero JSON contiene objetos y Arrays
+
+Los objetos se almacenan en variables con formato clave:valor para sus propiedades
+
+var object = {
+	"name" : "Rocky", 
+	"spicies" : "cat",
+	"favFood" : "tuna"
+	}
+
+Los Arrays tienen sus elementos separados por comas
+
+var array = [elemento1 , elemento2 , elemento3]
+
+Podemos crear un array que contenga objetos, y los objetos a su vez pueden contener arrays, ejemplo:
+
+[
+  {
+    "name": "Meowsy",
+    "species" : "cat",
+    "foods": {
+      "likes": ["tuna", "catnip"],
+      "dislikes": ["ham", "zucchini"]
+    }
+  },
+  {
+    "name": "Barky",
+    "species" : "dog",
+    "foods": {
+      "likes": ["bones", "carrots"],
+      "dislikes": ["tuna"]
+    }
+  },
+  {
+    "name": "Purrpaws",
+    "species" : "cat",
+    "foods": {
+      "likes": ["mice"],
+      "dislikes": ["cookies"]
+    }
+  }
+]

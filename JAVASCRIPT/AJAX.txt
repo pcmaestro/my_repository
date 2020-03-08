@@ -1,7 +1,7 @@
 OBJETO xmlHttpRequest
 
 Se trata del componente fundamental de una aplicación AJAX. A través de sus propiedades y métodos es
-posible lanzar pe7ciones en modo asíncrono al servidor y acceder a la cadena de texto enviada en la
+posible lanzar peticiones en modo asíncrono al servidor y acceder a la cadena de texto enviada en la
 respuesta.
 
 Primer hay que instanciar el objeto:
@@ -14,7 +14,7 @@ Los métodos habituales para interactuar con el servidor son GET y POST
 
 Invocación del recurso en el servidor (método open) :
 
-variable.open("GET", http//urlAccesoRecurso + posibleVariable, true) -->  ( Método, URL,  modo asíncrono - true o false - )
+variable.open("GET", http//urlAccesoRecurso + posibleVariable, true, user, password) -->  ( Método, URL,  modo asíncrono - true o false -, usuario, contraseña)
 
 Podemos establecer cabeceras en las peticiones :
 
@@ -37,16 +37,49 @@ propiedad readyState , que tienen estos valores :
 3 Se ha recibido la cabecera de la respuesta pero no el cuerpo
 4 Se ha recibido el cuerpo de la respuesta. Es el momento en que esta puede procesarse.
 
+Y también estos status :
+
+200: "OK"
+403: "Forbidden"
+404: "Page not found"
+
+El típico error 404 proviene del código de error que aparece en la línea de status del header HTML , 404, que signfica not found o no encontrado. 
+En general los códigos 200 indican respuestas correctas, los códigos 300 indican redirecciones, los códigos 400 problemas con la petición 
+y los códigos 500 problemas del servidor.
+
 Ejemplo de uso :
 
-function procesarRespuesta(){
-	if(variable.readyState == 4){
-		document.getElementById("id").innerHTML = "<h1>" + variable.responseText + "</h1>":
-		}
+
+//Creamos la función que modifica nuestra web
+function loadDoc() {
+  //Instanciamos el objeto XMLHttpRequest
+  var xhttp = new XMLHttpRequest();
+  //Ahora creamos dentro de nuestra función otra para supervisar los estado de la propiedad readyState
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("id").innerHTML =
+      this.responseText;
+    }
+  };
+  //Abrimos la conexión con el servidor con el método GET, si hace falta user + pass , lo indicamos
+  xhttp.open("GET", "ajax_info.txt", true);
+  //Enviamos la petición al servidor
+  xhttp.send();
 }
 
+OTRO EJEMPLO
+
+En este ejemplo traeremos la información de un fichero JSON ( notación javascript de objetos y Arrays)
+Usamos el método JSON.parse() para decirle al navegador que tiene que leer un JSON
 
 
+var ourRequest = new XMLHttpRequest();
 
+ourRequest.open("GET" , "https://learnwebcode.github.io/json-example/animals-1.json", true);
 
+ourRequest.onload = function show(){
+	var ourData = JSON.parse(ourRequest.responseText);
+	console.log(ourData[2]); //Aqui traemos el objeto en el index 2 del Array contenido en el JSON
 
+};
+ourRequest.send();
