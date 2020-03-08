@@ -1,0 +1,71 @@
+
+var lista = new Array(5);   //Indicamos que el Array tendrá 5 elementos, en blanco significa que son indeterminados
+
+var lista = new Array("Antonio", "Paco, "Maria", "Carolina")  // indicamos los elementos directamente, NO HACERLO CON NÚMEROS
+
+El índice empieza por cero , lo recorremos con [] , ejemplo :
+
+alert(lista[2] nos devolverá el valor "Maria"
+
+
+Las Array multidimensionales (Matrices) están formadas por filas y columnas, por ejemplo, creamos un Array de 3 filas y 5 columnas:
+
+var lista = new Array(3);
+
+for(i = 0; i < 4; i++){
+	lista2d[i] = new Array(5);
+	}
+
+Tambíen se pueden crear asi :
+var lista2d = [ [1,2,3,4], ["Antonio, "Paco", "Maria", "Carolina"], ["mesa", "silla" , "armario", "lampara"] ]  // 3 filas y 4 columnas
+
+Si la Matriz está vacía, la podemos rellenar asi. Ej incluir "alfombra" en fila 3 , columna 5:
+
+lista2d[2][4] = "alfombra"	
+
+Mostramos un elemento de la Matriz haciendo refenrecia a los indices,  por ejemplo alert(lista[2][2] = "armario"
+
+Para verlos todos :
+
+for(var fila in lista2d){
+	for(var columna in lista2d[fila]{
+		alert(  (lista2d[fila])[columna]  );
+	}
+}
+
+PROPIEDAD LENGTH
+
+Devuelve la cantidad de elementos de un Array , ej :  lista.length
+
+También sirve para modificar la longitud del Array , ej : lista.length = 7
+
+METODOS
+
+typeof(lista) // Indica el tipo de elementos incluidos en el Array
+
+lista.slice(posición inicio, posición posterior al fin) // Muestra una parte de los elementos del Array
+
+lista.sort()  // Ordena el Array
+
+( lista.sort() ).reverse() // Ordena el Array al revés
+
+lista.join("-") // Concatena los elementos del Array, en este caso con un guión
+
+lista.concat(lista2) // Concatena Arrays entre ellas
+
+lista.pop() // Elimina el último elemento del Array
+
+lista.push() // Añade un elemento al final del Array
+
+lista.splice() // Añade o elimina elementos a partir de una determinada posición , ej :
+	
+	lista.splice(3 , 0, "Virginia") // En la posición 3 insertamos "Virginia" , borrando 0 elementos del Array
+
+VER DOC Web API Javascript
+
+
+
+
+
+
+	

@@ -1,0 +1,13 @@
+La variable this se crea automáticamente en cada evento
+
+Se utiliza para referirse al elemento HTML que ha provocado el evento.
+
+En el código seria algo como esto :
+
+this = document.getElementById("id")
+
+Con lo cual se podría hacer esto :
+
+this.innerHTML = "Hola Mundo"
+
+No se puede usar si se invoca el código javascript mediante una función externa

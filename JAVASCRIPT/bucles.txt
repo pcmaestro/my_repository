@@ -1,0 +1,63 @@
+BUCLE FOR:
+
+El bucle for recorre el índice de un Array , los índices empiezan por cero.
+
+for(var i = 0; i<= j ; i++){     // for (contador=valorinicial; condición del bucle; incremento)
+	codigo a ejecutar;
+	}
+
+o también :
+
+for(var i in Array){		//Recorre siempre el índice desde la posición cero
+	codigo a ejecutar;
+	}
+
+BUCLES CONDICIONALES:
+
+Este bucle while no itera hasta que no se cumple la condición:
+while(i < j){
+	código a ejecutar;
+	}
+
+Este otro itera al menos una vez mientras se cumple la condición (en otros lenguajes sería un until):
+
+do{
+  códgio a ejecutar;
+  }while( i < j );
+
+
+if(i < j){
+	código a ejecutar;
+}else if(j > i){
+	código a ejecutar;
+	}else{
+	código por defecto;
+	}
+
+IMPORTANTE - instrucciones break y continue :
+
+Con la instrucción break salimos del bucle sin necesidad de que se cumpla su condición de finalización.
+
+Con la instrucción continue hacemos que el bucle ejecute la siguiente vuelta sin necesidad de llegar al final
+del código de su cuerpo ( lo devolvemos al punto de inicio)
+
+El bucle switch usa una expresión que tiene que devolver algún valor, ya sea numérico, booleano o string
+Según el valor que vaya devolviendo, podemos hacer que se ejecute un código u otro
+
+var i = 0;
+
+switch( i < 4 ){
+	case 0:
+		código a ejecutar;
+		break;
+	case 1:
+		código a ejecutar;
+		break;
+	case 2:
+		código a ejecutar;
+		break;
+	case 3:
+		código a ejecutar;
+		break;
+	default:
+		código por defecto;

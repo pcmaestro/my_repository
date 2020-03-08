@@ -1,0 +1,20 @@
+Nodos Element - Etiquetas HTML
+
+Nodos Text - Contenido de las etiquetas
+
+Parent Node - Nodo padre ( ej , etiqueta)
+
+Child Node - Nodo hijo ( ej, contenido de la etiqueta)
+
+
+// Crear nodo de tipo Element
+var parrafo = document.createElement("p");
+
+// Crear nodo de tipo Text
+var contenido = document.createTextNode("Hola Mundo!");
+
+// Añadir el nodo Text como hijo del nodo Element
+parrafo.appendChild(contenido);
+
+// Añadir el nodo Element como hijo de la pagina
+document.body.appendChild(parrafo);

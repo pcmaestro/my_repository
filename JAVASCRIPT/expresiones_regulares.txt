@@ -1,0 +1,31 @@
+EXPRESIONES REGULARES
+
+inicio - fin  :  /^   $/
+
+Especificación de caracteres: \d (digito) , \s (espacios en blanco, tabulaciones o saltos de linea) , \w ( alfanuméricos y "_" )
+
+Cantidad de caracteres : {caracteres mínimos, caracteres máxiomos}
+
+Buscar ocurrencias ( cualquier caracter contenido) : 	[abc] (busca "a", "b" o "c" 
+							[a-zA-ZñÑ] ( busca los rangos de "a" hasta "z" en mayusculas y minusculas. La "ñ" tiene que ir a parte
+
+
+Para encontrar varias ocurrencias : ? (cero o una), * (cero o más), + (uno o más)
+
+Caracater de escape para caracteres reservados :  \
+
+Distintos valores de texto se pueden separar con : |
+
+
+
+Se pueden agregar las expresiones dentro de ()
+
+El método test() permite comprobar si un string ( por ejemplo introducido en un formulario ) coincide con lo indicado en la expresión regular:
+
+var valor = document.getElementById("id").value;
+
+if(!expresion_regular.test(valor){
+	return false;
+}
+
+	

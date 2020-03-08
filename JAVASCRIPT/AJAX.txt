@@ -1,0 +1,52 @@
+OBJETO xmlHttpRequest
+
+Se trata del componente fundamental de una aplicación AJAX. A través de sus propiedades y métodos es
+posible lanzar pe7ciones en modo asíncrono al servidor y acceder a la cadena de texto enviada en la
+respuesta.
+
+Primer hay que instanciar el objeto:
+
+var variable = new XMLHttpRequest();
+
+Los métodos habituales para interactuar con el servidor son GET y POST
+
+
+
+Invocación del recurso en el servidor (método open) :
+
+variable.open("GET", http//urlAccesoRecurso + posibleVariable, true) -->  ( Método, URL,  modo asíncrono - true o false - )
+
+Podemos establecer cabeceras en las peticiones :
+
+setRequestHeader();
+
+
+
+Procesamiento de la respuesta del servidor ( propiedad onreadystatechange), aqui informamos de la función que procesará dicha respuesta.
+La función va sin parentesis (si se ponen, la función se ejecuta y guarda el resultado)
+
+variable.onreadystatechange = procesarRespuesta;
+
+
+Desde que se crea el objeto xmlHttpRequest, hasta que se recibe la respuesta por completo,  hay 4 cambios de estado que se recogen en la
+propiedad readyState , que tienen estos valores : 
+
+0 El objeto XMLHpRequest se ha creado pero aún no se ha configurado la petición.
+1 La petición se ha configurado pero aún no se ha enviado.
+2 La petición se acaba de enviar, aunque aún no se ha recibido respuesta.
+3 Se ha recibido la cabecera de la respuesta pero no el cuerpo
+4 Se ha recibido el cuerpo de la respuesta. Es el momento en que esta puede procesarse.
+
+Ejemplo de uso :
+
+function procesarRespuesta(){
+	if(variable.readyState == 4){
+		document.getElementById("id").innerHTML = "<h1>" + variable.responseText + "</h1>":
+		}
+}
+
+
+
+
+
+

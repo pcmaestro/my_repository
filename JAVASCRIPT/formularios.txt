@@ -1,0 +1,145 @@
+ACCESO A TRAVES DEL DOM
+
+El DOM organiza los formularios como un Array y por tanto se podrian acceder con los métodos
+de los Array, pero lo eficaz es hacerlo por name o su id.
+
+El objeto document permite acceder directamente a los formularios por su name de esta manera :
+
+<form name="formulario1" >
+  ...
+</form>
+
+var formularioNombreApellido = document.formario1
+
+Y también se puede acceder por el id :
+
+<form name = "id1">
+
+<input type="text" name="texto" id="id2" />
+
+</form>
+
+var formularioNombreApellido = document.getElementById("id1")
+
+var cajaText = document.getElementById("id2")
+
+OBJTENER DATOS DE LOS FORMUARIOS
+
+Formularios text / textarea:
+
+var valor = document.getElementById("id").value;
+
+Formularios radiobutton:
+
+Hay que usar un bucle para ver que opción está marcada mediante la propiedad checked,  ejemplo
+
+Tenemos varios radiobutton agrupados por el name="pregunta"
+
+Para manejarlos como Array,  los value los ponemos como 0,1,2,3....(aunque podemos poner lo que sea)
+
+Declaramos la variable que hará las veces de Array : var elementos = document.getElementByName("pregunta")
+
+Y ahora lanzamos sobre ella el bucle
+
+for(i in elementos){
+	alert(elementos[i].checked);
+	}
+
+
+Formularios checkbox:
+
+Aqui también usamos la propiedad checked
+
+var elemento = document.getElementById("id")
+
+alert(elemento.checked);
+
+
+Formulario select :
+
+Los navegadores crean automáticamente el Array options para las listas desplegables. Cuando el usuario selecciona una
+opción, le navegador la almacena en la propiedad selectedIndex
+
+En estos casos los value de las etiquetas <option> se enumeran como un Array , el id lo indicamos y tomamos sobre la
+etiqueta <select> , pongamos que en este caso id="opciones"
+
+
+// Obtener la referencia a la lista
+var lista = document.getElementById("opciones");
+
+// Obtener el índice de la opción que se ha seleccionado
+var indiceSeleccionado = lista.selectedIndex;
+
+// Con el índice y el array "options", obtener la opción seleccionada
+var opcionSeleccionada = lista.options[indiceSeleccionado];
+
+// Obtener el valor y el texto de la opción seleccionada
+var textoSeleccionado = opcionSeleccionada.text;
+var valorSeleccionado = opcionSeleccionada.value;
+
+alert("Opción seleccionada: " + textoSeleccionado + "\n Valor de la opción: " + valorSeleccionado);
+Como se ha visto, para obtener el valor del atributo value correspondiente a la opción seleccionada por el usuario, 
+es necesario realizar varios pasos. No obstante, normalmente se abrevian todos los pasos necesarios en una única instrucción:
+
+var lista = document.getElementById("opciones");
+
+// Obtener el valor de la opción seleccionada
+var valorSeleccionado = lista.options[lista.selectedIndex].value;
+
+// Obtener el texto que muestra la opción seleccionada
+var valorSeleccionado = lista.options[lista.selectedIndex].text;
+
+Lo más importante es tener en cuenta que el primer valor de selectedIndex sibre será el indice cero.
+
+
+ONSUBMIT
+
+El evento onsubmit sólo se puede aplicar en la etiqueta <form> , hay que tenerlo en cuenta si la validación
+de formularios la queremos hacer en el momento del submit. Pero tenemos la opción que ir validando poco a poco
+por ejemplo con el evento onblur , que validará el campo cuando pierda el foco del navegador
+
+<form action="" method="" id="" name="" onsubmit="return validacion()">
+
+La validación devolverá los valores true o false
+
+VALIDAR UN CAMPO DE TEXTO OBLIGATIRIO
+
+Para obligar al usuario a escribir algo en un campo text / textarea , evitando que lo haga con espacios en blanco
+usando el método test() del objeto RegExp
+
+var valor = document.getElementById("id").value;
+
+if(valor == null || valor.length == 0 || /^\s+$/.test(valor)){
+	return = false
+}
+
+VALIDAR UN CAMPO NUMÉRICO OBLIGATORIO
+
+var valor = document.getElementById("id").value;
+
+if( isNaN(valor){
+	return false;
+}
+
+VALIDAR QUE SE SELECCIONA UNA OPCION
+
+Para obligar al usuario a seleccionar una opción de manera obligatoria
+
+var indice = document.getElementById("opciones").selectedIndex;
+
+if(indice == null || indice == 0){
+	return false;
+}
+
+PARA MAS CASOS DE VALIDACIONES,  https://uniwebsidad.com/libros/javascript/capitulo-7/validacion
+
+
+
+
+
+
+
+
+
+
+
