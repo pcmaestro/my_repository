@@ -1,0 +1,6 @@
+UPDATE table
+SET column1 = expression1,
+    column2 = expression2,
+    ...
+    column_n = expression_n
+[WHERE conditions];
