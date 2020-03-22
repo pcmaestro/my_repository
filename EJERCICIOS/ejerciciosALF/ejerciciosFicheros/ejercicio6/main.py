@@ -10,6 +10,8 @@ cliente en una línea distinta
 '''
 from os.path import isfile
 
+run = True
+
 def opcion1():
     nombre = (input("Indica el nombre del cliente : ")).title()        
     archivo = open("listin.txt", "r")
@@ -70,33 +72,50 @@ def opcion3():
     else:
         print("El nº de tf indicado no es válido")
     
- #end opcion3   
-
-print('''
-Elige una opción :
-
-    1- Consultar el tf de un cliente
-    2- Introducir un nuevo cliente
-    3- Modificar el tf de un cliente
-    ''')
-
-opcion = input("indicar opción : ")
-
-if opcion.isnumeric():
+ #end opcion3
+ 
+def runAgain():
+    global run
+    run_again = input("Deseas realizar otra operación : S/N ").upper()
+    if run_again == "S":
+        run = True
+    else:
+        print("Programa finalizado")
+        run = False
+        
+#end runAgain  
     
-    opcion = int(opcion)
+
+while run:
     
-    if opcion == 1:
-        opcion1()              
+    print('''
+    Elige una opción :
+    
+        1- Consultar el tf de un cliente
+        2- Introducir un nuevo cliente
+        3- Modificar el tf de un cliente
+        ''')
+    
+    opcion = input("indicar opción : ")
+    
+    if opcion.isnumeric():
+        
+        opcion = int(opcion)
                 
-    elif opcion == 2:
-        opcion2()        
-                                
-    elif opcion == 3:
-        opcion3()       
-
+        if opcion == 1:
+            opcion1()
+            runAgain()              
+                    
+        elif opcion == 2:
+            opcion2()
+            runAgain()        
+                                    
+        elif opcion == 3:
+            opcion3()
+            runAgain()       
+    
+        else:
+            print("Elige una opción válida")
+    
     else:
         print("Elige una opción válida")
-
-else:
-    print("Elige una opción válida")
