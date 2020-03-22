@@ -94,6 +94,7 @@ while run:
         1- Consultar el tf de un cliente
         2- Introducir un nuevo cliente
         3- Modificar el tf de un cliente
+        4- Finalizar el programa
         ''')
     
     opcion = input("indicar opción : ")
@@ -113,9 +114,15 @@ while run:
         elif opcion == 3:
             opcion3()
             runAgain()       
+            
+        elif opcion == 4:
+            print("Programa finalizado")
+            run = False
     
         else:
             print("Elige una opción válida")
+            runAgain()
     
     else:
         print("Elige una opción válida")
+        runAgain()
