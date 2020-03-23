@@ -10,9 +10,18 @@ posición).
 '''
 from random import randint
 
+#Variable para comprobar que el jugador elige una longitud de dígitos válida
+ComprobarLongitud = True
+
+#Variable para seguir jugando mientras no se adivine el número secreto
 jugar = True
 
+#Lista donde se almacenan los números aleatorios generados por el juego
 n = []
+
+################### FUNCIONES DEL JUEGO ########################################
+
+#Las variables buffer van almacenando los aciertos en cada input de números
 
 def seleccion9digitos():
     
@@ -266,7 +275,7 @@ def seleccion2digitos():
         
 #end seleccion2digitos
 
-ComprobarLongitud = True
+######################### INICIO DEL JUEGO #####################################
 
 print("Adivina el número secreto\n")
 
@@ -280,9 +289,8 @@ while ComprobarLongitud:
         for i in range( int(longitud) ):
             n.append( str(randint(0,9)) )
         
-        cadena = "".join(n)
+        cadena = "".join(n)       
         
-        print(cadena)
         
         while jugar:   
                 
