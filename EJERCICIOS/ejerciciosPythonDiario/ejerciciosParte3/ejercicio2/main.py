@@ -21,45 +21,50 @@ n = []
 
 ################### FUNCIONES DEL JUEGO ########################################
 
-#Las variables buffer van almacenando los aciertos en cada input de números
+#Las variables buffer van almacenando los aciertos del jugador en las posiciones
+#del número secreto
+
+#La variable numeroSecreto almacena el número secreto que debe adivinar el jugador
+
+#La variable seleccion es el número introducido por el usuario
 
 def seleccion9digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
         
-    if seleccion[3] == cadena[3]:
+    if seleccion[3] == numeroSecreto[3]:
         print("Has acertado la posicion 4 del número secreto")
         buffer.append( seleccion[3] )
     
-    if seleccion[4] == cadena[4]:
+    if seleccion[4] == numeroSecreto[4]:
         print("Has acertado la posicion 5 del número secreto")
         buffer.append( seleccion[4] )
         
-    if seleccion[5] == cadena[5]:
+    if seleccion[5] == numeroSecreto[5]:
         print("Has acertado la posicion 6 del número secreto")
         buffer.append( seleccion[5] )
     
-    if seleccion[6] == cadena[6]:
+    if seleccion[6] == numeroSecreto[6]:
         print("Has acertado la posicion 7 del número secreto")
         buffer.append( seleccion[6] )
         
-    if seleccion[7] == cadena[7]:
+    if seleccion[7] == numeroSecreto[7]:
         print("Has acertado la posicion 8 del número secreto")
         buffer.append( seleccion[7] )
         
-    if seleccion[8] == cadena[8]:
+    if seleccion[8] == numeroSecreto[8]:
         print("Has acertado la posicion 9 del número secreto")
         buffer.append( seleccion[8] )    
     
@@ -72,35 +77,35 @@ def seleccion8digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
         
-    if seleccion[3] == cadena[3]:
+    if seleccion[3] == numeroSecreto[3]:
         print("Has acertado la posicion 4 del número secreto")
         buffer.append( seleccion[3] )
     
-    if seleccion[4] == cadena[4]:
+    if seleccion[4] == numeroSecreto[4]:
         print("Has acertado la posicion 5 del número secreto")
         buffer.append( seleccion[4] )
         
-    if seleccion[5] == cadena[5]:
+    if seleccion[5] == numeroSecreto[5]:
         print("Has acertado la posicion 6 del número secreto")
         buffer.append( seleccion[5] )
     
-    if seleccion[6] == cadena[6]:
+    if seleccion[6] == numeroSecreto[6]:
         print("Has acertado la posicion 7 del número secreto")
         buffer.append( seleccion[6] )
         
-    if seleccion[7] == cadena[7]:
+    if seleccion[7] == numeroSecreto[7]:
         print("Has acertado la posicion 8 del número secreto")
         buffer.append( seleccion[7] )
     
@@ -113,31 +118,31 @@ def seleccion7digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
         
-    if seleccion[3] == cadena[3]:
+    if seleccion[3] == numeroSecreto[3]:
         print("Has acertado la posicion 4 del número secreto")
         buffer.append( seleccion[3] )
     
-    if seleccion[4] == cadena[4]:
+    if seleccion[4] == numeroSecreto[4]:
         print("Has acertado la posicion 5 del número secreto")
         buffer.append( seleccion[4] )
         
-    if seleccion[5] == cadena[5]:
+    if seleccion[5] == numeroSecreto[5]:
         print("Has acertado la posicion 6 del número secreto")
         buffer.append( seleccion[5] )
     
-    if seleccion[6] == cadena[6]:
+    if seleccion[6] == numeroSecreto[6]:
         print("Has acertado la posicion 7 del número secreto")
         buffer.append( seleccion[6] )
     
@@ -150,27 +155,27 @@ def seleccion6digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
         
-    if seleccion[3] == cadena[3]:
+    if seleccion[3] == numeroSecreto[3]:
         print("Has acertado la posicion 4 del número secreto")
         buffer.append( seleccion[3] )
     
-    if seleccion[4] == cadena[4]:
+    if seleccion[4] == numeroSecreto[4]:
         print("Has acertado la posicion 5 del número secreto")
         buffer.append( seleccion[4] )
         
-    if seleccion[5] == cadena[5]:
+    if seleccion[5] == numeroSecreto[5]:
         print("Has acertado la posicion 6 del número secreto")
         buffer.append( seleccion[5] ) 
     
@@ -183,23 +188,23 @@ def seleccion5digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
         
-    if seleccion[3] == cadena[3]:
+    if seleccion[3] == numeroSecreto[3]:
         print("Has acertado la posicion 4 del número secreto")
         buffer.append( seleccion[3] )
     
-    if seleccion[4] == cadena[4]:
+    if seleccion[4] == numeroSecreto[4]:
         print("Has acertado la posicion 5 del número secreto")
         buffer.append( seleccion[4] )
     
@@ -212,19 +217,19 @@ def seleccion4digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
         
-    if seleccion[3] == cadena[3]:
+    if seleccion[3] == numeroSecreto[3]:
         print("Has acertado la posicion 4 del número secreto")
         buffer.append( seleccion[3] )
 
@@ -237,15 +242,15 @@ def seleccion3digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
     
@@ -258,15 +263,15 @@ def seleccion2digitos():
     
     buffer = []
 
-    if seleccion[0] == cadena[0]:
+    if seleccion[0] == numeroSecreto[0]:
         print("Has acertado la posicion 1 del número secreto")
         buffer.append( seleccion[0] )
     
-    if seleccion[1] == cadena[1]:
+    if seleccion[1] == numeroSecreto[1]:
         print("Has acertado la posicion 2 del número secreto")
         buffer.append( seleccion[1] )
         
-    if seleccion[2] == cadena[2]:
+    if seleccion[2] == numeroSecreto[2]:
         print("Has acertado la posicion 3 del número secreto")
         buffer.append( seleccion[2] )
     
@@ -289,7 +294,7 @@ while ComprobarLongitud:
         for i in range( int(longitud) ):
             n.append( str(randint(0,9)) )
         
-        cadena = "".join(n)       
+        numeroSecreto = "".join(n)       
         
         
         while jugar:   
@@ -297,7 +302,7 @@ while ComprobarLongitud:
             seleccion = input("\nIndica un número de " + longitud + " digitos : ")   
         
         
-            if seleccion == cadena:
+            if seleccion == numeroSecreto:
                 
                 print("Enhorabuena!!!, " + seleccion + " era el número secreto")
                 jugar = False       
@@ -305,7 +310,7 @@ while ComprobarLongitud:
             
             else:  
                 
-                a = len(cadena)
+                a = len(numeroSecreto)
                 b = len(seleccion)
                 
                 if a == b:
