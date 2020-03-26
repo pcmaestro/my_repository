@@ -1,8 +1,4 @@
-'''
-Created on 9 mar. 2020
 
-@author: Pedro Castellanos
-'''
 #Esto es un comentario que no se tendrá en cuenta al ejecutar el código
 
 print("primera línea de código")
