@@ -1,0 +1,68 @@
+IMPORTANTE ###
+Cuando clonamos el repositorio GIT, se crea una carpeta con su nombre, hay que entrar en ella
+para hacer los commit correctamente y hacer git pull para asegurarnos de tener en local la misma
+versión de archivos que haya en el último commit
+Para hacer git clone,  nos podemos meter en la carpeta windows que donde queremos clonar el
+repositorio y con botón derecho , clickar en GIT BASH ,  luego ejecutamos esto :
+
+git clone https://url_de_nuestro_repositorio
+
+COMANDOS DE CONSOLA ###
+git init comentario_de_creacion_de_proyecto // creamos proyecto en local
+
+git clone /path/nombre_repositorio_github // para clonar el repositorio remoto en local (luego nos metemos en él
+	e incluimos los cambios que deseamos realizar en el proyecto)
+
+git clone username@host : /path/nombre_repositorio_github // para clonar el repositorio en una maquina remota
+
+git add nombre_fichero // pasamos de workspace a stage area en local
+
+git add .  // añade todos los ficheros nuevos al stage area en local
+
+git commit -m "ponemos comentario"  // añadimos al repositorio local de versiones
+
+git remote add origin https://github.com/pcmaestro/my_repository.git // cuando hemos creado un proyecto nuevo
+git push -u origin master // subir los commits al GITHUB (master es el nombre de la rama principal)
+
+git pull // actualiza el workspace con el commit mas nuevo
+
+git checkout nº_de_commit nombre_archivo  // trae al workspace la versión de un fichero de un determinado commit
+
+git rm --cached nombre_archivo // borra un archivo del commit
+
+git checkout -b nombre_nueva rama // crea una rama y nos lleva ella
+git checkout nombre_rama // para cambiar de una rama a otra
+git merge nombre_rama // fusiona una rama con la rama que tengamos activa
+git branch -d nombre_rama // borra una rama
+git diff nombre_rama_activa nombre_otra_rama // para ver diferencias entre dos ramas
+
+
+git log // log de commits guardados
+git log --oneline // git log resumido ( si añadiemos por ej -2 , muestra sólo los 2 ultimmos commits)
+git log --pretty=oneline // resumido , pero con identificador largo del commit
+git log -p // para ver diferencias
+git log --stat //  muestra ficheros insertados y modificaciones en cada commit
+git log --pretty=format:"%h --> %ar"  // tiempo que lleva hecho el commit (resumido)
+git log --pretty=format:"%h %H --> %ar" // tiempo que lleva hecho el commit  (largo)
+git log --pretty=format:"%h %H --> %ar >>%an" // tiempo que lleva hecho el commit  (largo) con autor
+log --pretty=format:"%h %H --> %an %ae %ar %ad" // tiempo que lleva hecho el commit  (largo) con autor + email
+
+Atributos de pretty-format
+( a = fecha de creaciòn , c= fecha de commit ,  r=fecha realiva,  d=fecha absoluta , e=email creador )
+
+git log --oneline --name-status // ficheros que se icluyeron en el commit
+git log --since=X.minutes ( hours, weeks, months, years) // acotación temporal relativa
+git log --until=X.minutes ( hours, weeks, months, years) // acotación temporal relativa
+
+git log --since:"año-mes-dia" // acotación temporal absoluta ( ej "2020-01-01")
+git-log --until:"año-mes-dia" // acotación temporal absoluta
+  
+
+git status  // para comprobar si tenemos algo en el workspace que no haya sido sincronizado con git
+git status -s // para comprobar si los ficheros no sincronizados están añadidos al stage area o no
+
+
+gitk - interfaz gráfica de GIT
+git-gui - interfaz gráfica de GIT
+
+

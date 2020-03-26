@@ -1,0 +1,17 @@
+#Formateo de fecha y hora
+
+
+import time
+import datetime
+
+ahora = time.time()
+
+print(str(ahora))
+
+ahora = datetime.datetime.now()
+
+print(ahora)
+
+print("Año actual " + str(ahora.year))
+
+#string_fecha = ahora.strftime()

@@ -1,0 +1,24 @@
+class Disco():
+    
+    def __init__(self):
+        
+        self.artista = ""
+        self.album = ""
+        self.cancion = []
+        
+    def addSong(self):
+        self.cancion.append()
+        
+disco1 = Disco()
+
+disco1.artista = input("Indica el nombre del artista : ")
+
+disco1.album = input("Indica el nombre del album : ")
+
+
+
+
+ 
+        
+
+    

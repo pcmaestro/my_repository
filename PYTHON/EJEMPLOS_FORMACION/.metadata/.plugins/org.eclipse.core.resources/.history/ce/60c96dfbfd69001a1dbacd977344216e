@@ -1,0 +1,5 @@
+'''
+
+En esta función incluimos una subventana que se crea a partir de la principal. 
+El problema con esto es que parar la producción de múltiples ventanas
+'''

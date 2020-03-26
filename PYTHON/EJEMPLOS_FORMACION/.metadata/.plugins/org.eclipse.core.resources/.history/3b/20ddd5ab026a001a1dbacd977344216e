@@ -1,0 +1,31 @@
+#Manera sencilla de indicar las propiedades de una clase
+class Juguete1():
+    nombre = ""
+    precio = ""
+    
+#end juguete
+
+patines = Juguete1()
+
+patines.nombre = "patines"
+patines.precio = 0
+
+#Pero la forma habitual es hacerlo con un constructor de objetos
+
+class Juguete2():
+    def __init__(self):
+        self.nombre = ""
+        self.precio = 0
+        self.cantidad = 12
+
+#Podemos hacer que el constructor pida directamente los parámetros
+
+class Juguete3():
+    def __init__(self, nombre, precio):
+        self.nombre_producto = nombre
+        self.precio_producto = precio
+        
+juego = Juguete3("Parchis", 10)
+
+print("El producto" + juego.nombre + " vale " + str(juego.precio) + " euros")
+    

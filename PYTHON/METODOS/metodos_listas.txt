@@ -1,0 +1,53 @@
+METODOS DE LISTAS
+
+INDICE
+
+Empieza por cero , cualquier elemento se puede consultar por su número de indice X,  elemento[X]
+
+Si la lista contiene a su vez listas,  hay que recorrer los diferentes indices
+ej lista = [ ["a","b","c","d"], ["e","f","g","h"], ["i","j","k","m"] ]
+lista[2][1] nos devuelve el elemento "j"
+
+PRINT
+
+print(lista) y print(lista[:]) nos muestran todo el contenido de la lista
+
+SLICE
+
+Se usa con la sintaxis [indice inicio : indice fin] , el primer indice siempre es cero. El último indice no se muestra
+
+Se puede mostrar toda la lista empezando por el indice X , [X: ]
+
+Se puede mostrar toda la lista hasta el indice X , [ :X]
+
+Se puede mostrar toda la lista salvo X elementos del final , ej [:-X]
+
+Se pueden mostrar sólo los últimos X elementos , [-X: ]
+
+APPEND
+
+añade un elemento al final de la lista,  lista.append(elemento)
+
+EXTEND
+
+añade varios elementos, o incluso otra lista,  al final de la lista,  lista.extend(lista2)
+
+INSERT
+
+añade un elemento en una determinada posición X del indice, desplazando una posición todo lo que vaya detrás,  lista.insert(X, elemento)
+
+POP
+
+Elimina un elemento por su número X en el indice , lista.pop(X) . Si no se indica indice, elimina por defecto el último elemento
+
+REMOVE
+
+Elimina un elemento por su valor o su número X en el indice ,  list.remove(elemento)
+
+FUNCION LEN
+
+Muestra la cantidad de elementos que hay en la lista,  len(lista)
+
+SENTENCIA DEL
+
+Elimina toda la lista,  del lista

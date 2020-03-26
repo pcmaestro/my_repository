@@ -1,0 +1,27 @@
+class Prenda():
+    
+    def __init__(self):
+        
+        self.codProd= -1
+        self.nomProd =""
+        self.marca =""
+        self.modelo =""
+        self.talla =""
+        self.color =""
+        self.sexo =""
+        self.precio = -1
+
+#end class Prenda
+
+prenda = Prenda()
+ 
+prenda.codProd = input("Indica el código de producto : ")
+prenda.nomProd = input("Indica el nombre del producto : ")
+prenda.marca = input("Indica la marca del producto : ")
+prenda.modelo = input("Indica el modelo del producto : ")
+prenda.talla = input("Indica la talla del producto : ")
+prenda.color = input("Indica el color del producto : ")
+prenda.sexo = input("Indica H para hombre, M para mujer")
+prenda.precio = input("Indica el precio del producto : ")
+
+    

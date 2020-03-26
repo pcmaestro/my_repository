@@ -1,0 +1,2 @@
+1,Pantalon,Levis,Vaquero,L,Azul,H,25
+2,Camiseta,Lacoste,Polo,XL,Verde,H,15

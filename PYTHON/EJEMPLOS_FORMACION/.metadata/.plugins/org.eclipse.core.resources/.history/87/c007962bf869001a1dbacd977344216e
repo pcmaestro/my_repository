@@ -1,0 +1,26 @@
+#Las variables globales no se puede usar directamente en en las funciones
+#Esto es debido a que se encuentran en ambitos (scopes) distintos
+#El método básico es declarar variables globales dentro de las funciones
+#Pero este método no es recomendable, ya que en programas muy grandes
+#puede provocar compartamientos no deseados.
+
+#En este caso la variable local está dentro de la función, al invocar dicha función
+#se ejecuta correctamente
+
+# def mi_funcion():
+#     x = 300
+#     print("X vale " + str(x))
+# 
+# mi_funcion()
+
+#Pero en este otro caso la variable es global y no podemos usarla directamente
+#en la función
+
+x = 300
+
+def mi_funcion2():
+    print("X vale " + str(x)) # Esta función dará error
+
+mi_funcion2()
+
+    

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;basico24pyQt5/untitled.ui&apos; to &apos;ventana.ui&apos;" description="Rename resource &apos;untitled.ui&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="untitled.ui" name="ventana.ui" stamp="1585050178602" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;basico24pyQt5/ventana_ejemplo (3).ui&apos; to &apos;ventana_ejemplo.ui&apos;" description="Rename resource &apos;ventana_ejemplo (3).ui&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="ventana_ejemplo (3).ui" name="ventana_ejemplo.ui" stamp="1585051691789" updateReferences="true"/>
+</session>

@@ -1,0 +1,13 @@
+'''
+Este método askstring crea una pequeña ventana similar al alert de javascript,  
+no admite dimensionar con geometry()
+'''
+from tkinter import *
+from tkinter import messagebox
+from tkinter.simpledialog import askstring
+
+ventana = Tk()
+ventana.geometry("700x150")
+ventana.mainloop()
+
+nombre = askstring("Nombre", "Introduce tu nombre")

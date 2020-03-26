@@ -1,0 +1,19 @@
+#Vamos a usar el archivo generado de la ventana directamente, sin verlo
+
+import sys
+from PyQt5 import QtWidgets, QtCore, QtGui
+from ventanas import ventana_python
+
+#Linea obligatoria para usar pyqt5
+app = QtWidgets.QApplication(sys.argv)
+
+#Se prepara un MainWindow de pyqt5 , esto seria parte del código recomendado de
+#pyqt5
+MainWindow = QtWidgets.QMainWindow()
+
+
+ui = ventana_python.Ui_MainWindow()
+ui.setupUi(MainWindow)
+
+MainWindow.show()
+sys.exit(app.exec_())

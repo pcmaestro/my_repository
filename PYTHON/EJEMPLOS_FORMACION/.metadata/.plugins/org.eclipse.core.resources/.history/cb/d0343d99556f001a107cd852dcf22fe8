@@ -1,0 +1,12 @@
+#Vamos a usar el archivo generado de la ventana directamente, sin verlo
+
+import sys
+from PyQt5 import QtWidgets, QtCore, QtGui
+
+
+app = QtWidgets.QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+ui = Ui_MainWindow()
+ui.setupUi(MainWindow)
+MainWindow.show()
+sys.exit(app.exec_())

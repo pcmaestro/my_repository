@@ -1,0 +1,15 @@
+'''
+Este método askstring crea una pequeña ventana similar al window.prompt de
+javascript para introducir un dato en una caja de texto 
+no admite dimensionar con geometry()
+'''
+from tkinter import *
+from tkinter.simpledialog    import askstring
+from tkinter.messagebox import showinfo
+
+ventana = Tk()
+#ventana.geometry("700x150")
+nombre = askstring("Nombre", "Introduce tu nombre")
+showinfo("Mensaje", "Hola " + nombre)
+ventana.mainloop()
+

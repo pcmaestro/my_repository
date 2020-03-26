@@ -1,0 +1,6 @@
+import sys
+from PyQt5.QtWidgets import QWidget, QApplication
+
+#Variable global que indica
+print(__name__)
+

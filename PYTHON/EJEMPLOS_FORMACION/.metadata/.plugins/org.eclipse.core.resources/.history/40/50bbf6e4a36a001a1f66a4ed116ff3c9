@@ -1,0 +1,17 @@
+'''
+Created on 20 mar. 2020
+
+@author: hipercor
+'''
+
+ruta = "D:/WORKSPACE/LICLIPSE/basico23archivos/archivos"
+
+nuevoArchivo = "ficheroPrueba.txt"
+
+rutaCompleta1 = ruta + "/" + nuevoArchivo
+
+print(rutaCompleta1)
+
+
+
+

@@ -1,0 +1,20 @@
+'''
+Created on 20 mar. 2020
+
+@author: hipercor
+'''
+nuevoArchivo = "ficheroPrueba.txt"
+
+ruta = "D:/WORKSPACE/LICLIPSE/basico23archivos/archivos"
+
+rutaCompleta1 = ruta + "/" + nuevoArchivo
+
+print(rutaCompleta1)
+
+f = open(rutaCompleta1, "w")
+f.write("Esto es una prueba")
+f.close()
+
+
+
+

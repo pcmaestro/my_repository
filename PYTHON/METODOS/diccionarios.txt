@@ -1,0 +1,49 @@
+ACCESO AL CONTENIDO DE DICCIONARIOS 
+
+diccionario = {"a":"elem1", "b":"elem2", "c":"elem3", "d":"elem4", "e":"elem5", "f":"elem6", "g":["uno", "dos", "tres"]}
+
+print(diccionario), muestra todos los elementos
+
+print(diccionario{"d"], en este caso muestra el valor asociado a la clave "d"
+print(diccionario["g"][0]),  en este caso el valor de la clave "g" es una lista,  de la cual mostramos el valor "uno"
+
+EL METODO SLICE NO FUNCIONA
+
+AGREGAR UN VALOR AL DICCIONARIO 
+
+diccionario["h"] = "elem7"
+
+MODIFICAR UN VALOR
+
+diccionario["h"] = "elem8"
+
+MODIFICAR UNA CLAVE
+
+Este método modifica la clave, sin modificar el valor
+
+diccionario["h"] = diccionario.pop["h2"]
+
+ELIMINAR UN REGISTRO
+
+Para eliminar una pareja clave:valor , usaremos la sentencia del mencionando la clave
+
+del diccionario["h2"]
+
+METODO GET
+print(diccionario.get("d") ) ,  el método get() obtiene también un valor por su clave,  pero no lo pinta por si mismo
+
+Podemos usar GET para incluir en una variable su resultado, e incluso para saber si una clave no tiene valor, si para esto último
+no espcecificamos un argumento , por defecto devolverá None
+
+variable = diccionario.get("d")
+variable = diccionario.get("d", "clave vacia") , en este caso si la clave "d" no tiene valor, devolverá "clave vacía"
+
+METODOS KEYS() Y VALUES()
+
+Sirven respectivamente para obtener sólo las claves o sólo los valores del diccionar
+
+ORDENAR DICCIONARIOS
+Hay que hacerlo usando un bucle for
+
+
+

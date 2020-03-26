@@ -1,0 +1,27 @@
+MODO DE USO :  modulo.funcion()
+
+
+math - módulo de funciones matemáticas
+
+time - módulo de funciones para gestionar tiempo	
+
+	método para calcular el tiempo de ejecución de una tarea en segundos
+
+	tiempo_inicial = time()
+	
+	codigo a ejecutar
+
+	tiempo_final = time()
+
+	tiempo_ejecucion = tiempo_final - tiempo_inicial
+
+
+datetime - módulo de funciones para manipular valores de fecha y hora
+
+timeit - módulo de funciones para determinar tiempo de ejcución de pequeñas partes de código Python lo mas preciso posible
+
+random -  módulo de funciones para generar números aleatorios
+
+tk -  módulo de funciones para generar interfaces gráficas (tkinter)
+
+re - módulo de funciones para realizar operaciones con expresiones regulares
