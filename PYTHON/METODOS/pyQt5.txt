@@ -1,0 +1,103 @@
+##METODOS PYQT5
+
+IMPORTANTE- pyQt5 en el código MainWindow no crea los objetos con constructores,  indica las propiedades
+mediante funciones,  esta es una opción que da Python, pero que no se usa en la programación normal
+
+from PyQt5 import QtCore, QtGui, , uic, QtWidgets
+import sys
+
+****Si hay otros módulos con funciones y ventanas, también hay que hacer el import****
+
+****Ese IF se añade siempre para asegurar la aplicación de pyqt5 se ejecuta en el archivo que queremos***
+
+if __name__ == "__main__":
+
+__name__ es una variable global cuyo valor depende de donde esté :
+
+   1) si está en el archivo de python desde el que arrancamos
+  la variable __name__ vale "__main__"
+
+   2) si está en otro archivo que hayamos importado 
+  la variable __name__ vale el nombre de dicho archivo o modulo de pyhton
+
+
+#linea obligatoria para usar pyqt5 , en la variable app instanciamos el objeto de la aplicación de pyqt5
+app = QtWidgets.QApplication([])
+
+######################################### Usando diseños sin el QtDesigner ##################################################
+
+#Creamos la aplicacion de pyqt5
+app = QApplication([])
+
+#Objeto de la clase QWidget que representa una ventana
+w = QWidget() 
+
+#Modelamos la ventana
+w.resize(250,150)
+w.move(300,300)
+
+#Titulo de la ventana
+w.setWindowTitle("Ventana creada sin designer")
+
+#Mostramos la ventana
+w.show()
+
+#La ventana no se cierra mientras no finalice la aplicación pyqt5
+sys.exit(app.exec_())
+
+
+###################################### Usando diseños .ui del QtDesigner ####################################################
+
+#win es el interfaz creado a partir de el siguiente archivo de diseño,  lo cargamos con uic.loadUi()
+
+win = uic.loadUi("ventana_ejemplo.ui")
+
+#de esta forma se va a ejecutar la funcion que hayamos definido al pulsar un boton del diseño 
+( en este ejemplo al objeto lo hemos llamdado "boton_pulsame" ) , método clicked.connect()
+
+win.boton_pulsame.clicked.connect(boton_pulsado)
+	
+#mostramos la ventana la ventana, método show()
+
+win.show()
+
+#la aplicacion no cierra hasta que no termine app
+sys.exit(app.exec_())
+
+#################################### Usando diseños convertidos de .ui en .py ###############################################
+
+Mediante la consola de Windows debemos usar el compilador de intefaz pyuic5 :
+	
+	De forma sencilla lo podemos hacer mediante 
+		pyuic5 ventana_principa.ui > ventana_principal.py
+
+	Pero es recomendable hacerlo mejor mediante
+		pyuic5 -x -o ventana_principal.py ventana_princial.ui
+
+El segundo método añade en el archivo .py el if __name__ = "__main__"
+
+#linea obligatoria para usar pyqt5 , creamos la aplicación, aqui hay que darle como argumento
+#el módulo sys.argv de QT
+app = QtWidgets.QApplication(sys.argv)
+
+#Preparamos un MainWindow (ventana principal) de pyqt5, esto seria parte del codigo recomendado de pyqt5
+MainWindow = QtWidgets.QMainWindow()
+
+#Ahora creamos un objeto de la clase en el archivo generado y lo usa para preparar la ventana principal
+#llamada MainWindow para que tenga todo lo que pusimos en el designer, en este ejemplo llammaos al
+#objeto "ui"
+ui = ventana_python.Ui_MainWindow()
+ui.setupUi(MainWindow)
+
+#Line text ( cajas de texto) .  En este ejemplo al objeto Line text lo hemos llamado "input_usuario",
+#con text() capturamos lo que escribe
+
+introducido = ui.input_usuario.text()
+
+#De esta manera mostramos el resultado de la operacion que se haya realizado por detrás en un label que
+#que habremos creado previamente sin texto, utilizamos setText()
+
+ui.label_resultado.setText("resultado obtenido en la operacion")
+
+#Todos los componentes puestos en la ventana por el Designer estan en el objeto "ui" que hemos creado previamente
+ui.boton_convertir_a_dolares.clicked.connect(transformar_a_dolares)

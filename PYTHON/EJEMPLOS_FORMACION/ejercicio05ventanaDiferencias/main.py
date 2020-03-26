@@ -193,7 +193,7 @@ etiqueta1 = Label(
                 + " Indica tu nombre :").place(x = 10, y = 50
     )
 entrada_usuario = StringVar()
-campo =Entry(alert, textvariable = entrada_usuario).place(x = 400 ,y = 50)
+campo = Entry(alert, textvariable = entrada_usuario).place(x = 400 ,y = 50)
 Button(alert, text = "Enviar", command = caja_texto).place(x = 10, y = 80)
 alert.geometry("700x150")
 alert.mainloop()

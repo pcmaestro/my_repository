@@ -1,3 +1,5 @@
+#El módulo QtWidgets lo necesitamos para crear los objetos de Qt,  los otros
+#módulos son necesarios para convertir los archivos .ui en archivos .py
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ventanas import ventana_python
 import sys
@@ -28,7 +30,7 @@ MainWindow = QtWidgets.QMainWindow()
 ui = ventana_python.Ui_MainWindow()
 ui.setupUi(MainWindow)
 
-#todos los componentes puestos en la ventana por el designer estan ui
+#todos los componentes puestos en la ventana por el designer estan en ui
 ui.boton_convertir_a_dolares.clicked.connect(transformar_a_dolares)
 
 

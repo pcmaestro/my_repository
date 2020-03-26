@@ -9,7 +9,7 @@ from tkinter.messagebox import showinfo
 
 ventana = Tk()
 ventana.geometry("700x150")
-nombre = askstring("Nombre", "Introduce tu noit             mbre")
+nombre = askstring("Nombre", "Introduce tu nombre")
 showinfo("Mensaje", "Hola " + nombre)
 ventana.mainloop()
 

@@ -3,9 +3,7 @@ MODO DE USO :  modulo.funcion()
 
 math - módulo de funciones matemáticas
 
-time - módulo de funciones para gestionar tiempo	
-
-	método para calcular el tiempo de ejecución de una tarea en segundos
+time - módulo de funciones para calcular tiempo de ejecución de una tarea en segundos	
 
 	tiempo_inicial = time()
 	
@@ -17,6 +15,8 @@ time - módulo de funciones para gestionar tiempo
 
 
 datetime - módulo de funciones para manipular valores de fecha y hora
+		con el método strftime() podemos dar formato de salida a la fecha y hora, buscar en internet
+		los códigos de formateo de salida
 
 timeit - módulo de funciones para determinar tiempo de ejcución de pequeñas partes de código Python lo mas preciso posible
 
@@ -25,3 +25,5 @@ random -  módulo de funciones para generar números aleatorios
 tk -  módulo de funciones para generar interfaces gráficas (tkinter)
 
 re - módulo de funciones para realizar operaciones con expresiones regulares
+
+pyqt5 - módulo de funciones para generar interfaces gráficas (QT)
