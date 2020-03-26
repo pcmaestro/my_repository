@@ -1,0 +1,5 @@
+Tecla WINDOWS + R
+
+teclear shell:startup ( ruta C:\Users\hipercor\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup)
+
+Añadir acceso directo a la aplicación o script
