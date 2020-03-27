@@ -1,13 +1,31 @@
 -- VERSION_5
 -- START DISKCACHE_2
-D:\WORKSPACE\LICLIPSE\.metadata\.plugins\org.eclipse.core.resources\.projects\ejercicioCalculadoraTkinter\com.python.pydev.analysis\v2_indexcache
+D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\ejercicioCalculadoraTkinter\com.python.pydev.analysis\v2_indexcache
+main|1585238635471476000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\ejercicioCalculadoraTkinter\main.py
 -- END DISKCACHE
 -- START DICTIONARY
-0
+5
+4=Interfaz.__init__
+5=Interfaz.click
+3=Interfaz
+1=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\ejercicioCalculadoraTkinter\main.py
+2=main
 -- END DICTIONARY
 -- START TREE 1
-0
+3
+cal|1|calculadora!1^124#1*19@
+int|1|Interfaz!1^4#7*17@
+ven|1|ventana_principal!1^123#1*19@
 -- END TREE
 -- START TREE 2
-0
+9
+__i|1|__init__!3&1^5#9*18@
+bor|1|borrarHaciaLaIzquierda!3&1^106#9*18@
+cli|1|click!3&1^60#9*18@
+cre|1|crearBoton!3&1^55#9*18@
+lim|1|limpiarPantalla!3&1^95#9*18@
+mos|1|mostrarEnPantalla!3&1^116#9*18@
+ope|2|operacion!4&1^17#9*19@operacion!5&1^67#17*19@
+pan|1|pantalla!4&1^11#9*19@
+ven|1|ventana!4&1^7#9*19@
 -- END TREE

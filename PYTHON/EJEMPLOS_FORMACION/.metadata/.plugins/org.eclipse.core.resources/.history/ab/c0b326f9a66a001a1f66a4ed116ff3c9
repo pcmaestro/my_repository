@@ -1,6 +1,0 @@
-'''
-
-Para leer un fichero de internet hay que utilizar la función urlopen 
-del módulo urllib.request.
-
-'''

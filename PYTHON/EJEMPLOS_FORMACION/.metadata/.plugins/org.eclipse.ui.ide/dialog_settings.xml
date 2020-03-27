@@ -26,4 +26,8 @@
 			<item value="D:\WORKSPACE\LICLIPSE\ejercicio02ropa"/>
 		</list>
 	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="377"/>
+		<item key="DIALOG_Y_ORIGIN" value="185"/>
+	</section>
 </section>

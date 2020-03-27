@@ -1,12 +1,17 @@
 -- VERSION_5
 -- START DISKCACHE_2
-D:\WORKSPACE\LICLIPSE\.metadata\.plugins\org.eclipse.core.resources\.projects\repaso02scopes\com.python.pydev.analysis\v2_indexcache
+D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\repaso02scopes\com.python.pydev.analysis\v2_indexcache
+main|1585238635502725000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\repaso02scopes\main.py
 -- END DISKCACHE
 -- START DICTIONARY
-0
+2
+2=main
+1=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\repaso02scopes\main.py
 -- END DICTIONARY
 -- START TREE 1
-0
+2
+mi_|2|mi_funcion!1^10#5*18@mi_funcion2!1^21#5*18@
+x|1|x!1^19#1*19@
 -- END TREE
 -- START TREE 2
 0

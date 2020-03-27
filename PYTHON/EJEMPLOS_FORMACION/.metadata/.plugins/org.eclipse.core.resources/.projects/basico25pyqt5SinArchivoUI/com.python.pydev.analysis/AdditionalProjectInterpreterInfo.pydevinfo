@@ -1,13 +1,33 @@
 -- VERSION_5
 -- START DISKCACHE_2
-D:\WORKSPACE\LICLIPSE\.metadata\.plugins\org.eclipse.core.resources\.projects\basico25pyqt5SinArchivoUI\com.python.pydev.analysis\v2_indexcache
+D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\basico25pyqt5SinArchivoUI\com.python.pydev.analysis\v2_indexcache
+ventana_python|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico25pyqt5SinArchivoUI\ventana_python.py
+main|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico25pyqt5SinArchivoUI\main.py
 -- END DISKCACHE
 -- START DICTIONARY
-0
+6
+4=ventana_python
+5=Ui_MainWindow.setupUi
+2=main
+3=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico25pyqt5SinArchivoUI\ventana_python.py
+1=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico25pyqt5SinArchivoUI\main.py
+6=Ui_MainWindow
 -- END DICTIONARY
 -- START TREE 1
-0
+5
+app|2|app!1^13#5*19@app!3^49#5*35@
+mai|1|MainWindow!3^50#5*35@
+ui|1|ui!3^51#5*35@
+ui_|1|Ui_MainWindow!3^13#7*33@
+w|1|w!1^15#5*19@
 -- END TREE
 -- START TREE 2
-0
+7
+bot|1|boton_convertir_a_dolares!5&3^29#9*35@
+cen|1|centralwidget!5&3^17#9*35@
+ent|1|entrada_euros!5&3^22#9*35@
+lab|2|label_texto!5&3^19#9*35@label_resultado!5&3^25#9*35@
+ret|1|retranslateUi!6&3^40#9*34@
+set|1|setupUi!6&3^14#9*34@
+sta|1|statusbar!5&3^33#9*35@
 -- END TREE
