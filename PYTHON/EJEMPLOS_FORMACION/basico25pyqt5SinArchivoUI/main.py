@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QWidget, QApplication
 if __name__ == "__main__":
     app = QApplication([])#creo la aplicacion de pyqt5
     
-    w = QWidget() #objeto de la clase qwidget que representa una ventana
+    w = QWidget() #objeto de la clase Qwidget que representa una ventana
     w.resize(250,150)
     w.move(300,300)
     w.setWindowTitle("Ventana creada sin designer")

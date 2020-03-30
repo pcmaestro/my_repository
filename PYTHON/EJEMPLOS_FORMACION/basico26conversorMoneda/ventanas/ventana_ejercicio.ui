@@ -55,12 +55,16 @@
      <rect>
       <x>30</x>
       <y>160</y>
-      <width>151</width>
+      <width>211</width>
       <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>CONVERTIR A DOLARES</string>
+     <string> CONVERTIR A DOLARES</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../iconos/usd_dollar_3313.png</normaloff>../iconos/usd_dollar_3313.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="boton_convertir_a_libras">
@@ -68,12 +72,16 @@
      <rect>
       <x>30</x>
       <y>250</y>
-      <width>151</width>
+      <width>211</width>
       <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>CONVERTIR A LIBRAS</string>
+     <string> CONVERTIR A LIBRAS</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../iconos/libra_esterlina.png</normaloff>../iconos/libra_esterlina.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="boton_convertir_a_yuanes">
@@ -81,12 +89,16 @@
      <rect>
       <x>30</x>
       <y>340</y>
-      <width>151</width>
+      <width>211</width>
       <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>CONVERTIR A YUANES</string>
+     <string> CONVERTIR A YUANES</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../iconos/yuan.png</normaloff>../iconos/yuan.png</iconset>
     </property>
    </widget>
   </widget>
