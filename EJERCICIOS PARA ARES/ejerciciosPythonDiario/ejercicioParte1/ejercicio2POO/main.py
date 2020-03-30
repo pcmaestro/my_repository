@@ -1,3 +1,6 @@
+#Ejercicio 2
+#Escribir una clase en python que convierta un número romano en un número entero
+
 class ConvertirEntero():
     
     def __init__(self):
