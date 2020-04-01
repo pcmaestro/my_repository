@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dialogWindow</class>
+ <widget class="QDialog" name="dialogWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>599</width>
+    <height>452</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Clase de vuelo</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(225, 255, 216);</string>
+  </property>
+  <widget class="QLabel" name="lbl_plainText1">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>40</y>
+     <width>341</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ESCOJA LA CLASE DEL VUELO:</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="btn_radio_primera">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>80</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string> Primera clase 190 €</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="btn_radio_negocios">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>120</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string> Clase negocios 130 €</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="btn_radio_economica">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>160</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string> Clase económica 99 €</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_plainText2">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>220</y>
+     <width>391</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CLASE SELECCIONADA Y VALOR ASOCIADO:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_textToShow">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>300</y>
+     <width>341</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

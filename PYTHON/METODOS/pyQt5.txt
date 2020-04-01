@@ -101,3 +101,61 @@ ui.label_resultado.setText("resultado obtenido en la operacion")
 
 #Todos los componentes puestos en la ventana por el Designer estan en el objeto "ui" que hemos creado previamente
 ui.boton_convertir_a_dolares.clicked.connect(transformar_a_dolares)
+
+####################################### PROGRAMCION ORIENTADA A OBJETOS ##########################################
+
+En este caso creamos una clase ( Mi_clase() ) que hereda del módulo pre-construido de pyQt5 QDialog , traemos el módulo del archivo PY 
+desde el paquete ventanas. Dentro de la clase instanciamos un objeto de la clase Ui_* generada en el archivo PY
+y le aplicamos la función setupUI() de dicha clase, luego vamos asignando funciones a los eventos en nuestra ventana.
+Por úlitmo, creamos las funciones que serán llamadas por los eventos, en el caso del ejemplo, para el click sobre un
+botón tras escribir algo el usuario en una caja de texto
+
+Una vez definida la clase,  le instanciamos un objeto ( mi_objeto ) , esto ejecutará automáticamente todo lo definido
+en el constructor de la clase que hemos creado
+
+from PyQt5.QtWidgets import QApplication, QDialog
+
+import sys
+
+from ventanas import ventana
+
+class Mi_clase(QDialog):
+	def __init__(self):
+		super().__init__()
+		self.ui = ventana.Ui_clase_del_archivo_PY()
+		self.ui.setupUI(self)
+		self.ui.boton_que_hemos_creado.clicked.connect(self.funcion_para_un_boton)
+		self.show()
+
+	def funcion_para_un_boton(self):
+		input_usuario = self.ui.Label_caja_texto.text()
+		self.ui.accion_con_el_texto_recogido
+
+#End of Mi_clase
+
+if __name__ == "__main__":
+
+	app = QApplication(sys.argv)
+
+	mi_objeto = Mi_clase()
+
+	sys.exit(app.exec_())
+
+################################ VENTANAS DE ALERTA / DIALOGO ######################
+
+Esto requiere importar Qmessagebox
+
+Qmessagebox.information(self, "cadena de caracteres")
+
+
+################################  EVENTOS PYQT5 ####################################
+
+clicked.connect(self.funcion) --> Ejecuta la función asociada al click sobre un botón
+triggered.connect(self.funcion) --> Ejecuta la función asociado al click sobre un menú
+toggled.connect(self.funcion) --> Ejecuta la función asociada al click sobre un radiobutton
+
+
+
+
+
+
