@@ -41,7 +41,7 @@ def mostrar_listado_coches():
     
 def listado():
     coches = obtener_coches()    
-    texto = "id\tMarca\t\Modelo\tColor\tMotor\tPrecio\n\n"
+    texto = "id\tMarca\tModelo\tColor\tMotor\tPrecio\n\n"
     for c in coches:
         texto += ( str(c[0]) + "\t" + c[1] + "\t" + str(c[2]) + "\t" + str(c[3]) + 
                   "\t" + str(c[4]) + "\t" + str(c[5]) +"\n")
