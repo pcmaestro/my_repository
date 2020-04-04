@@ -1,0 +1,27 @@
+pip install mysql-connector
+
+import mysql.connector
+
+###############FUNCION DE CONEXION Y GESTION CON MYSQL ######################
+
+
+def func_sql():
+
+	mydb = mysql.connector.connect(    
+    	host = "localhost",
+    	user = "root",
+    	database = "bd_revistas"   
+    
+    )
+
+	print("Conexión OK")
+
+	cursor = mydb.cursor()
+
+	sql = "sentencia SQL"
+
+	cursor.execute(sql)
+
+	mydb.commit() # Lanza todos los cursor.execute() que hayamos creado previamente
+
+	

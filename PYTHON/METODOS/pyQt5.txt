@@ -153,6 +153,7 @@ Qmessagebox.information(self, "cadena de caracteres")
 clicked.connect(self.funcion) --> Ejecuta la función asociada al click sobre un botón
 triggered.connect(self.funcion) --> Ejecuta la función asociado al click sobre un menú
 toggled.connect(self.funcion) --> Ejecuta la función asociada al click sobre un radiobutton
+isClicked() --> Ejecuta la comprabación de si un radiobutton está clickado
 
 
 
