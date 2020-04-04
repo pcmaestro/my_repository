@@ -40,7 +40,7 @@ def mostrar_listado_coches():
     ui_listado_coches.btn_listar.clicked.connect(listado)
     
 def listado():
-    coches = obtener_coches()
+    coches = obtener_coches()    
     texto = "id\tMarca\t\Modelo\tColor\tMotor\tPrecio\n\n"
     for c in coches:
         texto += ( str(c[0]) + "\t" + c[1] + "\t" + str(c[2]) + "\t" + str(c[3]) + 

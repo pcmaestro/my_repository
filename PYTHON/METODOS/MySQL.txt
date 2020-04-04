@@ -2,26 +2,56 @@ pip install mysql-connector
 
 import mysql.connector
 
+import constantes_sql  ## En este módulo tendremos las sentencias SQL , al ser variables
+		       ## de valor constante, se escriben en MAYUSCULAS
+
 ###############FUNCION DE CONEXION Y GESTION CON MYSQL ######################
 
 
-def func_sql():
+def func_conectar_sql():
+	
+	##Segun la  BD, su IP y el usuario
 
 	mydb = mysql.connector.connect(    
-    	host = "localhost",
-    	user = "root",
-    	database = "bd_revistas"   
-    
-    )
+    	host = "10.1.0.0",
+    	user = "usuario",
+	password = "contraseña",
+    	database = "nombre_base_datos"       
+    	)
+	return mydb
 
-	print("Conexión OK")
+def func_registro_sql():
+	
+	#Donde invoquemos esta función, es necesario tener creado un objeto que almacene
+	#los inputs del usuario
 
-	cursor = mydb.cursor()
+    	sql = constantes_sql.SQL_INSERCION_SQL
+    	mydb = conectar()
+    	cursor = mydb.cursor()
 
-	sql = "sentencia SQL"
+    	#mirando el orden de insert de la sql formamos la siguiente tupla con 
+    	#los valores a insertar en base de datos
+    	val = (objeto.propiedad1, objeto.propiedad2, objeto.propiedad3.......)
+    	cursor.execute(sql,val)
+    	mydb.commit()
+    	mydb.disconnect()
 
-	cursor.execute(sql)
+def func_select_sql():
 
-	mydb.commit() # Lanza todos los cursor.execute() que hayamos creado previamente
+    	sql = constantes_sql.SQL_SELECT_SQL
+    	mydb = conectar()
+    	cursor = mydb.cursor()
+    	cursor.execute(sql)
+	#esto obtiene el resultado de la select, se crea una tupla por cada fila, y a su vez
+	#cada tupla se incluye como elemento de una lista
+    	resultado_lista_select = cursor.fetchall()
+    	mydb.disconnect()
+    	return resultado_lista_select
 
+### Las filas de la base de datos que nos devuelva la select (cada una una tupla dentro de una lista)
+### las podremos recorrercon un blucle for en la herramienta 
+### ej : datos = ""
+	 for tupla in lista :
+		datos += tupla[0] + tupla[1] + tupla[2]....
+		
 	
