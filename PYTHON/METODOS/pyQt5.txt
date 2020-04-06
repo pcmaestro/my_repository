@@ -150,11 +150,86 @@ Qmessagebox.information(self, "cadena de caracteres")
 
 ################################  EVENTOS PYQT5 ####################################
 
+------------	Eventos sobre Pushbutton	------------------------------------
+
 clicked.connect(self.funcion) --> Ejecuta la función asociada al click sobre un botón
+
+------------	Eventos sobre un MenuBar	------------------------------------
+
 triggered.connect(self.funcion) --> Ejecuta la función asociado al click sobre un menú
+
+------------	Eventos sobre un radiobutton / Checkbox	------------------------------------
+
 toggled.connect(self.funcion) --> Ejecuta la función asociada al click sobre un radiobutton
-isClicked() --> Ejecuta la comprabación de si un radiobutton o un checkbox está clickado
-statechanged() -- > Ejecuta la función asociada al click sobre un checkbox
+
+isClicked() --> Ejecuta la comprabación de si un radiobutton está clickado
+
+statechanged() -- > Ejecuta la comprobación de si un checkbox está clickado
+
+------------	Eventos sobre Line Text / Text Edit	----------------------------
+
+text() --> Lee el contenido de un Line Text o un Text Edit
+
+setText() --> Escribe texto en un Line Text o un Text Edit
+
+setFocus() --> Establece el cursor en un Line Text o un Text Edit determinados
+
+-------------	Eventos sobre un List Widget	-------------------------------------
+
+itemClicked() --> Ejecuta la función asociada a la selección de un elemento de una lista (List Widget)
+
+itemSelectionChanged() -- > Ejecuta la función asociada a la selección de varios elementos de una lista (List Widget)
+
+currentItem() --> Identifica el elemento seleccionado con itemClicked() , en la forma currentItem().text() 
+		  sirve para leer el texto seleccionado , pero se puede guardar en una variable
+
+selectedItems() --> Identifica los elementos seleccionados con itemSelectionChanged()
+
+
+addItem() --> Añade elementos a un List Widget , si son varios seleccionados con selectedItems() , hay que usar
+	      un bucle for para añadirlos.  Ej :
+
+	      elementos = xxxxxxxx.selectedItems()
+
+	      for elemento in elementos:
+	          xxxxxxxx.addItem(elemento)
+
+currentRow() --> Selecciona una linea de un List Widget para actuar sobre ella
+
+takeItem() --> Elimina la linea seleccionada con currentRow()
+
+insertItem() --> Inserta un nuevo elemento en la linea seleccionada con currentRow()
+
+getText(titulo_ventana, label_caja_texto) --> Crea una pequeña ventana tipo window.prompt para escribir una nueva cadena de texto
+
+clear() --> Limpia de elementos un List Widget ( si existe alguno)
+
+
+-------------	Eventos sobre un Table Widget	----------------------------------------
+
+Una tabla es una matriz de dos dimensiones , osea ,  una lista que contiene tuplas, con lo cual hay que recorrerla con bucles anidados
+Los elementos de una fila estarán incluidos en una tupla (con lo que cada elemento pertenecerá a una columna distinta):
+
+for tupla in lista:  ### Cada tupla representa una fila distina
+    fila = 0    
+    for elemento in tupla:  ### Cada elemento de una tupla pertenece a una columna distinta
+	columna = 0
+	celda = QTableWidgetElement(elemento) ###Agrega elementos a una celda
+	self.ui.objeto_tabla.setItem(fila, columna, celda) ###Agrega las celdas a la tabla
+	columna += 1
+   fila += 1
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
