@@ -194,6 +194,9 @@ addItem() --> Añade elementos a un List Widget , si son varios seleccionados co
 	      for elemento in elementos:
 	          xxxxxxxx.addItem(elemento)
 
+addItems() --> Para añadir más de un elemento
+
+
 currentRow() --> Selecciona una linea de un List Widget para actuar sobre ella
 
 takeItem() --> Elimina la linea seleccionada con currentRow()

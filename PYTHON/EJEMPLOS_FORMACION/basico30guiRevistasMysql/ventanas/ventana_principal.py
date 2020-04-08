@@ -34,8 +34,14 @@ class Ui_MainWindow(object):
         self.submenu_registrar_revista.setObjectName("submenu_registrar_revista")
         self.submenu_listar_revistas = QtWidgets.QAction(MainWindow)
         self.submenu_listar_revistas.setObjectName("submenu_listar_revistas")
+        self.submenu_list_widget_revistas = QtWidgets.QAction(MainWindow)
+        self.submenu_list_widget_revistas.setObjectName("submenu_list_widget_revistas")
+        self.submenu_table_widget_revistas = QtWidgets.QAction(MainWindow)
+        self.submenu_table_widget_revistas.setObjectName("submenu_table_widget_revistas")
         self.menuRevistas.addAction(self.submenu_registrar_revista)
         self.menuRevistas.addAction(self.submenu_listar_revistas)
+        self.menuRevistas.addAction(self.submenu_list_widget_revistas)
+        self.menuRevistas.addAction(self.submenu_table_widget_revistas)
         self.menubar.addAction(self.menuRevistas.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -49,6 +55,8 @@ class Ui_MainWindow(object):
         self.menuRevistas.setTitle(_translate("MainWindow", "Revistas"))
         self.submenu_registrar_revista.setText(_translate("MainWindow", "Registrar Revista"))
         self.submenu_listar_revistas.setText(_translate("MainWindow", "Listar Revistas"))
+        self.submenu_list_widget_revistas.setText(_translate("MainWindow", "Listar Revistas Usando List Widget"))
+        self.submenu_table_widget_revistas.setText(_translate("MainWindow", "Listar Revistas Usando Table Widget"))
 
 
 if __name__ == "__main__":

@@ -11,26 +11,28 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>APLICACION GESTION REVISTAS</string>
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(233, 255, 252);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>170</y>
-      <width>461</width>
-      <height>91</height>
+      <x>140</x>
+      <y>110</y>
+      <width>451</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>20</pointsize>
      </font>
     </property>
     <property name="text">
-     <string>Bienvenido a la aplicacion de getion de revistas
- usando PyQt5</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;GESTION COMERCIAL DE COCHES&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>
@@ -43,36 +45,36 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuRevistas">
+   <widget class="QMenu" name="menuAcciones">
     <property name="title">
-     <string>Revistas</string>
+     <string>Acciones</string>
     </property>
-    <addaction name="submenu_registrar_revista"/>
-    <addaction name="submenu_listar_revistas"/>
-    <addaction name="submenu_list_widget_revistas"/>
-    <addaction name="submenu_table_widget_revistas"/>
+    <addaction name="actionRegistrar_coche"/>
+    <addaction name="actionListar_coches"/>
+    <addaction name="actionLista_con_list_widget"/>
+    <addaction name="actionlistar_con_table_widget"/>
    </widget>
-   <addaction name="menuRevistas"/>
+   <addaction name="menuAcciones"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="submenu_registrar_revista">
+  <action name="actionRegistrar_coche">
    <property name="text">
-    <string>Registrar Revista</string>
+    <string>Registrar coche</string>
    </property>
   </action>
-  <action name="submenu_listar_revistas">
+  <action name="actionListar_coches">
    <property name="text">
-    <string>Listar Revistas</string>
+    <string>Listar coches</string>
    </property>
   </action>
-  <action name="submenu_list_widget_revistas">
+  <action name="actionLista_con_list_widget">
    <property name="text">
-    <string>Listar Revistas Usando List Widget</string>
+    <string>Lista con list widget</string>
    </property>
   </action>
-  <action name="submenu_table_widget_revistas">
+  <action name="actionlistar_con_table_widget">
    <property name="text">
-    <string>Listar Revistas Usando Table Widget</string>
+    <string>listar con table widget</string>
    </property>
   </action>
  </widget>

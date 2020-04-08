@@ -1,0 +1,71 @@
+string formating
+
+---------------------------- ULTIMAS VERSIONES DE PYTHON --------------------------------------
+
+format() - Aplica formato a las partes de un string entre llaves
+
+EJ:
+#Esto imprime "Me llamo Juan y soy español"
+nombre = "Juan"
+nacionalidad = "español"
+print("Me llamo {} y soy {}".format(nombre, nacionalidad))
+
+Si en la tupla hay muchos elementos, por defecto sigue el orden de primero a último,  pero entre
+las llaves podemos poner un número de indice : {0}...{1}...{2}...etc...
+
+Además,  se puede obligar a que el car}acter entre llaves sea de un tipo determinado :
+
+{:s} - string
+{:d} - nº entero
+{:,d} - nº entero con separador de miles
+{:.xf} - nº real con x decimales
+{:,.xf} - nº real con separador de miles y x decimales
+
+Y tambien podemos combinar estos formatos con números de indice :
+
+{3:,.2f} - Esto nos trae el valor del indice nº 3 , con separador de miles y dos decimales
+
+
+----------------------------  TODAS LAS VERSIONES DE PYTHON  ---------------------------------
+
+%s = string y objetos que pudieran representarse en string (listas, tuplas)
+
+Ej :
+# Esto imprime "Hola, Juan!"
+nombre = "Juan"
+print("Hola, %s!" % nombre)
+
+# Esto muestra lo siguiente: Una Lista: [1, 2, 3]
+milista = [1,2,3]
+print("Una lista: %s" % milista)
+
+%d = nº entero
+
+Ej:
+# Esto imprime "John is 23 years old."
+nombre = "John"
+edad = 23
+print("%s tiene %d años." % (nombre, edad) )
+
+%.xf = nº real con x digitos decimales , OJO,  no redondea , sólo trunca
+
+Ej :
+# Esto convierte 39.43454647 en 39.43
+
+numero = 39.43454647
+
+print("El resultado es %.2f" % numero )
+
+
+
+APENDICE :
+
+Elementos que pueden acompañar al simbolo % :
+
+d	for integers
+f	for floating point numbers
+b	for binary numbers
+o	for octal numbers
+x/X	for octal hexadecimal numbers (lowercase/uppercase)
+s	for string
+e	for floating point in exponent format
