@@ -27,3 +27,19 @@ tk -  módulo de funciones para generar interfaces gráficas (tkinter)
 re - módulo de funciones para realizar operaciones con expresiones regulares
 
 pyqt5 - módulo de funciones para generar interfaces gráficas (QT)
+
+mysql.connect - módulo de funciones para conectar , insertar, mostrar, modificar y borrar elementos de una BD MySQL
+
+_functools - módulo para hacer operaciones con funciones , la más importante que trae es partial(funcion , valor para funcion)
+	     la función partial() permite pasarle directamente un argumento a otra función a la hora de invocar a esta segunda
+
+sys - módulo que provee acceso a funciones y objetos del interprete de Python:
+	
+	sys.exit() - Permite terminar un script devolviendo un valor (0 significa ejecución OK).  También permite diferir el fin de un script
+		     hasta que termine la ejecución de otro
+
+	sys.argv - guarda en una lista los argumentos con los cuales se ha invocado al interprete de Python
+
+	sys.path - lista de directorios donde el interprete busca los módulos cuando realizamos un import
+
+	sys.version - Muestra la versión del interprete de Python que estamos usando

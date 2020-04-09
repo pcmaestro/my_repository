@@ -25,7 +25,7 @@ def func_registro_sql():
 	#Donde invoquemos esta función, es necesario tener creado un objeto que almacene
 	#los inputs del usuario
 
-    	sql = constantes_sql.SQL_INSERCION_SQL
+    	sql = constantes_sql.SQL_INSERT_SQL
     	mydb = conectar()
     	cursor = mydb.cursor()
 
@@ -53,5 +53,37 @@ def func_select_sql():
 ### ej : datos = ""
 	 for tupla in lista :
 		datos += tupla[0] + tupla[1] + tupla[2]....
+
+def func_select_por_id(id_registro):
+	]
+    sql = constantes_sql.SQL_SELECT_POR_ID
+    mydb = conectar()
+    cursor = mydb.cursor()
+    val = (id_registro,)
+    cursor.execute(sql, val)
+    elemento_obtenido = cursor.fetchone()
+    mydb.commit()      
+    mydb.disconnect()
+    objeto_elemento = clases.Elemento(propiedad1 = elemento_obtenido[0], propiedad2 = elemento_obtenido[1].....)
+    return objeto_elemento
+
+def func_modificar_sql(cambios_ptes_guardar):
+
+    sql = constantes_sql.SQL_UPDATE_CAMBIOS
+    mydb = conectar()
+    cursor = mydb.cursor()
+    val = (cambios_ptes_guardar.propiedad1, cambios_ptes_guardar.propiedad2...........)
+    cursor.execute(sql, val)
+    mydb.commit()
+    mydb.disconnect()
 		
-	
+def func_borrar_sql(id_registro):
+
+    sql = constantes_sql.SQL_DELETE_REGISTRO
+    mydb  = conectar()
+    cursor = mydb.cursor()
+    val = (id_registro,)
+    cursor.execute(sql, val)
+    mydb.commit()
+    mydb.disconnect()
+		
