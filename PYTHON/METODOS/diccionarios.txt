@@ -45,5 +45,9 @@ Sirven respectivamente para obtener sólo las claves o sólo los valores del dic
 ORDENAR DICCIONARIOS
 Hay que hacerlo usando un bucle for
 
+JOIN
+Este método es de los string,  pero sirve para convertir en cadena de texto los elementos de un iterable, siempre que sean sólo letras
 
+cadena = ",".join(diccionario.keys())
+cadena = ",".join(diccionario.values())
 

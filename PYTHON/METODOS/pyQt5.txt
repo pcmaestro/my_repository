@@ -223,9 +223,15 @@ for tupla in lista:  ### Cada tupla representa una fila distina
    fila += 1
 
 
+-----------------------  Eventos sobre Slider bar y Scroll bar ---------------------------------------------
+
+valueChanged.connect() --> Ejecuta la función del argumento según van cambiando los valores por el desplazamiento de la barra
 
 
 
+-----------------------  Eventos sobre un Spin Box (caja con flechas para aumentar o disminuir valores  -------------
+
+editingFinished.connect() --> Ejecuta la función del argumento según el usuario va aumentando o disminuyendo valores
 
 
 

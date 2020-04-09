@@ -1,0 +1,60 @@
+METODOS DE LAS CADENAS DE CARACTERES
+
+Una cadena de caracteres puede ser recorrida igual que cualquier objeto iterable desde el indice 0
+
+count() - Muestra el nº de veces que se repite un elemento en una cadena 
+
+find() / index() - Retornan la primera posición en el indice de un conjunto de caracteres de la cadena. Si no encuentran
+	ninguna coincidencia,  index() devuelve ValueError, y find() devuelve -1 
+
+rfind() / index() - Igual que las anteriores, pero iniciando la busqueda de derecha a izquierda
+
+startswith() / endswith() -  Devuelven valores True o False si una cadena empieza o termina por el conjunto de caracteres
+	que se les pase como argumento
+
+isdigit() / isnumeric() / isdecimal()  - Devuelven valores True o False si todos los caracteres de una cadena son dígitos numéricos
+	con pequeñas diferencias que se pueden consultar en la documentación oficial
+
+isalnum() - Devuelven valores True o False si todos los caracteres de una cadena son alfanuméricos (números y letras)
+
+isalpha() - Devuelven valores True o False si todos los caracteres de una cadena son letras
+
+islower() - Devuelven valores True o False si todos los caracteres son letras minusculas
+
+isupper() - Devuelven valores True o Falsesi todos los caracteres son letras mayusculas
+
+isprintable() - Devuelven valores True o False si todos los caracteres se pueden imprimir (\n y \t no se imprimen)
+
+isspace() - Devuelven valores True o False si todos los valores de la cadena son espacios
+
+capitalize() - Retorna la cadena con su primera letra en mayuscula
+
+encode() - Codifica la cadena con el mapa de caracteres especificado y retorna una instancia del tipo bytes (sólo caracteres ASCII)
+	ej . encode("utf-8") devolverá un UNICODE traducido a Bytes
+
+decode() - Operación inversa a la anterior ,  podemos pasar una cadena tipo Bytes a tipo UNICODE
+
+center() / rjust() / ljust() - Alinena la cadena de caracteres al centro, la derecha y la izquierda respectivamente
+
+lower() / upper() -  Convierten todos los caracteres de la cadena a minusculos y mayusculas respectivamente
+
+swapcase() - Cambias mayusculas por minusculas y viceversa
+
+title() - Convierte en mayuscula la primera letra de cada conjunto de caracteres
+	ej. cadena = "juan martinez rodgriguez" // print(cadena.title()) --> "Juan Martinez Rodriguez"
+
+strip() / lstrip() / rstrip() - Borran los espacios en blanco al principio y al final , a la izquierda, y a la derecha respectivamente
+
+replace() - Reemplaza un cojunto de caracteres por otro conjunta de caracteres distinto
+	ej (áéíóú, aeiou)
+
+split() - Devuelve una lista separando los caractares por el argumento indicado, por defecto, espacios en blanco
+	ej . cadena.split(",")
+
+splitlines() - Devuelve una lista separando los caracteres por saltos de línea 
+
+join() - Convierte en cadena una lista si está compuesta sólo por caracteres tipo string
+	ej. ",".join(lista)
+
+
+

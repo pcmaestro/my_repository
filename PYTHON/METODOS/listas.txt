@@ -67,6 +67,16 @@ for index, elemento in enumerate(lista, 0):
 2 "tres"
 3 "cuatro"
 
-SENTENCIA DEL
+SENTENCIA DELej
 
 Elimina toda la lista,  del lista
+
+JOIN
+Este método es de los string,  pero sirve para convertir en cadena de texto los elementos de un iterable, siempre que sean sólo letras
+
+cadena = ",".join(lista)
+
+FUNCION FILTER
+Metodo que usa una función para filtrar elementos en un iterable y devolver otro iterable con ellos
+
+iterable_filtrado = filer(funcion, iterable)
