@@ -43,3 +43,7 @@ sys - módulo que provee acceso a funciones y objetos del interprete de Python:
 	sys.path - lista de directorios donde el interprete busca los módulos cuando realizamos un import
 
 	sys.version - Muestra la versión del interprete de Python que estamos usando
+
+os - Módulo que contiene funciones para manipular archivos y rutas de directorios
+
+urllib.request - Contiene la función urlopen que permite leer archivos y webs traidas de internet

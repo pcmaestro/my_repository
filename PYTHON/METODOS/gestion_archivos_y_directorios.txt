@@ -1,0 +1,125 @@
+LECTURA Y ESCRITURA DE ARCHVIOS
+
+La apertura de ficheros TXT requiere qóduue el archievo esté en la misma ruta que el módulo Python
+a ejecutar, o bien hay que darle al programa la ruta completa de su ubicación ( con barras / )
+
+Este método de apertura carga todo el texto en memoria y requiere de cerrar el archivo para
+que lo pueda usar otra aplicación:
+
+file = open("/home/user/archivo.txt", "método de apertura")
+código...
+file.close()
+
+Este otro es más eficiente,  no ocupa tanta memoria y el cierre del archivo es automático, requiere indentación:
+
+with open("/home/user/archivo.txt", "método de apertura) as file:
+	código......
+
+
+Métodos de apertura :
+
+w - Crea el archvo y escribe en él,  o sobreescribe el texto en un archivo existente
+r - modo de sólo lectura
+a - añade contenido al final del texto existente
+r+ - modo de lectura y escritura
+a+ - Crea el archivo y escribe en él,  la siguiente vez añadirá contenido al final del texto
+
+Métodos para el contenido de los archivos:
+
+file.write("cadena de texto") -- > Escribe contenido en el archivo
+
+file.read() --> Lee y alamacena en una variable el contenido del archivo
+
+file.readline() --> Lee una línea del archivo, por defecto empieza por la primera
+
+file.readlines() --> Convierte las lineas del texto en una lista separada por los saltos de línea. Este método
+		     es útil para recorrer el texto linea a linea con un bucle for, para por ejemplo, buscar
+		     líneas que contengan un determinado conjunto de caracteres
+
+RENOMBRAR, MOVER Y BORRAR ARCHIVOS
+
+Importando el módulo os podemos además renombrar, mover y borrar archivos. Antes de hacer nada con estas
+funciones,  SIEMPRE hay que conprobar que el archivo existe con el método os.path.isfile():
+
+Ej . existe_fichero = os.path.isfile("/home/user/archivo.txt") --> Devolverá los valores True o False
+
+Renombrar con os.rename() :
+
+fichero = ("/home/user/archivo.txt")
+
+
+
+ficheroNuevoNombre = ("/home/user/archivo2.txt)
+
+os.rename(fichero, ficheroNuevoNombre)
+
+Mover con os.rename(), con o sin renombrar el archivo :
+
+ruta_actual = ("/home/user/archivo.txt")
+
+ruta_nueva = ("/home/user/documentos/archivo.txt")
+
+Borrar con os.remove() :
+
+fichero = ("/home/user/archivo.txt")
+
+os.remove(fichero)
+
+
+Es buena práctica realizar las comprobaciones de existencia de un archivo usando condicionales IF y envolviendo
+el programa en un try / except
+
+
+CREACION, MODIFICACION Y BORRADO DE DIRECTORIOS
+
+Para trabajar con directorios también se utilizan funciones del módulo os:
+
+os.mkdir(ruta) : Crea un nuevo directorio en la ruta
+
+os.chdir(ruta) : Cambia el directorio actual al indicado por la ruta
+
+os.getcwd() : Devuelve una cadena con la ruta del directorio actual
+
+os.rmdir(ruta) : Borra el directorio de la ruta, siempre y cuando esté vacío
+
+Ejemplos:
+
+import os
+
+nuevoDirectorio = "prueba1"
+
+ruta = "D:/WORKSPACE/LICLIPSE/basico23archivos/archivos"
+
+rutaCompleta = ruta + "/" + nuevoDirectorio
+
+if rutaCompleta:
+    os.rmdir(rutaCompleta)
+    os.mkdir(rutaCompleta)
+print("Programa terminado")
+
+#Esto devuelve el directorio actual donde se ejecuta el programa python
+print("Nuestro programa se está ejecutando en el directorio :" +  "\n" +
+      os.getcwd() )
+
+
+LEER ARCHIVOS DE INTERNET :
+
+Para leer un fichero de internet hay que utilizar la función urlopen del módulo urllib.request.
+Lo que traemos de la web viene en binario, hay que pasarlo a texto UTF-8 con el método decode() . 
+El resultado será el HTML publicado en la web
+
+Ejemplo:
+
+from urllib.request import urlopen
+
+
+web = urlopen("https://elpais.com/economia/2020-03-19/el-gobierno-asume-que-no-podra-presentar-los-presupuestos-de-2020.html")
+
+contenido = web.read().decode("utf-8")
+
+ruta = "D:/WORKSPACE/LICLIPSE/basico23archivos/archivos/"
+
+file = open(ruta + "ficheroWeb.txt", "w")
+file.write(contenido)
+file.close()
+print("Programa terminado OK")
