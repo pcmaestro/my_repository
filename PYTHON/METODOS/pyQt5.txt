@@ -234,9 +234,31 @@ valueChanged.connect() --> Ejecuta la función del argumento según van cambiand
 editingFinished.connect() --> Ejecuta la función del argumento según el usuario va aumentando o disminuyendo valores
 
 
+-----------------------  Eventos sobre Combox  -------------------------------------------------------------------
+
+currentIndexChanged.connect() --> Ejecuta la función del argumento según la opción elegida por el usuario
+
+currentIndex() --> Lo usamos para guardar en una variable (ej. indice_elegido) el indice de la opción elegida
+
+itemText(indice_elegido) --> Lo usamos para guardar en una variable (ej. opcion_elegida) la selección del usuario
+
+-----------------------  Eventos sobre Progress Bar  -----------------------------------------------------------
+
+En este caso hay que ir dandole valores en función de la ejecución de la función que mide, esto lo podemos hacer
+dando valores a una variable x en un ciclo while mientras dure la ejecución
+
+Al widget progress bar le vamos a pasar esos valores mediante setValue(x)
+
+Ej
+
+while descarga:
+	x += 0.000001
+
+self.ui.progress_bar.setValue(x)
 
 
 
+con set.value(
 
 
 
