@@ -257,8 +257,32 @@ while descarga:
 self.ui.progress_bar.setValue(x)
 
 
+--------------------------- Eventos QLCDNumber  ---------------------------------------
 
-con set.value(
+import QLCDNumber
+
+self.lcd_number.displaycount(x) --> x son la cantidad de dígitos a mostrar en el widget
+
+self.ui.lcelfd_number.display(valor_que_viene_de_una_variable)
+
+self.ui.lcd_number.setMode(QLCDNumber.Dec / QLCDNumber.Bin / QLCDNumber.Oct / QLCDNumber.Hex) --> Modos numéricos del widget
+
+
+--------------------------  Eventos Calendar Widget / Date Edit  --------------------
+
+selectionChanged.connect() --> Ejecuta la función indicada en el argumento
+
+fecha = self.ui.calendar.selectDate() --> Guarda la fecha modificada en el widget
+
+fecha_en_string = str(fecha.toPyDate()) --> Convierte la fecha que viene del widget en una cadena de texto
+
+self.ui.calendar.setDate(fecha) --> Establece en el widget la fecha que la pasemos en la variable fecha
+
+
+
+
+
+
 
 
 

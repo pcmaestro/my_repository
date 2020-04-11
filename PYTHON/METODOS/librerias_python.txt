@@ -1,5 +1,12 @@
 MODO DE USO :  modulo.funcion()
 
+abc -  módulo Abstract Base Classes ,  sirve para crear superclases,  de las cuales heredará otras clases, pero desde las
+       cuales no se pueden instanciar objetos directamente:
+
+       Ej.
+       from abc import ABC
+	
+       class Persona(ABC):
 
 math - módulo de funciones matemáticas
 
