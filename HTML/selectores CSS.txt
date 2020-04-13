@@ -36,6 +36,20 @@ Selector de ID ( para aplicar estilo a un único elemento)
 
 PSEUDO-CLASES para selectores :  ver https://developer.mozilla.org/es/docs/Web/CSS/Pseudo-classes
 
+Esto cambia el color de fondo al pasar el ratón por encima del elemento incluido en un div
+
+div:hover {
+  background-color: #F89B4D;
+}
+
+Y esto cambia el color de un enlace en función de si está clickado o no
+
+a:link{color:red;
+       cursor:wait}
+
+a:visited{color:green;}
+
+
 Combinación de selectores :
 
 	Siempre hay que leerlos desde dentro hacia afuera , podemos mezclar elementos con IDs y con clases para aplicar

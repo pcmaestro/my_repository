@@ -1,0 +1,16 @@
+IMAGENES
+
+<img src = "imagenes/foto.jpg" / alt = "Texto a mostrar si no carga" title = "tooltip a mostrar al pasar encima el ratón" / >
+
+SONIDO
+
+<audio src="multimedia/musica.mp3" controls autoplay loop />
+
+VIDEO
+
+<video controls autoplay > 
+
+<source src="multimedia/video.mp4"/>
+
+</video>
+

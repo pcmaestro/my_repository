@@ -1,0 +1,991 @@
+EJEMPLOS CSS DE EJERCICIOS:
+
+@font-face{font-family: "guay";
+            src: url(../fonts/Lobster-Regular.ttf)}
+
+@font-face{font-family: "nathan";
+            src: url(../fonts/Nathan.ttf)}
+
+
+body{   background-image: url("../img/index/cocina.png");
+        background-size: cover;
+        background-attachment: fixed;
+        font-family: "nathan";
+        font-size: 2em;
+        margin:5%;}
+
+
+#alergenos{text-align: right;
+            float: left;}
+
+table, td, th{
+     border: 1px solid;
+     border-collapse: collapse;
+     padding:1%;}
+
+td{text-align: left;
+    height: 40px;
+    min-width: 50px;
+}   
+
+th{text-align: center;
+    height: 50px;
+    min-width: 50px;
+}
+
+.cell-center{text-align: center;}
+
+__________________________________________________________________________
+
+
+body{   background-image: url("../img/index/cocina.png");
+        background-size: cover;
+        background-attachment: fixed;
+        font-family: "guay";
+        margin:0 auto;}
+
+p{opacity: 1;}
+    
+
+header h1{font-size: 5em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;          
+          text-shadow: 5px 5px 15px black;
+          animation-name: cabeceras;
+          animation-duration: 1s;s}
+
+
+@keyframes cabeceras{
+
+     0%{  font-size: 0em;
+          text-align: center;
+          color: black;
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     10%{ font-size: 0.5em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     20%{ font-size: 1em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     30%{ font-size: 1.5em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     40%{ font-size: 2em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     50%{ font-size: 2.5em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     60%{ font-size: 3em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     70%{ font-size: 3.5em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     80%{ font-size: 4em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+
+     90%{ font-size: 4.5em;
+          text-align: center;
+          color:black;   
+          padding-bottom: 2mm;
+          text-shadow: 5px 5px 15px black;}
+}
+
+section{font-size: 2em;}
+         
+
+#return_index{text-align: left;
+              font-size: small;
+              padding:0.5em}
+
+img{padding-left: 10em;}
+
+#alergenos{text-align: right;
+            float: left;}
+table{margin: auto;}
+
+td{text-align: center;
+   height: 100px;}   
+
+#lileft{text-align: left;}
+
+video{width: 100%;}
+
+td a{text-decoration: none;}
+
+.actions {
+     white-space: nowrap;
+     width: 1px;
+    }
+______________________________________________________________________________________________
+
+TEXTO ALREDEDOR DE IMAGENES
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texto alineado alrededor de imagenes</title>
+
+    <style>
+        img {
+            width: 25%;
+            height: 25%;
+        }
+
+        #id1 {
+            float: left;
+            padding-right: 10px;
+            padding-bottom: 5px;
+        }
+
+        #id2 {
+            float: right;
+            padding-left: 10px;
+            padding-bottom: 5px;            
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam provident,
+        <img src=paisaje.jpg id="id1" />
+        
+        Earum eveniet ad eos, facilis maxime, necessitatibus quasi, facere quam aspernatur minus nobis harum rem quo
+        sapiente aliquam! Nam commodi officia eius doloremque cumque fugit, quam dicta expedita eum provident?
+        Harum rerum blanditiis animi dignissimos debitis temporibus consequuntur provident accusantium quam cumque at
+        voluptas beatae voluptatum officia ipsum unde quod natus aperiam, nostrum perferendis iusto alias qui commodi
+        soluta? Velit!
+        Odit totam eaque repellendus dicta omnis, a, eum vero magni saepe, sint voluptatem recusandae? Labore illum
+        debitis similique facere doloremque dolorem dolor laudantium. Ab culpa repellat facilis nostrum consectetur
+
+        Animi laudantium quos laborum molestias accusamus illo natus, maxime aspernatur nostrum veniam dolor quo modi,
+        dolores eaque sit dolore hic pariatur sed? Eaque repellendus cupiditate maiores consectetur maxime tempora
+        doloribus.
+        Culpa quaerat amet consequatur. Possimus laudantium enim rerum dicta expedita recusandae magni facilis
+        blanditiis similique voluptatem maxime voluptatibus sunt minima provident, ratione consequuntur aliquid,
+        reiciendis est quae architecto fuga corporis?
+        Velit deserunt ea, consequuntur quaerat et qui delectus? Veritatis placeat reiciendis pariatur rem assumenda qui
+        porro, itaque aspernatur, accusantium natus explicabo facilis similique laborum esse! Molestias necessitatibus
+        rerum eum quia?
+        Nulla cumque nesciunt distinctio pariatur minus, incidunt tempora enim esse, rem aut obcaecati ipsam adipisci
+        necessitatibus delectus saepe. Deserunt eveniet minima eos atque. Magni numquam, perspiciatis dignissimos amet
+        impedit quod!
+        Dolores, possimus alias? Vitae non accusamus, aliquid unde pariatur nesciunt repellat enim corporis ad dolorum
+        impedit explicabo porro minima quasi mollitia quis perspiciatis necessitatibus excepturi asperiores eaque saepe
+        similique qui!
+        Dolorem, distinctio illo consequatur ullam qui voluptate enim non id ut at nobis illum vero doloribus
+        necessitatibus blanditiis temporibus tenetur. Maxime error vero fugiat dolores in commodi hic perferendis
+        impedit.
+        Ab voluptates et amet similique hic mollitia minus voluptatum odit excepturi accusamus ducimus, ipsa perferendis
+        laborum, ea suscipit officia nobis cumque quae dolore facere ad! Veniam unde tempora pariatur perferendis.
+        Officiis culpa magni id illum nostrum possimus officia quod nihil aspernatur animi, repellendus tempore nulla
+        eveniet cupiditate sit quia architecto non deserunt aperiam sed iure eligendi voluptas qui consequuntur! Dolore?
+        Temporibus iure earum omnis, repudiandae at autem, explicabo cupiditate voluptates dolorem expedita sequi vero
+        ipsam excepturi eligendi cum, delectus vel? Iste fuga suscipit veniam aspernatur obcaecati ab rem tenetur quod.
+        Repellendus quasi in inventore, accusantium nam quas? Enim est eveniet dolores ut nihil debitis ab sapiente
+        adipisci, ex, delectus pariatur quod quibusdam, sunt soluta. Ullam cumque repudiandae maiores. Velit, inventore?
+        Dolorum, odit corporis! Dolor ipsam mollitia labore eos iste recusandae libero odio fugit velit repellat?
+        Laboriosam placeat, atque debitis ipsam minima quam. Tempora tempore, pariatur sint a animi hic magnam.
+    </div>
+    <div>
+        <img src=paisaje.jpg id="id2" />
+        Amet similique fugiat modi autem ipsa aliquid quis dicta officia temporibus optio? In, id fuga. Exercitationem
+        sapiente error maiores ipsa officiis laborum odit pariatur officia blanditiis inventore! Esse, alias mollitia.
+        Voluptatum minus deleniti quas numquam non vel amet molestias aliquam! Ratione aspernatur eligendi non
+        exercitationem molestias praesentium unde maiores cum ducimus tempora accusamus rem ab tempore nihil, eos at?
+        Dicta.
+        Rerum aperiam quidem vero, a sunt illum esse. Nihil, dignissimos? Illo cum, ab veniam reiciendis maiores
+        quisquam voluptatem architecto illum dolorem cupiditate quibusdam aliquam harum odio unde eligendi sunt labore.
+        Odio nobis optio dolores architecto et perferendis quae eos deleniti beatae dolor soluta obcaecati dicta vero
+        totam cumque, atque veniam delectus nostrum eius voluptate maiores tempore tenetur aspernatur. Quam, doloremque.
+        Minima hic itaque, consequatur mollitia quidem rerum porro nisi. Enim, error, a saepe deleniti, repellendus quos
+        totam nulla ex iste ratione excepturi reprehenderit dolor quas recusandae quasi ullam. Saepe, blanditiis!
+        Saepe deserunt quasi placeat, quae perferendis voluptate. Quibusdam quisquam sunt eius quas sapiente in
+        molestias quae libero quasi, voluptatem quos repellat possimus nihil accusamus facilis quia incidunt provident
+        pariatur eligendi!
+        Libero quam officiis, provident molestiae velit quia ex nisi maiores, in voluptates, perspiciatis consectetur
+        corrupti quasi enim quo inventore vero laboriosam voluptatibus dicta nostrum. Corrupti consequatur eaque tenetur
+        dolore voluptas!
+        Voluptatibus nisi placeat expedita, assumenda accusantium praesentium at illo nam quam autem aliquam magni
+        excepturi, earum repudiandae iure sunt quis debitis facilis unde molestias! Necessitatibus dolore aspernatur
+        assumenda deleniti aliquid.
+        Tempore, hic repudiandae. Temporibus officiis autem quisquam quos nostrum omnis rem, nisi sunt dolores iste
+        blanditiis deserunt dolorum repellendus. Commodi sed consequuntur, quasi perferendis corporis vitae hic
+        voluptates voluptatum laborum!
+        Reiciendis perferendis vel saepe reprehenderit voluptatibus dolorem cum dolore exercitationem quaerat inventore
+        aliquid distinctio at repudiandae in libero id ea neque impedit ipsa, explicabo est quasi autem deserunt? Quod,
+        excepturi.
+        Minima culpa recusandae, rem corporis minus quos facere voluptate atque nulla autem natus eius quibusdam iure
+        inventore eos quo nobis. Debitis dolor magnam voluptas, fugit facilis harum ad amet eos.
+        Dicta earum voluptates, accusamus numquam veniam beatae enim pariatur architecto ad nam harum hic necessitatibus
+        fugiat omnis id non aut nesciunt. Saepe facere accusamus quam quo repudiandae suscipit eligendi accusantium.
+        Delectus suscipit quod ab! Inventore, atque distinctio. Repellat laudantium deleniti nisi quia dolorem tempora
+        soluta ex fugit, magni qui impedit consequatur minus obcaecati commodi temporibus explicabo eius at, sed illo.
+        Cupiditate non nisi laborum soluta deserunt sint veniam minima quidem quaerat explicabo harum deleniti, itaque
+        incidunt, ea, ex tempora numquam id laboriosam perferendis culpa mollitia eaque! Et maiores nobis eos.
+        Asperiores, et cum. Est soluta rerum perferendis laborum facilis, qui magni labore quaerat molestiae, et sint
+        excepturi odit ratione architecto ea sapiente doloremque, enim a temporibus voluptas maiores minima! Possimus.
+        Perspiciatis alias exercitationem neque, iure consequatur id voluptas minima ullam numquam maiores? Reiciendis
+        est, sapiente dicta nisi veritatis vel explicabo assumenda voluptatibus, similique ea repellat cum recusandae
+        distinctio dolores nulla!
+        A aliquid, numquam voluptate reiciendis iure omnis officiis alias! Sunt facilis ex eos quisquam, perferendis qui
+        maiores recusandae quia eveniet, eaque optio deserunt porro non voluptate adipisci voluptatibus quas odit.
+        Quia nam incidunt quos neque voluptates minus praesentium obcaecati voluptatum, laboriosam quas voluptatem
+        officia tempore harum quibusdam nisi repellat est impedit, hic, minima repudiandae necessitatibus. Odit cumque
+        provident dolores alias!
+    </div>
+
+
+</body>
+
+</html>
+
+___________________________________________________________________________________________________
+
+BORDES
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+    <style>
+
+        /* Este primer método es para empotrar un tipo de letra desde una web*/
+
+        /*@import url('https://fonts.googleapis.com/css?family=Lacquer&display=swap');*/     
+
+        /*Este segundo método es para descargar el tipo de letra y usarla*/
+
+
+        @font-face{font-family: "Germanica";
+                    src: url(fonts/ShadowedGermanica.ttf)} 
+
+        body{margin:auto;
+             width:70%}            
+
+        .cuadro1{background-color: rgb(57, 214, 109);
+                 width: 15%;
+                 padding:3em;
+                 float: left;
+                 margin:1em;
+                 /*font-family: "Lacquer" --> Primer método de letra*/
+                 font-family: "Germanica"; /* --> Segundo método de letra */   
+                 box-shadow: 1px 1px 3px #292929;}               
+
+        .cuadro2{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3.5em;
+                border-radius: 20px;
+                float:left;
+                margin:1em;}
+
+        .cuadro3{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3.5em;
+                border-radius: 100px 20px 100px 20px;
+                float:left;
+                margin:1em;}
+
+        .cuadro4{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3.5em;                
+                border-radius: 40px / 50%;
+                float:left;
+                margin:1em;}    
+
+        .cuadro5{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3.5em 3.5em 3.5em 2em;                
+                border-radius: 20px 200px 20px 40px;
+                float:left;
+                margin:1em;}  
+
+        .cuadro6{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3.5em;             
+                border-radius: 20px 20px 100px 100px / 20px 20px 100% 100%;
+                float:left;
+                margin:1em;}
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="cuadro1">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>   
+    <div class="cuadro2">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+    <div class="cuadro3">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+    <div class="cuadro4">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+
+    <div class="cuadro5">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+
+    <div class="cuadro6">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+
+</body>
+
+</html>
+
+__________________________________________________________________________________________________________________________
+
+DISPLAY
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display</title>
+    <style>
+        li {
+            list-style: none;
+            display: inline-block;
+            padding: 0em;
+            margin: 2%;
+        }
+
+        li:hover {
+            list-style: none;
+            display: inline-block;
+            padding: 0em;
+            margin: 2%;
+            background-color: black;
+            color: white;
+        }
+        #si {
+            display: block;
+        }
+
+        #no {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="si">Este texto se ve</div>
+    <div id="no">Este texto no se ve</div>
+
+    <ul>
+        <li>Uno</li>
+        <li>Dos</li>
+        <li>Tres</li>
+        <li>Cuatro</li>
+        <li>Cinco</li>
+    </ul>
+
+
+</body>
+
+</html>
+
+____________________________________________________________________________________________________________________________
+
+SOMBRAS
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+    <style>
+
+        /* Este primer método es para empotrar un tipo de letra desde una web*/
+
+        /*@import url('https://fonts.googleapis.com/css?family=Lacquer&display=swap');*/     
+
+        /*Este segundo método es para descargar el tipo de letra y usarla*/
+
+
+        @font-face{font-family: "Germanica";
+                    src: url(fonts/ShadowedGermanica.ttf)} 
+
+        body{margin:auto;
+             width:70%}            
+
+        .cuadro1{background-color: rgb(57, 214, 109);
+                 width: 15%;
+                 padding:3em;
+                 float: left;
+                 margin:2em;  
+                 box-shadow: 20px 10px 30px #292929;} /* x, y, desenfoque, color */          
+
+        .cuadro2{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3em;
+                float: left;
+                margin:2em;
+                box-shadow: -20px -10px 20px #292929;} /* Los valores negativos ponen la sombra en la esquina superior izquierda*/
+
+        .title1{text-shadow: 10px 5px 8px yellow;
+                        font-size: 4em;
+                        color:limegreen;}
+
+        .title2{text-shadow: -10px -5px 8px blue;
+                font-size: 4em;
+                color:limegreen;}
+
+        .title3{text-shadow: 3px -3px 5px deeppink,
+                             6px -6px 5px seagreen,
+                             9px -9px 5px yellow;
+                             font-size: 4em;}
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="cuadro1">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>   
+
+    <div class="cuadro2">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>   
+
+    <h1 class="title1">Titulo 1</h1>
+    <h1 class="title2">Titulo 2</h1>
+    <h1 class="title3">Titulo 3</h1>
+
+</body>
+
+</html>
+
+___________________________________________________________________________________________________________________________
+
+ROTACIONES
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotaciones</title>
+    <style>
+        @font-face {
+            font-family: "Germanica";
+            src: url(fonts/ShadowedGermanica.ttf)
+        }
+
+        body {
+            margin: auto;
+            width: 70%
+        }
+
+        .cuadro1 {
+            background-color: rgb(57, 214, 109);
+            width: 15%;
+            padding: 3em;
+            float: left;
+            margin: 2em;
+            box-shadow: 20px 10px 30px #292929;
+            transform: rotate(-15deg);
+            clear: left;
+        }
+
+        img{width: 30%;            
+            margin-top: 20px;
+            transform:rotate3d(1,0,0, 60deg);}
+            
+
+    </style>
+</head>
+
+<body>
+    <div class="cuadro1">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+
+   <p>
+
+    <img src="imagenes/flecha.png" />
+
+   </p>
+
+</body>
+
+</html>
+
+_____________________________________________________________________________________________________________________________
+
+OPACIDAD
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+    <style>
+
+        /* Este primer método es para empotrar un tipo de letra desde una web*/
+
+        /*@import url('https://fonts.googleapis.com/css?family=Lacquer&display=swap');*/     
+
+        /*Este segundo método es para descargar el tipo de letra y usarla*/
+
+
+        @font-face{font-family: "Germanica";
+                    src: url(fonts/ShadowedGermanica.ttf)} 
+
+        body{margin:auto;
+             width:70%}            
+        
+        /*Ejemplos aplicando la propiedad opacity*/
+        .cuadro1{background-color: rgb(57, 214, 109);
+                 width: 15%;
+                 padding:1.5em;
+                 float: left;
+                 margin:1em;                
+                 font-family: "Germanica";
+                 box-shadow: 1px 1px 3px #292929;
+                 opacity: 0.8;}               
+
+        .cuadro2{background-color: rgb(57, 214, 109);
+                width: 15%;
+                padding:3.5em;
+                border-radius: 20px;
+                float:left;
+                margin:1em;
+                opacity: 0.3;}
+
+        /* En este ejemplo se aplica la opacidad con rgba(rojo, veder, azul, opacidad)*/
+        .cuadro3{background-color: rgba(57, 214, 109, 0.5);
+                width: 15%;
+                padding:3.5em;
+                border-radius: 100px 20px 100px 20px;
+                float:left;
+                margin:1em;
+                font-weight: bold;}       
+
+    </style>
+</head>
+
+<body>
+    <div class="cuadro1">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>   
+    <div class="cuadro2">
+        *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+    </div>
+    <div class="cuadro3">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+        facere
+        inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!        
+    </div>
+   
+</body>
+
+</html>
+
+_______________________________________________________________________________________________________________________
+
+SEPARACION DE TEXTO EN COLUMNAS
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiples Columnas</title>
+
+    <style>
+
+        div{column-count: 3;
+            column-rule: black;
+            column-rule-width: 1px;
+            column-rule-style: solid;
+            text-align: justify;
+            column-gap: 10%;
+            margin:5%}
+    </style>
+</head>
+
+<body>
+    <div>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error obcaecati, perferendis earum necessitatibus facilis voluptates assumenda, id tempore dolorum deleniti alias dolor illum nesciunt non aut vitae architecto sed sit!
+        Dolorum, suscipit? Tenetur soluta voluptates aspernatur consequatur nemo ipsa blanditiis quod laudantium quaerat vitae iusto itaque quibusdam totam repellendus dolore, dolorum rem. Rerum, nam dolor assumenda libero accusamus enim pariatur!
+        Provident ducimus in cum veritatis doloremque voluptas voluptatem aliquam facere laborum nemo reiciendis eaque dicta, ad voluptate adipisci expedita maiores repellat corrupti nostrum iusto obcaecati perferendis! Odio, ullam eligendi? Et!
+        Rem dignissimos minus excepturi repellendus commodi blanditiis, beatae a quos, tempore laborum, aliquam ad eius magni? Voluptatibus, esse voluptate ipsam iusto provident vitae magni, ipsa quam, laboriosam recusandae sapiente exercitationem.
+        Nostrum, temporibus totam. Magni doloribus dignissimos incidunt nihil facilis, eum aut quisquam neque placeat sit non deleniti harum quam accusamus nobis! Eius, doloribus assumenda vitae non sit veritatis esse tempore!
+        Obcaecati porro in tenetur perferendis, harum vero cumque beatae quas aliquid, facere aperiam earum ratione? Facilis excepturi ex earum, corrupti possimus vitae eum culpa corporis asperiores harum necessitatibus soluta exercitationem.
+        Dolor debitis eveniet voluptate, dignissimos, magni natus ad itaque, aperiam perferendis at error voluptatibus vero rem alias quis dolores impedit. Eveniet minus veniam vitae error suscipit odio dignissimos necessitatibus fuga?
+        Assumenda ea repellendus dolore, earum temporibus facilis eum illo, pariatur incidunt facere eaque, beatae minus rerum in reiciendis id cupiditate doloribus maxime mollitia possimus quia iusto at perspiciatis? Deleniti, eligendi.
+        Quasi earum cum, temporibus optio ea distinctio nemo sit voluptatum nostrum dignissimos aliquid quos consequatur omnis itaque soluta iusto ipsum odit facilis reprehenderit nam laborum atque libero ut fugiat? Rerum!
+        Iste mollitia non, repellat veritatis magnam repudiandae optio repellendus labore, suscipit sed debitis enim earum doloremque nisi nostrum consequuntur tenetur quibusdam assumenda in rerum ex. Quisquam optio nisi quidem nobis?
+    </div>
+</body>
+
+</html>
+
+____________________________________________________________________________________________________________________
+
+IMAGENES DE FONDO
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+    <style>
+        @font-face {
+            font-family: "Germanica";
+            src: url(fonts/ShadowedGermanica.ttf)
+        }
+
+        body {
+            margin: auto;
+            /*background-image: url("imagenes/bob.png");                     
+            background-size: cover;*/    
+        }
+
+        .cuadro1 {
+            
+            background-color: rgb(57, 214, 109);
+            width: 15%;
+            padding: 2em;
+            float: left;
+            margin: 1em;            
+            font-family: "Germanica";            
+            box-shadow: 5px 5px 15px #292929;
+            
+        }
+
+        .cuadro2 {
+            position: relative;
+            background-color: rgb(57, 214, 109);
+            width: 15%;
+            padding: 3.5em;
+            border-radius: 20px;
+            float: left;
+            margin: 1em;
+            z-index: 2;
+            }
+
+       #contenido{
+            position: absolute;
+            width:100%;
+            height: 100%;
+            background-image: url("imagenes/bob.png");
+            background-repeat: no-repeat;           
+            background-position: center;
+            float: left;
+            z-index: 1;
+                   
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="contenido">
+        </div> <div class="cuadro1">
+            *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+            facere
+            inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+        </div>
+        <div class="cuadro2">
+            *Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit molestias, blanditiis consequatur quam omnis
+            facere
+            inventore quaerat dolor iste nam, fugiat veniam neque quibusdam error recusandae cumque non dolore magni!
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+_____________________________________________________________________________________________________________________
+
+
+GRADIENTES
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradientes</title>
+
+    <style>
+        div {
+            float: left;
+            width: 20%;
+            height: 100px;
+            background-color: indianred;
+            margin: 10px;
+        }
+
+        body {
+            margin: 0 auto;
+            width: 80%;
+        }
+
+        #default{background: linear-gradient(blue, fuchsia, yellow);}
+
+        #barras{background: linear-gradient(red, yellow, red);}
+
+        #izda_dcha{background: linear-gradient(to right, blue, fuchsia, yellow);}
+
+        #dcha_izda{background: linear-gradient(to left, blue, fuchsia, yellow);}
+
+        #diagonal_dcha{background: linear-gradient(to bottom right, blue, fuchsia, yellow);}
+
+        #diagonal_izda{background: linear-gradient(to top left, blue, fuchsia, yellow);}
+
+        #centro{background: radial-gradient(blue, fuchsia, yellow);}
+
+        #espacios{background: radial-gradient(yellow 20%, red 70%, black 10%);}
+
+        #circulo{background: radial-gradient(circle, yellow, red, black);}
+
+        #repetir{background: repeating-radial-gradient(yellow, red, black);}
+
+        #opacidad{background: linear-gradient(to bottom right, rgba(0,0,255,0)30%, 
+                                rgba(0,0,255,1));}
+       
+        
+    </style>
+</head>
+
+<body>
+
+    <h1>Gradientes Lineales</h1>
+    <div id="default"></div>
+    <div id="barras"></div>
+    <div id="izda_dcha"></div>
+    <div id="dcha_izda"></div>
+    <div id="diagonal_dcha"></div>
+    <div id="diagonal_izda"></div>
+
+    <br clear="left"/>
+
+    <h1>Gradientes Radiales</h1>
+
+    <div id="centro"></div>    
+    <div id="espacios"></div>
+    <div id="circulo"></div>
+    <div id="repetir"></div>
+
+    <br clear="left"/>
+
+    <h1>Opacidades</h1>
+
+    <div id="opacidad"></div>
+
+
+</body>
+
+</html>
+
+_________________________________________________________________________________________________
+
+TRANSICIONES
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transiciones</title>
+
+    <style>
+
+            div{width: 30%;
+                height: 200px;
+                background-color: red;
+                float: left;
+                margin: 20px;              
+                /*transition-duration: 2s;
+                transition-property: width;*/
+                transition: width 3s, background-color 3s, height 3s;}
+
+            #cambio1:hover{width:70%;
+                          height: 30px;
+                          background-color: yellow;}
+
+            p{transition: 5s;}
+
+            #cambio2:hover{transform: rotate(45deg);                           }
+
+    </style>
+
+</head>
+<body>
+
+_________________________________________________________________________________________________________________
+
+ANIMACIONES
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animaciones</title>
+
+    <style>
+        #cuadro {
+            width: 200px;
+            height: 100px;
+            background-color: orange;
+            position: relative;
+            animation-name: animacion1;
+            animation-duration: 10s;
+        }
+
+        @keyframes animacion1 {
+
+            0% {
+                background-color: orange;
+                width: 200px;
+                font-size: 1em;
+                left: 30px;
+            }
+
+            25% {
+                background-color: blue;
+                width: 500px;
+                font-size: 3em;
+                left: 500px;
+            }
+
+            50% {
+                background-color: springgreen;
+                width: 300px;
+                font-size: 2em;
+                left: 30px
+            }
+
+            75% {
+                background-color: red;
+                width: 200px;
+                font-size: 3em;
+                left: 500px
+            }
+        }
+
+        #texto {
+            font-size: 10em;
+            font-family: sans-serif;
+            color: orangered;
+            animation-name: animacion2;
+            animation-duration: 10s;
+        }
+
+        @keyframes animacion2 {
+            0% {
+                font-size: 10em;
+                font-family: sans-serif;
+                color: orangered;
+            }
+
+
+            25% {
+                font-size: 5em;
+                font-family: 'Times New Roman', Times, serif;
+                color: red;
+            }
+
+            75% {
+                font-size: 8em;
+                font-family: monospace;
+                color: blue;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cuadro">Hola, Mundo</div>
+
+    <br />
+
+    <div id="texto">Texto con efectos</div>
+
+</body>
+
+</html>

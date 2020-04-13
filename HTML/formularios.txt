@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios</title>
+</head>
+<body bgcolor="#DFFCB6">
+    <!-- información corta y no confidencial, método GET,  información larga o confidencial
+        método POST-->
+
+    <form action="##programa_python###" method="GET">     
+        
+        <fieldset>
+            <legend>Datos personales</legend>
+
+        <label>Nombre</label>
+        <input type="text" name="nombre" required="true" />   
+        <label>Apellidos</label>
+        <input type="text" name="apellidos" list="apellidos"/> <!-- Creamos un predictivo con los apellidos -->
+            <datalist id="apellidos">
+                <option value="Lopez" />
+                <option value="Laiz" />
+                <option value="Lara" />
+                <option value="Sanz" />
+                <option value="Sanchez" />
+                <option value="Sevilla" />
+            </datalist>
+        
+        <br/>
+        <br/>
+
+        <label>Edad</label>
+        <input type="number" name="Edad" min="18"/>   
+
+        <br/>
+        <br/>
+
+        <label>Fecha de nacimiento</label>
+        <input type="date" name="birthday"/>    
+        
+        </fieldset>
+        <br/>
+        <br/>
+        
+        <label>Password</label>
+        <input type="password" name="password" />
+
+        <br/>
+        <br/>
+
+        <label>Elige color</label>
+        <input type="color" name="color"/>
+
+        <br/>
+        <br/>
+
+        <label>Fichero</label>
+        <input type="file" name="upload"/>    
+        
+        <br/>
+        <br/>
+
+        <label>Subimit con imagen</label>
+        <input type="image" src="C:\Users\Hp 840 G2\WORKSPACE\FRONT\Recetario\img\tortilla\tortilla.jpg" width="5%" name="picture"/>
+
+        <br/>
+        <br/>       
+        
+        <label>Danos tu opinión</label>
+        <textarea cols="100" rows="10" name="opinion" maxlength="50"></textarea>      
+
+        <br/>
+        <br/> 
+
+        <label>Sexo : </label> <!-- IMPORTANTE, todos deben tener el mismo atributo name-->
+        <input type="radio" name="sexo" value="m"/> Mujer
+        <input type="radio" name="sexo" value="h"/> Hombre
+
+        <br/>
+        <br/> 
+
+        <label>Hobbies</label> <br/>
+        <input type="checkbox" value="c" name="cine" checked/> Cine <br/>
+        <input type="checkbox" value="t" name="teatro"/> Teatro <br/>
+        <input type="checkbox" value="d" name="deporte"/> Deporte <br/>
+        <input type="checkbox" value="m" name="musica"/> Musica <br/>
+
+        <br/>
+        <br/> 
+
+        <label>Estado civil</label>
+        <select name="estado">
+            <option value="s">Soltero</option>
+            <option value="c">Casado</option>
+            <option value="v">Viudo</option>
+            <option value="p">Pareja de hecho</option>      
+        </select>
+
+        <br/>
+        <br/> 
+
+        <label>Idiomas</label>
+        <select name="idiomas" multiple="true" size="5">
+            <option value="in" selected>Inglés</option>
+            <option value="fr">Francés</option>
+            <option value="it">Italiano</option>
+            <option value="al">Alemán</option>
+            <option value="ch">Chino</option>
+        </select>
+
+        <br/>
+        <br/>         
+
+
+        <label>Teléfono móvil</label> <!-- [numero obligatirio]{posiciones}-->
+        <input type="tel" name="movil" size="9" pattern="[6-7]{1}[0-9]{8}" title="Debe empezar por 6-7 y contener 9 digitos" />
+
+        <br/>
+        <br/> 
+
+        <input type="reset" value="Limpiar formularos" />    
+
+        <br/>
+        <br/> 
+
+        <input type="submit" value="Enviar datos" />
+
+
+
+
+
+
+
+
+    </form>
+</body>
+</html>

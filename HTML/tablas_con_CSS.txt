@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas</title>
+
+    <style>
+        table{  border:medium dashed blue;
+                caption-side: bottom;;                           
+                                }
+
+        caption{font-size: small;
+                font-style: italic;
+                padding-top: 0.5em;}
+        
+        /* Selector múltiple */
+        th, td{border:medium solid darkkhaki}
+
+        /*Selector descendente (herencias),  los td dentro de los tr */
+
+        tr td{border:brown double thin;
+                }
+
+    </style>
+</head>
+<body>
+
+    <table >
+        <caption>Titulo de la tabla</caption>
+        <tr>
+            <th>COLUMNA 1</th>
+            <th>COLUMNA 2</th>
+            <th>COLUMNA 3</th>
+        </tr>
+
+        <tr>
+            <td>1A</td>
+            <td>2A</td>
+            <td>3A</td>
+        </tr>
+            <td>1B</td>
+            <td>2B</td>
+            <td>3B</td>
+        <tr>
+            <td>1C</td>
+            <td>2C</td>
+            <td>3C</td>
+        </tr>
+
+    </table>
+
+</body>
+</html>
+
+_______________________________________________________________________________
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla2</title>
+    <style>
+
+        .brd{   border-style: solid;
+                border-collapse: collapse;
+                border-color: black;                
+                caption-side: bottom;
+                text-align: center;                
+                font-size: 1em;
+                background-color: aquamarine;}     
+                                                
+
+        .margin{margin:3em auto 1em auto}
+
+        caption{font-family: cursive;
+                font-size: medium;
+                padding: 0.3em;}
+
+        tr, td{border-style: solid;
+               font-family: Verdana, Geneva, Tahoma, sans-serif;
+               padding:1em;}
+
+        th{ font-weight: bold;   
+            border-style: solid;          
+            border-color: black;                     
+            color:red;
+            padding:1em 1.5em 1em 1.5em;}
+
+        #letra{font-family: Georgia, 'Times New Roman', Times, serif;}
+
+        
+
+    </style>
+</head>
+<body>
+    <table class="brd margin">
+        <caption>Programmas de formación</caption>
+        <tr>
+            <th rowspan="2">Programa</th>
+            <th rowspan="2">Curso</th>
+            <th colspan="2">Contenido</th>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <th>Dificultad</th>
+        </tr>
+        <tr>
+            <td rowspan="4">Java Core</td>
+            <td rowspan="2">Spring</td>
+            <td>IoC</td>
+            <td>Alta</td>
+        </tr>
+        <tr>
+            <td>Configuración</td>
+            <td>Baja</td>
+
+        </tr>
+        <tr>
+            <td rowspan="2">Maven</td>
+            <td>Dependencias</td>
+            <td rowspan="2">Media</td>
+ 
+        </tr>
+        <tr>
+            <td>Paquetización</td>
+        </tr>
+        <tr>
+            <td rowspan="3">Business Integration</td>
+            <td rowspan="2">Hibernate</td>
+            <td>Conectividad</td>
+            <td>Media</td>
+        </tr>
+        <tr>
+            <td>Persistencia</td>
+            <td>Alta</td>
+
+        </tr>
+        <tr>
+            <td id="letra">Web Services</td>
+            <td>Integración</td>
+            <td>Media</td>
+
+        </tr>
+
+    </table>
+    
+</body>
+</html>

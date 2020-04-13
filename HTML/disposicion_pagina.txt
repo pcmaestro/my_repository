@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Elementos estructurales</title>
+<link href="css/estilos.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="content">
+		<header>
+			<h1>Encabezado de la pagina</h1>
+		</header>
+
+		<nav>
+			<p>Barra de navegacion</p>
+		</nav>
+		<main>
+			<article>
+				Titulo del articulo
+				<section>Noticia 1</section>
+				<section>Noticia 2</section>
+			</article>
+
+			<aside>
+				<p>Publicidad</p>
+			</aside>
+
+			<aside>
+				<p>Muro Facebook</p>
+			</aside>
+		</main>
+		<footer>
+			<p>Pie de pagina</p>
+		</footer>
+	</div>
+</body>
+</html>

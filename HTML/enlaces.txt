@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enlaces</title>
+	
+    <link href="css/estilos.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h1>Enlaces</h1>
+
+        <h2>Enlace una web externa</h2>
+            <a href="https://www.esky.es/" target = "_blank" >Buscar vuelo</a>
+
+        <h2>Enlace a otra página en mi sitio web</h2>
+
+        <h2>Enlace a un correo electrónico</h2>
+            <a href="mailto:pcmaestro@hotmail.com;magemero@hotmail.com?cc=otro@otro.com&bcc=otros@otros.com&Subject=Correo de Prueba">Contacto</a>
+            
+        <h2>Enlaces dentro de la misma página</h2>
+            <a href="minikwiki.html">Ir a minikwiki</a>
+
+	<!-- Enlaces dentro de una misma página -->
+
+	<a name = "volver"> Volver aqui </a>
+
+	<a href ="#volver"> Volver arriba </a>
+
+</body>
+</html>

@@ -18,3 +18,7 @@ parrafo.appendChild(contenido);
 
 // Añadir el nodo Element como hijo de la pagina
 document.body.appendChild(parrafo);
+
+//Escribir contenido HTML;
+
+document.getElementById("id").innerHTML = "Hola Mundo"

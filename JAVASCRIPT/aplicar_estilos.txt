@@ -1,0 +1,30 @@
+
+//variables globales , reutilizables en todas las funciones
+var estiloBorde = false;
+var estiloColor = false;
+var estiloSombra = false;
+
+
+function borde(){       
+    if (!estiloBorde){
+    document.getElementById("cuadrado").style.border = "5px solid black";
+    estiloBorde = true;}
+    else{document.getElementById("cuadrado").style.border = "none";
+    estiloBorde = false;}
+}
+
+function color(){
+    if (!estiloColor){
+    document.getElementById("cuadrado").style.backgroundColor = "red";
+    estiloColor = true;}
+    else{document.getElementById("cuadrado").style.backgroundColor = "blue";
+    estiloColor = false;}
+}
+
+function sombra(){
+    if (!estiloSombra){
+        document.getElementById("cuadrado").style.boxShadow = "5px 5px 15px black";
+        estiloSombra = true;}
+    else{document.getElementById("cuadrado").style.boxShadow = "none";
+    estiloSombra = false;}
+}

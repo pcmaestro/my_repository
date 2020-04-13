@@ -1,0 +1,24 @@
+var elemento = "";
+
+function start(event) {
+    elemento = event.target.id
+    event.target.style.opacity = "0.4";
+}
+
+function end(event) {
+    event.target.style.opacity = "1";
+}
+
+function over(event) {
+    event.target.style.border = "20px dotted black";
+    event.preventDefault();
+}
+
+function leave(event) {
+    event.target.style.border = "none";
+}
+
+function drop(event) {
+    event.target.appendChild(document.getElementById(elemento));
+    event.target.style.border = "none";
+}

@@ -1,0 +1,179 @@
+TEXTOS
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textos_canvas</title>
+</head>
+<body onload="dibujar()"> <!-- Al cargar la web llama a la función dibujar de JS-->
+
+    <canvas id="miCanvas" width="1300" height="250" style="background-color: bisque;">
+        Texto que se muestra en navegadores que no soportan HTML5
+
+    </canvas>
+    
+    <script>
+        function dibujar(){ 
+
+            var canvas = document.getElementById("miCanvas");
+            var ctxCanvas = canvas.getContext("2d");
+
+            ctxCanvas.font="bold 50px Arial";
+            ctxCanvas.textAlign="center";
+            ctxCanvas.strokeStyle="red";
+            ctxCanvas.strokeText("Texto a mostrar", 300, 200);
+            }
+
+
+
+        </script>
+</body>
+</html>
+
+_________________________________________________________________________________________________
+
+LINEAS Y FIGURAS
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>    
+</head>
+<body onload="dibujar()"> <!-- Al cargar la web llama a la función dibujar de JS-->
+
+    <canvas id="miCanvas" width="1300" height="700" style="background-color: bisque;">
+        Texto que se muestra en navegadores que no soportan HTML5
+
+    </canvas>
+    
+    <script>
+        function dibujar(){ 
+            //obtener la referencia del canvas
+            var canvas = document.getElementById("miCanvas");
+            //Accedemos al contecto del canvas
+            var ctxCanvas = canvas.getContext("2d");
+            //Pintar una linea roja
+            ctxCanvas.strokeStyle ="#FF0000";
+            //ctxCanvas.beginPath();
+            ctxCanvas.moveTo(20,20);
+            ctxCanvas.lineTo(70,90);   
+            ctxCanvas.stroke();              
+            //ctxCanvas.closePath();
+
+            //Pintar un rectangulo relleno azul
+
+            ctxCanvas.fillStyle="blue";
+            ctxCanvas.fillRect(208,155 ,421,168);
+
+            //Pintar un rombo
+            ctxCanvas.fillStyle="yellow";
+            ctxCanvas.beginPath();
+            ctxCanvas.moveTo(300,200);
+            ctxCanvas.lineTo(350,300);
+            ctxCanvas.lineTo(300,400);
+            ctxCanvas.lineTo(250,300);
+            ctxCanvas.closePath();
+            ctxCanvas.fill();       
+
+           
+            ctxCanvas.strokeStyle="red";
+            ctxCanvas.beginPath();
+            ctxCanvas.moveTo(900,250);
+            ctxCanvas.lineTo(950,300);
+            ctxCanvas.lineTo(850,300);
+            ctxCanvas.lineTo(930,350);
+            ctxCanvas.lineTo(870,350);
+            ctxCanvas.closePath();
+            ctxCanvas.stroke();
+
+
+ 
+        }
+
+    </script>
+</body>
+</html>
+
+____________________________________________________________________________________________
+
+CURVAS
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circulos</title>    
+</head>
+<body onload="dibujarcirculo()"> <!-- Al cargar la web llama a la función dibujar de JS-->
+
+    <canvas id="miCanvas" width="1300" height="600" style="background-color: bisque;">
+        Texto que se muestra en navegadores que no soportan HTML5
+
+    </canvas>
+    
+    <script>
+        function dibujarcirculo()
+            { 
+                var canvas = document.getElementById("miCanvas");
+                var ctxCanvas = canvas.getContext("2d");
+
+                ctxCanvas.strokeStyle="#0E0E9A";
+                ctxCanvas.beginPath();            
+                ctxCanvas.arc(650, 300, 100, 0, 1.5 * Math.PI); //Centro(x,y) , radio, angulo(radianes)
+                ctxCanvas.stroke();                
+
+                ctxCanvas.fillStyle="#0E0E9A";
+                ctxCanvas.beginPath();            
+                ctxCanvas.arc(650, 300, 90, 0, 1.5 * Math.PI);
+                ctxCanvas.fill();  
+                ctx.closePath();                
+            }
+
+    </script>
+</body>
+</html>
+
+_________________________________________________________________________________________________________________
+
+GRADIENTES
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient</title>    
+</head>
+<body onload="dibujarGradient()"> <!-- Al cargar la web llama a la función dibujar de JS-->
+
+    <canvas id="miCanvas" width="1300" height="500" style="background-color:lightgreen;">
+        Texto que se muestra en navegadores que no soportan HTML5
+
+    </canvas>
+    
+    <script>
+        function dibujarGradient()
+        {           
+            var canvas = document.getElementById("miCanvas");
+            var ctx = canvas.getContext("2d");
+
+            // Crear gradiente
+            var grd = ctx.createLinearGradient(0, 0, 500, 0);
+            grd.addColorStop(0.1, "red");
+            grd.addColorStop(0.5, "green");
+            grd.addColorStop(0.7, "Blue");
+            grd.addColorStop(1, "violet");
+
+            // Rellenar un rectángulo con el gradiente
+            ctx.fillStyle = grd;
+            ctx.fillRect(10, 10, 550, 280); 
+        }
+
+    </script>
+</body>
+</html>

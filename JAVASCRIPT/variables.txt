@@ -1,0 +1,98 @@
+        //Variable numérica hexadecimal (siempre 0x delante) , cualquier valor que demos a n, saldrá pintado en hexadedimal
+        n = 0xFF32;
+
+        //Variable numérica octal (siempre 0 delante), cualquier valor que demos a x, saldrá pintado en octal
+        x = 012345;
+
+        //Variable numérica decimal, cualquier valor que demos a y, saldrá pintado en decimal
+        y = 12345;
+
+        //Variables booleanos ( siempre equivalen a 0 y 1)
+        i = false;
+        j = true;
+
+        //Conversiones , funciones de conversión. Los input del usuario son string por defecto
+        parseFloat();
+        parseInt();
+        toString();
+        //El resultado NaN tras una convesión , significa not a number
+
+    
+
+        //Función para conocer el tipo de una variable
+        typeof ();
+
+____________________________________________________________________________________________________________
+
+    <script lang="javascript">
+
+        var nombre = "pepito";
+        var edad = 48;
+
+        function inicio() {
+        //Conversión implicita , la variable edad se convierte en texto
+        console.log(nombre + " tiene " + edad + " años.");
+
+        //Las variables booleanas tienen conversio numérica true=1 y false=0 , este caso dará resultado 49
+        var casado = true;
+        console.log(edad + casado)
+        //Pero en este caso hay strings( se concatenan en lugar de sumarse) y casado conserva el valor booleano
+        console.log(nombre + " tiene " + edad + " años y está casado? " + casado);      
+
+        //Conversiones explicitas
+
+        //Texto --> Numérico
+        var texto = "12345";
+        console.log(parseInt(texto) + edad);
+        }
+
+        //Los input de usuario son por defecto strings,  para operar con números hay que convertirlos
+        function suma() {
+            alert(parseInt(document.getElementById("numero").value) + edad);
+        }
+
+        //Esta función pide el dato al usuairo en una ventana de aviso
+        function solicitar() {
+            var dato = window.prompt("Introduce un número");
+            alert(parseInt(dato) + edad);
+        }
+
+    </script>
+
+__________________________________________________________________________________________________________
+
+INCREMENTOS Y DECREMENTOS
+
+    <script lang="javascript">
+
+        var cuenta = 0
+
+        function incrementar() {
+            cuenta++; // --> Postincremento , se ejecuta después de hacer concatenaciones
+            //++cuenta; --> Preincremnto , se ejecuta antes de hacer concatenaciones
+            //cuenta = cuenta + 1;
+            //cuenta += 1;
+            document.getElementById("etiqueta").innerText = "Contador : " + cuenta;
+        }
+
+        /*Preincrementos,  se ejecutan antes de las asignaciones en las variables
+         Postincrementos , se ejecuta primero la asignación de la variable y luego el incremento
+         
+         a = 7
+         b = 5
+         c = ?
+
+         c = --b // c = 4
+         c = a++ // c = 7
+         
+         */
+
+        function decrementar() {
+            cuenta--;
+            //cuenta = cuenta - 1;
+            //cuenta -= 1;            
+            document.getElementById("etiqueta").innerText = "Contador : " + cuenta;
+        }
+
+    </script>
+

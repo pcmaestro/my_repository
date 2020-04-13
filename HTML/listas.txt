@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas</title>
+</head>
+<body>
+
+    <h1> Listas ordenadas </h1>
+
+    <ol>
+        <li>Rojo</li>
+        <li>Verde</li>
+        <li>Azul</li>
+        <li>Amarillo</li>
+        <li>Negro</li>
+    </ol>
+    
+    <ol type="A">
+        <li>Rojo</li>
+        <li>Verde</li>
+        <li>Azul</li>
+        <li>Amarillo</li>
+        <li>Negro</li>
+    </ol>
+
+    <ol type="i">
+        <li>Rojo</li>
+        <li>Verde</li>
+        <li>Azul</li>
+        <li>Amarillo</li>
+        <li>Negro</li>
+    </ol>
+
+    <ol type="I">
+        <li>Rojo</li>
+        <li>Verde</li>
+        <li>Azul</li>
+        <li>Amarillo</li>
+        <li>Negro</li>
+    </ol>
+
+    <ol type="a">
+        <li>Rojo</li>
+        <li>Verde</li>
+        <li>Azul</li>
+        <li>Amarillo</li>
+        <li>Negro</li>
+    </ol>
+
+    <ol type="1">
+        <li>Rojo</li>
+        <li>Verde</li>
+        <li>Azul</li>
+        <li>Amarillo</li>
+        <li>Negro</li>
+    </ol>
+
+    <p>Reanudamos la lista en otro ol</p>
+
+    <ol start="6">
+        <li> Naranja</li>
+        <li>Morado</li>
+        <li>Rosa</li>
+        <li>Gris</li>
+        <li>Fucsia</li>
+    </ol>
+
+    <h1>Listas no ordenadas</h1>
+
+    <ul>
+        <li>Naranja</li>
+        <li>Morado</li>
+        <li>Rosa</li>
+        <li>Gris</li>
+        <li>Fucsia</li>
+    </ul>
+
+    <ul type="circle">
+        <li>Naranja</li>
+        <li>Morado</li>
+        <li>Rosa</li>
+        <li>Gris</li>
+        <li>Fucsia</li>
+    </ul>
+
+    <ul type="square">
+        <li>Naranja</li>
+        <li>Morado</li>
+        <li>Rosa</li>
+        <li>Gris</li>
+        <li>Fucsia</li>
+    </ul>
+
+    <ul type="disk">
+        <li>Naranja</li>
+        <li>Morado</li>
+        <li>Rosa</li>
+        <li>Gris</li>
+        <li>Fucsia</li>
+    </ul>
+    
+    <h1>Listas de definición</h1>
+
+        <dl>
+            <dt>km/h</dt>
+            <dd>Kilometros por hora</dd>
+
+            <dt>m<sup>2</sup></dt>
+            <dd>metros cuadrados</dd>
+
+            <dt>cm<sup>3</sup></dt>
+            <dd>centimetros cúbicos</dd>
+
+        </dl>
+</body>
+</html>
