@@ -37,6 +37,12 @@ pyqt5 - módulo de funciones para generar interfaces gráficas (QT)
 
 mysql.connect - módulo de funciones para conectar , insertar, mostrar, modificar y borrar elementos de una BD MySQL
 
+sqlite3 - módlulo de funciones para conectar , insertar, mostrar, modificar y borrar elementos de una BD SQLite
+
+cx_Oracle - módlulo de funciones para conectar , insertar, mostrar, modificar y borrar elementos de una BD Oracle
+
+pyodbc - módlulo de funciones para conectar , insertar, mostrar, modificar y borrar elementos de una BD SQL Server
+
 _functools - módulo para hacer operaciones con funciones , la más importante que trae es partial(funcion , valor para funcion)
 	     la función partial() permite pasarle directamente un argumento a otra función a la hora de invocar a esta segunda
 
@@ -50,7 +56,7 @@ sys - módulo que provee acceso a funciones y objetos del interprete de Python:
 	sys.path - lista de directorios donde el interprete busca los módulos cuando realizamos un import
 
 	sys.version - Muestra la versión del interprete de Python que estamos usando
-
+ 
 os - Módulo que contiene funciones para manipular archivos y rutas de directorios
 
 urllib.request - Contiene la función urlopen que permite leer archivos y webs traidas de internet

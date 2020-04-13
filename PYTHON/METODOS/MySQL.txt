@@ -26,7 +26,7 @@ def func_registro_sql():
 	#los inputs del usuario
 
     	sql = constantes_sql.SQL_INSERT_SQL
-    	mydb = conectar()
+    	mydb = func_conectar_sql()
     	cursor = mydb.cursor()
 
     	#mirando el orden de insert de la sql formamos la siguiente tupla con 
@@ -39,7 +39,7 @@ def func_registro_sql():
 def func_select_sql():
 
     	sql = constantes_sql.SQL_SELECT_SQL
-    	mydb = conectar()
+    	mydb = func_conectar_sql()
     	cursor = mydb.cursor()
     	cursor.execute(sql)
 	#esto obtiene el resultado de la select, se crea una tupla por cada fila, y a su vez
@@ -55,9 +55,9 @@ def func_select_sql():
 		datos += tupla[0] + tupla[1] + tupla[2]....
 
 def func_select_por_id(id_registro):
-	]
+	
     sql = constantes_sql.SQL_SELECT_POR_ID
-    mydb = conectar()
+    mydb = func_conectar_sql()
     cursor = mydb.cursor()
     val = (id_registro,)
     cursor.execute(sql, val)
@@ -70,7 +70,7 @@ def func_select_por_id(id_registro):
 def func_modificar_sql(cambios_ptes_guardar):
 
     sql = constantes_sql.SQL_UPDATE_CAMBIOS
-    mydb = conectar()
+    mydb = func_conectar_sql()
     cursor = mydb.cursor()
     val = (cambios_ptes_guardar.propiedad1, cambios_ptes_guardar.propiedad2...........)
     cursor.execute(sql, val)
@@ -80,7 +80,7 @@ def func_modificar_sql(cambios_ptes_guardar):
 def func_borrar_sql(id_registro):
 
     sql = constantes_sql.SQL_DELETE_REGISTRO
-    mydb  = conectar()
+    mydb  = func_conectar_sql()
     cursor = mydb.cursor()
     val = (id_registro,)
     cursor.execute(sql, val)
