@@ -3,8 +3,8 @@ desencadena una acción sobre la web, seria este:
 
 e por convencion representa la palabra "event"
 
-funcion_prueba_sobre_elemento(){
-		var prueba = funcion_interna(e){
+function prueba_sobre_elemento(){
+		var prueba = function funcion_interna(e){
 			console.log("Este evento es de tipo" + e.type);
 		}
     	}

@@ -5,7 +5,7 @@ hay que quitarles el prefijo "on":
 Ejemplo para escuchar el evento "onclick" ( en este caso sólo click) sobre un botón, que mostrará un div. 
 
 
-function boton(){
+function funcion_boton(){
 	var btn;
 	btn = document.getElementById("id_boton");
 	btn.addEventListener("click", mi_funcion);

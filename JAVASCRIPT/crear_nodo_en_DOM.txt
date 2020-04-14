@@ -21,4 +21,4 @@ document.body.appendChild(parrafo);
 
 //Escribir contenido HTML;
 
-document.getElementById("id").innerHTML = "Hola Mundo"
+document.getElementById("id").innerHTML = "<p> Hola Mundo </p>"
