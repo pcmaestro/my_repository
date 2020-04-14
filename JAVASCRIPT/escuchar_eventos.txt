@@ -1,0 +1,21 @@
+Este método no requiere indicar explicitamente los eventos en los atributos del nodo DOM , ya que creamos 
+una función que los "escucha". Para usar los eventos de esta manera, a los que hay en el listado oficial,
+hay que quitarles el prefijo "on":
+
+Ejemplo para escuchar el evento "onclick" ( en este caso sólo click) sobre un botón, que mostrará un div. 
+
+
+function boton(){
+	var btn;
+	btn = document.getElementById("id_boton");
+	btn.addEventListener("click", mi_funcion);
+	}
+
+function mi_funcion(){
+	var div;
+	div = document.getElementById("div_id").style.display = "block";
+	}
+
+Si por cualquier razón necesitamos eleminar un Event Listener ,  la sintáxis sería esta :
+
+document.getElementById("id").removeEventListener("evento", funcion_del_evento);

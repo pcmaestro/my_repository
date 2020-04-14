@@ -1,0 +1,14 @@
+Existe un truco para conocer mediante el console.log deporl navegador que tipo de evento
+desencadena una acción sobre la web, seria este:
+
+e por convencion representa la palabra "event"
+
+funcion_prueba_sobre_elemento(){
+		var prueba = funcion_interna(e){
+			console.log("Este evento es de tipo" + e.type);
+		}
+    	}
+
+Si en esta función cambiamos e.type por e.target,  el console.log nos muestra el tipo
+de evento sobre el cual se está ejecutando el evento
+	

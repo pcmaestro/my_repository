@@ -1,0 +1,6 @@
+La funcion para detener la ejecución de un evento es preventDefault() , esto seria como introducir
+un break en un bucle o un return en una función , detiene la ejecución si se cumple/no se cumple
+alguna condición, por ejemplo, evitar que viaje la información de un formulario
+
+
+
