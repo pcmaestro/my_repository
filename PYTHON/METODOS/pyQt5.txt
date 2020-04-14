@@ -162,7 +162,7 @@ triggered.connect(self.funcion) --> Ejecuta la función asociado al click sobre 
 
 Para abrir un archivo:
 
-archivo = QFileDialaog.getOpenFileName(self, "Titulo ventana", "C:\\ruta_archivo", "filtro - ej. Text Files (.txt) ")
+archivo = QFileDialog.getOpenFileName(self, "Titulo ventana", "C:\\ruta_archivo", "filtro - ej. Text Files (.txt) ")
 
 Esto guarda en archivo la tupla (""C:\\ruta_archivo", "filtro - ej. Text Files (.txt) " , con lo que archivo[0] es la
 ruta al archivo que deseamos abrir
@@ -193,6 +193,8 @@ text() --> Lee el contenido de un Line Text o un Text Edit
 setText() --> Escribe texto en un Line Text o un Text Edit
 
 setFocus() --> Establece el cursor en un Line Text o un Text Edit determinados
+
+clear() --> Limpia el contenido del widget (usar por ejemplo cuando ya se haya enviado la información)
 
 -------------	Eventos sobre un List Widget	-------------------------------------
 
@@ -298,6 +300,46 @@ fecha_en_string = str(fecha.toPyDate()) --> Convierte la fecha que viene del wid
 
 self.ui.calendar.setDate(fecha) --> Establece en el widget la fecha que la pasemos en la variable fecha
 
+--------------------------  Imagenes  -----------------------------------------------
+
+A la hora de registrar un articulo, normalmente las imagenes se insertan en un objeto Qlabel (en este caso , label_imagen), 
+es buena práctica hacer que pasen primero por una carpeta temporal antes de guardar el registro
+
+Seleccionar imagen llamando a una función con este código pulsando un Qpushbutton:
+
+archivo = QFileDialog.getOpenFileName(MainWindow)  --> Esto trae una tupla
+ruta_archivo = archivo[0]
+shutil.copy(ruta_archivo + "temporal/imagen.jpg")
+pixmap = QPixmap("temporal/imagen.jpg")
+
+Adaptamos el tamaño de la imagen al del QLabel:
+
+altura_label = ui.label_imagen.height()
+pixmap_redim = pixmap.scaledToHeight(altura_label) --> Esto redimensiona el pixmap,  no la imagen real
+
+Insertamos la imagen:
+
+ui.label_imagen.setPixmap(pixmap_redim)
+
+Movemos la imagen de la carpeta temporal a la definitiva y la renombramos con el id del producto en la BD
+
+id_generado = operaciones_bd.funcion_insert_sql(objeto_a_registrar)
+shutil.move("temporal/imagen.jpg", "imagenes/" + str(id_generado) + ".jpg")
+
+Ahora añadimos la imagen como icono, por convención, se nombra con el Id del objeto que representa en la BD,
+al consultar la BD para saber el id,  nos traerá la fila en forma de tupla. Hacemos la comprobación para ver
+si existe algún icono para el producto en cuestión:
+
+icono = QLabel()
+ruta_imagen = ""imagenes/"+str(tupla[0])+".jpg" --> La primera columna de la tupla es el id
+objeto_path = pathlib.Path(ruta_imagen) --> Creamos un objeto de la libreria pathlib.Path
+existe = objeto_path.is_file() --> Comprueba si la imagen existe en la ruta ( tambien se puede hacer con os.isfile() )
+if existe:
+	pixmap = QPixmap(ruta_imagen)
+	pixmap_redim = pixmap.scaleToHeight(50) --> En este ejemplo redimensionamos a 50 px
+	icono.setPixmap(pixmap_redim)
+	ui.table_widget.setCellWidget(fila, indice_celda + x , icono) --> Aqui pintamos el icono en una tabla
+									  en la posición indice_celda + x
 
 
 

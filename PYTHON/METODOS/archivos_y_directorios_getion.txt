@@ -65,6 +65,8 @@ fichero = ("/home/user/archivo.txt")
 
 os.remove(fichero)
 
+También existe la librería shutil:
+
 
 Es buena práctica realizar las comprobaciones de existencia de un archivo usando condicionales IF y envolviendo
 el programa en un try / except

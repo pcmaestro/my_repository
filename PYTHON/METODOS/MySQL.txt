@@ -20,7 +20,7 @@ def func_conectar_sql():
     	)
 	return mydb
 
-def func_registro_sql():
+def func_registro_sql(objeto_a_registrar):
 	
 	#Donde invoquemos esta función, es necesario tener creado un objeto que almacene
 	#los inputs del usuario
@@ -31,9 +31,12 @@ def func_registro_sql():
 
     	#mirando el orden de insert de la sql formamos la siguiente tupla con 
     	#los valores a insertar en base de datos
-    	val = (objeto.propiedad1, objeto.propiedad2, objeto.propiedad3.......)
+    	val = (objeto_a_registrar.propiedad1, objeto_a_registrar.propiedad2, objeto_a_registrar.propiedad3.......)
     	cursor.execute(sql,val)
     	mydb.commit()
+	id_generado = cursor.lastrowid  --> Quizá lo necesitemos para nombrar una imagen referida a este artículo,
+					    devuelve el último valor de la columna marcada como AUTO-INCREMENT en la
+					    tabla de la BD
     	mydb.disconnect()
 
 def func_select_sql():

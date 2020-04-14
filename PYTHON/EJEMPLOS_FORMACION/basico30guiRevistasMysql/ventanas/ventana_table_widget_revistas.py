@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
         self.table_widget_revistas = QtWidgets.QTableWidget(self.centralwidget)
         self.table_widget_revistas.setGeometry(QtCore.QRect(40, 70, 731, 481))
         self.table_widget_revistas.setObjectName("table_widget_revistas")
-        self.table_widget_revistas.setColumnCount(6)
+        self.table_widget_revistas.setColumnCount(7)
         self.table_widget_revistas.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.table_widget_revistas.setHorizontalHeaderItem(0, item)
@@ -31,6 +31,8 @@ class Ui_MainWindow(object):
         self.table_widget_revistas.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.table_widget_revistas.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.table_widget_revistas.setHorizontalHeaderItem(6, item)
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(240, 30, 301, 21))
         font = QtGui.QFont()
@@ -60,6 +62,8 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "borrar"))
         item = self.table_widget_revistas.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "editar"))
+        item = self.table_widget_revistas.horizontalHeaderItem(6)
+        item.setText(_translate("MainWindow", "imagen"))
         self.label.setText(_translate("MainWindow", "LISTADO USANDO TABLE WIDGET"))
 
 

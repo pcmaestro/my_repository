@@ -59,4 +59,8 @@ sys - módulo que provee acceso a funciones y objetos del interprete de Python:
  
 os - Módulo que contiene funciones para manipular archivos y rutas de directorios
 
+pathlib -  también contiene funciones para manipular archivos y rutas de directorios
+
 urllib.request - Contiene la función urlopen que permite leer archivos y webs traidas de internet
+
+shutil - módulo con funciones para copiar y mover archivos

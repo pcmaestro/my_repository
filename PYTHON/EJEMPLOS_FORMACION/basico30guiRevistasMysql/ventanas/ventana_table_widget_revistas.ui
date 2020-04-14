@@ -53,6 +53,11 @@
       <string>editar</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>imagen</string>
+     </property>
+    </column>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">

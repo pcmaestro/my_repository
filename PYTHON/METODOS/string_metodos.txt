@@ -56,5 +56,8 @@ splitlines() - Devuelve una lista separando los caracteres por saltos de línea
 join() - Convierte en cadena una lista si está compuesta sólo por caracteres tipo string
 	ej. ",".join(lista)
 
+eval() - Evulua un string como si fuera código Python válido
+
+	ej . eval("2 + 2")  --> En este caso se hará la operación aritmética representada en el string
 
 

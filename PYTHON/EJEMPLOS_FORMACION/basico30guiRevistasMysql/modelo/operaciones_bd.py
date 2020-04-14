@@ -17,10 +17,17 @@ def registro_revista(revista):
     cursor = mydb.cursor()
     #mirando el orden de insert de la sql formo la siguiente tupla con 
     #los valores a insertar en base de datos
-    val = (revista.titulo,revista.precio, revista.tema)
-    cursor.execute(sql,val)
+    val = (revista.titulo,revista.precio, revista.tema, revista.digital, revista.frecuencia,revista.tipo)
+    try:
+        cursor.execute(sql,val)
+    except Exception as e:
+        print(e)
+        
     mydb.commit()
+    id_generado = cursor.lastrowid
     mydb.disconnect()
+    
+    return id_generado
     
 def obtener_revistas():
     sql = constantes_sql.SQL_LISTADO_REVISTAS
