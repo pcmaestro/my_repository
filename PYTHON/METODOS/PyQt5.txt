@@ -346,16 +346,18 @@ valueChanged.connect() --> Ejecuta la función del argumento según van cambiand
 
 -----------------------  Eventos sobre un Spin Box (caja con flechas para aumentar o disminuir valores  -------------
 
-editingFinished.connect() --> Ejecuta la función del argumento según el usuario va aumentando o disminuyendo valores
+valueChanged().connect() --> Cada vez que el valor cambia, se emite esta señal
+value() --> Lee el balor del spin box
+setValue(valor) --> Estable (o reestablece) el valor del spinbox
 
 
 -----------------------  Eventos sobre Combox  -------------------------------------------------------------------
 
 currentIndexChanged.connect() --> Ejecuta la función del argumento según la opción elegida por el usuario
 
-currentIndex() --> Lo usamos para guardar en una variable (ej. indice_elegido) el indice de la opción elegida
+Primer paso  > currentIndex() --> Lo usamos para guardar en una variable (ej. indice_elegido) el indice de la opción elegida
 
-itemText(indice_elegido) --> Lo usamos para guardar en una variable (ej. opcion_elegida) la selección del usuario
+Segundo paso > itemText(indice_elegido) --> Lo usamos para guardar en una variable (ej. opcion_elegida) la selección del usuario
 
 -----------------------  Eventos sobre Progress Bar  -----------------------------------------------------------
 
