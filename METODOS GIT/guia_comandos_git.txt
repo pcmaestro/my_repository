@@ -26,7 +26,7 @@ git push -u origin master // subir los commits al GITHUB (master es el nombre de
 
 git pull // actualiza el workspace con el commit mas nuevo
 
-git checkout nº_de_commit nombre_archivo  // trae al workspace la versión de un fichero de un determinado commit
+git checkout nº_de_commit nombre_archivo  // trae al workspace la versión de un fichero de un determinado commit (MUY IMPORTANTE PARA RECUPERAR VERSIONES ANTERIORES)
 
 git rm --cached nombre_archivo // borra un archivo del commit
 
@@ -38,6 +38,12 @@ git diff nombre_rama_activa nombre_otra_rama // para ver diferencias entre dos r
 
 
 git log // log de commits guardados
+git log nombre_fichero // log de commits guardados de un determinado fichero
+git log - n X nombre_fichero // log de los últimos X commits guardados de un determinado fichero
+
+Estos 3 últimos métodos se pueden combinar con los siguientes:
+
+
 git log --oneline // git log resumido ( si añadiemos por ej -2 , muestra sólo los 2 ultimmos commits)
 git log --pretty=oneline // resumido , pero con identificador largo del commit
 git log -p // para ver diferencias
@@ -45,7 +51,7 @@ git log --stat //  muestra ficheros insertados y modificaciones en cada commit
 git log --pretty=format:"%h --> %ar"  // tiempo que lleva hecho el commit (resumido)
 git log --pretty=format:"%h %H --> %ar" // tiempo que lleva hecho el commit  (largo)
 git log --pretty=format:"%h %H --> %ar >>%an" // tiempo que lleva hecho el commit  (largo) con autor
-log --pretty=format:"%h %H --> %an %ae %ar %ad" // tiempo que lleva hecho el commit  (largo) con autor + email
+git log --pretty=format:"%h %H --> %an %ae %ar %ad" // tiempo que lleva hecho el commit  (largo) con autor + email
 
 Atributos de pretty-format
 ( a = fecha de creaciòn , c= fecha de commit ,  r=fecha realiva,  d=fecha absoluta , e=email creador )

@@ -1,6 +1,6 @@
 import re
 
-patron = ^[a-z]{1,10}$
+patron = r"^[a-z]{1,10}$"
 
 validador = re.compile(patron)
 
