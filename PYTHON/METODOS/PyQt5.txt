@@ -233,7 +233,7 @@ sys.exit(0)
 
 toggled.connect(self.funcion) --> Ejecuta la función asociada al click sobre un radiobutton
 
-isClicked() --> Ejecuta la comprabación de si un radiobutton está clickado
+isChecked() --> Ejecuta la comprabación de si un radiobutton está clickado
 
 statechanged() -- > Ejecuta la comprobación de si un checkbox está clickado
 
