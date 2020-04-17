@@ -397,8 +397,18 @@ self.ui.calendar.setDate(fecha) --> Establece en el widget la fecha que la pasem
 
 --------------------------  Imagenes  -----------------------------------------------
 
+Uso del objeto QPixmap:
+
+
+pixmap = QPixmap("imagenes/imagen.jpg")
+
+ui.label_imagen.setPixmap(pixmap)
+
+
 A la hora de registrar un articulo, normalmente las imagenes se insertan en un objeto Qlabel (en este caso , label_imagen), 
 es buena práctica hacer que pasen primero por una carpeta temporal antes de guardar el registro
+
+Ej.  Selección de una imagen para adjuntarla al registro de un producto :
 
 Seleccionar imagen llamando a una función con este código pulsando un Qpushbutton:
 

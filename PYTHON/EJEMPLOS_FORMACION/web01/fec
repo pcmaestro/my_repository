@@ -1,0 +1,10 @@
+
+
+
+
+
+fecha = 2020/04/17
+
+fecha = "{8:10}/{5:7}/{0:4}".format(fecha)
+
+print(fecha)

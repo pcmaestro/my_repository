@@ -2,7 +2,31 @@ string formating
 
 ---------------------------- ULTIMAS VERSIONES DE PYTHON --------------------------------------
 
-format() - Aplica formato a las partes de un string entre llaves
+Función format():
+
+Podemos formatear números con separador de miles y decimales
+
+Ej.
+
+numero = 1000000
+
+numero = format(numero, ",.2f"))
+
+resultado -->  1,000,000.00
+
+Se puede pasar a formato europeo usando replace():
+
+numero = format(numero, ",.2f")
+numero = numero.replace("." , "@").replace("," , ".").replace("@" , ",")
+
+resultado --> 1.000.000,00
+
+Y si hace falta un redondeo ( en lugar de truncar):
+
+numero = round(numero)
+
+
+También aplica formato a las partes de un string entre llaves
 
 EJ:
 #Esto imprime "Me llamo Juan y soy español"
@@ -10,10 +34,9 @@ nombre = "Juan"
 nacionalidad = "español"
 print("Me llamo {} y soy {}".format(nombre, nacionalidad))
 
-Si en la tupla hay muchos elementos, por defecto sigue el orden de primero a último,  pero entre
-las llaves podemos poner un número de indice : {0}...{1}...{2}...etc...
+Si en la tupla hay muchos elementos, por defecto sigue el orden de primero a último,  pero entrelas llaves podemos poner un número de indice : {0}...{1}...{2}...etc...
 
-Además,  se puede obligar a que el car}acter entre llaves sea de un tipo determinado :
+Además,  se puede obligar a que el caracter entre llaves sea de un tipo determinado :
 
 {:s} - string
 {:d} - nº entero
