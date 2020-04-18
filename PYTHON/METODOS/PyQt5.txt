@@ -218,6 +218,10 @@ archivo = QFileDialog.getOpenFileName(self, "Titulo ventana", "C:\\ruta_archivo"
 Esto guarda en archivo la tupla (""C:\\ruta_archivo", "filtro - ej. Text Files (.txt) " , con lo que archivo[0] es la
 ruta al archivo que deseamos abrir
 
+Usando la variable MainWindow creada por Qt Designer ( guarda la ruta desde la cual tomamos la imagen en forma de tupla)
+
+archivo = QFileDialog.getOpenFileName(self, MainWindow)
+
 Para guardar un arhivo:
 
 archivo = QFileDialog.getSaveFileName(self, "Titulo ventana", "C:\\ruta_archivo", "filtro - ej. Text Files (.txt) ")
@@ -395,7 +399,7 @@ fecha_en_string = str(fecha.toPyDate()) --> Convierte la fecha que viene del wid
 
 self.ui.calendar.setDate(fecha) --> Establece en el widget la fecha que la pasemos en la variable fecha
 
---------------------------  Imagenes  -----------------------------------------------
+--------------------------  Imagenes e Iconos  -----------------------------------------------
 
 Uso del objeto QPixmap:
 
@@ -405,8 +409,14 @@ pixmap = QPixmap("imagenes/imagen.jpg")
 ui.label_imagen.setPixmap(pixmap)
 
 
-A la hora de registrar un articulo, normalmente las imagenes se insertan en un objeto Qlabel (en este caso , label_imagen), 
+A la hora de registrar un articulo o crear un icono , normalmente las imagenes se insertan en un objeto Qlabel (en este caso , label_imagen), 
 es buena práctica hacer que pasen primero por una carpeta temporal antes de guardar el registro
+
+Ej.
+
+icono = Qlabel()
+icono.setPixmap(pixmap)
+
 
 Ej.  Selección de una imagen para adjuntarla al registro de un producto :
 

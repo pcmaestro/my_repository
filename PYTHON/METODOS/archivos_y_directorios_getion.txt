@@ -1,6 +1,6 @@
 LECTURA Y ESCRITURA DE ARCHVIOS
 
-La apertura de ficheros TXT requiere qóduue el archievo esté en la misma ruta que el módulo Python
+La apertura de ficheros TXT requiere que el archivo esté en la misma ruta que el módulo Python
 a ejecutar, o bien hay que darle al programa la ruta completa de su ubicación ( con barras / )
 
 Este método de apertura carga todo el texto en memoria y requiere de cerrar el archivo para
@@ -38,6 +38,8 @@ file.readlines() --> Convierte las lineas del texto en una lista separada por lo
 
 RENOMBRAR, MOVER Y BORRAR ARCHIVOS
 
+Las rutas de destino de los archivos movidos deben ser tomadas desde el punto donde existe el Main
+
 Importando el módulo os podemos además renombrar, mover y borrar archivos. Antes de hacer nada con estas
 funciones,  SIEMPRE hay que conprobar que el archivo existe con el método os.path.isfile():
 
@@ -65,7 +67,10 @@ fichero = ("/home/user/archivo.txt")
 
 os.remove(fichero)
 
-También existe la librería shutil:
+También existe la librería shutil, se pueden renombrar los archivos a la vez que se copian o mueven:
+
+shutil.copy("C:/Users/carpeta_actual/nombre_actual" , "C:/Users/nueva_carpeta/nuevo_nombre")
+shutil.move("C:/Users/carpeta_actual/nombre_actual" , "C:/Users/nueva_carpeta/nuevo_nombre")
 
 
 Es buena práctica realizar las comprobaciones de existencia de un archivo usando condicionales IF y envolviendo
