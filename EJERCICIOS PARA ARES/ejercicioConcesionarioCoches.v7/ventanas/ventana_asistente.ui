@@ -14,14 +14,14 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(170, 255, 255);</string>
+   <string notr="true">background-color: rgb(170, 170, 255);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>50</y>
+      <x>130</x>
+      <y>0</y>
       <width>481</width>
       <height>51</height>
      </rect>
@@ -33,8 +33,8 @@
    <widget class="QComboBox" name="cbx_marca">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>130</y>
+      <x>160</x>
+      <y>80</y>
       <width>350</width>
       <height>22</height>
      </rect>
@@ -96,8 +96,8 @@
    <widget class="QLineEdit" name="txt_modelo">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>180</y>
+      <x>160</x>
+      <y>130</y>
       <width>350</width>
       <height>20</height>
      </rect>
@@ -109,8 +109,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>130</y>
+      <x>50</x>
+      <y>80</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -129,8 +129,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>180</y>
+      <x>50</x>
+      <y>130</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -149,8 +149,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>230</y>
+      <x>50</x>
+      <y>180</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -169,8 +169,8 @@
    <widget class="QComboBox" name="cbx_color">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>230</y>
+      <x>160</x>
+      <y>180</y>
       <width>350</width>
       <height>22</height>
      </rect>
@@ -217,8 +217,8 @@
    <widget class="QRadioButton" name="radio_diesel">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>290</y>
+      <x>160</x>
+      <y>240</y>
       <width>82</width>
       <height>17</height>
      </rect>
@@ -230,8 +230,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>310</y>
+      <x>50</x>
+      <y>260</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -250,8 +250,8 @@
    <widget class="QRadioButton" name="radio_gasolina">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>330</y>
+      <x>160</x>
+      <y>280</y>
       <width>82</width>
       <height>17</height>
      </rect>
@@ -266,8 +266,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>410</y>
+      <x>50</x>
+      <y>360</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -286,8 +286,8 @@
    <widget class="QSpinBox" name="spx_precio">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>410</y>
+      <x>160</x>
+      <y>360</y>
       <width>350</width>
       <height>22</height>
      </rect>
@@ -308,8 +308,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>510</y>
+      <x>50</x>
+      <y>460</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -328,8 +328,8 @@
    <widget class="QCheckBox" name="chx_cheque">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>510</y>
+      <x>160</x>
+      <y>460</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -341,8 +341,8 @@
    <widget class="QCheckBox" name="chx_tarjeta">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>510</y>
+      <x>260</x>
+      <y>460</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -354,8 +354,8 @@
    <widget class="QCheckBox" name="chx_contado">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>510</y>
+      <x>360</x>
+      <y>460</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -367,15 +367,14 @@
    <widget class="QPushButton" name="btn_registrar">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>550</y>
+      <x>260</x>
+      <y>500</y>
       <width>151</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(117, 117, 117, 255), stop:1 rgba(255, 255, 255, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(117, 117, 117, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="text">
      <string>REGISTRAR</string>
@@ -384,8 +383,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QCheckBox" name="chx_financiado">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>510</y>
+      <x>460</x>
+      <y>460</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -400,8 +399,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QLabel" name="lbl_marca_ko">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>130</y>
+      <x>540</x>
+      <y>80</y>
       <width>221</width>
       <height>20</height>
      </rect>
@@ -413,8 +412,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QLabel" name="lbl_modelo_ko">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>180</y>
+      <x>540</x>
+      <y>130</y>
       <width>221</width>
       <height>20</height>
      </rect>
@@ -426,8 +425,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QLabel" name="lbl_color_ko">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>230</y>
+      <x>540</x>
+      <y>180</y>
       <width>221</width>
       <height>20</height>
      </rect>
@@ -439,8 +438,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QLabel" name="lbl_modo_pago_ko">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>510</y>
+      <x>560</x>
+      <y>460</y>
       <width>231</width>
       <height>20</height>
      </rect>
@@ -452,8 +451,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QPushButton" name="btn_insertar">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>460</y>
+      <x>150</x>
+      <y>410</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -469,8 +468,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>460</y>
+      <x>50</x>
+      <y>410</y>
       <width>81</width>
       <height>16</height>
      </rect>

@@ -28,7 +28,9 @@ git pull // actualiza el workspace con el commit mas nuevo
 
 git checkout nº_de_commit nombre_archivo  // trae al workspace la versión de un fichero de un determinado commit (MUY IMPORTANTE PARA RECUPERAR VERSIONES ANTERIORES)
 
-git rm --cached nombre_archivo // borra un archivo del commit
+git rm --cached nombre_archivo // borra un archivo del del stage
+
+Para borrar archivos y carpetas en el repositorio , basta con borrarlos en el workspace y luego hacer el commit y el git push
 
 git checkout -b nombre_nueva rama // crea una rama y nos lleva ella
 git checkout nombre_rama // para cambiar de una rama a otra

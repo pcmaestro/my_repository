@@ -338,6 +338,21 @@ def listado_table_widget():
         btn_editar = QPushButton("Editar coche")
         btn_editar.clicked.connect( partial(editar_coche, coche[0]) )
         ui_listado_list_tablewidget.tableWidget.setCellWidget(fila, columna +1, btn_editar)
+
+	#icono con una imagen del coche
+        icono = QLabel()
+        ruta_imagen = "imagenes/"+str(coche[0])+".jpg"
+        print(ruta_imagen)
+        objeto_path = os.path.isfile(ruta_imagen)    
+        print(objeto_path)    
+        if objeto_path:           
+            pixmap = QPixmap(ruta_imagen)           
+            icono.setPixmap(pixmap)
+            ui_listado_list_tablewidget.tableWidget.setCellWidget(fila, columna + 2, icono)
+       
+	#Adaptamos el ancho de columna al de las imagenes 
+        header = ui_listado_list_tablewidget.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
              
         fila += 1
 
@@ -458,9 +473,15 @@ if existe:
 
 
 
+#############################  HOJAS DE ESTILO  #################################################################
+
+La hoja styles.css debe estar en el mismo directorio que las interfaces de las ventanas :
+
+with open("styles.css") as f:
+    self.setStyleSheet(f.read())
 
 
-
+ver https://recursospython.com/guias-y-manuales/hojas-de-estilo-en-qt/
 
 
 

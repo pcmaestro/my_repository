@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(233, 255, 252);</string>
+   <string notr="true">background-color: rgb(170, 170, 255);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -28,8 +28,15 @@
     </property>
     <property name="font">
      <font>
+      <family>MS Shell Dlg 2</family>
       <pointsize>20</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;GESTION COMERCIAL DE COCHES&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

@@ -185,22 +185,27 @@ def listado_table_widget():
             columna += 1
           
         btn_eliminar = QPushButton("Eliminar coche")
+        btn_eliminar.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(117, 117, 117, 255), stop:1 rgba(255, 255, 255, 255));")
         btn_eliminar.clicked.connect( partial(eliminar_coche, coche[0]) )
         ui_listado_list_tablewidget.tableWidget.setCellWidget(fila, columna, btn_eliminar)
         
         btn_editar = QPushButton("Editar coche")
+        btn_editar.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(117, 117, 117, 255), stop:1 rgba(255, 255, 255, 255));")
         btn_editar.clicked.connect( partial(editar_coche, coche[0]) )
         ui_listado_list_tablewidget.tableWidget.setCellWidget(fila, columna +1, btn_editar)
+            
         #icono de la imagen
         icono = QLabel()
-        ruta_imagen = "imagenes/"+str(coche[0])+".jpg"
-        print(ruta_imagen)
-        objeto_path = os.path.isfile(ruta_imagen)    
-        print(objeto_path)    
+        ruta_imagen = "imagenes/"+str(coche[0])+".jpg"        
+        objeto_path = os.path.isfile(ruta_imagen)            
         if objeto_path:           
-            pixmap = QPixmap(ruta_imagen)            
+            pixmap = QPixmap(ruta_imagen)           
             icono.setPixmap(pixmap)
             ui_listado_list_tablewidget.tableWidget.setCellWidget(fila, columna + 2, icono)
+        
+        header = ui_listado_list_tablewidget.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(9, QtWidgets.QHeaderView.ResizeToContents)
+        
         fila += 1
                                                                                             
 def eliminar_coche(id_coche):    
@@ -210,8 +215,7 @@ def eliminar_coche(id_coche):
         mostrar_table_widget()
         listado_table_widget()
 
-def editar_coche(id_coche):
-    print("LLego a editar_coche() y el id_coche es " + str(id_coche))
+def editar_coche(id_coche):    
     QMessageBox.about(MainWindow, "Alerta" , "Vas a editar el registro " + str(id_coche))
     ui_editar_coche.setupUi(MainWindow)
     coche_modificado = obtener_coche_por_id(id_coche)
@@ -225,11 +229,9 @@ def editar_coche(id_coche):
 
 def guardar_coche_modificado(id_coche):
     QMessageBox.about(MainWindow, "Aviso", "Se va a modificar el coche con id " + str(id_coche))
-    cambios_ptes_guardar = Coche()
-    print("objeto cambios_ptes_guardar creado")
+    cambios_ptes_guardar = Coche()    
     cambios_ptes_guardar.__str__()
-    cambios_ptes_guardar.id = id_coche
-    print("Creada instancia cambios_ptes_guardar, el id es " + str(cambios_ptes_guardar.id))
+    cambios_ptes_guardar.id = id_coche    
     cambios_ptes_guardar.marca = ui_editar_coche.txt_marca.text()
     cambios_ptes_guardar.modelo = ui_editar_coche.txt_modelo.text()
     cambios_ptes_guardar.color = ui_editar_coche.txt_color.text()

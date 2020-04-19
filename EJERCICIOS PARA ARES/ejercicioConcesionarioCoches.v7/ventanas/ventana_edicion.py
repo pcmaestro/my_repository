@@ -13,7 +13,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(689, 600)
+        MainWindow.resize(800, 600)
+        MainWindow.setStyleSheet("background-color: rgb(170, 170, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -85,6 +86,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btn_modificar.setFont(font)
+        self.btn_modificar.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(117, 117, 117, 255), stop:1 rgba(255, 255, 255, 255));")
         self.btn_modificar.setObjectName("btn_modificar")
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
         self.label_7.setGeometry(QtCore.QRect(50, 470, 91, 16))

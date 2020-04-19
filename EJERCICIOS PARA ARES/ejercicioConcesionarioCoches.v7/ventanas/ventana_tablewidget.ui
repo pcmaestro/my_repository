@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Tabla de coches</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(170, 170, 255);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -44,11 +47,30 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(230, 255, 244);</string>
+     <string notr="true">background-color: rgb(232, 228, 255);</string>
+    </property>
+    <property name="columnCount">
+     <number>10</number>
     </property>
     <column>
      <property name="text">
       <string>ID</string>
+     </property>
+     <property name="background">
+      <color>
+       <red>216</red>
+       <green>243</green>
+       <blue>224</blue>
+      </color>
+     </property>
+     <property name="foreground">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
      </property>
     </column>
     <column>
@@ -96,11 +118,6 @@
       <string>IMAGEN</string>
      </property>
     </column>
-    <column>
-     <property name="text">
-      <string/>
-     </property>
-    </column>
    </widget>
    <widget class="QPushButton" name="btn_listar_tabla">
     <property name="geometry">
@@ -110,6 +127,9 @@
       <width>191</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(117, 117, 117, 255), stop:1 rgba(255, 255, 255, 255));</string>
     </property>
     <property name="text">
      <string>LISTAR COCHES</string>
