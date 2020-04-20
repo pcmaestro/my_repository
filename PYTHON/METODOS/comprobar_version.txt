@@ -1,5 +1,0 @@
-En CMD de Windows
-
-python --version
-
-Nos tiene que devolver la versión instalada

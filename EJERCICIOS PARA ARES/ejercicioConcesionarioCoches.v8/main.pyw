@@ -133,8 +133,8 @@ def mostrar_registro_coche():
     ui_registro_coche.btn_registrar.clicked.connect(registrar_coche)
 
 def mostrar_listado_coches():
-    ui_listado_coches.setupUi(MainWindow)
-    ui_listado_coches.btn_listar.clicked.connect(listado)
+        ui_listado_coches.setupUi(MainWindow)
+        ui_listado_coches.btn_listar.clicked.connect(listado)
     
 def mostrar_list_widget():
     ui_listado_list_widget.setupUi(MainWindow)
@@ -142,6 +142,8 @@ def mostrar_list_widget():
     
 def mostrar_table_widget():
     ui_listado_list_tablewidget.setupUi(MainWindow)
+    ui_listado_list_tablewidget.tableWidget.verticalHeader().hide()        
+    ui_listado_list_tablewidget.tableWidget.horizontalHeader().setStyleSheet("QHeaderView::section { background-color:black; color: white; }")    
     ui_listado_list_tablewidget.btn_listar_tabla.clicked.connect(listado_table_widget)
     
 def mostrar_asistente():

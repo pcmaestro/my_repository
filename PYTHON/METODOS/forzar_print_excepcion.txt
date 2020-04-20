@@ -1,4 +1,0 @@
-try:
-    código....
-except Exception as e:
-    print(e)
