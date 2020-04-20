@@ -28,10 +28,11 @@ Ej.
 
 @app.route("/guardar-anuncio")
 def guardar_anuncio():
+    texto = request.args.get("texto")
     email = request.args.get("email")
     telefono = request.args.get("telefono")
-    texto = request.args.get("texto")
-    return .......
+    anuncio = texto + " contactar en : " + email + str(telefono)
+    return anuncio
 
 
 

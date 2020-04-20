@@ -90,3 +90,39 @@ def func_borrar_sql(id_registro):
     mydb.commit()
     mydb.disconnect()
 		
+################################  EXPORTAR SELECT A ARCHIVO CSV ######################################
+
+El resultado que trae el cursor es una lista, donde cada fila es una tupla:
+
+Ej. Esto crea un archivo CSV que podemos carga en un excel
+
+import mysql.connector
+
+SQL_LISTADO_COCHES = "SELECT id_producto, marca, modelo, color, motor, REPLACE( FORMAT(precio, 0), ',' , '.'), forma_pago FROM tabla_coches;"
+
+def conectar():
+    mydb = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        database = "bd_coches"
+    )
+    return mydb
+
+def obtener_coches():
+    sql = SQL_LISTADO_COCHES
+    mydb = conectar()
+    cursor = mydb.cursor()
+    cursor.execute(sql)
+    resultado_lista = cursor.fetchall()
+    mydb.disconnect()
+    return resultado_lista
+
+coches = obtener_coches()
+
+with open("archivo_bd.csv", "w") as f:
+    for coche in coches:
+        for propiedad in coche:
+            linea = str(propiedad) + ";"
+            f.write(linea)
+        
+        f.write("\n")
