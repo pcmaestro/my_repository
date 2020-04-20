@@ -500,10 +500,49 @@ if existe:
 
 #############################  HOJAS DE ESTILO  #################################################################
 
-La hoja styles.css debe estar en el mismo directorio que las interfaces de las ventanas :
+Los estilos de Qt se llaman QSS
 
-with open("styles.css") as f:
-    self.setStyleSheet(f.read())
+La mayoria de las propiedades de CSS son compatibles con QSS , en la hoja de estilos
+hay que aplicarlos con esta sintaxis:
+
+QPushButton{....} --> Aplica el estilo a todos los objetos de la clase QPushButton
+
+QPushButton#boton_pulsame{....} --> Aplica el estilo sólo al objeto boton_pulsame
+
+Para usar una hoja de estilos externa, hay que leerla desde el main:
+
+Ej . Aplicando hoja de estilo externa con encapsulación de clases
+
+
+from PyQt5.QtWidgets import QApplication, QDialog
+
+import window --> ventana creada por pyuic5
+
+import sys
+
+
+class MyWindow(window.Ui_MainWindow):
+
+    def __init__(self):
+        super().__init__()
+
+    def setupUi(self, MainWindow):
+        super().setupUi(MainWindow)  
+
+
+if __name__ == "__main__":
+
+    app = QApplication(sys.argv)
+    MainWindow = QMainWindow()
+    with open("estilos/style.css") as f:
+        MainWindow.setStyleSheet(f.read())
+    ventana = MyWindow()
+    ventana.setupUi(MainWindow)    
+    MainWindow.show()
+    sys.exit(app.exec_())
+
+
+
 
 
 ver https://recursospython.com/guias-y-manuales/hojas-de-estilo-en-qt/
