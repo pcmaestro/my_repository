@@ -1,0 +1,6 @@
+https://pypi.org/project/auto-py-to-exe/
+
+pip install auto-py-to-exe
+
+Es necesaria una herramienta para cada plataforma, y recomendable
+crear los ejecutables desde esa misma plataforma

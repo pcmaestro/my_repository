@@ -1,0 +1,99 @@
+import re
+
+patron = r"^[a-z]{1,10}$"
+
+validador = re.compile(patron)
+
+texto = "esto es una prueba"
+
+resultado_validación = validador.match(text)
+
+if resultado_validacion:
+	ejecutar código.....
+else:
+	no ejecutar código...
+
+Secuencias de escape:
+
+\n	Nueva línea (new line). El cursor pasa a la primera posición de la línea siguiente.
+\t	Tabulador. El cursor pasa a la siguiente posición de tabulación.
+\\	Barra diagonal inversa
+\v	Tabulación vertical.
+
+Clases de caracteres:
+
+Se incluyen entre [...] , serán válidas las coincidencias incluidas dentro de los corchetes, salvo que
+la expresión sea [^...] , en cuyo caso quiere decir que son válidos todos los NO incluidos en los corchetes
+
+Cantidad de caracteres:
+
+{nº mínimo, nº máximo}
+
+Metacaracteres:
+
+Metacaracter	
+^	inicio de línea.
+$	fin de línea.
+\A	inicio de texto.
+\Z	fin de texto.
+.	cualquier caracter en la línea.
+\b	encuentra límite de palabra.
+\B	encuentra distinto a límite de palabra.
+
+\w	un caracter alfanumérico (incluye "_").
+\W	un caracter no alfanumérico.
+\d	un caracter numérico.
+\D	un caracter no numérico.
+\s	cualquier espacio (lo mismo que [ \t\n\r\f]).
+\S	un no espacio.
+
+*	cero o más, similar a {0,}.
++	una o más, similar a {1,}.
+?	cero o una, similar a {0,1}.
+{n}	exactamente n veces.
+{n,}	por lo menos n veces.
+{n,m}	por lo menos n pero no más de m veces.
+*?	cero o más, similar a {0,}?.
++?	una o más, similar a {1,}?.
+??	cero o una, similar a {0,1}?.
+{n}?	exactamente n veces.
+{n,}?	por lo menos n veces.
+{n,m}?	por lo menos n pero no más de m veces.
+
+|	Seperador de alternativas , selecciona siempre primero la de mas a la izquierda
+
+()	Usados tambier para incluir subexpresiones dentro de expresiones regulares
+
+Una vez creado el objeto validador:
+
+validador = re.compile(patron_reg_exp)
+
+al objeto le podemos aplicar estos métodos:
+
+match(): El cual determinada si la regex tiene coincidencias en el comienzo del texto.
+
+search(): El cual escanea todo el texto buscando cualquier ubicación donde haya una coincidencia.
+
+findall(): El cual encuentra todos los subtextos donde haya una coincidencia y nos devuelve estas coincidencias como una lista.
+
+finditer(): El cual es similar al anterior pero en lugar de devolvernos una lista nos devuelve un iterador.
+
+
+Ejemplos de Expresiones Regulares :
+
+Validando mails
+
+regex: \b[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}\b
+
+
+Validando una URL
+
+regex: ^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$
+
+Validando una dirección IP
+
+regex: ^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$
+
+Validando una fecha dd/mm/yyyy
+
+regex: ^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\d\d)$

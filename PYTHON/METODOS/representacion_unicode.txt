@@ -1,0 +1,11 @@
+Los caracteres UNICODE en Python deben escribirse en este formato:
+
+Ej : ñ en UNICODE es U+00F1
+
+En Python la almacenamos asi en una variable
+
+caracter_en_unicode = u"\u00F1"
+
+Y lo usamos asi en un string , esto imprime "Vivo en España"
+
+print("Vivo en Espa" + u"\u00F1" + "a")

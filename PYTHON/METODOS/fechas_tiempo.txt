@@ -1,0 +1,38 @@
+from time import time
+from datetime import date
+from datetime import datetime
+
+
+#Este método nos devuelve el tiempo transcurrido desde 01/01/1970 en segundos
+
+ahora = time()
+
+Se suele usar para medir el tiempo transcurrido entre dos puntos de un proceso
+
+#Este es el método que nos permite formatear y convertir a string las fechas y las horas
+
+string_fecha = ahora.strftime("%d/%m/%Y, %H:%M:%S")	resultado --> 17/04/2020, 13:39:40
+
+
+Ejemplos de uso :
+
+#Date - Día actual
+today = date.today()	resultado --> 2020-04-17
+
+#Datetime - Fecha actual
+now = datetime.now()	resultado --> 2020-04-17 13:30:22.237459
+
+#Date
+print("El día actual es {}".format(today.day))    	resultado --> El dia actual es 17
+print("El mes actual es {}".format(today.month))  	resultado --> El mes actual es 4
+print("El año actual es {}".format(today.year))   	resultado --> El año actual es 2020
+
+
+#Datetime
+print("El día actual es {}".format(now.day))	  	resultado --> El dia actual es 17
+print("El mes actual es {}".format(now.month))	  	resultado --> El mes actual es 4
+print("El año actual es {}".format(now.year))	  	resultado --> El año actual es 2020
+
+print("La hora actual es {}".format(now.hour))		resultado --> La hora actual es 13
+print("El minuto actual es {}".format(now.minute))	resultado --> El minuto actual es 26
+print("El segundo actual es {}".format(now.second))	resultado --> El segundo actual es 3
