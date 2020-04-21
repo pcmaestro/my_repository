@@ -12,13 +12,13 @@ def func_conectar_sql():
 	
 	##Segun la  BD, su IP y el usuario
 
-	mydb = mysql.connector.connect(    
+	conectar = mysql.connector.connect(    
     	host = "10.1.0.0",
     	user = "usuario",
-	password = "contraseña",
+	passwd = "contraseña",
     	database = "nombre_base_datos"       
     	)
-	return mydb
+	return conectar
 
 def func_registro_sql(objeto_a_registrar):
 	
@@ -26,33 +26,36 @@ def func_registro_sql(objeto_a_registrar):
 	#los inputs del usuario
 
     	sql = constantes_sql.SQL_INSERT_SQL
-    	mydb = func_conectar_sql()
-    	cursor = mydb.cursor()
+    	conexion = func_conectar_sql()
+    	cursor = conexion.cursor()
 
-    	#mirando el orden de insert de la sql formamos la siguiente tupla con 
-    	#los valores a insertar en base de datos
+    	#mirando el orden de insert de la sql formamos la siguiente tupla con los valores a 
+	#insertar en base de datos
+
     	val = (objeto_a_registrar.propiedad1, objeto_a_registrar.propiedad2, objeto_a_registrar.propiedad3.......)
     	cursor.execute(sql,val)
-    	mydb.commit()
+    	conexion.commit()
 	id_generado = cursor.lastrowid  --> Quizá lo necesitemos para nombrar una imagen referida a este artículo,
 					    devuelve el último valor de la columna marcada como AUTO-INCREMENT en la
 					    tabla de la BD
-    	mydb.disconnect()
+    	conexion.disconnect()
+	return id_generado --> Opcional, si fuera necesario
 
 def func_select_sql():
 
     	sql = constantes_sql.SQL_SELECT_SQL
-    	mydb = func_conectar_sql()
-    	cursor = mydb.cursor()
+    	conexion = func_conectar_sql()
+    	cursor = conexion.cursor()
     	cursor.execute(sql)
 	#esto obtiene el resultado de la select, se crea una tupla por cada fila, y a su vez
-	#cada tupla se incluye como elemento de una lista
+	#cada tupla se incluye como elemento de una lista	
     	resultado_lista_select = cursor.fetchall()
-    	mydb.disconnect()
+	conexion.commit()
+    	conexion.disconnect()
     	return resultado_lista_select
 
 ### Las filas de la base de datos que nos devuelva la select (cada una una tupla dentro de una lista)
-### las podremos recorrercon un blucle for en la herramienta 
+### las podremos recorrer con un blucle for en la herramienta 
 ### ej : datos = ""
 	 for tupla in lista :
 		datos += tupla[0] + tupla[1] + tupla[2]....
@@ -60,35 +63,35 @@ def func_select_sql():
 def func_select_por_id(id_registro):
 	
     sql = constantes_sql.SQL_SELECT_POR_ID
-    mydb = func_conectar_sql()
-    cursor = mydb.cursor()
+    conexion = func_conectar_sql()
+    cursor = conexion.cursor()
     val = (id_registro,)
     cursor.execute(sql, val)
     elemento_obtenido = cursor.fetchone()
-    mydb.commit()      
-    mydb.disconnect()
+    conexion.commit()      
+    conexion.disconnect()
     objeto_elemento = clases.Elemento(propiedad1 = elemento_obtenido[0], propiedad2 = elemento_obtenido[1].....)
     return objeto_elemento
 
 def func_modificar_sql(cambios_ptes_guardar):
 
     sql = constantes_sql.SQL_UPDATE_CAMBIOS
-    mydb = func_conectar_sql()
-    cursor = mydb.cursor()
+    conexion = func_conectar_sql()
+    cursor = conexion.cursor()
     val = (cambios_ptes_guardar.propiedad1, cambios_ptes_guardar.propiedad2...........)
     cursor.execute(sql, val)
-    mydb.commit()
-    mydb.disconnect()
+    conexion.commit()
+    conexion.disconnect()
 		
 def func_borrar_sql(id_registro):
 
     sql = constantes_sql.SQL_DELETE_REGISTRO
-    mydb  = func_conectar_sql()
-    cursor = mydb.cursor()
+    conexion  = func_conectar_sql()
+    cursor = conexion.cursor()
     val = (id_registro,)
     cursor.execute(sql, val)
-    mydb.commit()
-    mydb.disconnect()
+    conexion.commit()
+    conexion.disconnect()
 		
 ################################  EXPORTAR SELECT A ARCHIVO CSV ######################################
 
@@ -101,19 +104,21 @@ import mysql.connector
 SQL_LISTADO_COCHES = "SELECT id_producto, marca, modelo, color, motor, REPLACE( FORMAT(precio, 0), ',' , '.'), forma_pago FROM tabla_coches;"
 
 def conectar():
-    mydb = mysql.connector.connect(
+    conectar = mysql.connector.connect(
         host = "localhost",
         user = "root",
+	passwd = "contraseña",
         database = "bd_coches"
     )
-    return mydb
+    return conectar
 
 def obtener_coches():
     sql = SQL_LISTADO_COCHES
-    mydb = conectar()
-    cursor = mydb.cursor()
+    conexion = conectar()
+    cursor = conexion.cursor()
     cursor.execute(sql)
     resultado_lista = cursor.fetchall()
+    conexion.commit()
     mydb.disconnect()
     return resultado_lista
 
@@ -123,6 +128,5 @@ with open("archivo_bd.csv", "w") as f:
     for coche in coches:
         for propiedad in coche:
             linea = str(propiedad) + ";"
-            f.write(linea)
-        
+            f.write(linea)        
         f.write("\n")

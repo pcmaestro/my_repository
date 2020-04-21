@@ -35,6 +35,22 @@ def guardar_anuncio():
     return anuncio
 
 
+###Estas dos ultimas líneas sólo son necesarias para ejecuciones en local
 
+Flask.debug = 1  --> Permite refrescar en local los cambios
+app.run() --> Ejecuta en local la aplicación
+
+######################  NOTACIONES JINJA ###############################
+
+Jinja es un template language para Python , se usa para incrustar código Phyton
+en HTML para que pueda ser renderizado por los navegadores como si del propio HTML
+se tratara:
+
+Notaciones para envolver bucles y condicionales:
+{%for../if.../elif.../while....%}
+{%endfor%} / {%endif%} / {%endwhile%}
+
+Notaciones para envolver código y variables:
+{{......}}
 
 

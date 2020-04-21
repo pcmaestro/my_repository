@@ -6,3 +6,13 @@ CREATE TABLE employees
   CONSTRAINT employees_pk PRIMARY KEY (employee_number),
   CONSTRAINT fk_departments FOREIGN KEY (department_id) REFERENCES departments(department_id)
 );
+
+Ej.
+
+CREATE TABLE `tabla_anuncios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NULL,
+  `precio` DECIMAL(9,2) NULL,
+  `email` VARCHAR(255) NULL,
+  `email-valido` VARCHAR(2) NULL DEFAULT 'NO',
+  PRIMARY KEY (`id`));
