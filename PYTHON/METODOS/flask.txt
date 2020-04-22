@@ -36,9 +36,24 @@ def guardar_anuncio():
 
 
 ###Estas dos ultimas líneas sólo son necesarias para ejecuciones en local
-
 Flask.debug = 1  --> Permite refrescar en local los cambios
 app.run() --> Ejecuta en local la aplicación
+
+####################  ESTRUCTURA DE DIRECTORIOS NECESARIA ##################
+
+MyApplication/
+    /static/
+        /style.css
+        /script.js
+    /templates/
+        /index.html
+	/other.html
+    /app.py
+
+#####################  ENLACES ENTRE ARCHIVOS HTML  ######################
+
+los enlaces <a href = "...."> entre archivos HTML los haremos por el nombre de ruta que tengan
+en el app.py
 
 ######################  NOTACIONES JINJA ###############################
 
@@ -53,4 +68,22 @@ Notaciones para envolver bucles y condicionales:
 Notaciones para envolver código y variables:
 {{......}}
 
+####################  ELEMENTOS ESTATICOS ################################
 
+Para usar el archivo CSS y JavaScript estático en la plantilla index.html, necesitamos usar 
+el nombre del punto final 'estático' especial:
+
+{{url_for('static', filename = 'style.css')}}
+
+Ej.
+
+<html>
+    <head>
+        <title>Static File</title>
+        <link href="{{url_for('static', filename = 'style.css')}}" rel="stylesheet">
+        <script src="{{url_for('static', filename = 'script.js')}}"></script>
+    </head>
+    <body>
+        <h3>Hello World!</h3>
+    </body>
+</html>

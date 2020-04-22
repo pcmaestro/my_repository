@@ -1,0 +1,6 @@
+espacio en blanco = &nbsp;
+
+salto de línea =  </br> //  <p>
+
+tabulaciones = No existen, se pueden poner 4 signos &nbsp;
+
