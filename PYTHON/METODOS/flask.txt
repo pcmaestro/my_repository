@@ -87,3 +87,83 @@ Ej.
         <h3>Hello World!</h3>
     </body>
 </html>
+
+################  VALIDACION DE REGISTROS EN BD POR EMAIL  ###############
+
+Se trata de enviar al usuario un mail de confirmación de registro en una web para confirmar
+que su dirección de correo es correcta
+
+En el correo recibe un link que debe clickar, el cual le redirige a una ruta de validación que contiene 
+el id de registro y un código alfanumérico de gran longitud (por ej 200 caracteres) que se ha generado 
+previanente en Python junto con su registro, al clickar el enlace el módulo Python comprueba que todo 
+coincide y valida entonces el registro en la BD
+
+Ej.  formato del enlace :
+
+http://www.elanuncio.com/validar-anuncio?id=16&c=XJjMXy4qnguL9ycn3zKzA780qKaOtM9QXJ4Y0I2s7fXBvaqzn9HjuDBdRBZi
+
+En esta URL podemos ver id= id generado en la BD // c= código de validación generado
+
+LINEAS DE CODIGO NECESARIAS PARA ENVIAR CORREOS DESDE EL SERVIDOR DE GOOGLE (requiere activar validación en dos pasos)
+
+from flask_mail import Mail, Message
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'mi_correo@gmail.com'
+app.config['MAIL_PASSWORD'] = 'gafglhkhkjfjrjfhr' --> Esta clave nos la da Google al activar las contraseñas para aplicaciones
+mail = Mail(app)
+
+LINEAS NECESARIAS PARA GENERAR EL CODIGO DE VALIDACION:
+import string
+import random
+
+letras = string.ascii_letters + "0123456789"
+codigo = "".join(random.choices(letras, k = longitud_del_codigo))
+
+Este código lo usaremos en la función de registro en la BD
+
+LINEAS NECESARIAS PARA ENVIAR EL CORREO ELECTRONICO
+
+#Asunto y destinatarios
+msg = Message("asunto_del_correo", sender = "mi_correo@gmail.com" , recipients = [lista_emails])
+
+#Correo con texto plano:
+msg.body = "texto_del_mensaje"
+
+#Correo con HTML:
+msg.html = "<h1>text_del_correo</h1>
+
+#Enviamos el correo
+mail.send(msg)
+
+
+RUTA PARA VALIDAR LA PETICION DE REGISTRO
+
+from flask.globals import request
+
+Podemos leer de la URL ejemplo los datos que se muestran
+
+id = request.args.get("id")
+codigo = request.args.get("c")	
+
+Ej.  Función de validación y creción de ruta :
+
+def validar(id, codigo):
+	código para validar que "id" y "c" son correctos
+	
+	return resultado
+
+
+@app.route("/validar-registro")
+def validar_registro():
+	id = request.args.get("id")
+	codigo = request.args.get("c")	
+	resultado = operaciones_bd.validar(id,codigo)
+	if resultado == True:
+		return render_template("codigo-no-valido.html")
+	if resultado == False:
+		return render_template("codigo-validado.html")
+
+
