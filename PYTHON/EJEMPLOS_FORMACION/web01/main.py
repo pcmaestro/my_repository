@@ -24,6 +24,8 @@ def guardar_anuncio():
         + telefono + " " + texto
     return mensaje
 
+
+
 Flask.debug = 1 #esto es para que cuango guarde desde eclipse no tenga
 #que parar y arrancar la aplicacion, solo tendre que refrescar desde el 
 #navegador web para ver los cambios

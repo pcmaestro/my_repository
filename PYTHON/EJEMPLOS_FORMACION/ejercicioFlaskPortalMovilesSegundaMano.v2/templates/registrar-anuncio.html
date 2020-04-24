@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Registro de anuncios</title>
+
+<link rel = "stylesheet" href ="{{ url_for('static',filename= 'estilos.css') }}"/>
+
+</head>
+
+<body>
+
+    <div id = "header">  <h1>FORMULARIO DE REGISTRO DE ANUNCIOS </h1> </div>
+    
+    <div id = "formulario">
+           
+    
+        <form action ="guardar-anuncio">
+            
+            <table>
+                <tr>
+		            <td><label>Marca del terminal</label></td><td><input type = "text" name = "marca" /></td>
+		            <td><label>Modelo del terminal</label></td><td><input type = "text" name = "modelo" /></td>        
+		            <td><label>Color del terminal</label></td><td><input type = "text" name = "color" /></td>
+		        </tr>
+		        <tr>
+		            <td><label>Pantalla del terminal</label></td><td><input type = "text" name = "pantalla" /></td>
+		            <td><label>Memoria del terminal</label></td><td><input type = "text" name = "memoria" /></td>		            
+		            <td><label>Año del terminal</label></td><td><input type = "text" name = "anyo"/></td>
+		        </tr>
+		        <tr>
+		            <td><label>Precio del terminal</label></td><td><input type = "text" name = "precio" /></td>		        
+		            <td><label>Nombre del vendedor</label></td><td><input type = "text" name = "nombre" /></td>
+		            <td><label>Teléfono del vendedor</label></td><td><input type = "text" name = "telefono" /></td>
+		        </tr>
+		        <tr>
+		            <td><label>Email del vendedor</label></td><td><input type = "text" name = "email" /></td>
+		        </tr>		       
+
+            </table>
+            
+            </br>			
+			
+           <div id = "boton"><input type = "submit" value = "REGISTRAR" id = "btn_registrar"/></div>
+            
+        </form>            
+
+    
+    </div>
+
+
+</body>
+</html>

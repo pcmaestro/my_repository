@@ -1,0 +1,7 @@
+QMainWindow{background-color: grey;}
+
+QPushButton{font-size: 14px;
+            background: linear-gradient(to right, grey darkgrey, silver);
+        }         
+
+QTextEdit{background-color: white;}

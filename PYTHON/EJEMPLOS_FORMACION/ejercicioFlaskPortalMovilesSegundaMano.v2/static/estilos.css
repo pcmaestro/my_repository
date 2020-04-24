@@ -1,0 +1,95 @@
+@charset "UTF-8";
+body {
+    background-color: burlywood;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1,h2 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: red
+}
+
+caption {
+    text-align: center;    
+}
+
+#header {
+    background-color: #F98B23;
+    color: red;
+    text-shadow: black 1px 1px 3px;
+    padding: 1.2em;
+}
+
+#registro {
+    background-color: #FC993D;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    text-shadow: black 2px 2px 3px;
+    font-size: larger;
+    padding: 0.5em;
+}
+
+#registro:hover {
+    background-color: #FC993D;
+    text-align: center;    
+    text-decoration: none;
+    text-shadow: black 2px 2px 3px;
+    font-size: 2em;
+    padding: 1em;
+    box-shadow: black 2px 2px 10px;
+}
+
+#anuncios {
+    background-color: #FAAB61;
+}
+
+#formulario {
+    background-color: #FC993D;    
+}
+
+
+#btn_registrar {
+    background: linear-gradient(grey, darkgrey, white);
+    padding: 1em;
+    margin: auto;
+    font-weight: bold;
+}
+
+#btn_registrar:hover {cursor: pointer;
+}
+
+#boton{padding: 0.3em;
+    text-align: center;
+}
+
+#registro-ok {
+    background-color: #F98B23;
+    padding : 5em;    
+    margin: auto;
+    text-align: center;
+    font-size: 2em;
+}
+
+table {
+    margin: auto;
+    padding: 1em;
+    
+}
+
+tr {
+    padding: 1em;
+    box-shadow: black 2px 2px 5px;
+}
+
+td {
+    padding: 1em;
+}
+
+#volver-inicio:hover{font-size: 1.5em;
+    text-shadow: black 2px 2px 3px;
+}

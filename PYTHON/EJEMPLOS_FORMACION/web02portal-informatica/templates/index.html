@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div> Bienvenido al portal de anuncios de Pedro Castellanos</div>
+
+<div> <a href = "registrar-anuncio" > Registrar anuncio </a></div>
+
+<div> Listado de anuncios </div>
+
+{% for a in var_anuncios:  %}
+    
+    <div> 
+       <b>{{a[1]}}</b> <br/>
+        precio : {{a[2]}} <br/>
+        email de contacto : <b> {{a[3]}}</b>
+    </div>
+
+{%endfor%}
+
+</body>
+</html>

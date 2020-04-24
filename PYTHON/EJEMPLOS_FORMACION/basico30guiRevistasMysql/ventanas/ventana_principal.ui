@@ -49,8 +49,8 @@
     </property>
     <addaction name="submenu_registrar_revista"/>
     <addaction name="submenu_listar_revistas"/>
-    <addaction name="submenu_list_widget_revistas"/>
-    <addaction name="submenu_table_widget_revistas"/>
+    <addaction name="actionListar_usando_listwidget"/>
+    <addaction name="actionlistar_usando_table_widget"/>
    </widget>
    <addaction name="menuRevistas"/>
   </widget>
@@ -65,14 +65,14 @@
     <string>Listar Revistas</string>
    </property>
   </action>
-  <action name="submenu_list_widget_revistas">
+  <action name="actionListar_usando_listwidget">
    <property name="text">
-    <string>Listar Revistas Usando List Widget</string>
+    <string>Listar usando listwidget</string>
    </property>
   </action>
-  <action name="submenu_table_widget_revistas">
+  <action name="actionlistar_usando_table_widget">
    <property name="text">
-    <string>Listar Revistas Usando Table Widget</string>
+    <string>listar usando table widget</string>
    </property>
   </action>
  </widget>
