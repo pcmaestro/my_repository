@@ -1,5 +1,11 @@
+pip install flask
+pip install flask-mail
+
 from flask import Flask, request
 from flask.templating import render_template
+from flask_mail import Mail, Message
+import string
+import random
 
 Creamos el objeto de la apliación Flask:
 
@@ -132,8 +138,8 @@ msg = Message("asunto_del_correo", sender = "mi_correo@gmail.com" , recipients =
 #Correo con texto plano:
 msg.body = "texto_del_mensaje"
 
-#Correo con HTML:
-msg.html = "<h1>text_del_correo</h1>
+#Correo con HTML (este método es el usado para enviar el link de validación) :
+msg.html = "Para continuar con el proceso, por favor haga click <a href = "http://www.elanuncio.com/validacion-registro?id=2&c=kfaskfasdfenbcgggkernaksici">aqui</a>
 
 #Enviamos el correo
 mail.send(msg)
@@ -143,7 +149,7 @@ RUTA PARA VALIDAR LA PETICION DE REGISTRO
 
 from flask.globals import request
 
-Podemos leer de la URL ejemplo los datos que se muestran
+Podemos leer de la URL ejemplo anterior los datos que se muestran
 
 id = request.args.get("id")
 codigo = request.args.get("c")	
