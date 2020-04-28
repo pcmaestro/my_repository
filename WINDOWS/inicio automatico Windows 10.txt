@@ -1,0 +1,4 @@
+Inicio automatico Windows 10
+
+Ejecutar el comando netplwiz ,  en la pantalla emergente, deshabilitar "los usuarios deben escribir
+su nombre y contraseña para usar el equipo"

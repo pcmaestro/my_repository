@@ -9,7 +9,7 @@ El objeto document permite acceder directamente a los formularios por su name de
   ...
 </form>
 
-var formularioNombreApellido = document.formario1
+var formularioNombreApellido = document.formulario1
 
 Y también se puede acceder por el id :
 
@@ -58,7 +58,7 @@ alert(elemento.checked);
 Formulario select :
 
 Los navegadores crean automáticamente el Array options para las listas desplegables. Cuando el usuario selecciona una
-opción, le navegador la almacena en la propiedad selectedIndex
+opción, el navegador la almacena en la propiedad selectedIndex
 
 En estos casos los value de las etiquetas <option> se enumeran como un Array , el id lo indicamos y tomamos sobre la
 etiqueta <select> , pongamos que en este caso id="opciones"
@@ -89,7 +89,7 @@ var valorSeleccionado = lista.options[lista.selectedIndex].value;
 // Obtener el texto que muestra la opción seleccionada
 var valorSeleccionado = lista.options[lista.selectedIndex].text;
 
-Lo más importante es tener en cuenta que el primer valor de selectedIndex sibre será el indice cero.
+Lo más importante es tener en cuenta que el primer valor de selectedIndex siempre será el indice cero.
 
 
 ONSUBMIT

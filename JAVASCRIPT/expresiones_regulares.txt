@@ -1,6 +1,11 @@
 EXPRESIONES REGULARES
 
-inicio - fin  :  /^   $/
+Se pueden declarar de dos maneras :
+
+directamente como variable --> var regexp = /^.....$/
+
+como objeto de la clase RegExp --> var regexp = new RegExp("^......$")
+
 
 Especificación de caracteres: \d (digito) , \s (espacios en blanco, tabulaciones o saltos de linea) , \w ( alfanuméricos y "_" )
 
@@ -28,4 +33,8 @@ if(!expresion_regular.test(valor){
 	return false;
 }
 
-	
+VALIDACION DE TF ESPAÑOL
+regex_tf = new RegExp("^[6-9]{1}[0-9]{8}$");
+
+VALIDACION DE EMAIL
+regex_mail = new RegExp("^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
