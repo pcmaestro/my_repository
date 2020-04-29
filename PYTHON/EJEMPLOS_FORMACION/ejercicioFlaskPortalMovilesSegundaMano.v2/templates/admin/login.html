@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administracion</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'estilos.css') }}" />
+
+    <script src="{{url_for('static', filename = 'javascript.js')}}"></script>
+
+</head>
+<body>
+    <div id = "formulario_acceso">
+
+        <h1>ACCESO A LA ADMINISTRACION DEL PORTAL</h1>
+        <br/>
+        <label>USUARIO</label>
+        <br/>
+        <input type = "text" name = "usuario" id = "usuario" />
+        <br/>
+        <label>CONTRASEÑA</label>
+        <input type = "password" name = "password" id = "password" />
+        <br/>
+        <span id = "error_login">{{error_login}}</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div style="background-color: cyan"> GESTION DE ANUNCIOS ADMIN </div>
+
+
+<div> <a href="cerrar-sesion">CERRAR SESIÓN</a> </div>
+
+{% for a in anuncios  %}
+
+<div style="margin: 10px">
+    id: {{ a[0] }} <br/>
+    titulo: {{ a[1] }} <br/>
+    <a href="borrar-anuncio?id={{ a[0] }}" onclick="return confirm('¿Estas seguro?');" >BORRAR</a>
+    <a href="editar-anuncio?id={{ a[0] }}">EDITAR</a>
+</div>
+
+{% endfor %}
+
+</body>
+</html>

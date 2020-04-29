@@ -1,0 +1,35 @@
+DECLARACION DE CLASES Y CONSTRUCTOR DE OBJETOS
+
+this aqui funciona igual que Self en Python
+
+class Rectangle {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+  area(){
+    return this.height * this.width;
+  }
+}
+
+INSTANCIAR UN OBJETO
+
+var rectangulo = new Rectangle(5,10)
+
+HERENCIA
+
+class Animal {
+  constructor(nombre) {
+    this.nombre = nombre;
+  }
+
+  hablar() {
+    console.log(this.nombre + ' hace un ruido.');
+  }
+}
+
+class Perro extends Animal {
+  hablar() {
+    console.log(this.nombre + ' ladra.');
+  }
+}

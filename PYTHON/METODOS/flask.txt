@@ -1,7 +1,8 @@
 pip install flask
 pip install flask-mail
 
-from flask import Flask, request
+from flask import Flask
+from flask.globals import request, session
 from flask.templating import render_template
 from flask_mail import Mail, Message
 import string
@@ -172,4 +173,119 @@ def validar_registro():
 	if resultado == False:
 		return render_template("codigo-validado.html")
 
+#####################  METODOS PARA FORMULARIOS  ###################################################
+
+GET --> Usado para traer información
+POST --< Usado para subir, modificar o borrar información
+
+GET es el método por defecto en HTML,  para usar POST hay que indicarlo en la etiqueta <form>
+En Flask GET también es el método por defecto, y también hay que indicar expresemente POST en
+la ruta de los formularios:
+
+Ej.  @app.route("/formularios-registro", methods=["POST","GET"])
+
+Hay dos métodos de lectura con GET y POST
+
+Para leer formularios con GET:
+
+request.args.get("texto"_formulario")  // request.args["texto_formulario"]
+
+Para leer formularios con POST:
+
+request.form.get("texto_formulario") // request.form["texto_formulario"]
+
+En el caso de POST, si queremos subir archivos , como por ej imágenes, en el HTML hay que indicar el
+atributo enctype="multipart/form-data":
+
+<form action="/ruta_creada_en_python" method="POST" enctype="multipart/form-data">   
+
+
+####################  ADMINISTRACION Y SESION DE USUARIO  ##########################################
+
+from flask.globals import session
+
+Creamos la clave de sesion de usuario para administracion:
+
+app.secret_key = "ejemplo_clave_secreta"
+
+Creamos la ruta de administracion (añadimos una variable para guardar posibles errores de login):
+
+@app.route("/admin/")
+def inicio_administracion():
+    return render_template("admin/login.html", error_login = "")
+
+Se puede crear una ruta "generica" que podemos usar de comodín para indicar las rutas relacionadas
+con el proceso de administración web en una única función:
+
+Ej. Función completa de administracion
+
+@app.route("/admin/<string:ruta>", methods=["POST","GET"])
+def administracion(ruta):
+    if ruta == "login-admin":
+        pass_introducido = request.form.get("clave")
+        if pass_introducido == "1234" :
+             session["identificado"] = "ok"
+             listado_anuncios = operaciones_bd_anuncios.obtener_anuncios()
+             return render_template("admin/listado-anuncios-admin.html", anuncios = listado_anuncios)
+        else:
+             return render_template("admin/login.html", error_login = "pass incorrecto")
+
+    if not "identificado" in session :
+        return "te has colado, indentificate de nuevo"
+
+    if ruta == "borrar-anuncio":
+        id = request.args.get("id")
+        operaciones_bd_anuncios.borrar_anuncio(id)
+        try:
+            #borramos la foto y si no existe, se ejecuta el except que no hace nada
+            os.remove("mysite/static/fotos/" + str(id) + ".jpg")
+        except:
+            pass
+        listado_anuncios = operaciones_bd_anuncios.obtener_anuncios()
+        return render_template("admin/listado-anuncios-admin.html", anuncios = listado_anuncios)
+    if ruta == "editar-anuncio":
+        id = request.args.get("id")
+        anuncio_a_editar = operaciones_bd_anuncios.obtener_anuncio_por_id(id)
+        return render_template("admin/editar-anuncio.html",anuncio = anuncio_a_editar)
+    if ruta == "guardar-cambios-anuncio":
+        #asi obtengo los datos del formulario, incluido el hidden
+        id = request.form.get("id")
+        nombre = request.form.get("nombre")
+        precio = request.form.get("precio")
+        email = request.form.get("email")
+        email_valido = request.form.get("email-valido")
+
+        #asi preparo el objeto a mandar a guardar_cambios_anuncio para guardar cambios en la bd
+        anuncio_guardar_cambios =  modelo.Anuncio()#forma mas directa: modelo.Anuncio(id=id, nombre = nombre, precio = precio, email = email, email_valido = email_valido)
+        anuncio_guardar_cambios.id = id
+        anuncio_guardar_cambios.nombre = nombre
+        anuncio_guardar_cambios.precio = precio
+        anuncio_guardar_cambios.email = email
+        anuncio_guardar_cambios.email_valido = email_valido
+
+        #finalmente actualizamos el anuncio en base de datos y volvemos a mostrar listado
+        operaciones_bd_anuncios.guardar_cambios_anuncio(anuncio_guardar_cambios)
+
+        #si el usuario subio una nuevo foto, la pisamos con la anterior:
+        if "foto" in request.files:
+            foto = request.files["foto"]
+            foto.save("mysite/static/fotos/" + str(id) + ".jpg")
+
+        listado_anuncios = operaciones_bd_anuncios.obtener_anuncios()
+        return render_template("admin/listado-anuncios-admin.html", anuncios = listado_anuncios)
+
+    if ruta == "cerrar-sesion":
+        session.clear()
+        return render_template("admin/login.html",error_login = "")
+
+###################  IMAGENES  ##################################################
+
+Esta línea en HTML muestra una imagen, y si esta no existe, muestra otra imagen por defecto gracias al evento onerror
+de Javascript:
+
+<img src="static/fotos/{{ a[0] }}.jpg" style="height: 200px;" onerror="this.src='static/fotos/sin_imagen.jpg'" />
+
+También se puede mostrar un texto si no existe la imagen:
+
+<img src="static/fotos/{{ a[0] }}.jpg" style="height: 200px;"  alt = "La imagen no existe" />
 

@@ -7,21 +7,26 @@
 <body>
 
 
-<div> Bienvenido al portal de anuncios de Pedro Castellanos</div>
+<div>Bienvenido al portal de anuncios de ARES</div>
 
-<div> <a href = "registrar-anuncio" > Registrar anuncio </a></div>
+<div><a href="registrar-anuncio">registrar mi anuncio</a></div>
 
-<div> Listado de anuncios </div>
+<div>listado de anuncios:</div>
 
-{% for a in var_anuncios:  %}
-    
-    <div> 
-       <b>{{a[1]}}</b> <br/>
-        precio : {{a[2]}} <br/>
-        email de contacto : <b> {{a[3]}}</b>
+{% for a in var_anuncios  %}
+
+    <div style="margin: 10px; background-color: rgb(200,250,200);">
+        <b> {{ a[1] }} </b> <br/>
+        precio: {{ a[2] }} <br/>
+        email de contacto: <b>  {{ a[3] }}  </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email valido: <b>{{a[4]}}</b> <br/>
+        foto:
+        <img src="static/fotos/{{ a[0] }}.jpg" style="height: 200px" alt="SIN FOTO" />
+
     </div>
 
-{%endfor%}
+{% endfor %}
+
+
 
 </body>
 </html>

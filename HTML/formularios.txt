@@ -1,3 +1,15 @@
+
+Los métodos de los formularios son GET y POST:
+
+GET --> Para obtener información
+
+POST --> Para enviar información
+
+En el caso de POST, si queremos subir archivos (por ej imágenes) , hay que añadir
+el atributo enctype="multipart/form-data">
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,10 +18,9 @@
     <title>Formularios</title>
 </head>
 <body bgcolor="#DFFCB6">
-    <!-- información corta y no confidencial, método GET,  información larga o confidencial
-        método POST-->
 
-    <form action="##programa_python###" method="GET">     
+
+    <form action="/ruta_creada_en_python" method="POST" enctype="multipart/form-data">     
         
         <fieldset>
             <legend>Datos personales</legend>
@@ -55,8 +66,8 @@
         <br/>
         <br/>
 
-        <label>Fichero</label>
-        <input type="file" name="upload"/>    
+        <label>Fichero</label><input type="file" name="upload"/>    --> Mediante CSS se puede ocultar el texto "Ningún archivo seleccionado"
+									que presenta este input por defecto, usaremos la propiedad color: transparent;
         
         <br/>
         <br/>
