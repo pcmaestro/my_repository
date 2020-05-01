@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+Introduce los datos de tu anuncio: <br/>
+
+<form action="guardar-nuevo-anuncio" method ="post" enctype="multipart/form-data">
+ producto: <input type="text" name="nombre"/> <br/>
+ precio: <input type="text" name="precio" /> <br/>
+ email de contacto: <input type="text" name="email" /> <br/>
+
+ categoria: <select name="id_categoria">
+                {% for c in listado_categorias %}
+                    <option value="{{ c[0] }}" >{{ c[1] }}</option>
+                {% endfor %}
+            </select>
+ <br/>
+
+ foto del anuncio: <input type="file" name="foto" /> <br/>
+ <input type="submit" value="REGISTRAR MI ANUNCIO"/>
+</form>
+
+
+</body>
+</html>

@@ -1,4 +1,0 @@
-class Disco():
-    
-    def __init__(self):
-    

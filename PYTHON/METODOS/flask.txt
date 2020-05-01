@@ -206,7 +206,7 @@ from flask.globals import session
 
 Creamos la clave de sesion de usuario para administracion:
 
-app.secret_key = "ejemplo_clave_secreta"
+app.secret_key = "clave_secreta"
 
 Creamos la ruta de administracion (añadimos una variable para guardar posibles errores de login):
 
@@ -288,4 +288,90 @@ de Javascript:
 También se puede mostrar un texto si no existe la imagen:
 
 <img src="static/fotos/{{ a[0] }}.jpg" style="height: 200px;"  alt = "La imagen no existe" />
+
+
+################## CHAT ( AJAX )  #######################################################
+
+Para crear los ficheros JSON que usa AJAX hay que hacer esta importación:
+
+from flask import jsonify
+
+En la carpeta STATIC debemos incluir el módulo de JQUERY
+
+
+Ej.  de chat ( requiere crear un tabla en BD para ir guardando los mensajes)
+
+En la parte de PYTHON:
+
+from flask import Flask
+from flask.templating import render_template
+from flask.globals import request
+from operaciones_bd import operaciones_bd_mensajes
+from flask import jsonify
+
+app = Flask(__name__)
+
+@app.route("/")
+def inicio():
+    return render_template("index.html")
+
+
+#comienzo del servicio rest
+@app.route("/registrar-mensaje",methods=["GET","POST"])
+def registrar_mensaje():
+    nombre = request.args["n"]
+    mensaje = request.args["m"]
+    operaciones_bd_mensajes.registrar_mensaje(nombre, mensaje)
+    return "ok"
+
+@app.route("/obtener-mensajes")
+def obtener_mensajes():
+    mensajes = operaciones_bd_mensajes.obtener_mensajes()
+    return jsonify(mensajes)
+
+
+Flask.debug = 1
+app.run()
+
+En la parte HTML llamamos a JQUERY e incluimos nuestro script de Javascript;
+
+<script type="text/javascript" src="static/jquery.js" ></script>
+<script type="text/javascript">
+
+$("#boton_enviar_mensaje").click(function(){
+	nombre = $("#nombre").val()
+	mensaje =$("#mensaje").val()
+	//voy a mandarlo a registrar-mensaje
+	$.ajax({ 
+		url : "registrar-mensaje" , 
+		data : { n : nombre , m : mensaje },
+        success: function(res){
+        	if ( res != "ok" ){
+        		alert("error en envio de mensaje: " + res)
+        	}
+        }//success
+	});//end ajax
+});//end click
+
+
+function refrescar(){
+	ahora = new Date();
+	$("#info").html(ahora) --> Opcional, para ver el avance de los refrescos
+
+	//para pedir un json (que viene en formato de listas dentro de un array) desde jquery, esta nos da directamente la siguiente funcion
+	$.getJSON("obtener-mensajes", function(resultado){
+		texto = ""
+		for( indice in resultado ){
+			texto += resultado[indice][1] + " : " + resultado[indice][2] + "\n";
+		}
+	    $("#listado_mensajes").html(texto);	
+	});
+	
+}//end refrescar
+
+setInterval(refrescar,1000);  --> En milisegundos, refresca los mensajes cada 1 seg. Lo que se hace realmente es traer los registros
+				  posteriores en la BD al id del último mensaje publicado
+
+</script>
+
 

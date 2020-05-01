@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+Bienvenido a la administracion del portal <br/>
+
+Introduce la contraseña para entrar <br/>
+
+<div style="color: red">{{ error_login }}</div>
+
+<form action="login-admin" method="post">
+
+contraseña: <input type="password" name="clave" /> <br/>
+
+<input type="submit" value="ENTRAR"/>
+
+</form>
+
+</body>
+</html>

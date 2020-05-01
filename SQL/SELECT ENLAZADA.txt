@@ -1,0 +1,5 @@
+SELECT ENLAZADA
+
+SELECT ta.id, ta.nombre, tc.nombre FROM tabla_anuncios AS ta, tabla_categorias AS tc
+WHERE ta.id_categoria = tc.id;
+

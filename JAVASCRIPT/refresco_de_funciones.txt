@@ -1,0 +1,5 @@
+Para ejecutar una función cada cierto tiempo:
+
+
+setInterval(nombre_funcion, tiempo_em_milisegundos)
+

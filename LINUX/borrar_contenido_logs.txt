@@ -1,0 +1,3 @@
+Para borrar el contenido de un log sin borrar el archivo :
+
+cat /dev/null > archivo.log

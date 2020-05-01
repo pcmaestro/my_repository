@@ -1,11 +1,11 @@
 -- VERSION_5
 -- START DISKCACHE_2
-D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\ventanasTkinter\com.python.pydev.analysis\v2_indexcache
-main|1585252615701352000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\ventanasTkinter\main.py
+C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\ventanasTkinter\com.python.pydev.analysis\v2_indexcache
+main|1587847236512756000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\ventanasTkinter\main.py
 -- END DISKCACHE
 -- START DICTIONARY
 2
-1=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\ventanasTkinter\main.py
+1=C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\ventanasTkinter\main.py
 2=main
 -- END DICTIONARY
 -- START TREE 1

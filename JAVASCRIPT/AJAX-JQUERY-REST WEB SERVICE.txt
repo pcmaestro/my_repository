@@ -1,0 +1,127 @@
+OBJETO xmlHttpRequest
+
+Se trata del componente fundamental de una aplicación AJAX. A través de sus propiedades y métodos es
+posible lanzar peticiones en modo asíncrono al servidor y acceder a la cadena de texto enviada en la
+respuesta.
+
+Primer hay que instanciar el objeto:
+
+var variable = new XMLHttpRequest();
+
+Los métodos habituales para interactuar con el servidor son GET y POST
+
+
+
+Invocación del recurso en el servidor (método open) :
+
+variable.open("GET", http//urlAccesoRecurso + posibleVariable, true, user, password) -->  ( Método, URL,  modo asíncrono - true o false -, usuario, contraseña)
+
+Podemos establecer cabeceras en las peticiones :
+
+setRequestHeader();
+
+
+
+Procesamiento de la respuesta del servidor ( propiedad onreadystatechange), aqui informamos de la función que procesará dicha respuesta.
+La función va sin parentesis (si se ponen, la función se ejecuta y guarda el resultado)
+
+variable.onreadystatechange = procesarRespuesta;
+
+
+Desde que se crea el objeto xmlHttpRequest, hasta que se recibe la respuesta por completo,  hay 4 cambios de estado que se recogen en la
+propiedad readyState , que tienen estos valores : 
+
+0 El objeto XMLHpRequest se ha creado pero aún no se ha configurado la petición.
+1 La petición se ha configurado pero aún no se ha enviado.
+2 La petición se acaba de enviar, aunque aún no se ha recibido respuesta.
+3 Se ha recibido la cabecera de la respuesta pero no el cuerpo
+4 Se ha recibido el cuerpo de la respuesta. Es el momento en que esta puede procesarse.
+
+Y también estos status :
+
+200: "OK"
+403: "Forbidden"
+404: "Page not found"
+
+El típico error 404 proviene del código de error que aparece en la línea de status del header HTML , 404, que signfica not found o no encontrado. 
+En general los códigos 200 indican respuestas correctas, los códigos 300 indican redirecciones, los códigos 400 problemas con la petición 
+y los códigos 500 problemas del servidor.
+
+Ejemplo de uso :
+
+
+//Creamos la función que modifica nuestra web
+function loadDoc() {
+  //Instanciamos el objeto XMLHttpRequest
+  var xhttp = new XMLHttpRequest();
+  //Ahora creamos dentro de nuestra función otra para supervisar los estado de la propiedad readyState
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("id").innerHTML =
+      this.responseText;
+    }
+  };
+  //Abrimos la conexión con el servidor con el método GET, si hace falta user + pass , lo indicamos
+  xhttp.open("GET", "ajax_info.txt", true);
+  //Enviamos la petición al servidor
+  xhttp.send();
+}
+
+OTRO EJEMPLO
+
+En este ejemplo traeremos la información de un fichero JSON ( notación javascript de objetos y Arrays)
+Usamos el método JSON.parse() para decirle al navegador que tiene que leer un JSON
+
+
+var ourRequest = new XMLHttpRequest();
+
+ourRequest.open("GET" , "https://learnwebcode.github.io/json-example/animals-1.json", true);
+
+ourRequest.onload = function show(){
+	var ourData = JSON.parse(ourRequest.responseText);
+	console.log(ourData[2]); //Aqui traemos el objeto en el index 2 del Array contenido en el JSON
+
+};
+ourRequest.send();
+
+
+####################### USANDO JQUERY  ############################################################
+
+Debemos importar el archivo de JQUERY e instalarlo en un directoria del proyecto, luego lo invocamos en el HTML
+y escribimos nuestro Javascript haciendo uso de sus funciones
+
+Para tomar un elemento en el DOM ,  el formato es $("#id"), $
+
+Para leer el contendio de una caja de texto o un textarea :  $("id").val()
+
+Para escribir html :  $("id").html(texto_a_insertar)
+
+Para escuchar eventos : $("id").click(funcion_a_ejecutar)
+
+Para mostrar y ocultar elementos : $("id").show()  // $("id").hide()
+
+Para aplicar CSS : $("id").css("atributo", "valor") --> Ej ("background-color", "blue")
+
+Para 
+
+Para enviar la información a través de AJAX :  
+
+<script type="text/javascript" src="static/jquery.js" ></script>
+
+<script>
+
+$.ajax{	
+    url: "ruta-web",
+    data: {clave1:valor1, clave2:valor2, clave3:valor3.......},
+    success : function(resultado){
+			   if(resultado != "ok"){
+					código a ejecutar......
+					}//end success
+
+}//end ajax
+
+Para recibir información a través de AJAX:
+
+$.getJSON("ruta-web", funcion_a_ejecutar)
+
+</script>

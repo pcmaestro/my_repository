@@ -1,21 +1,21 @@
 -- VERSION_5
 -- START DISKCACHE_2
-D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\basico23archivos\com.python.pydev.analysis\v2_indexcache
-archivosMovidos.main5withAs|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\archivosMovidos\main5withAs.py
-main3rutasConVariables|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main3rutasConVariables.py
-main4leerArchivosInternet|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main4leerArchivosInternet.py
-main|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main.py
-main2directorios|1585238635440232000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main2directorios.py
+C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\basico23archivos\com.python.pydev.analysis\v2_indexcache
+archivosMovidos.main5withAs|1587847235965844000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\archivosMovidos\main5withAs.py
+main3rutasConVariables|1587847235965844000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main3rutasConVariables.py
+main4leerArchivosInternet|1587847235965844000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main4leerArchivosInternet.py
+main|1587847235965844000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main.py
+main2directorios|1587847235965844000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main2directorios.py
 -- END DISKCACHE
 -- START DICTIONARY
 8
-5=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main3rutasConVariables.py
+7=C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main2directorios.py
+1=C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main4leerArchivosInternet.py
 6=main3rutasConVariables
 2=main4leerArchivosInternet
-1=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main4leerArchivosInternet.py
-3=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main.py
+3=C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main.py
 4=main
-7=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main2directorios.py
+5=C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico23archivos\main3rutasConVariables.py
 8=main2directorios
 -- END DICTIONARY
 -- START TREE 1

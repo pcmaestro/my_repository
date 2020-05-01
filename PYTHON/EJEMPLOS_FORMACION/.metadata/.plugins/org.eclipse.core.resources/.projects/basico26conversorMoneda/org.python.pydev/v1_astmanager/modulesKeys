@@ -1,4 +1,7 @@
 MODULES_MANAGER_V2
-main|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\main.py
-ventanas.__init__|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\ventanas\__init__.py
-ventanas.ventana_python|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\ventanas\ventana_python.py
+iconos.__init__|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\iconos\__init__.py
+main|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\main.py
+main_ejercicio|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\main_ejercicio.py
+ventanas.__init__|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\ventanas\__init__.py
+ventanas.ventana_ejercicio|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\ventanas\ventana_ejercicio.py
+ventanas.ventana_python|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\basico26conversorMoneda\ventanas\ventana_python.py

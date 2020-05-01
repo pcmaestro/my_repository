@@ -1,12 +1,12 @@
 -- VERSION_5
 -- START DISKCACHE_2
-D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\repaso02scopes\com.python.pydev.analysis\v2_indexcache
-main|1585238635502725000|D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\repaso02scopes\main.py
+C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\.metadata\.plugins\org.eclipse.core.resources\.projects\repaso02scopes\com.python.pydev.analysis\v2_indexcache
+main|1587847236497130000|C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\repaso02scopes\main.py
 -- END DISKCACHE
 -- START DICTIONARY
 2
+1=C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\repaso02scopes\main.py
 2=main
-1=D:\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\repaso02scopes\main.py
 -- END DICTIONARY
 -- START TREE 1
 2
