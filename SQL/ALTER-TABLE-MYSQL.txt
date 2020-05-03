@@ -1,3 +1,5 @@
 
 ALTER TABLE tabla_terminales ADD id_categorias int(3) NOT NULL DEFAULT 1;
 ALTER TABLE tabla_terminales ADD FOREIGN KEY (id_categorias) REFERENCES tabla_categorias(id_categorias);
+
+ALTER TABLE tabla_terminales MODIFY id_categorias int(3) NULL;
