@@ -1,0 +1,5 @@
+Comprimir
+tar -cvzf output.tar.gz /ruta/entrada
+
+Descomprimir
+tar -zxvf output.tar.gz
