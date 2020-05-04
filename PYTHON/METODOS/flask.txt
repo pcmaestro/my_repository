@@ -374,4 +374,77 @@ setInterval(refrescar,1000);  --> En milisegundos, refresca los mensajes cada 1 
 
 </script>
 
+######################################  HERENCIA DE PLANTILLAS  #####################################################################3
 
+
+Podemos crear una plantilla "base" y llamarla en otras plantillas para no repetir el código HTML, lo que necesitemos
+personalizar en las nuevas plantillas irá envuelto en un bloque nombrado con una variable
+
+
+Ej. Esta sería la plantilla base.html en mysite/templates/base ,  se hereda todo pero se deja un "hueco" sin heredar en el bloque
+llamado content_1
+
+<html>
+    <head>
+        <title>Plantilla Base</title>
+    </head>
+    <body> 
+	<h1> HOLA MUNDO </h1> 
+
+	{%block content_1%}
+	{%endblock%}
+
+    </body>
+</html>
+
+Y en la nueva plantilla llamamos a la platilla base mediante su ruta respecto de templates y añadimos el nuevo HTML en el
+hueco que habia quedado en el bloque content_1
+
+{%extends "base/base.htnl"%}
+
+{%block content_1%}
+    
+    Aqui va el HTML de la nueva plantilla.......
+
+{%endblock%}
+
+
+##########################################  MACROS  #########################################################################
+
+Si en un proyecto tenemos la necesidad de repetir determinado código X veces,  podemos hacer uso de una macro
+
+Ej.  Creamos el archivo macro.html e incluimos la función mostrar()
+
+{% macro mostrar(valor) %}
+
+	<h1> Se repite este texto con el valor:  {{valor}} </h1>
+
+{% endmacro %]
+
+Y luego donde queramos llamar a la macro, hacemos esto
+
+{% from macro.html import mostrar %}
+
+    {{ mostrar(uno) }}
+
+Esto renderiza "Se repite este texto con el valor : uno " ,  podemos usar las macros incluso dentro de un bloque
+
+
+##############################  COOKIES  #############################################33
+
+from flask import make_response
+
+Para enviar la cookie al navegador
+
+@app.route("/cookie")
+def cookie():
+    response = make_response( accion que lleva a cabo la cookie-por ej render_template("anuncio.html")- )
+    response.set_cookie("nombre_de_la_cookie", "contenido_de_la_cookie")
+    return response
+
+Y para leer la cookie cuando carga nuestra web:
+
+@app.route("/")
+def inicio():
+    nombre_de_la_cookie = request.cookies.get("nombre_de_la_cookie", "valor_a_devolver_si_la_cookie_no_existe")
+    acción a realizar con los valores que traiga la cookie........

@@ -2,8 +2,5 @@ Comprimir
 tar -cvzf output.tar.gz /ruta/entrada
 
 Descomprimir
-<<<<<<< HEAD
 tar -zxvf output.tar.gz
-=======
-tar -zxvf output.tar.gz
->>>>>>> 9eb8ffb8af90bf3b193208872a09691c517a7176
+

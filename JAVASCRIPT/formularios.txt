@@ -23,7 +23,7 @@ var formularioNombreApellido = document.getElementById("id1")
 
 var cajaText = document.getElementById("id2")
 
-OBJTENER DATOS DE LOS FORMUARIOS
+OBJTENER DATOS DE LOS FORMULARIOS
 
 Formularios text / textarea:
 
@@ -134,7 +134,24 @@ if(indice == null || indice == 0){
 PARA MAS CASOS DE VALIDACIONES,  https://uniwebsidad.com/libros/javascript/capitulo-7/validacion
 
 
+EVITAR EL SUBMIT SI FALLA ALGUNA VALIDACION:
 
+Podemos encerrar las validaciones en un condicional IF , en caso afirmativo permitimos le submit,
+en caso negativo,  evitamos que viaje la información con preventDefault(), que evita el comportamiento
+por defecto de los eventos en el navegador
+
+Ej:
+En el HTML
+onsubmit = "validar()"
+
+En el JavaScript
+validacion = regexp.text("texto_formulario");
+
+function validar(event){
+    if(!validacion){
+	event.preventDefault()
+	}
+}
 
 
 

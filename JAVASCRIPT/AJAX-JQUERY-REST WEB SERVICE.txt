@@ -90,19 +90,42 @@ ourRequest.send();
 Debemos importar el archivo de JQUERY e instalarlo en un directoria del proyecto, luego lo invocamos en el HTML
 y escribimos nuestro Javascript haciendo uso de sus funciones
 
-Para tomar un elemento en el DOM ,  el formato es $("#id"), $
+Todo el código JQuery de nuestro proyecto deberá estar envuelto por esta funcion:
 
-Para leer el contendio de una caja de texto o un textarea :  $("id").val()
+$(document).ready(function(){
 
-Para escribir html :  $("id").html(texto_a_insertar)
+    código JQuery.............
 
-Para escuchar eventos : $("id").click(funcion_a_ejecutar)
+});
 
-Para mostrar y ocultar elementos : $("id").show()  // $("id").hide()
+Para tomar un elemento en el DOM ,  el formato es $("#id"), $(".class"), $("h1")...etc
 
-Para aplicar CSS : $("id").css("atributo", "valor") --> Ej ("background-color", "blue")
+Para leer el contendio de una caja de texto o un textarea :  $("#id").val()
 
-Para 
+Para escribir html :  $("#id").html(texto_a_insertar)
+
+Para escuchar eventos : $("#id").click(funcion_a_ejecutar)
+
+Para mostrar y ocultar elementos : $("#id").show()  // $("#id").hide() // $("#id").toggle() --> En los parentesis podemos añadir los milisegundos
+												que dura el efecto de mostrar u ocultar para que 
+												se ejecuten lentamente
+
+También se pueden mostrar y ocultar elementos con .fadeIn(), .fadeOut(), .fadeToggle() igualmente pasandoles como parámetros los milisegundos de
+duración del efectoG
+
+Para aplicar CSS : $("#id").css("atributo", "valor") --> Ej ("background-color", "blue")
+
+Para aplicar varios atributos CSS: $("#id").css( {color: "blue" , background: "green", font-weight: "bold"} )
+
+Para aplicar selectores : $("div h1") --> Todos los h1 dentro de un div
+
+Para añadir elementos al DOM : $("#id").append("<h1>Nuevo texto a mostrar</h1>) --> Dentro del elemento con cierta id, añade un h1
+
+Para eliminar elementos del DOM : $("#id").remove() --> Elimina el elemento con cierto id
+
+Para añadir/quitar una clase : $("div").addClass("class") / $("div").removeClass("class") --> Añade o quita una clase CSS a un elemento
+
+Para establecer atributos de un elemento : $("img").attr("src", "home/pictures/25.jpg") // $("img").attr("height", "150")
 
 Para enviar la información a través de AJAX :  
 
@@ -111,7 +134,7 @@ Para enviar la información a través de AJAX :
 <script>
 
 $.ajax{	
-    url: "ruta-web",
+    url: "ruta-web-python",
     data: {clave1:valor1, clave2:valor2, clave3:valor3.......},
     success : function(resultado){
 			   if(resultado != "ok"){
@@ -122,6 +145,6 @@ $.ajax{
 
 Para recibir información a través de AJAX:
 
-$.getJSON("ruta-web", funcion_a_ejecutar)
+$.getJSON("ruta-web-python", funcion_a_ejecutar)
 
 </script>

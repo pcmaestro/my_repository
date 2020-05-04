@@ -1,0 +1,13 @@
+La raiz es representada por la palabra reservada document
+
+Podemos tomar elementos pod diferentes atributos:
+
+document.getElementById("id")
+document.getElementByClass("class")
+document.getElementByName("name")
+
+De esta forma podemos tomar cualquier elemento del DOM:
+
+document.querySelector("h1") --> Toma todos los <h1>
+document.querySelector("#id") --> Toma elemento con cierta id
+document.querySelector(".class") --> Toma elementos con cierta clase
