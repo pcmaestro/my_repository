@@ -430,7 +430,7 @@ Y luego donde queramos llamar a la macro, hacemos esto
 Esto renderiza "Se repite este texto con el valor : uno " ,  podemos usar las macros incluso dentro de un bloque
 
 
-##############################  COOKIES  #############################################33
+##############################  COOKIES  #############################################
 
 from flask import make_response
 
@@ -448,3 +448,9 @@ Y para leer la cookie cuando carga nuestra web:
 def inicio():
     nombre_de_la_cookie = request.cookies.get("nombre_de_la_cookie", "valor_a_devolver_si_la_cookie_no_existe")
     acción a realizar con los valores que traiga la cookie........
+
+############################  REDIRECCION DE RUTAS  ######################################
+
+Cuando queremos dar el OK a un registro en una web , si no cambiamos la ruta y el usuario refresca la web del OK,
+se puede volver a grabar el registro. Para evitar esto ,  lo que podemos hacer es un return redirect("ruta-python")
+y en esa ruta hacer el return render_template del ok.html

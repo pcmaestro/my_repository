@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+Bienvenido a mi portal de anuncios con django <br/>
+<a href="registrar-anuncio">registrar mi anuncio</a><br/>
+
+listado de anuncios:<br/>
+{% for a in anuncios %}
+    <div style="margin: 10px">
+      <b>{{a.titulo}}</b><br/>
+      precio: {{a.precio}} euros <br/>
+      email de contacto: <b>{{a.email}}</b>
+    </div>
+{% endfor %}
+
+</body>
+</html>

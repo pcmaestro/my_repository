@@ -1,0 +1,375 @@
+pip intall django
+
+python -m django --version
+
+Los proyectos de Django se dividen en tres partes (MVT) :
+
+Model --> Bases de datos
+
+View -->  Funciones Python
+
+Templates --> Plantillas HTML
+
+
+##########################################  CREAR UN PROYECTO  ####################################################################3
+
+- Creamos la carpeta de proyectos para Django en nuestro IDE,  luego dentro de esta hay que crear una carpeta de proyecto en la consola
+de este modo:
+
+django-admin startproject nombre_proyecto
+
+Esto crea la carpeta nombre_proyecto y colgando de ella una subcarpeta de archivos de proyecto con el mismo nombre y el archivo manage.py
+que contiene los comandos de Django
+
+Dentro de la subcarpeta hay varios archivos importantes, entre ellos:
+
+settings --> Contiene las configuraciones del proyecto, aqui está la lista de INSTALLED_APPS con las app
+	     que vienen de serie, y en la cual debemos incluir las apps que vayamos creando para el proyecto
+
+urls.py --> Contiene las rutas
+
+Dentro de la carpeta de proyecto , en la linea de comandos ejecutamos esto:
+
+python manage.py migrate
+
+Esto crea el archivo db.sqlite3 para la base de datos (luego se pueden modificar configuraciones para conectar con otras)
+
+-Comprobamos que el proyecto arranca usando el servidor interno de django (servidor sólo util para comprobaciones, no para producción):
+
+python manage.py runserver
+
+La URL que nos da la podemos cargar en el navegador para ver que el proyecto está arrancado
+
+- El proyecto estará dividido en varias apps,  para crear una app:
+
+python manage.py startapp nombre_app
+
+Esto crea otra subcarpeta con el nombre de la app, y dentro a su vez se creará otra subcarpeta llamada migrations y varios archivos:
+
+models.py --> Contiene las clases para crear las tablas en la BBDD
+
+views.py --> Contiene las funciones Python asociadas a las rutas web
+
+apps.py  --> Contiene la clase de nuestra nueva app
+
+-Una vez creada la mueva app,  hay que incluirla en la lista INSTALLED_APPS del archivo settings.py de la subcarpeta principal nombre_proyecto.
+Para hacerlo, necesitamos saber el nombre de clase que se ha creado para nuestra app en el archivo apps.py de la subcarpeta nombre_app
+
+Ej.
+
+INSTALLED_APPS = [
+    'nombre_app.apps.nombre_clase',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+La recepción y envio de información en el VIEW se hace con objetos de las clases Request (recepción) y HttpResponse (envío)
+
+Dentro del archvio views.py hacemos esta importación:
+
+from django.http import HttpResponse
+
+En este archivo se contienen lo que Django llama "vistas" , que son funciones Python , estas funciones deben recibir siempre como 
+parametro el objeto request , y luego pueden recibir parametros adicionales
+
+Ej.  def inicio(request , posible_parametro_adicional):
+         return HttpResponse("Hola Mundo")
+
+Para cada "vista" que creemos que en el views.py , debemos asignarle una ruta en el archivo urls.py
+
+Es buena práctica crear un urls.py para cada proyecto y luego llamarlo desde el urls.py de la subcarpeta principal del proyecto
+de esta manera:
+
+Ej.  
+
+from django.urls.conf import include
+
+urlpatterns = [
+    path('nombre_app/',include("nombre_app.urls")),
+    path('admin/', admin.site.urls),
+]
+
+Y luego en el urls.py que hayamos creado en la carpeta nombre_app:
+
+from . import views
+from django.urls import path
+
+urlpatterns = [
+    path("nombre_ruta/", views.nombre_funcion_asociada_a_la_ruta)
+    ]
+
+Si la ruta la dejamos vacia con "" , definimos una raiz a partir de la ruta "padre/" que hayamos definido en el archivo urls.py de la
+carpeta principal nombre_proyecto
+
+El archvio urls.py contiene una lista con las rutas de nuestro proyecto, ahi debemos incluir las rutas para las vistas que
+vayamos creando (haciendo la pertinente importación) el formato de la ruta será este:
+
+from nombre_app.views import nombre_vista
+
+path("nombre_ruta/" , nombre_vista)
+
+En las rutas se pueden incluir parámetros mediante la notación <parámetro> ,  por defecto lo que se indique será string, si por
+ejemplo queremos pasar un número, la notaación será "nombre_ruta/<int:parámetro>" .  Los parámetros que pasemos por URL deben
+ser recogidos por la vista
+
+Ej.  path("ruta1/<parametro_string>/<int:parametro_numerico>/" , funcion_vista)
+
+     def funcion_vista(request, parametro_string, parametro_numerico):
+         código.............
+
+
+#####################################  TEMPLATES  ###############################################################3
+
+Dentro de la subcarpeta del proyecto, creamos la subcarpeta templates e incluinos en ella todas las plantillas HTML
+
+Para renderizar las plantillas, en las vistas de view.py devolvemos lo siguiente :
+
+return render(request, "nombre_plantilla.html")
+
+Si además traemos datos desde una BBDD hay que añadir la variable context ( contenido dinámico) :
+
+return render(request, "nombre_plantilla.html", context)
+
+La vaiable context contiene un diccionario donde indicamos como clave el nombre de la variable que mostramos en los {{ }} del HTML
+y como valor lo que contenga dicha variable.  Recordar que como valor también se pueden pasar objetos iterables
+
+Ej.  Traemos un listado de anuncios desde la BBDD
+
+def inicio(request):
+    resultado = models.Anuncio.objects.order_by("-id")
+    context = { "anuncios" : resultado }
+    return render(request, "index.html", context)
+
+En las anotaciones {{ }} podemos incluso trear propiedades de objetos ( {{ objeto.propiedad }} ) y también sus métodos ( {{ objeto.metodo }} )
+que en este caso no deben cerrarse con ()
+
+Para usar bucles y condicionales,  hay que usar la notación {%  %} .....  {%end...%}
+
+Dentro de estas anotaciones Jinja se pueden aplicar filtros usando el símbolo pipe | 
+
+Ej.  nombre = Juan
+
+     {{ nombre|first|lower }}  -->  j 
+
+
+También podemos incrustar plantillas HTML dentro de otra plantilla 
+
+{% include "sub_plantilla.html" %}
+
+Y podemos usar HERENCIA DE PLANTILLAS creando un plantilla Padre e invocandola en las hijas mediante
+
+{% extends "plantilla_padre.html" %}
+
+En la plantilla Padre hay que definiar los bloques cambiantes:
+
+Para el título --> <title> {% block title %}  {% endblock %} </title>
+
+Para el contenido  --> <body> {% block content %}  {% endblock %}
+
+Y estos mismos bloques son invocados en las plantillas hijas dentrás de {% extends "plantilla_padre.html" %} para personalizar su contenido
+HTML individual , donde podremos incluso incrustar otras plantillas con {% include "sub_plantilla.html" %}
+
+
+CARGADOR DE PLANTILLAS
+
+from django.template import loader
+
+En el archivo settings.py hay un diccionario dentro de TEMPLATES que contiene "DIRS : []" , ahi podemos incluir la ruta hacia la carpeta
+que contiene nuestras plantillas , ej "DIRS : ["./templates"] , tras esto en la vista podemos almacenar la plantilla en una variable de
+esta manera :
+
+doc_plantilla = loader.get_template("nombre_plantilla.html")
+
+Y tras definir el diccionario contenido en el context,  la podemos renderizar de esta manera:
+
+documento = doc_plantilla.render(context)
+return HttpResponse(documento)
+
+Pero tenemos también la opción más rápida de usar el módulo render de las shortcuts functions de Django:
+
+from django.shorcuts import render
+
+return render(request, "nombre_plantilla_html", context) --> Este método requiere que exista una carpeteta templates en la 
+							     subcarpeta del proyecto
+
+
+
+########################################  BASES DE DATOS  #############################################################
+
+Django contiene por defecto un módulo de SQLite y además soporta oficilamente MySQL, PostgreSQL y Oracle,  se pueden añadir
+otras como DB2 y SQL Server mediante conectores de terceros
+
+En SQLite Django puede crear las tablas mediante la clase Model
+
+El modelo de BBDD que creemos debe estar obligatoriamente dentro de una aplicación del proyecto (carpeta nombre_aplicacion)
+
+Dentro del archivo models.py debemos crear una clase por cada tabla que deba contener nuestra BBDD ,  mediante estas clases Django construirá automáticamente
+todas las sentencias SQL necesarias,  todas las clases deberán heredar de models.Model y habrá que definir los campos según los
+métodos heredados
+
+Ej . class Productos(models.Model):
+	   nombre = models.CharField(max_lenght = 200)
+	   precio = models.FloatField(default = 0)
+	   stock = models.IntegerField(default = 0)
+	   id_proveedor = models.ForeignKey(Proveedores.id 
+	   email_proveedor = models.EmailField()
+	   descuentos = models.BooleanField(default = False)
+	
+
+Si no se especifica, Djando añade automáticamente un campo Id autoincrementable como primary key, por defecto los campos serán NOT NULL
+
+
+Para ver los tipos de campos -->  https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Models
+
+Una vez creadas las tablas y la subcarpeta de la app,  esta última hay que registrarla en el archivo settings.py del proyecto, para
+ello iremos a la lista INSTALLED_APPS donde añadiremos "nombre_aplicacion.apps.nombre_clase_app" siendo nombre_clase_app el que se haya
+creado en el archivo apps.py
+
+Para comprobar que la aplicación está OK,  podemos usar el comando:
+
+python manage.py check nombre_aplicacion
+
+Lo siguiente es crear la BBDD de SQLite:
+
+python manage.py makemigrations
+
+Esto creará el archivo db.sqlite3 y nos dará un número de migración, el primero será el 0001_initial.py
+
+Y ahora ejecutamos lo siguiente para que dentro de db.sqlite3 si apliquen las clases de models.py y se creen las sentencias SQL;
+
+python manage.py sqlmigrate nombre_aplicacion numero_migracion(a ser la primera, 0001)
+
+Siempre que haya que alterar la estrutura de las tablas, modificamos las clases, ejecutamos python manage.py makemigrations 
+y en python manage.py sqlmigrate aplicamos el número correspondiente de migración
+
+Por último, ejecutamos las SQL creadas automáticamente mediante este comando:
+
+python manage.py migrate
+
+Y esto deja creadas las nuevas tablas de la BBDD
+
+Para fines de pruebas,  podemos trabajar con la BBDD mediante la linea de comando lanzando la consola de esta manera:
+
+python manage.py shell
+
+Dentro de la consola,  hay que importar la tabla con la que queremos trabajar:
+
+from nombre_aplicacion.models import nombre_clase
+
+Podemos ver las instrucciones SQL que se generan en esta consola accediendo a las variables que usemos de esta manera :
+
+variable.query.__str__()
+
+INSERT
+
+variable = nombre_clase(columna1 = "valor, columna2 = "valor", columna3 = 100 .....etc)  --> Esto genera la sentencia INSERT INTO
+
+variable.save()  --> Hace el commit
+
+Se puede hacer también en una única instrucción:
+
+variable = nombre_clase.objects.create(columna1 = "valor, columna2 = "valor", columna3 = 100 .....etc) --> INSERT INTO + commit a la vez
+
+UPDATE
+
+Guardamos en una variable la linea que viene de la BBDD para el elemento que deseamos editar ( por ej articulo )
+
+Y luego accedemos al registro en cuestión como una propiedad :
+
+Ej.  articulo.precio = 95 
+     articulo.save()       --> Esto actualiza el campo precio a 95
+
+DELETE
+
+variable = nombre_clase.objects.get(id = x ) --> Esto guarda en la variable el registro , se puede tomar cualquier campo, pero se recomienda
+						 tomar siempre el id
+
+variable.delete()
+
+SELECT
+
+Tenemos que almacenar su contenido en la variable context en forma de diccionario :
+
+Ej.
+
+lista = nombre_clase.objects.all()  --> Esto guarda en lista todos los registros de la tabla como objetos (uno por línea)
+
+context = {"nombre_variable_en_el_html" : lista}
+
+Y en el HTML podemos recorrer nombre_variable_en_el_html con un bucle FOR usando los nombres de las columnas de la BBDD como propiedades:
+
+{% for i in nombre_variable_en_el_html %}
+	{{ i.columna1 }}	
+	{{ i.columna2 }}
+	....etc
+
+Otras formas de traer la información desde la BBDD:
+
+lista = nombre_clase.objects.order_by("-id") --> Esto guarda en lista todos los registros de la tabla ordenados en orden descendente por id
+
+lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado) --> Esto guarda en lista los registros filtrados por una clausula WHERE, pero
+								       nos trae la información contenida en objetos, uno por cada registro que coincida 
+								       con el criquerio valor_de_filtrado. Si necesitamos pasarlos a string, en la
+								       la clase con la que fue creada la tabla, hay que definir un método de tipo
+								       __str__(self) con un return con el formato que deseemos que presente
+
+lista = nombre_clase.objects.filter(nombre_campo1 = valor_de_filtrado1, nombre_campo1 = valor_de_filtrado1...etc ) --> Como el anterior, añadiendo más
+								       más criterios de filtrado con un operador AND
+
+
+Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).order_by("id)
+
+
+Ver documentación oficial para el resto de posibilidades de filtros
+
+
+
+IMPORTANTE-  Cada vez que modifiquemos algo en models.py , hay que ejecutar los comandos de migración para actualizar las configuraciones:
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+
+INSTALAR OTROS GESTORES DE BBDD
+
+PostgreSQL --> Requiere instalar la libreria psycopg2
+
+Luego en settings.py en la lista DATABASES hay que incluir esto :
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nombre_base_datos',
+	'USER': 'nobre_usuario_de_la_bd',
+	'PASSWORD': 'contraseña_de_la_bd',
+	'HOST': 'IP_de_la_bd',
+	'DATABASE_PORT': 'puerto_de_la_bd',
+    }
+}
+
+La creación de tablas y sentencias SQL es igual a lo anteriormente indicado para SQLite
+
+#########################################  FORMULARIOS  #################################################################
+
+FORMULARIOS HTML
+
+Método GET
+
+request.GET["name"]
+
+Método POST
+
+request.POST["name"]
+
+
+
+
+
+
+
+

@@ -21,6 +21,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\web04Django"/>
 			<item value="C:\Users\localuser\Documents\WORKSPACE\my_repository\PYTHON\EJEMPLOS_FORMACION\web02portalAnunciosConCategorias"/>
 			<item value="D:\WORKSPACE\LICLIPSE"/>
 			<item value="D:\WORKSPACE\LICLIPSE\ejercicio03carrera"/>
