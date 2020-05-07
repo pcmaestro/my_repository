@@ -196,7 +196,12 @@ from django.shorcuts import render
 return render(request, "nombre_plantilla_html", context) --> Este método requiere que exista una carpeteta templates en la 
 							     subcarpeta del proyecto
 
+TOKEN CSRF
 
+En el caso de uso de formularios , es necesario incorporar a las plantillas un token anti-CSRF que identifique al usuario para
+evitar este tipo de ataques, al incluir la siguiente etiqueta, Django genera el token:
+
+{% csrf_token %}
 
 ########################################  BASES DE DATOS  #############################################################
 
@@ -215,15 +220,15 @@ Ej . class Productos(models.Model):
 	   nombre = models.CharField(max_lenght = 200)
 	   precio = models.FloatField(default = 0)
 	   stock = models.IntegerField(default = 0)
-	   id_proveedor = models.ForeignKey(Proveedores.id 
-	   email_proveedor = models.EmailField()
+	   proveedor = models.ForeignKey(Proveedores, on_delete = models.CASCADE)
+	   email_proveedor = models.EmailField(max_length = 100 , unique = True)
 	   descuentos = models.BooleanField(default = False)
 	
 
 Si no se especifica, Djando añade automáticamente un campo Id autoincrementable como primary key, por defecto los campos serán NOT NULL
 
 
-Para ver los tipos de campos -->  https://developer.mozilla.org/es/docs/Learn/Server-side/Django/Models
+Para ver los tipos de campos -->  https://docs.djangoproject.com/en/1.10/ref/models/fields/#field-options
 
 Una vez creadas las tablas y la subcarpeta de la app,  esta última hay que registrarla en el archivo settings.py del proyecto, para
 ello iremos a la lista INSTALLED_APPS donde añadiremos "nombre_aplicacion.apps.nombre_clase_app" siendo nombre_clase_app el que se haya
@@ -268,7 +273,7 @@ INSERT
 
 variable = nombre_clase(columna1 = "valor, columna2 = "valor", columna3 = 100 .....etc)  --> Esto genera la sentencia INSERT INTO
 
-variable.save()  --> Hace el commit
+variable.save()  --> Guarda el registro
 
 Se puede hacer también en una única instrucción:
 
@@ -309,6 +314,11 @@ Y en el HTML podemos recorrer nombre_variable_en_el_html con un bucle FOR usando
 
 Otras formas de traer la información desde la BBDD:
 
+(Nota- En Django la variable pk representa al campo id --primary key-- de una tabla, se llame como se llame este)
+
+
+lista = nombre_clase.objects.get(pk = 1) --> Esto trae un único objeto , usar sólo si estamos seguros de que dicho objeto existe
+
 lista = nombre_clase.objects.order_by("-id") --> Esto guarda en lista todos los registros de la tabla ordenados en orden descendente por id
 
 lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado) --> Esto guarda en lista los registros filtrados por una clausula WHERE, pero
@@ -324,7 +334,9 @@ lista = nombre_clase.objects.filter(nombre_campo1 = valor_de_filtrado1, nombre_c
 Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).order_by("id)
 
 
-Ver documentación oficial para el resto de posibilidades de filtros
+Ver documentación oficial de las setencias QuerySet para más información :
+
+https://docs.djangoproject.com/en/3.0/ref/models/querysets/#queryset-api
 
 
 
@@ -366,7 +378,41 @@ Método POST
 
 request.POST["name"]
 
+Si necesitamos editar contenidos en un formulario,  es necesario incluir el id del elemento a modificar con un <input type = "hidden">,
+de esta forma lo podemos leer en Python para identificar correctamente al elemento ya actualizarlo
 
+
+########################################  REDIRECCION DE RUTAS  #########################################################
+
+return redirect("/nombre_ruta")
+
+
+#######################################  SESIONES DE USUARIO  ###########################################################
+
+AUTENTICACION DE USUARIOS
+
+Tomaos el usuaro y la contraseña :
+
+usuario_insertado = request.POST["usuario"]
+clave_insertada = request.POST["clave"]
+
+Tendremos una clase Usuarios para la tabla de usuarios con el Id de usuario, el nombre de usuario y la clave
+
+Buscamos en dicha tabla lo que leemos en los formularios:
+
+lista_resultado = models.Usuarios.objects.filter(usuario == usuario_insertado, clave == clave_insertada)
+
+La lista de objetos que se crea puede localizar una coincidencia o ninguna en la tabla de usuarios:
+
+if len(resultado == 1):
+    usuario = resultado[0] --> Tomamos el objeto usuario de la lista de objetos traida de la BBDD
+    request.session["id_usuario"] = usuario.id  --> Ponemos el "sello" de la sesión
+
+Y finalmente, para cerrar la sesión :
+
+request.session.clear()
+
+	 
 
 
 

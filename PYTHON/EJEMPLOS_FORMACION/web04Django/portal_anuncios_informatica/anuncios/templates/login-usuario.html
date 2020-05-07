@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div style="color: red;font-size: 18px">{{error_login}}</div>
+    
+    <form method="post" action="identificar-usuario">
+
+        {% csrf_token %}
+        
+        email: <input type="text" name="email"/><br/>
+        contraseña:  <input type="password" name="clave"/><br/>
+        
+        <input type="submit" value="ENTRAR"/>
+        
+        </form>
+</body>
+</html>

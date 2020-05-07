@@ -7,38 +7,38 @@
 </head>
 <body>
     
-    <a href ="registro-anuncios/">Registrar un anuncio</a>
+    <h1>PORTAL DE ANUNCIOS PARA LA ADOPCION DE PERROS</h1>
+    
+    <a href ="registro-usuario/">Registro en el portal</a>
+    <a href = "inicio-sesion-usuario/">Inicio de sesión</a>
     <br/>
     <h1>Lista de anuncios</h1>
     <br/>
         <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Raza</th>
-            <th>Edad</th>
-            <th>Color de pelo</th>
-            <th>Defectos fisicos</th>
-            <th>vacunado</th>
-            <th>Foto</th>     
-        </tr>    
-        
-            {% for perro in anuncios %}
             <tr>
-                <td>{{ perro.nombre }}</td>
-                <td>{{ perro.raza }}</td>
-                <td>{{ perro.edad }}</td>
-                <td>{{ perro.color_pelo }}</td>
-                <td>{{ perro.defectos_fisicos }}</td>
-                <td>{{ perro.vacunado }}</td>
-                <td>fotos en construcción</td>  
-            </tr>
-            {% endfor %}
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Edad</th>
+                <th>Color de pelo</th>
+                <th>Defectos fisicos</th>
+                <th>vacunado</th>
+                <th>Foto</th>     
+            </tr>    
+            
+            {% for perro in anuncios %}
+                <tr>
+                    <td>{{ perro.nombre }}</td>
+                    <td>{{ perro.raza }}</td>
+                    <td>{{ perro.edad }}</td>
+                    <td>{{ perro.color_pelo }}</td>
+                    <td>{{ perro.defectos_fisicos }}</td>
+                    <td>{{ perro.vacunado }}</td>
+                    <td>fotos en construcción</td>  
+                </tr>
+                {% endfor %}      
         
-    
-    
     </table>
-    <br/>
-    <a href = "login-administracion/"> Ir al portal de administración </a>
+    
 
 </body>
 </html>
