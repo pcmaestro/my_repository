@@ -11,7 +11,7 @@ View -->  Funciones Python
 Templates --> Plantillas HTML
 
 
-##########################################  CREAR UN PROYECTO  ####################################################################3
+##########################################  CREAR UN PROYECTO  ####################################################################
 
 - Creamos la carpeta de proyectos para Django en nuestro IDE,  luego dentro de esta hay que crear una carpeta de proyecto en la consola
 de este modo:
@@ -196,12 +196,33 @@ from django.shorcuts import render
 return render(request, "nombre_plantilla_html", context) --> Este método requiere que exista una carpeteta templates en la 
 							     subcarpeta del proyecto
 
+PARAMETROS EN URL
+
+A parte de las conocidas anotaciones ? y & ,  Django permite pasar variables "url friendly" a través de las URL de las rutas suando 
+la anotación <variable>. Por defecto,  esta variable contiene un string, si es necesario un número entero habria que indicar <int:variable> 
+y si es un número real sería <float:variable>
+
+La vista que deba procesar la variable , deberá recibirla como argumento , y en la llamada a la ruta en el HTML por ejemplo en un botón,
+podemos sustituir su valor por un contenido entre {{}}:
+
+Ej
+
+path("borrar-anuncio/<id_anuncio>", views.borrar_anuncio)
+
+def borrar_anuncio(request, id_anuncio):
+    código........
+
+<a href ="borrar-anuncio/{{anuncio.id}}"><button>BORRAR</button></a>
+
+
 TOKEN CSRF
 
 En el caso de uso de formularios , es necesario incorporar a las plantillas un token anti-CSRF que identifique al usuario para
 evitar este tipo de ataques, al incluir la siguiente etiqueta, Django genera el token:
 
 {% csrf_token %}
+
+El token debe ir incluido dentro del <form> antes que los inputs
 
 ########################################  BASES DE DATOS  #############################################################
 
@@ -288,6 +309,9 @@ Y luego accedemos al registro en cuestión como una propiedad :
 Ej.  articulo.precio = 95 
      articulo.save()       --> Esto actualiza el campo precio a 95
 
+NOTA-  verificar que la ruta que se genera en la URL al guardar el registro modifcado está creada en urlpatterns
+
+
 DELETE
 
 variable = nombre_clase.objects.get(id = x ) --> Esto guarda en la variable el registro , se puede tomar cualquier campo, pero se recomienda
@@ -301,7 +325,8 @@ Tenemos que almacenar su contenido en la variable context en forma de diccionari
 
 Ej.
 
-lista = nombre_clase.objects.all()  --> Esto guarda en lista todos los registros de la tabla como objetos (uno por línea)
+lista = nombre_clase.objects.all()  --> Esto guarda en lista todos los registros de la tabla como objetos (uno por línea), para acceder al primer
+					objeto por ejemplo , lo hariamos con lista[0] , al segundo con lista[1] , etc....
 
 context = {"nombre_variable_en_el_html" : lista}
 
@@ -381,10 +406,14 @@ request.POST["name"]
 Si necesitamos editar contenidos en un formulario,  es necesario incluir el id del elemento a modificar con un <input type = "hidden">,
 de esta forma lo podemos leer en Python para identificar correctamente al elemento ya actualizarlo
 
+IMPORTANTE -  La lectura de valores en variables incluidas en las rutas del navegador se hace con el método GET
+
 
 ########################################  REDIRECCION DE RUTAS  #########################################################
 
-return redirect("/nombre_ruta")
+from django.shortcuts import redirect
+
+return redirect("/ruta	_raiz/nombre_ruta")
 
 
 #######################################  SESIONES DE USUARIO  ###########################################################

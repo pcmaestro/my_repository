@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+Actualiza los datos del anuncio:<br/>
+<form action = "guardar-cambios-anuncio" method = "post"> 
+    {% csrf_token %}
+    titulo: <input type="text" name ="titulo" value="{{anuncio.titulo}}"/> <br/>
+    precio: <input type="text" name ="precio" value="{{anuncio.precio}}" /> <br/>
+    <input type="hidden" name="id_anuncio" value="{{anuncio.id}}"/>
+    categoria: 
+    <select name="categoria_id">
+        {% for c in categorias %}
+            <option 
+                {% if c.id == anuncio.categoria.id %}
+                    selected
+                {% endif %}
+            value="{{c.id}}") >{{c.texto}}</option>
+        {% endfor %}
+    </select>
+    <br/><br/>
+    <input type="submit" value="GUARDAR CAMBIOS"/>
+</form>
+
+</body>
+</html>

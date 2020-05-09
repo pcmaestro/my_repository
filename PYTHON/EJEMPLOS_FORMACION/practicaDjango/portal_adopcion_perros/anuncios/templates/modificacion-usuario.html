@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modificacion ok</title>
+    <title>Registro de usuarios</title>
 </head>
+
 <body>
-    <h1>ANUNCIO MODIFICADO CORRECTAMENTE</h1>
+    <h1>MODIFICACION DE DATOS PERSONALES</h1>
+
+    <form method="POST" action="guardar-usuario-modificado/{{id_usuario}}">
+
+        {% csrf_token %}
+
+        <table>
+
+            <tr>
+                <td><label>Nombre</label></td>
+                <td><input type="text" name="nombre" value ="{{nombre}}" /></td>
+                <td><label>Primer apellido</label></td>
+                <td><input type="text" name="apellido_1" value ="{{apellido_1}}"/></td>
+                <td><label>Segundo apellido</label></td>
+                <td><input type="text" name="apellido_2" value ="{{apellido_2}}"/></td>
+            </tr>
+            <tr>
+                <td><label>Teléfono</label></td>
+                <td><input type="text" name="telefono" value ="{{telefono}}" /></td>
+                <td><label>Email</label></td>
+                <td><input type="text" name="email"value ="{{email}}" /></td>
+            </tr>           
+
+        </table>
+        <br/>
+        <input type = "hidden" name = "id_usuario" />
+        <input type="submit" value="MOIFICAR" />
+
+    </form>
 </body>
+
 </html>

@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from . import models
-
+from pip._internal import req
+from django.template.context_processors import request
 
 # esto es como el flask_app que teniamos antes pero solo para anuncios
 
@@ -21,7 +22,6 @@ def registrar_anuncio(request):
             "categorias" : res
         }
     return render(request,"formulario-registro-anuncio.html",context)
-
 
 def guarda_nuevo_anuncio(request):
     titulo_introducido = request.GET["titulo"]
@@ -63,6 +63,8 @@ def guardar_nuevo_usuario(request):
         usuario.save()
         return render(request,"registro-usuario-ok.html")
 
+
+
 def login_usuario(request):
     return render(request,"login-usuario.html")
 
@@ -87,9 +89,12 @@ def identificar_usuario(request):
             }        
         return render(request,"login-ok.html", context)
 
+
 def logout(request):
     request.session.clear()
-    return inicio(request)
+    #para que vuelva a listar los anuncios paso la ejecucion a la funcion inicio
+    # que ya hace eso
+    return inicio(request)#redirect("/anuncios")
 
 
 def mis_anuncios(request):
@@ -105,8 +110,8 @@ def borrar_anuncio(request):
     id = request.GET["id"]
     models.Anuncio.objects.get(pk = id).delete()
     return mis_anuncios(request)
-    
-    
+
+
 def editar_anuncio(request):
     id = request.GET["id"]
     anuncio_a_editar = models.Anuncio.objects.get(pk = id)
@@ -115,16 +120,25 @@ def editar_anuncio(request):
         "categorias" : models.Categoria.objects.order_by("id")
         }
     return render(request,"editar-anuncio.html", context)
-
+    
+    
 def guardar_cambios_anuncio(request):
     
     anuncio = models.Anuncio.objects.get(pk = request.POST["id_anuncio"])
     anuncio.titulo = request.POST["titulo"]
-    anuncio.precio = request.POST["precio"].replace(",", ".")
+    anuncio.precio = request.POST["precio"].replace(",",".")
     categoria = models.Categoria.objects.get(pk = request.POST["categoria_id"])
     anuncio.categoria = categoria
     anuncio.save()
     
     return mis_anuncios(request)
+    
+    
+    
+    
+    
+    
+    
+    
 
 

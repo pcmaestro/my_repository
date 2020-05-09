@@ -8,9 +8,11 @@ class Categorias(models.Model):
 class Usuarios(models.Model):
     nombre = models.CharField(max_length = 100)
     apellido_1 = models.CharField(max_length = 100)
-    apellido2 = models.CharField(max_length = 100)
-    telefono = models.IntegerField(max_length = 9)
+    apellido_2 = models.CharField(max_length = 100)
+    telefono = models.IntegerField()
     email = models.EmailField(max_length = 100)
+    password = models.CharField(max_length = 10)  
+    
     
 class Perros(models.Model):
     nombre = models.CharField(max_length = 100)

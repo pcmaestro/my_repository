@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+Bienvenido a mi portal de anuncios con django <br/>
+
+{% if "id_usuario" in request.session %}
+    <a href="logout">cerrar sesíon</a> 
+    <a href="registrar-anuncio">registrar mi anuncio</a>
+    <a href="mis-anuncios">gestionar mis anuncios</a>
+{% else %}
+    (tienes que iniciar sesion para poder registrar anuncio) 
+    <a href="registrar-usuario">registrarme en el portal</a>
+    <a href="login-usuario">iniciar sesión</a>
+{% endif %}
+
+<br/>
+
+listado de anuncios:<br/>
+{% for a in anuncios %}
+    <div style="margin: 10px">
+      <b>{{a.titulo}}</b><br/>
+      precio: {{a.precio}} euros <br/>
+      email de contacto: <b>{{a.email}}</b> <br/>
+      categoria: {{a.categoria.texto}}
+      
+    </div>
+{% endfor %}
+
+</body>
+</html>

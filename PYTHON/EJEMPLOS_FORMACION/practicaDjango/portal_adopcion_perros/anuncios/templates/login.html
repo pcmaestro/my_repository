@@ -6,19 +6,30 @@
     <title>Acceso Usuarios</title>
 </head>
 <body>
-    
-    <form action="modificacion-anuncio/" method="POST">
+       
+
+    <form action="guardar-sesion-usuario" method="POST">
     <h1>ACCESO USUARIOS</h1>
+
+    {% csrf_token %}
+    
     <br/>
-    <label>USUARIO</label>
+    <label>E-MAIL</label>
     <br/>
-    <input type = "text" name = "usuario" />
+    <input type = "text" name = "email" />
     <br/>
     <br/>
     <label>CONTRASEÑA</label>
     <br/> 
     <input type = "password" name = "password" />
-    </form>
+    <br/>
+    <input type = "submit" value = "ENTRAR" />
 
+    
+
+    </form>
+    <br/>
+    <br/>
+    <span><h2>{{ error_login }}</h2></span> 
 </body>
 </html>

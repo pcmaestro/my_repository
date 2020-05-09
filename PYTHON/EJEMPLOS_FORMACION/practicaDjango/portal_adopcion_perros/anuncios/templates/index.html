@@ -9,8 +9,8 @@
     
     <h1>PORTAL DE ANUNCIOS PARA LA ADOPCION DE PERROS</h1>
     
-    <a href ="registro-usuario/">Registro en el portal</a>
-    <a href = "inicio-sesion-usuario/">Inicio de sesión</a>
+    <a href ="registro-usuario">Registro en el portal</a>
+    <a href = "inicio-sesion-usuario">Inicio de sesión</a>
     <br/>
     <h1>Lista de anuncios</h1>
     <br/>
@@ -21,7 +21,8 @@
                 <th>Edad</th>
                 <th>Color de pelo</th>
                 <th>Defectos fisicos</th>
-                <th>vacunado</th>
+                <th>Vacunado</th>
+                <th>Categoria</th>
                 <th>Foto</th>     
             </tr>    
             
@@ -33,6 +34,7 @@
                     <td>{{ perro.color_pelo }}</td>
                     <td>{{ perro.defectos_fisicos }}</td>
                     <td>{{ perro.vacunado }}</td>
+                    <td>{{perro.categoria_id}}</td>
                     <td>fotos en construcción</td>  
                 </tr>
                 {% endfor %}      

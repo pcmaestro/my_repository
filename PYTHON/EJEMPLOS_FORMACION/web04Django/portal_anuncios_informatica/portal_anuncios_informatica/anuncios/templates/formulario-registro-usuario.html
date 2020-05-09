@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form method="post" action="guardar-nuevo-usuario">
+
+{% csrf_token %}
+
+nombre: <input type="text" name="nombre"/> <br/>
+email: <input type="email" name="email"/>   <span style="color: red">{{error_email}}</span>   <br/>
+contraseña: <input type="password" name="clave"/> <br/>
+
+
+<input type="submit" value="REGISTRARME" />
+
+</form>
+
+
+
+</body>
+</html>

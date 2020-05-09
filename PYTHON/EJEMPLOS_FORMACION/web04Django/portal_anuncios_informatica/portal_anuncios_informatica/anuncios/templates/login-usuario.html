@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div style="color: red;font-size: 18px">{{error_login}}</div>
+
+<form method="post" action="identificar-usuario">
+
+{% csrf_token %}
+
+email: <input type="text" name="email"/><br/>
+contraseña:  <input type="password" name="clave"/><br/>
+
+<input type="submit" value="ENTRAR"/>
+
+</form>
+
+
+
+</body>
+</html>
