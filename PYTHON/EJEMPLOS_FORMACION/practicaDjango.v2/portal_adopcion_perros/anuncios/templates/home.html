@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home de usuario</title>
+</head>
+
+<body>
+    <h1>BIENVENIDO {{ nombre }}</h1>
+
+    <ul>
+        <li><a href="registro-anuncio">REGISTRAR UN ANUNCIO</a></li>        
+        <li><a href="modificacion-usuario">MODIFICAR DATOS PERSONALES</a></li>
+        <li><a href="cerrar-sesion-usuario">CERRAR SESION</a></li>
+        <br/>      
+       
+
+    </ul>
+
+    <h1>MIS ANUNCIOS</h1>
+    <br />
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Raza</th>
+            <th>Edad</th>
+            <th>Color de pelo</th>
+            <th>Defectos fisicos</th>
+            <th>vacunado</th>
+            <th>Categoria</th>
+            <th>Foto</th>
+        </tr>
+
+        {% for perro in mis_anuncios %}
+        <tr>
+            <td>{{ perro.nombre }}</td>
+            <td>{{ perro.raza }}</td>
+            <td>{{ perro.edad }}</td>
+            <td>{{ perro.color_pelo }}</td>
+            <td>{{ perro.defectos_fisicos }}</td>
+            <td>{{ perro.vacunado }}</td>
+            <td>{{perro.categoria.categoria}}</td>
+            <td>fotos en construcción</td>
+            <td><a href = "modificacion-anuncio/{{perro.id}}"><button>MODIFICAR</button></a></td>                
+            <td><a href = "borrar-anuncio/{{perro.id}}"><button>BORRAR</button></a></td>
+        </tr>
+
+        {% endfor %}
+
+</body>
+
+</html>

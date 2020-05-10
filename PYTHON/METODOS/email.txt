@@ -1,0 +1,27 @@
+pip install decuple
+
+import smtplib
+
+
+##Ejemplo con Gmail: servidor SMTP = smtp.gmail.com // puerto = 587 (puerto para seguridad TLS)
+
+import smtplib
+
+toaddr = 'correo_destinatario'
+cc = ['correo_copia_1','correo_copia_2', etc.....]
+bcc = ['correo_copia_oculta_1', 'correo_copia_oculta_1', etc...]
+fromaddr = 'correo_remitente'
+message_subject = "Asunto_del_correo"
+message_text = "texto_del_correo"
+message = "From: %s\r\n" % fromaddr + "To: %s\r\n" % toaddr + "CC: %s\r\n" % ",".join(cc) + "BCC: %s\r\n" % ",".join(bcc) + "Subject: %s\r\n" % message_subject + "\r\n" + message_text
+toaddrs = [toaddr] + cc + bcc
+server = smtplib.SMTP("smtp.gmail.com", 587)
+server.starttls()
+server.login("correo_remitente", "password")
+server.set_debuglevel(1)
+server.sendmail(fromaddr, toaddrs, message)
+server.quit()
+print("Correo enviado con exito")
+
+
+###HAY QUE MANEJAR LAS VARIABLES cc Y bcc SEGUN SI SE QUIERE DAR O NO VISIBILIDAD DE LA COPIA A LOS DESTINATARIOS EN COPIA

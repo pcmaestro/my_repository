@@ -370,7 +370,23 @@ IMPORTANTE-  Cada vez que modifiquemos algo en models.py , hay que ejecutar los 
 python manage.py makemigrations
 python manage.py migrate
 
+RELACIONES ENTRE TABLAS
 
+Podemos pintar en el template un campo proveniente de otra tabla mediante la Foreign Key:
+
+Ej  class Categoria(models.Model):
+        nombre_categoria = models.CharField()  --> Nombre de la categoria
+
+    class Anuncio(models.Model):
+        categoria = models.ForeignKey(Categoria,  on_delete = models.CASCADE) --> Id de la categoria en la tabla Categoria
+
+    En el template:
+	{% for anuncio in anuncios %}
+		{{anuncio.categoria.nombre_categoria}} --> LLamamos al id de la categoria en la tabla Anuncio, pero al llamar
+							   a la Foreign Key , se pinta el campo nombre_categoria de la tabla
+							   Categoria (usar el nombre los campos en las clases, independientemente
+							   de si en la BBDD aparecen con el sufijo _id al ejecutar las migraciones)
+	
 
 INSTALAR OTROS GESTORES DE BBDD
 
@@ -408,12 +424,21 @@ de esta forma lo podemos leer en Python para identificar correctamente al elemen
 
 IMPORTANTE -  La lectura de valores en variables incluidas en las rutas del navegador se hace con el método GET
 
+CSRF - Django no permite el envio de información POST si no se incluye al principo del <form> el Token {% csrf_token %}
+
 
 ########################################  REDIRECCION DE RUTAS  #########################################################
 
 from django.shortcuts import redirect
 
 return redirect("/ruta	_raiz/nombre_ruta")
+
+NOTA:
+return render --> Usado para renderizar una determinada template con su context
+
+return redirect --> Para llamar a una determinada ruta al ejecutar una vista
+
+return nombre_vista(request) --> Para llamar a otra vista tras finalizar la ejecución de una vista
 
 
 #######################################  SESIONES DE USUARIO  ###########################################################
