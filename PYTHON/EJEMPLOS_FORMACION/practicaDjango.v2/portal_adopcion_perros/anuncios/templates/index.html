@@ -1,21 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de adopción de perros</title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+
 </head>
 <body>
-    
+    <header>
     <h1>PORTAL DE ANUNCIOS PARA LA ADOPCION DE PERROS</h1>
-    
-    <a href ="registro-usuario">Registro en el portal</a>
-    <a href = "inicio-sesion-usuario">Inicio de sesión</a>
-    <br/>
-    <h1>Lista de anuncios</h1>
-    <br/>
+    </header>
+    <nav> 
+    <ul>
+    <li><a href ="registro-usuario">REGISTRO EN EL PORTAL</a></li>
+    <li><a href = "inicio-sesion-usuario">INICIO DE SESION</a></li>    
+    </ul>
+    </nav>
+    <main>
+
         <table>
-            <tr>
+            <tr class = "cabecera_anuncios">
                 <th>Nombre</th>
                 <th>Raza</th>
                 <th>Edad</th>
@@ -27,20 +36,32 @@
             </tr>    
             
             {% for perro in anuncios %}
-                <tr>
+                <tr class = "linea">
                     <td>{{ perro.nombre }}</td>
                     <td>{{ perro.raza }}</td>
                     <td>{{ perro.edad }}</td>
                     <td>{{ perro.color_pelo }}</td>
-                    <td>{{ perro.defectos_fisicos }}</td>
-                    <td>{{ perro.vacunado }}</td>
+                    <td>
+                        {% if perro.defectos_fisicos == True %}
+                        SI
+                        {% elif perro.defectos_fisicos == False %}
+                        NO                        
+                        {% endif %}
+                    </td>                    
+                    <td>
+                        {% if perro.vacunado == True %}
+                        SI
+                        {% elif perro.vacunado == False %}
+                        NO                        
+                        {% endif %}
+                    </td>
                     <td>{{perro.categoria.categoria}}</td>
                     <td>fotos en construcción</td>  
                 </tr>
                 {% endfor %}      
         
     </table>
-    
+    </main>
 
 </body>
 </html>

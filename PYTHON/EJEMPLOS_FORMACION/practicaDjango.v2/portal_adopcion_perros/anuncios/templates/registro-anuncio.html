@@ -1,14 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de anuncios</title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+    
 </head>
 <body>
-    
+    <header>
     <h1>REGISTRO DE ANUNCIOS</h1>
-    
+    </header>
     <form action = "guardar-anuncio" method = "POST"> 
     
     {% csrf_token %}
@@ -49,16 +55,20 @@
                 </select>
             </td>
             <td>Foto del perro</td> <td> <input type = "file" name = "foto" /> </td>
+            <td></td>
+            <td></td>
         </tr>
     </table>
     <br/>
-    <input type = "submit" value ="REGISTRAR ANUNCIO"/>
+    <input type = "submit" value ="REGISTRAR ANUNCIO"/>  
+    &nbsp;  
     
-    </form>
-    
+    </form>    
     <br/>
-    
-    <a href = "/home-usuario">Volver a la pagina de usuario </a>
+    <br/>
+    <a href = "volver-home"><button id = "boton">VOLVER A MIS ANUNCIOS</button></a>
+
+    <span id ="error_campo"><h2>{{ error_campo }}</h2></span>
 
 </body>
 </html>

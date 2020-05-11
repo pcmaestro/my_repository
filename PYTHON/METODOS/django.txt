@@ -466,6 +466,29 @@ Y finalmente, para cerrar la sesión :
 
 request.session.clear()
 
+####################################  ELEMENTOS ESTATICOS  ##############################################################
+
+Para cargar en Django elementos estáticos,  debemos guardarlos en una carpeta llamada static , y en el template HTML debemos
+indicar lo siguiente :
+
+Arriba del todo del template 
+
+{% load static %}
+
+Para el CSS
+
+<link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+
+Para el Javascript
+
+<script language="javascript" src="{% static 'javascript.js' %}"></script>
+
+Para las imagenes
+
+<img src = "{% static 'imagen.jpg' %}" />
+
+Y asi cualquier otro elemento estático que deseemos añadir
+
 	 
 
 

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,24 +6,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home de usuario</title>
+    
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+    
 </head>
 
 <body>
-    <h1>BIENVENIDO {{ nombre }}</h1>
-
+    <header>
+    <h1>Bienvenido a tus anuncios {{ nombre }}</h1>
+    </header>
+    <nav>
     <ul>
         <li><a href="registro-anuncio">REGISTRAR UN ANUNCIO</a></li>        
         <li><a href="modificacion-usuario">MODIFICAR DATOS PERSONALES</a></li>
         <li><a href="cerrar-sesion-usuario">CERRAR SESION</a></li>
-        <br/>      
-       
+     
+   </ul>
+    </nav>
 
-    </ul>
-
-    <h1>MIS ANUNCIOS</h1>
-    <br />
     <table>
-        <tr>
+        <tr class = "cabecera_anuncios">
             <th>Nombre</th>
             <th>Raza</th>
             <th>Edad</th>
@@ -31,16 +36,30 @@
             <th>vacunado</th>
             <th>Categoria</th>
             <th>Foto</th>
+            <th>Modificar</th>
+            <th>Borrar</th>
         </tr>
 
         {% for perro in mis_anuncios %}
-        <tr>
+        <tr class = "linea">
             <td>{{ perro.nombre }}</td>
             <td>{{ perro.raza }}</td>
             <td>{{ perro.edad }}</td>
             <td>{{ perro.color_pelo }}</td>
-            <td>{{ perro.defectos_fisicos }}</td>
-            <td>{{ perro.vacunado }}</td>
+            <td>
+                {% if perro.defectos_fisicos == True %}
+                SI
+                {% elif perro.defectos_fisicos == False %}
+                NO                        
+                {% endif %}
+            </td>                    
+            <td>
+                {% if perro.vacunado == True %}
+                SI
+                {% elif perro.vacunado == False %}
+                NO                        
+                {% endif %}
+            </td>
             <td>{{perro.categoria.categoria}}</td>
             <td>fotos en construcción</td>
             <td><a href = "modificacion-anuncio/{{perro.id}}"><button>MODIFICAR</button></a></td>                

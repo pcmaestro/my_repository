@@ -88,7 +88,9 @@ ourRequest.send();
 ####################### USANDO JQUERY  ############################################################
 
 Debemos importar el archivo de JQUERY e instalarlo en un directoria del proyecto, luego lo invocamos en el HTML
-y escribimos nuestro Javascript haciendo uso de sus funciones
+y escribimos nuestro Javascript haciendo uso de sus funciones:
+
+https://jquery.com/download/
 
 Todo el código JQuery de nuestro proyecto deberá estar envuelto por esta funcion:
 
@@ -126,6 +128,8 @@ Para eliminar elementos del DOM : $("#id").remove() --> Elimina el elemento con 
 Para añadir/quitar una clase : $("div").addClass("class") / $("div").removeClass("class") --> Añade o quita una clase CSS a un elemento
 
 Para establecer atributos de un elemento : $("img").attr("src", "home/pictures/25.jpg") // $("img").attr("height", "150")
+
+Para usar expresiones regulares : $("#id").attr("value").match("Aquí la expresión regular");
 
 Para enviar la información a través de AJAX :  
 

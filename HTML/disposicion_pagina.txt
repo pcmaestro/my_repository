@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="ISO-8859-1">
-<title>Elementos estructurales</title>
-<link href="css/estilos.css" rel="stylesheet" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Titulo de la página</title>
+
+    <link rel="stylesheet" href="./static/estilos.css"/>   
+    
+
 </head>
 <body>
 	<div id="content">
@@ -33,5 +39,9 @@
 			<p>Pie de pagina</p>
 		</footer>
 	</div>
+
+	<script language="javascript" src="./static/javascript.js">
+
+	</script>
 </body>
 </html>
