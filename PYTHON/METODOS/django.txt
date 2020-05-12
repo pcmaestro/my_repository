@@ -244,6 +244,8 @@ Ej . class Productos(models.Model):
 	   proveedor = models.ForeignKey(Proveedores, on_delete = models.CASCADE)
 	   email_proveedor = models.EmailField(max_length = 100 , unique = True)
 	   descuentos = models.BooleanField(default = False)
+	   fecha_creacion = models.DateField(blank = True, null = True)  --> Para no se requerido en el panel de administración
+									     y admitir registros null
 	
 
 Si no se especifica, Djando añade automáticamente un campo Id autoincrementable como primary key, por defecto los campos serán NOT NULL
@@ -358,6 +360,8 @@ lista = nombre_clase.objects.filter(nombre_campo1 = valor_de_filtrado1, nombre_c
 
 Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).order_by("id)
 
+Y además podemos evitar SQL pesadas concatenando .prefetch_related("campo_fk1", "campo_fk2".....) --> Evita que Django genere una SQL diferida por cada registro
+
 
 Ver documentación oficial de las setencias QuerySet para más información :
 
@@ -400,12 +404,39 @@ DATABASES = {
         'NAME': 'nombre_base_datos',
 	'USER': 'nobre_usuario_de_la_bd',
 	'PASSWORD': 'contraseña_de_la_bd',
-	'HOST': 'IP_de_la_bd',
+	'HOST': 'IP_de_la_bd o host_name_de_la_bd',
 	'DATABASE_PORT': 'puerto_de_la_bd',
     }
 }
 
 La creación de tablas y sentencias SQL es igual a lo anteriormente indicado para SQLite
+
+EJECUCION DIFERIDA Y DEPURACION DE SETENCIAS SQL EN LOCAL
+
+Django genera las sentencias SQL en modo diferido,  primero crea  y no las ejecuta has que hacemos uso de la variable en la que está
+almacenado el resultado . Esto permite ir añadiendo en Python lineas de código con filtros posteriores sobre esa misma variable.
+
+Para poder comprobar las setencias SQL que Django ejecuta cuanto lo tenemos instalado aun en local,  podemos añadir a la
+vista en cuestión este código para que en la consola aparezcan las SQL que se van generando :
+    
+    import logging
+
+    l = logging.getLogger('django.db.backends') 
+    l.setLevel(logging.DEBUG)
+    l.addHandler(logging.StreamHandler())
+
+EVITAR LA GENERACION DE MULTIPLES SQL EN LOS SELECT
+
+En casos en los que necesitamos hacer selects que requieren del uso de Foreign Keys provenientes de otras tablas,  Django
+crea una SQL por cada registro,  lo cual puede mermar el rendimiento de nuestra aplicación, para evitar este comportamiento
+debemos usar la orden .prefetch_related("campo_fk1", "campo_fk2".....):
+
+EJ.
+	lista_objetos_bbdd = models.Anuncio.objects.order_by("-id").prefetch_related('categoria','usuario')
+
+Este ejemplo usará una SQL para extraer el id de sesión (Django siempre lo hace) y otra para traer anuncios ordenados por su id
+pintando en lugar del categoria_id y el usuario_id de la clase Anuncio ,  los nombres que tienen estas en las tablas hacia las
+que apuntan las Foreigh Keys
 
 #########################################  FORMULARIOS  #################################################################
 
@@ -489,7 +520,184 @@ Para las imagenes
 
 Y asi cualquier otro elemento estático que deseemos añadir
 
-	 
+
+##################################  BUSCADORES EN LA APLICACION  ##########################################################
+
+Ej.  HTML
+
+buscador:
+<form action="/anuncios" method = "GET">
+
+titulo: <input type="text" name="name_valor_en_buscador" value="{{valor_en_buscador}}" /> 
+
+<input type="submit" value="BUSCAR" /> 
+
+<a href="/anuncios">resetear busqueda</a>
+
+</form>
+
+Ej. VIEWS (añadiendo al context valor_en_buscador, se queda pintado en el buscador hasta que se haga un reset)
+
+    resultado = models.Anuncio.objects.order_by("-id").prefetch_related('categoria','usuario')    
+
+    valor_en_buscador = ""
+
+    if "name_valor_en_buscador" in request.GET:
+
+        resultado = resultado.filter( nombre_columna__contains = request.GET["name_valor_en_buscador"])
+        valor_buscado = request.GET["name_valor_en_buscador"]	 
+
+
+###############################  PAGINACION  #############################################################################
+
+Ej. HTML (usamos en la URL la variable comienzo)
+
+<div>
+    
+    total de anuncios en base de datos: {{total_resultados}} <br/>
+    
+    {% if anterior >= 0 %}
+        <a href="/anuncios?comienzo={{anterior}}">ANTERIOR</a>
+    {% endif %}
+    
+    {% if siguiente < total_resultados %}
+        <a href="/anuncios?comienzo={{siguiente}}">SIGUIENTE</a>
+    {% endif %}
+</div>
+
+Ej. VIEWS ( caso de 5 resultados por página haciendo un slice a la lista de objetos que viene de la BBDD)
+
+    listado = models.Anuncio.objects.order_by("-id").prefetch_related('categoria','usuario')
+
+    comienzo = 0
+    if "comienzo" in request.GET :
+        comienzo = int(request.GET["comienzo"])
+    listado = listado[comienzo:comienzo+5]
+    total_resultados = models.Anuncio.objects.count()    
+    
+    siguiente = comienzo + 5
+    anterior = comienzo - 5
+    context = {
+            "anuncios" : listado,
+            "valor_en_buscador" : valor_en_buscador,
+            "siguiente" : siguiente,
+            "anterior" : anterior,
+            "total_resultados": total_resultados
+	    }
+
+
+############################ SUBIR PROYECTOS DJANGO A PYTHON ANYWHERE  ###############################################
+
+Al crear un poryecto Django en PythonAnywhere , se crean automáticamente los archivos settins.py y urls.py del proyecto,
+con lo cual nosotros sólo debemos subir el contenido de la carpeta donde se encuentre nuestra APP, creando el directorio
+con el nombre de dicha APP y las subcarpetas static, templates......
+
+Una vez subidos los archivos, en settings.py debemos añadir a la ilsta INSTALLED_APPS nuestra APP y crear la BD de MySQL,
+añadiendola a la lista DATABASES de settings.py , también hay que poner el DEBUG a False, ya que en el debugging sólo se
+puede hacer en local
+
+En urls.py de la raiz del proyecto añadiremos con include la ruta de la raiz que vayamos a usar
+
+Finalmente, en la consola BASH ejecutamos estas sentencias ( en este caso con Python 3.8)
+
+python3.8 manage.py makemigrations nombre_app
+
+python3.8 manage.py migrate
+
+Con esto nuestro proyecto Django ya está listo para trabajar con él
+
+
+
+############################  IMAGENES Y ARCHIVOS  ##################################################################
+
+Este código permite guardar una imagen o cualquier otra clase de archivo, como un PDF
+
+En el HTML :
+
+
+
+
+
+Para subir imagenes
+
+<form action = "guardar-nuevo-anuncio" method="post" enctype="multipart/form-data">
+
+	 <input type="file" name="foto"/>
+
+Para mostrar imagenes, en la parte de arriba del <body> incluimos esto 
+
+{% load static %}
+{% static 'nombre_carpeta_imagenes' as ruta_imagenes %}
+
+Y para que aparezca la imagen
+
+<img src="{{ruta_imagenes}}/{{elemento.id}}.jpg" />
+
+En el VIEWS
+
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
+#Guardamos una imagen nombrandola con el id en BBDD del registro al que hace referencia en el directorio static
+
+    id_anuncio = anuncio.id --> Viene de un objeto obtenido de la BBDD
+    ruta = "anuncios/static/imagenes/" + str(id_anuncio) + ".jpg"
+    f = request.FILES["foto"]
+    default_storage.save(ruta, ContentFile(f.read()))   
+
+
+############################  PANEL DE ADMINISTRACION  ##############################################################
+
+La web de administracion que incorpora Django está en la ruta /admin que aparece en el archivo urls.py de la raiz del
+proyecto
+
+Para visualizar las tablas de la BBDD en este portal, hay que incluir las clases con las que las hemos creado en el archivo
+admin.py de nuestra APP de esta manera:
+
+from . import models
+
+admin.site.register(models.nombre_clase)
+
+IMPORTANTE -  En el Panel de administracion se añade una s al final del nombre de la clase , por lo que habria que evitar
+crear modelos con nombres en plural
+
+También es conveniente añadir las clases un método __str__(self) en el cual definamos un string que muestre la información
+contenida en las clases que queramos que aparezca en el listado del panel de administración, de lo contrario aparece un
+listado con números de objetos:
+
+Ej __str__(self):
+       return "El usuario se llama {} {} {}".format(self.nombre, self.apellido1, self.apellido2)
+
+Por último , hay que crear el superusuario administrador del portal, que a su vez podrá crear otros administradores:
+
+python manage.py createsuperuser
+
+
+En el panel aparecen los campos de las tablas creadas en models.py nombrados con la priemra letra en mayuscula y cambiando
+los guiones bajos por un espacio.  Si por alguna razón necesitamos que se pinte en el panel el nombre de algún campo con
+otro nombre disinto, basta con añadir esto en el propiedad de la clase:
+
+nombre = models.CharField(max_length = 20, verbose_name = "Nombre de Usuario")
+
+Podemos personalizar los campos de los modelos que se muestran en el panel, para ello en admin.py hay que crear una clase
+que , heredando de admin.ModelAdmin, indique los campos que serán visibles del modelo en cuestión;
+
+
+	class nombre_claseAdmin(admin.ModelAdmin):
+		list_display = ("nombre_campo1", "nombre_campo2"....)
+		search_fields = ("nombre_campo1", "nombre_campo2"....) --> Estos son campos por los cuales buscar en el panel
+		list_filter = ("nombre_campo1", "nombre_campo2"....) --> Estos son campos por los cuales filtrar en el panel
+		date_hierarchy = ("campo_fecha",) --> Esto añade menús de selección de fechas en la parte superior del panel
+
+Y actualizar el registro:
+
+admin.site.register(nombre_clase, nombre_claseAdmin)
+
+De esta manera en el panel se muestra sólo lo añadido en la clase que enmascara a la real, y además se añade un buscador en el
+panel y un filtro ( si usamos un campo DateField, Django añade varios filtros por dias, meses, años...)
+
+
+
 
 
 

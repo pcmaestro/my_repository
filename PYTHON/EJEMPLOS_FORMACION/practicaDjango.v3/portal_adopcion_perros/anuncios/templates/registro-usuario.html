@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de usuarios</title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+
+</head>
+
+<body onload = "hola()">
+    <br/> 
+    <br/>
+    <br/>
+    <header
+    <h1>INDIQUE SUS DATOS PARA REGISTRARSE EN EL PORTAL</h1>
+    </header>
+    <form method="POST" action="guardar-usuario" onsubmit="return validar_usuario()">
+
+        {% csrf_token %}
+
+        <table>
+
+            <tr>
+                <td><label>Nombre</label></td>
+                <td><input type="text" name="nombre" class = "text" /></td>
+                <td><label>Primer apellido</label></td>
+                <td><input type="text" name="apellido_1" class = "text" /></td>
+                <td><label>Segundo apellido</label></td>
+                <td><input type="text" name="apellido_2" class = "text" /></td>
+                <td><label>Teléfono</label></td>
+                <td><input type="text" name="telefono" id = "telefono"/></td>
+            </tr>
+            <tr>
+                <td><label>Email</label></td>
+                <td><input type="text" name="email" id = "email" /></td>
+                <td><label>Contraseña</label></td>
+                <td><input type = "password" name = "password1" class = "password"/></td>
+                <td><label>Confirmar contraseña</label></td>
+                <td><input type = "password" name = "password2" class = "password" /></td>
+                <td></td>
+                <td></td>
+            </tr>           
+
+        </table>
+        <br/>
+        <input type="submit" value="REGISTRAR" />
+        <br/>
+        <br/>
+        <span id = "error_mail"><h2>{{ error_mail }}</h2></span>
+        <span id = "pass_no_match"><h2>{{ pass_no_match }}</h2></span>
+        <span id = "validacion_ko"><h2>{{ validacion_ko }}</h2></span>
+
+    </form>
+</body>
+
+</html>

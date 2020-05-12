@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-    
-    Listado de <b>TUS ANUNCIOS:</b>
 
-    {% for a in anuncios %}
-        <div style="margin: 10px">
-                titulo: {{a.titulo}} precio: {{a.precio}} <br/>
-                <a href="borrar-anuncio?id={{a.id}}">BORRAR</a> 
-                <a href="editar-anuncio?id={{a.id}}">EDITAR</a>     
-        </div>
-    {% endfor %}
-    
+Listado de <b>TUS ANUNCIOS:</b>
+
+{% for a in anuncios %}
+    <div style="margin: 10px">
+            titulo: {{a.titulo}} precio: {{a.precio}} <br/>
+            <a href="borrar-anuncio?id={{a.id}}">BORRAR</a> 
+            <a href="editar-anuncio?id={{a.id}}">EDITAR</a>     
+    </div>
+{% endfor %}
+
 
 </body>
 </html>

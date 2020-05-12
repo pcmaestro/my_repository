@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de anuncios</title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+    
+</head>
+<body>
+    <header>
+    <h1>REGISTRO DE ANUNCIOS</h1>
+    </header>
+    <form action = "guardar-anuncio" method = "POST"> 
+    
+    {% csrf_token %}
+
+    <table>        
+        <tr>
+            <td>Nombre</td><td><input type = "text" name = "nombre"/></td>
+            <td>Raza</td><td><input type = "text" name = "raza"/></td>
+            <td>Edad</td><td><input type = "text" name = "edad"/></td>
+        </tr> 
+            <td>Color de pelo</td><td><input type = "text" name = "pelo"/></td>
+            <td>Defectos fisicos</td>
+            <td>
+                <select name = "defectos">    
+                    <option value = "null">---seleccione---</option>                
+                    <option value = "0">NO</option>
+                    <option value = "1">SI</option>
+                </select>
+
+            </td>
+            <td>vacunado</td>
+            <td>
+                <select name = "vacunado">
+                    <option value = "null">---seleccione---</option>    
+                    <option value = "0">NO</option>
+                    <option value = "1">SI</option>
+                </select>                
+            </td>
+        <tr>
+            <td>Categoria de perro</td>
+            <td>
+                <select name = "categoria">
+                    <option value = "null">---seleccione---</option>
+                    <option value = "1">Perro de compañia</option>
+                    <option value = "2">Perro Guardian</option>
+                    <option value = "3">Raza peligrosa</option>
+
+                </select>
+            </td>
+            <td>Foto del perro</td> <td> <input type = "file" name = "foto" /> </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <br/>
+    <input type = "submit" value ="REGISTRAR ANUNCIO"/>  
+    &nbsp;  
+    
+    </form>    
+    <br/>
+    <br/>
+    <a href = "volver-home"><button id = "boton">VOLVER A MIS ANUNCIOS</button></a>
+
+    <span id ="error_campo"><h2>{{ error_campo }}</h2></span>
+
+</body>
+</html>

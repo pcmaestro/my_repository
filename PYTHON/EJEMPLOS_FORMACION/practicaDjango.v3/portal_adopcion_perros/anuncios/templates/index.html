@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de adopción de perros</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+
+</head>
+<body>    
+    {% static 'fotos' as ruta_imagenes %}
+    <header>
+    <h1>PORTAL DE ANUNCIOS PARA LA ADOPCION DE PERROS</h1>
+    </header>
+    <nav> 
+    <ul>
+    <li><a href ="registro-usuario">REGISTRO EN EL PORTAL</a></li>
+    <li><a href = "inicio-sesion-usuario">INICIO DE SESION</a></li>
+    <li><a href = "/admin" >ACCESO ADMINISTRADORES</a></li> 
+    </ul>
+    </nav>
+    <main>
+
+        <table>
+            <tr class = "cabecera_anuncios">
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Edad</th>
+                <th>Color de pelo</th>
+                <th>Defectos fisicos</th>
+                <th>Vacunado</th>
+                <th>Categoria</th>
+                <th>Foto</th>     
+            </tr>    
+            
+            {% for perro in anuncios %}
+                <tr class = "linea">
+                    <td>{{ perro.nombre }}</td>
+                    <td>{{ perro.raza }}</td>
+                    <td>{{ perro.edad }}</td>
+                    <td>{{ perro.color_pelo }}</td>
+                    <td>
+                        {% if perro.defectos_fisicos == True %}
+                        SI
+                        {% elif perro.defectos_fisicos == False %}
+                        NO                        
+                        {% endif %}
+                    </td>                    
+                    <td>
+                        {% if perro.vacunado == True %}
+                        SI
+                        {% elif perro.vacunado == False %}
+                        NO                        
+                        {% endif %}
+                    </td>
+                    <td>{{perro.categoria.categoria}}</td>
+                    <td id = "celda_foto"><img src = "{{ruta_imagenes}}/{{perro.id}}.jpg" alt = "Foto no disponible" id = "foto_perro" /></td>  
+                </tr>
+                {% endfor %}      
+        
+    </table>
+    </main>
+
+</body>
+</html>
