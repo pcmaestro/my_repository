@@ -19,8 +19,14 @@
     <ul>
     <li><a href ="registro-usuario">REGISTRO EN EL PORTAL</a></li>
     <li><a href = "inicio-sesion-usuario">INICIO DE SESION</a></li>
-    <li><a href = "/admin" >ACCESO ADMINISTRADORES</a></li> 
-    </ul>
+    <li><a href = "/admin" >ACCESO ADMINISTRADORES</a></li>     
+    </ul>          
+    <form action ="buscador" method="GET" id ="form_buscador">
+    <label>BUSCA TU PERRO&nbsp;</label>
+    <input type = "text" name = "criterio" placeholder="filtra por criterio..." id = "buscador"/>
+    <input type ="submit" value = "BUSCAR" id ="submit"/> 
+    </form>      
+    <br/>
     </nav>
     <main>
 
@@ -34,6 +40,7 @@
                 <th>Vacunado</th>
                 <th>Categoria</th>
                 <th>Foto</th>     
+                <th>Tf Contacto</th>
             </tr>    
             
             {% for perro in anuncios %}
@@ -58,11 +65,25 @@
                     </td>
                     <td>{{perro.categoria.categoria}}</td>
                     <td id = "celda_foto"><img src = "{{ruta_imagenes}}/{{perro.id}}.jpg" alt = "Foto no disponible" id = "foto_perro" /></td>  
+                    <td>{{perro.usuario.telefono}}</td>
                 </tr>
                 {% endfor %}      
         
     </table>
     </main>
+    <footer>
+        &nbsp;Anuncios totales : {{anuncios_totales}}
+
+        <a href = '/anuncios'id = "limpiar" >{{limpiar}}&nbsp;&nbsp;&nbsp;</a>
+
+        {% if anterior >= 0 %}
+            <a href="/anuncios?comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+        {% endif %}
+    
+        {% if siguiente < anuncios_totales %}
+            <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+        {% endif %}
+    </footer> 
 
 </body>
 </html>

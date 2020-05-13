@@ -17,7 +17,7 @@ Templates --> Plantillas HTML
 de este modo:
 
 django-admin startproject nombre_proyecto
-
+im
 Esto crea la carpeta nombre_proyecto y colgando de ella una subcarpeta de archivos de proyecto con el mismo nombre y el archivo manage.py
 que contiene los comandos de Django
 
@@ -358,9 +358,11 @@ lista = nombre_clase.objects.filter(nombre_campo1 = valor_de_filtrado1, nombre_c
 								       más criterios de filtrado con un operador AND
 
 
-Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).order_by("id)
+Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).order_by("id").count()
 
 Y además podemos evitar SQL pesadas concatenando .prefetch_related("campo_fk1", "campo_fk2".....) --> Evita que Django genere una SQL diferida por cada registro
+												      creando una JOIN. Si sólo vamos a traer un registro, podemos
+												      podemos hacer la JOIN con select_related(("campo_fk1", "campo_fk2"..)								
 
 
 Ver documentación oficial de las setencias QuerySet para más información :
@@ -544,8 +546,40 @@ Ej. VIEWS (añadiendo al context valor_en_buscador, se queda pintado en el busca
 
     if "name_valor_en_buscador" in request.GET:
 
-        resultado = resultado.filter( nombre_columna__contains = request.GET["name_valor_en_buscador"])
-        valor_buscado = request.GET["name_valor_en_buscador"]	 
+	criterio = request.GET["name_valor_en_buscador"]
+
+        if len(anuncios.filter(columna1__contains = criterio)) != 0:
+            anuncios = anuncios.filter(columna1__contains = criterio)
+
+        elif len(anuncios.filter(columna2__contains = criterio)) != 0:
+            anuncios = anuncios.filter(columna2__contains = criterio)
+
+	elif len(anuncios.filter(columna3__contains = criterio)) != 0:
+            anuncios = anuncios.filter(columna3__contains = criterio)
+
+        etc...
+
+        valor_en_buscador = request.GET["name_valor_en_buscador"] --> Esto va al context para dejarlo pintado en la caja del buscador	 
+
+BUSCADOR EN COLUMAS CON FOREIGN KEYS
+
+Ej. con categorias de anuncios
+
+En este caso hay que localizar primero en la tabla a la que llama la foreign key el texto del id_categoria en el cual estamos buscando
+
+categorias = models.Categorias.objects.filter(columna_con_ForeignKey__contains = criterio)
+
+Luego hay que crear un array que contendrá los objetos finalmente coincidentes
+
+anuncios_finales = []
+
+Y finalmente recorrer con un bucle los objetos que hemos sacado antes desde la tabla Categorias en la variable categorias 
+y añadirlos al array
+
+for c in categorias:
+    anuncios_finales.extend(anuncios.filter(categoria = c))
+
+anuncios = anuncios_finales
 
 
 ###############################  PAGINACION  #############################################################################
@@ -614,10 +648,6 @@ Este código permite guardar una imagen o cualquier otra clase de archivo, como 
 
 En el HTML :
 
-
-
-
-
 Para subir imagenes
 
 <form action = "guardar-nuevo-anuncio" method="post" enctype="multipart/form-data">
@@ -644,6 +674,17 @@ from django.core.files.base import ContentFile
     ruta = "anuncios/static/imagenes/" + str(id_anuncio) + ".jpg"
     f = request.FILES["foto"]
     default_storage.save(ruta, ContentFile(f.read()))   
+
+COMPROBAR SI HAY UNA IMAGEN O ARCHIVO PARA CARGAR :
+
+if "imagen" in request.FILES:
+    imagen = request.FILES["imagen"]
+    código......
+
+SUSTITUCION DE ARCHIVOS EXISTENTES
+
+El método default_storage.save() no "machaca" archivos existentes con el mismo nombre,  primero es necesario usar
+os.path.isfile() y os.remove() para borrar el archivo existente y luego guardar el nuevo con el mismo nombre
 
 
 ############################  PANEL DE ADMINISTRACION  ##############################################################

@@ -101,7 +101,7 @@ def guardar_sesion_usuario(request):
 def home_usuario(request):
     id_usuario = request.session["id_usuario"]
     usuario = models.Usuarios.objects.get(pk = id_usuario)    
-    anuncios_usuario = models.Perros.objects.filter(usuario_id = usuario.id)
+    anuncios_usuario = models.Perros.objects.filter(usuario_id = usuario.id).order_by("-id").prefetch_related("categoria", "usuario")
     context = {
         "nombre" : usuario.nombre + " " + usuario.apellido_1 +
          " " + usuario.apellido_2, "mis_anuncios" : anuncios_usuario

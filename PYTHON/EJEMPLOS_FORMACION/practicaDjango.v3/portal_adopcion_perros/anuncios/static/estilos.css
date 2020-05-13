@@ -112,3 +112,48 @@ th{
 #celda_foto{
     text-align: center;
 }
+
+#label{
+    white-space: nowrap;
+    width: 1px;
+    text-align: left;
+}
+
+footer{
+    background-color: #F35A81;
+    color: white;
+    font-weight: bold;
+    padding-top: 2%;
+    padding-bottom: 2%;
+
+}
+
+.paginacion{
+    text-decoration: none;
+    color: white;
+    float: right;
+
+}
+
+#form_buscador{
+    text-align: center;
+    width: 70%;
+    box-shadow: black -3px -3px 5px;
+    margin:auto;
+    padding: 1%;
+
+}
+
+#buscador{
+    width: 20%;
+}
+
+#submit:hover{
+    cursor: pointer;
+}
+
+#limpiar{
+    text-decoration: none;
+    color: white;
+    float: right;
+}

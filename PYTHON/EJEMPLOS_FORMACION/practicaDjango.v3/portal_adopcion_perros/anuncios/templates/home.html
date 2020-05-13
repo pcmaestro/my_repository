@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    {% static 'fotos' as ruta_imagenes %}
     <header>
     <h1>Bienvenido a tus anuncios {{ nombre }}</h1>
     </header>
@@ -61,7 +62,7 @@
                 {% endif %}
             </td>
             <td>{{perro.categoria.categoria}}</td>
-            <td>fotos en construcción</td>
+            <td id = "celda_foto"><img src = "{{ruta_imagenes}}/{{perro.id}}.jpg" alt = "Foto no disponible" id = "foto_perro" /></td>
             <td><a href = "modificacion-anuncio/{{perro.id}}"><button>MODIFICAR</button></a></td>                
             <td><a href = "borrar-anuncio/{{perro.id}}"><button>BORRAR</button></a></td>
         </tr>

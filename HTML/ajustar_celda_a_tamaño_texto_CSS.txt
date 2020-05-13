@@ -1,0 +1,5 @@
+
+#id_celda{
+	white-space: nowrap;
+ 	width: 1px;
+}
