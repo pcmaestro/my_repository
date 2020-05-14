@@ -6,11 +6,19 @@
 </head>
 <body>
 
+{% load static %}
+{% static 'imagenes' as ruta_imagenes %}
+
 Actualiza los datos del anuncio:<br/>
-<form action = "guardar-cambios-anuncio" method = "post"> 
+<form action = "guardar-cambios-anuncio" method = "post" enctype="multipart/form-data"> 
     {% csrf_token %}
     titulo: <input type="text" name ="titulo" value="{{anuncio.titulo}}"/> <br/>
     precio: <input type="text" name ="precio" value="{{anuncio.precio}}" /> <br/>
+    imagen actual:<br/>
+    
+    <img src="{{ruta_imagenes}}/{{anuncio.id}}.jpg?um={{anuncio.ultima_modificacion}}" style="height: 50px"/><br/>
+    selecciona una nueva imagen, si quieres cambiarla: <input type="file" name="foto"/> <br/>
+    
     <input type="hidden" name="id_anuncio" value="{{anuncio.id}}"/>
     categoria: 
     <select name="categoria_id">

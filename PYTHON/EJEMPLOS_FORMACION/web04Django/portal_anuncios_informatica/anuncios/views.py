@@ -4,10 +4,14 @@ from . import models
 import logging
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.http.response import HttpResponse
+from . import utilidades
+from django.utils import timezone
 
 # esto es como el flask_app que teniamos antes pero solo para anuncios
 
 def inicio(request):
+    
     
     l = logging.getLogger('django.db.backends') 
     l.setLevel(logging.DEBUG)
@@ -32,8 +36,8 @@ def inicio(request):
     comienzo = 0
     if "comienzo" in request.GET :
         comienzo = int(request.GET["comienzo"])
-    res = res[comienzo:comienzo+5]
-    total_resultados = models.Anuncio.objects.count()
+    res = res[comienzo:comienzo + resultados_por_pagina]
+    total_resultados = models.Anuncio.objects.filter(titulo__contains = titulo_buscador).count()
     
     
     siguiente = comienzo + 5
@@ -64,7 +68,9 @@ def guarda_nuevo_anuncio(request):
     usuario = models.Usuario.objects.get(pk = request.session["id_usuario"])
     
     anuncio = models.Anuncio(titulo = titulo_introducido, precio = precio_introducido, email = usuario.email)
-    anuncio.categoria = categoria
+    anuncio.ip = utilidades.obtener_ip(request)
+    anuncio.ultima_modificacion = timezone.now()
+    anuncio.categoria_id = categoria_id
     anuncio.usuario = usuario
     anuncio.save()
     #despues de guardar el anuncio, vammos a guardar la imagen con un nombre 
@@ -137,7 +143,7 @@ def logout(request):
 
 def mis_anuncios(request):
     usuario_actual = models.Usuario.objects.get(pk = request.session["id_usuario"])
-    res = models.Anuncio.objects.filter(usuario = usuario_actual)
+    res = models.Anuncio.objects.filter(usuario = usuario_actual).order_by('-id')
     context = {
         "anuncios" : res
         }
@@ -167,7 +173,16 @@ def guardar_cambios_anuncio(request):
     anuncio.precio = request.POST["precio"].replace(",",".")
     categoria = models.Categoria.objects.get(pk = request.POST["categoria_id"])
     anuncio.categoria = categoria
+    anuncio.ultima_modificacion = timezone.now()
     anuncio.save()
+    
+    #guardar imagen si la hay
+    if "foto" in request.FILES:
+        ruta = "anuncios/static/imagenes/" + str(anuncio.id) + ".jpg"
+        f = request.FILES["foto"]#name del input type file
+        default_storage.delete(ruta)
+        default_storage.save(ruta, ContentFile(f.read()))   
+    
     
     return mis_anuncios(request)
     

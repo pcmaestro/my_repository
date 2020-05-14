@@ -354,11 +354,29 @@ lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado) --> Esto g
 								       la clase con la que fue creada la tabla, hay que definir un método de tipo
 								       __str__(self) con un return con el formato que deseemos que presente
 
+lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).count() --> Cuenta los registros obtenidos
+
+lista = nombre_clase.objects.filter(nombre_campo__contains = valor_contenido) --> Filtra los registros según un valor X que contengan
+
+lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).distinct() --> Filtra los registros haciendo un select distinct
+
+lista = nombre_clase.objects.filter(nombre_campo__gt = 100) --> Filtra los registros por valores mayores que 100
+
+lista = nombre_clase.objects.filter(nombre_campo__lt = 100) --> Filtra los registros por valores menores que 100
+
+lista = nombre_clase.objects.filter(nombre_campo__gte = 100) --> Filtra los registros por valores iguales o mayores que 100
+
+lista = nombre_clase.objects.filter(nombre_campo__lte = 100) --> Filtra los registros por valores iguale o menores que 100
+
+lista = nombre_clase.objects.filter(nombre_campo__in = [array]) --> Filtra los registros que existan dentro de un array
+
 lista = nombre_clase.objects.filter(nombre_campo1 = valor_de_filtrado1, nombre_campo1 = valor_de_filtrado1...etc ) --> Como el anterior, añadiendo más
-								       más criterios de filtrado con un operador AND
+								       criterios de filtrado con un operador AND
+
+lista = nombre_clase.object.aggregate(nombre_campo1 , nombre_campo2)  --> Devuelve valores agregados de los campos indicados
 
 
-Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).order_by("id").count()
+Se pueden concatenar las acciones, por ejemplo nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).filter(nombre_campo__contains = valor_contenido).count() 
 
 Y además podemos evitar SQL pesadas concatenando .prefetch_related("campo_fk1", "campo_fk2".....) --> Evita que Django genere una SQL diferida por cada registro
 												      creando una JOIN. Si sólo vamos a traer un registro, podemos
@@ -668,6 +686,12 @@ En el VIEWS
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
+#Comprobar si hay una imagen o archivo para cargar:
+
+if "imagen" in request.FILES:
+    imagen = request.FILES["imagen"]
+    código......
+
 #Guardamos una imagen nombrandola con el id en BBDD del registro al que hace referencia en el directorio static
 
     id_anuncio = anuncio.id --> Viene de un objeto obtenido de la BBDD
@@ -675,16 +699,39 @@ from django.core.files.base import ContentFile
     f = request.FILES["foto"]
     default_storage.save(ruta, ContentFile(f.read()))   
 
-COMPROBAR SI HAY UNA IMAGEN O ARCHIVO PARA CARGAR :
+#Sustituimos la imange actual por otra nueva (hay que borrar previamente la anterior):
 
-if "imagen" in request.FILES:
-    imagen = request.FILES["imagen"]
-    código......
+    id_anuncio = anuncio.id --> Viene de un objeto obtenido de la BBDD
+    ruta = "anuncios/static/imagenes/" + str(id_anuncio) + ".jpg"
+    default.storage.delete(ruta)
+    f = request.FILES["foto"]
+    default_storage.save(ruta, ContentFile(f.read()))   
 
-SUSTITUCION DE ARCHIVOS EXISTENTES
+#Refresco automático de imagenes:
 
-El método default_storage.save() no "machaca" archivos existentes con el mismo nombre,  primero es necesario usar
-os.path.isfile() y os.remove() para borrar el archivo existente y luego guardar el nuevo con el mismo nombre
+from django.utils import timezone
+
+En el archivo settings.py, modificamos el TIME ZONE :
+
+TIME_ZONE = 'Europe/Madrid'
+
+En el models.py es necesario disponer de un campo en una tabla que almacene una fecha de última modificación
+
+ultima_modificacion = models.DateTimeField("fecha ultima modificacion") 
+
+En el views.py añadimos el código para guardar en una propiedad el timestamp (Ej. registro anuncio)
+
+anuncio.ultima_modificacion = timezone.now()
+
+En el HTML añadimos un parámetro a la ruta de la imagen 
+
+Ej. mostrando las propiedades de un anuncio ( um sería ultima modificacion)
+
+{% load static %}
+{% static 'imagenes' as ruta_imagenes %}
+
+	{% for anuncio in anuncios %}
+		<img src="{{ruta_imagenes}}/{{a.id}}.jpg?um={{a.ultima_modificacion}}" />
 
 
 ############################  PANEL DE ADMINISTRACION  ##############################################################
@@ -738,10 +785,129 @@ De esta manera en el panel se muestra sólo lo añadido en la clase que enmascar
 panel y un filtro ( si usamos un campo DateField, Django añade varios filtros por dias, meses, años...)
 
 
+##############################  OBTENER IP DE USUARIO Y GEOLOCALIZACION  ###################################################
+
+Con este código podemos ver toda la información de usuario que se almacena en los datos META:
+
+    texto = "info del usuario:<br/>"
+    elementos_en_META =  str(request.META.keys())
+    texto += elementos_en_META
+    return HttpResponse(texto)
+
+La funcionalidad de obtener IP no suele estar en los archivos views.py , suelen estar en uno a parte llamado utilities.py:
 
 
+def obtener_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        return x_forwarded_for.split(",")[0]
+    return request.META.get('REMOTE_ADDR')
+
+En el models.py debemos añadir un campo con la ip del usuario :
+
+Ej 
+
+ip = models.CharField(max_length = 200)
 
 
+Y luego en el views.py hacemos uso de esta función:
 
+Ej.  Captura de la IP al guardar un anuncio
+
+from . import utilities
+
+anuncio.ip = utilities.obtener_ip(request)
+
+
+Para geolocalizar la IP,  es necesario hacer uso de un servicio REST externo, como por ej. https://www.infosniper.net
+
+
+######################################  CODIGO DE TESTEO  ###########################################################
+
+En test.py podemos definir funciones que hagan un test a nuestro código Django para ver si el funcionamiento es correcto
+
+
+Con esta instrucción, ejecutamos todas las funciones que haya definidas en test.py
+
+python manage.py test
+
+Ej.  Testeamos que el registro de un usuario en un portal de anuncios es correco :
+
+from . import models
+
+class TestRegistroAnuncio(TestCase):
+    def setUp(self):        
+        models.Usuario.objects.create(nombre="pruebas",email="rueba@gmail.com", clave="123")
+        
+    def test_registro_usuario(self):
+        usuario = models.Usuario.objects.get(email = "prueba@gmail.com")
+        self.assertEqual(usuario.email, "prueba@gmail.com")
+
+Todo lo que sea creado en la BD en el método SetUp(self) ,  se borrará automáticamente al finalizar el test
+
+Respecto de self.assert ,  tiene diferentes valores ( en este caso es Equal) . Ver documentacion https://docs.djangoproject.com/en/3.0/topics/testing/tools/
+
+
+####################################  ENVIO DE EMAIL  ##############################################################
+
+
+En settings.py:
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "yourusername@gmail.com"
+EMAIL_HOST_PASSWORD = 'yourpassword'
+
+En Views
+
+from django.core.mail import send_mail
+
+send_mail(
+    'Subject here',
+    'Here is the message.',
+    'from@example.com',
+    ['to@example.com'],
+    fail_silently=False,
+)
+
+Si necesitamos que nuestra aplicación nos envie un correo desde un formulario de contacto , en el VIEWS tenemos que indicar:
+
+Ej. tenemos un formulario con los campos ASUNTO, EMAIL_USUARIO, MENSAJE
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+subject = request.POST["asunto"]
+
+message = request.POST["mensaje"] + " " + request.POST["email_usuario"]  --> Esto es para que veamos el email de quien nos escribe
+
+email_from = settings.EMAIL_HOST_USER
+
+recipient_list = ["nuestro_email@gmail.com"]
+
+send_mail(subject, message, email_from, recipient_list)
+
+
+Y si necesitamos enviar el correo en formato HTML, podemos usar la función render_to_string y la funcion EmailMessage
+
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+
+template = get_template("correo.html")
+content = template.render(context)
+
+email = EmailMultialternatives(
+	"asunto_correo",
+	"texto_descripcion_correo",
+	settings.EMAIL_HOST_USER,
+	["destinatario1@gmail.com","destinatario2@gmail.com"],
+)
+
+email.attach_alternative(content, "text/html")
+
+email.send()
 
 

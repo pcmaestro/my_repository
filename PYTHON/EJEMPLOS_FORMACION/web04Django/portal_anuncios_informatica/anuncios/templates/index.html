@@ -42,14 +42,14 @@ listado de anuncios:<br/>
 <br/>
 <div>
     
-    total de anuncios en base de datos: {{total_resultados}} <br/>
+    total de anuncios: {{total_resultados}} <br/>
     
     {% if anterior >= 0 %}
-        <a href="/anuncios?comienzo={{anterior}}">ANTERIOR</a>
+        <a href="/anuncios?comienzo={{anterior}}&titulo={{titulo_buscador}}">ANTERIOR</a>
     {% endif %}
     
     {% if siguiente < total_resultados %}
-        <a href="/anuncios?comienzo={{siguiente}}">SIGUIENTE</a>
+        <a href="/anuncios?comienzo={{siguiente}}&titulo={{titulo_buscador}}">SIGUIENTE</a>
     {% endif %}
 </div>
 <br/>
@@ -62,7 +62,10 @@ listado de anuncios:<br/>
       categoria: {{a.categoria.texto}}<br/>
       usuario: {{a.usuario.nombre}}
       id: {{a.id}}<br/>
-      <img src="{{ruta_imagenes}}/{{a.id}}.jpg" style="height: 50px"/>
+      
+      ultima modificacion: <b>{{a.ultima_modificacion}}</b> <br/>
+      
+      <img src="{{ruta_imagenes}}/{{a.id}}.jpg?um={{a.ultima_modificacion}}" style="height: 50px"/>
       
     </div>
 {% endfor %}

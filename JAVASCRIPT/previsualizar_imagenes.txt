@@ -1,0 +1,25 @@
+PREVISUALIZAR IMANGENES EN JAVASCRIPT 
+
+Código para ver una pequeña muestra de una imagen seleccionada en el HTML antes de hacer
+el submit hacia el servidor
+
+<p><label>Añadir imagen: </label></p>
+<input type="file" name="imagen" id="seleccion-imagen" accept=".jpg">
+<img id="img" src="" width="200px" border="solid 1px">
+<script>
+    function init() {
+          var fichero = document.getElementById('seleccion-imagen');
+          fichero.addEventListener('change', mostrarImagen, false);
+        }
+
+        function mostrarImagen(event) {
+          var file = event.target.files[0];
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            var img = document.getElementById('img');
+            img.src = event.target.result;
+          }
+          reader.readAsDataURL(file);
+        }
+    window.addEventListener('load', init, false);
+</script>
