@@ -4,18 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de adopción de perros</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+
 </head>
-<body>
-    
+<body>    
+    {% static 'fotos' as ruta_imagenes %}
+    <header>
     <h1>PORTAL DE ANUNCIOS PARA LA ADOPCION DE PERROS</h1>
-    
-    <a href ="registro-usuario">Registro en el portal</a>
-    <a href = "inicio-sesion-usuario">Inicio de sesión</a>
+    </header>
+    <nav> 
+    <ul>
+    <li><a href ="registro-usuario">REGISTRO EN EL PORTAL</a></li>
+    <li><a href = "inicio-sesion-usuario">INICIO DE SESION</a></li>
+    <li><a href = "/admin" >ACCESO ADMINISTRADORES</a></li>     
+    </ul>          
+    <form action ="/anuncios" method="GET" id ="form_buscador">
+    <label>BUSCA TU PERRO&nbsp;</label>
+    <input type = "text" name = "criterio" value = "{{valor_en_buscador}}"  placeholder="filtra por criterio..." id = "buscador"/>
+    <input type ="submit" value = "BUSCAR" id ="submit"/> 
+    </form>
     <br/>
-    <h1>Lista de anuncios</h1>
+    <span id = "anuncios_totales">&nbsp;Anuncios totales : {{anuncios_totales}}</span>
     <br/>
+    {% if filtrado == True %}
+        <div id = "btn_limpiar">    
+        <a href = "/anuncios" id = "limpiar" ><button>{{limpiar}}</button></a>    
+        </div>
+    {% endif %}
+    <br/>
+    </nav>
+    <main>
+
         <table>
-            <tr>
+            <tr class = "cabecera_anuncios">
                 <th>Nombre</th>
                 <th>Raza</th>
                 <th>Edad</th>
@@ -24,23 +48,65 @@
                 <th>Vacunado</th>
                 <th>Categoria</th>
                 <th>Foto</th>     
+                <th>Tf Contacto</th>
             </tr>    
             
             {% for perro in anuncios %}
-                <tr>
-                    <td>{{ perro.nombre }}</td>
-                    <td>{{ perro.raza }}</td>
-                    <td>{{ perro.edad }}</td>
-                    <td>{{ perro.color_pelo }}</td>
-                    <td>{{ perro.defectos_fisicos }}</td>
-                    <td>{{ perro.vacunado }}</td>
-                    <td>{{perro.categoria_id}}</td>
-                    <td>fotos en construcción</td>  
+                <tr class = "linea">
+                    <td>{{ perro.nombre}}</td>
+                    <td>{{ perro.raza}}</td>
+                    <td>{{ perro.edad}}</td>
+                    <td>{{ perro.color_pelo}}</td>
+                    <td>
+                        {% if perro.defectos_fisicos == True %}
+                        SI
+                        {% elif perro.defectos_fisicos == False %}
+                        NO                        
+                        {% endif %}
+                    </td>                    
+                    <td>
+                        {% if perro.vacunado == True %}
+                        SI
+                        {% elif perro.vacunado == False %}
+                        NO                        
+                        {% endif %}
+                    </td>
+                    <td>{{perro.categoria.categoria}}</td>
+                    <td id = "celda_foto"><img src = "{{ruta_imagenes}}/{{perro.id}}.jpg?um={{perro.ultima_modificacion}}" alt = "Foto no disponible" id = "foto_perro" /></td>  
+                    <td>{{perro.usuario.telefono}}</td>
                 </tr>
                 {% endfor %}      
         
     </table>
+    </main>
+    <footer>        
+
+        {% if filtrado == False %}
     
+            {% if siguiente < anuncios_totales and siguiente == paginacion %}
+                <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+           
+            {% elif siguiente < anuncios_totales and siguiente > paginacion %}
+                <a href="/anuncios?comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
+                <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+            {% else %}
+                <a href="/anuncios?comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+            {% endif %}
+
+        {% elif filtrado == True %}
+
+            {% if siguiente < anuncios_totales and siguiente == paginacion %}
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+            {% elif siguiente < anuncios_totales and siguiente > paginacion %}   
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a> 
+            {% else %}
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+            {% endif %}
+
+        {% endif %}
+        
+    </footer> 
 
 </body>
 </html>

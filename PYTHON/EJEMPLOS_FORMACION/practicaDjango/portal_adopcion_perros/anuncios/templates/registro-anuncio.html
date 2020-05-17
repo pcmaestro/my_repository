@@ -1,15 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de anuncios</title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+    
 </head>
 <body>
-    
+    <header>
     <h1>REGISTRO DE ANUNCIOS</h1>
-    
-    <form action = "guardar-anuncio" method = "POST"> 
+    </header>
+
+    <form action = "guardar-anuncio" method = "POST" enctype="multipart/form-data">
     
     {% csrf_token %}
 
@@ -48,17 +55,22 @@
 
                 </select>
             </td>
-            <td>Foto del perro</td> <td> <input type = "file" name = "foto" /> </td>
+            <td>Foto del perro</td> <td> <input type = "file" name = "foto" id = "carga_foto"/> </td>
+            <td></td>
+            <td></td>
         </tr>
     </table>
     <br/>
-    <input type = "submit" value ="REGISTRAR ANUNCIO"/>
     
-    </form>
+    <input type = "submit" value ="REGISTRAR ANUNCIO"/>    
     
+
+    </form>        
     <br/>
-    
-    <a href = "/home-usuario">Volver a la pagina de usuario </a>
+    <a href = "volver-home"><button id = "boton" onclick = "preventDefault()">VOLVER A MIS ANUNCIOS</button></a>
+    <br/> 
+
+    <span id ="error_campo"><h2>{{ error_campo }}</h2></span>
 
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div>Bienvenido al portal de anuncios de ARES</div>
+
+<div><a href="registrar-anuncio">registrar mi anuncio</a></div>
+
+<form action="/">
+    buscar: <input type="text" name="nombre" value="{{valor_buscador}}"/> <input type="submit" value="ACEPTAR"/>
+</form>
+anuncios encontrados: {{cantidad_anuncios}}
+<br/>
+<a href="/">ver todos los anuncios</a>
+
+<div>
+{% if valor_anterior >= 0 %}
+    <a href="?comienzo={{valor_anterior}}&nombre={{valor_buscador}}">anterior</a>
+{% endif %}
+
+{% if valor_siguiente < cantidad_anuncios %}
+    <a href="?comienzo={{valor_siguiente}}&nombre={{valor_buscador}}">siguiente</a>
+{% endif %}
+</div>
+
+<div>listado de anuncios:</div>
+
+{% for a in var_anuncios  %}
+
+    <div style="margin: 10px; background-color: rgb(200,250,200);">
+        categoria: <b>{{ a[5] }}</b><br/>
+        <b> {{ a[1] }} </b> <br/>
+        precio: {{ a[2] }} <br/>
+        email de contacto: <b>  {{ a[3] }}  </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email valido: <b>{{a[4]}}</b> <br/>
+        id: {{a[0]}}<br/>
+        foto:
+        <img src="static/fotos/{{ a[0] }}.jpg" style="height: 200px" alt="SIN FOTO" />
+    </div>
+
+{% endfor %}
+
+
+
+</body>
+</html>

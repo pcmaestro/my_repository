@@ -1,39 +1,93 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de anuncios</title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+    
 </head>
 <body>
-    
+
+    <header>
     <h1>MODIFICACION DE ANUNCIOS</h1>
-    
-    <form action = "guardar-anuncio-modificado/{{id_anuncio}}" method = "POST"> 
+    </header>
+    <br/>
+    <a href = "/anuncios/home-usuario"><button>VOLVER A MIS ANUNCIOS</button></a>
+    <br/> 
+    <form action = "guardar-anuncio-modificado/{{id_anuncio}}" method = "POST" enctype="multipart/form-data">
     
     {% csrf_token %}
     
     <table>        
         <tr>
             <td>Nombre</td><td><input type = "text" name = "nombre" value = "{{nombre}}"/></td>
+            <td></td>
             <td>Raza</td><td><input type = "text" name = "raza" value = "{{raza}}"/></td>
+            <td></td>
             <td>Edad</td><td><input type = "text" name = "edad" value = "{{edad}}"/></td>
-        </tr> 
-            <td>Color de pelo</td><td><input type = "text" name = "pelo"value = "{{pelo}}" /></td>
-            <td>Defectos fisicos</td><td><input type = "text" name = "defectos" value = "{{defectos}}" /></td>
-            <td>vacunado</td><td><input type = "text" name = "vacunado" value = "{{vacunado}}"/></td>
-        <tr>
-            <td>Foto del perro</td> <td> <input type = "file" name = "foto" /> </td>
+            <td></td>
+            <td></td>
         </tr>
+        <tr>
+            <td id = "label">Color de pelo</td><td><input type = "text" name = "pelo"value = "{{pelo}}" /></td>
+            <td></td>
+            <td id = "label">Defectos fisicos</td>
+            <td>
+                <select name = "defectos">
+                    <option value = "null">---seleccione---</option>
+                    <option value = "1" >SI</option>
+                    <option value = "0" >NO</option>
+
+
+                </select>
+            </td>
+            <td></td>
+            <td>vacunado</td>
+            <td>
+                <select name = "vacunado">
+                    <option value = "null">---seleccione---</option>
+                    <option value = "0">NO</option>
+                    <option value = "1">SI</option>
+                </select>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+
+            <td id = "label">Categoria de perro</td>
+            <td>
+                <select name = "categoria">
+                    <option value = "null">---seleccione---</option>
+                    <option value = "1">Perro de compañia</option>
+                    <option value = "2">Perro Guardian</option>
+                    <option value = "3">Raza peligrosa</option>
+
+                </select>
+            </td>
+            <td></td>
+            <td id="label">Foto del perro</td> <td> <input type = "file" name = "foto" /> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
     </table>
             <input type = "hidden" name = "id_anuncio" value = "{{id_anuncio}}" />
-
+            <br/>
             <input type = "submit" value = "MODIFICAR" />
+            &nbsp;  
+            
     </form>
+    <br/> 
     
-    <br/>
-    
-    <a href = "/anuncios">Volver al inicio </a>
 
 </body>
 </html>

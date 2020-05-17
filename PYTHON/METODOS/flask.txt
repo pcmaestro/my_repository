@@ -454,3 +454,73 @@ def inicio():
 Cuando queremos dar el OK a un registro en una web , si no cambiamos la ruta y el usuario refresca la web del OK,
 se puede volver a grabar el registro. Para evitar esto ,  lo que podemos hacer es un return redirect("ruta-python")
 y en esa ruta hacer el return render_template del ok.html
+
+###########################  BUSCADOR Y PAGINACION  #####################################
+
+Creamos un buscador de anuncios en nuestra web que mantendrá el texto buscado en la caja hasta que la limpiemos
+
+En el HTML 
+
+<form action="/">
+    buscar: <input type="text" name="nombre" value="{{valor_buscador}}"/> <input type="submit" value="ACEPTAR"/>
+</form>
+anuncios encontrados: {{cantidad_anuncios}}
+<br/>
+<a href="/">ver todos los anuncios</a>
+
+<div>
+{% if valor_anterior >= 0 %}
+    <a href="?comienzo={{valor_anterior}}&nombre={{valor_buscador}}">anterior</a>
+{% endif %}
+
+{% if valor_siguiente < cantidad_anuncios %}
+    <a href="?comienzo={{valor_siguiente}}&nombre={{valor_buscador}}">siguiente</a>
+{% endif %}
+</div>
+
+En las operaciones con BBDD:
+
+SQL_LISTADO_ANUNCIOS = "select ta.id, ta.nombre, ta.precio, ta.email, ta.`email-valido`, tc.nombre from tabla_anuncios as ta ,tabla_categorias as tc where ta.id_categoria = tc.id and ta.nombre like %s order by ta.id desc limit %s,%s ;"
+
+def obtener_anuncios(nombre,comienzo,resultados_por_pagina):
+    sql = constantes_sql.SQL_LISTADO_ANUNCIOS
+    conexion = conectar()
+    lista = None
+
+    cursor = conexion.cursor()
+    val = ('%'+nombre+'%',comienzo,resultados_por_pagina)
+    cursor.execute(sql,val)
+    lista = cursor.fetchall()
+    if conexion is not None:
+        conexion.disconnect()
+
+    print(lista)
+    return lista
+
+
+def numero_de_anuncios(nombre):
+    sql = constantes_sql.SQL_CANTIDAD_ANUNCIOS
+    conexion = conectar()
+    cursor = conexion.cursor()
+    val = ('%'+nombre+'%',)
+    cursor.execute(sql,val)
+    lista = cursor.fetchone()
+    if conexion is not None:
+        conexion.disconnect()
+    return lista[0]
+
+En el flask_app:
+
+    nombre_buscador = ""
+    if "nombre" in request.args:
+        nombre_buscador = request.args["nombre"]
+
+    comienzo = 0
+    if "comienzo" in request.args:
+        comienzo = int(request.args["comienzo"])
+    siguiente = comienzo + 5
+    anterior = comienzo -5
+    resultados_por_pagina = 5
+    anuncios = operaciones_bd_anuncios.obtener_anuncios(nombre_buscador,comienzo,resultados_por_pagina)
+    numero_de_anuncios = operaciones_bd_anuncios.numero_de_anuncios(nombre_buscador)
+    return render_template("index.html", var_anuncios = anuncios, valor_buscador = nombre_buscador,valor_anterior = anterior, valor_siguiente = siguiente, cantidad_anuncios = numero_de_anuncios)

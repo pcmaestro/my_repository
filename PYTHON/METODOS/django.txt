@@ -445,7 +445,7 @@ vista en cuestión este código para que en la consola aparezcan las SQL que se 
     l.setLevel(logging.DEBUG)
     l.addHandler(logging.StreamHandler())
 
-EVITAR LA GENERACION DE MULTIPLES SQL EN LOS SELECT
+EVITAR LA GENERACION DE MULTIPLES SQL EN LOS SELECT AL HACER JOIN
 
 En casos en los que necesitamos hacer selects que requieren del uso de Foreign Keys provenientes de otras tablas,  Django
 crea una SQL por cada registro,  lo cual puede mermar el rendimiento de nuestra aplicación, para evitar este comportamiento
@@ -456,7 +456,7 @@ EJ.
 
 Este ejemplo usará una SQL para extraer el id de sesión (Django siempre lo hace) y otra para traer anuncios ordenados por su id
 pintando en lugar del categoria_id y el usuario_id de la clase Anuncio ,  los nombres que tienen estas en las tablas hacia las
-que apuntan las Foreigh Keys
+que apuntan las Foreigh Keys. Si sabemos que sólo obtendremsos un unico registro, podemos usar select_related()
 
 #########################################  FORMULARIOS  #################################################################
 
@@ -910,4 +910,15 @@ email.attach_alternative(content, "text/html")
 
 email.send()
 
+####################################  FIXTURES  ###################################################################
 
+Este comando guarda información de una base de datos para exportar:
+
+python manage.py dumpdata nombre_app > nombre_app.json
+
+Para cargarlo en otro proyecto (poniendo el databasedump.json en la carpeta del manage.py)
+
+python manage.py loaddata nombre_app.json
+
+
+https://riptutorial.com/django/example/17482/fixtures
