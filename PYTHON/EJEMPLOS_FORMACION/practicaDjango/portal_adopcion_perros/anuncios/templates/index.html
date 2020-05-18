@@ -89,6 +89,8 @@
             {% elif siguiente < anuncios_totales and siguiente > paginacion %}
                 <a href="/anuncios?comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
                 <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+            {% elif anuncios_totales < paginacion %}
+                <span>&nbsp;&nbsp;&nbsp;NO HAY MAS ANUNCIOS</span>
             {% else %}
                 <a href="/anuncios?comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
             {% endif %}
@@ -100,6 +102,8 @@
             {% elif siguiente < anuncios_totales and siguiente > paginacion %}   
                 <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
                 <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a> 
+            {% elif anuncios_totales < paginacion %}
+                <span>&nbsp;&nbsp;&nbsp;NO HAY MAS ANUNCIOS</span>
             {% else %}
                 <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
             {% endif %}

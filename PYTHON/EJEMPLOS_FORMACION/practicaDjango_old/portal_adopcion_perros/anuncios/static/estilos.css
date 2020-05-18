@@ -136,6 +136,13 @@ footer{
 
 }
 
+#paginacion2{
+    text-decoration: none;
+    color: white;
+    float: left;
+
+}
+
 #form_buscador{
     text-align: center;
     width: 70%;
@@ -172,4 +179,10 @@ footer{
 #email_no_validado{
     font-weight: bold;
     color:red;
+}
+
+#anuncios_totales{
+    font-weight: bold;
+    color: white;
+    padding: 1%;
 }

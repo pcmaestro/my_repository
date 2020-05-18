@@ -18,7 +18,6 @@ urlpatterns = [
     path("cerrar-sesion-usuario", views_usuarios.cerrar_sesion_usuario),
     path("borrar-anuncio/<id_anuncio>", views_anuncios.borrar_anuncio),
     path("modificacion-anuncio/guardar-anuncio-modificado/<id_anuncio>", views_anuncios.guardar_anuncio_modificado),
-    path("buscador", views_anuncios.buscador),
     path("validar-correo", views_usuarios.validar_correo)
     
     ]

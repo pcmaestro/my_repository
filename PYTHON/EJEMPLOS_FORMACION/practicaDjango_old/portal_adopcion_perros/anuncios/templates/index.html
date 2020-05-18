@@ -21,15 +21,18 @@
     <li><a href = "inicio-sesion-usuario">INICIO DE SESION</a></li>
     <li><a href = "/admin" >ACCESO ADMINISTRADORES</a></li>     
     </ul>          
-    <form action ="buscador" method="GET" id ="form_buscador">
+    <form action ="/anuncios" method="GET" id ="form_buscador">
     <label>BUSCA TU PERRO&nbsp;</label>
     <input type = "text" name = "criterio" value = "{{valor_en_buscador}}"  placeholder="filtra por criterio..." id = "buscador"/>
     <input type ="submit" value = "BUSCAR" id ="submit"/> 
     </form>
-    {% if anuncios_paginados > 0 %}
-    <div id = "btn_limpiar">    
-    <a href = '/anuncios'id = "limpiar" ><button>{{limpiar}}</button></a>    
-    </div>
+    <br/>
+    <span id = "anuncios_totales">&nbsp;Anuncios totales : {{anuncios_totales}}</span>
+    <br/>
+    {% if filtrado == True %}
+        <div id = "btn_limpiar">    
+        <a href = "/anuncios" id = "limpiar" ><button>{{limpiar}}</button></a>    
+        </div>
     {% endif %}
     <br/>
     </nav>
@@ -76,15 +79,31 @@
         
     </table>
     </main>
-    <footer>
-        &nbsp;Anuncios totales : {{anuncios_totales}}        
+    <footer>        
 
-
+        {% if filtrado == False %}
     
-        {% if siguiente < anuncios_totales %}
-            <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
-        {% else %}
-            <a href="/anuncios?comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+            {% if siguiente < anuncios_totales and siguiente == paginacion %}
+                <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+           
+            {% elif siguiente < anuncios_totales and siguiente > paginacion %}
+                <a href="/anuncios?comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
+                <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+            {% else %}
+                <a href="/anuncios?comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+            {% endif %}
+
+        {% elif filtrado == True %}
+
+            {% if siguiente < anuncios_totales and siguiente == paginacion %}
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+            {% elif siguiente < anuncios_totales and siguiente > paginacion %}   
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a> 
+            {% else %}
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+            {% endif %}
+
         {% endif %}
         
     </footer> 

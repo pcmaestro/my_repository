@@ -540,103 +540,193 @@ Para las imagenes
 
 Y asi cualquier otro elemento estático que deseemos añadir
 
+############################  BUSCADOR (FILTRADO) Y PAGINACION  #################################################################
 
-##################################  BUSCADORES EN LA APLICACION  ##########################################################
+En el HTML
 
-Ej.  HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de adopción de perros</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+    
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
 
-buscador:
-<form action="/anuncios" method = "GET">
+</head>
+<body>    
+    {% static 'fotos' as ruta_imagenes %}
+    <header>
+    <h1>PORTAL DE ANUNCIOS PARA LA ADOPCION DE PERROS</h1>
+    </header>
+    <nav> 
+    <ul>
+    <li><a href ="registro-usuario">REGISTRO EN EL PORTAL</a></li>
+    <li><a href = "inicio-sesion-usuario">INICIO DE SESION</a></li>
+    <li><a href = "/admin" >ACCESO ADMINISTRADORES</a></li>     
+    </ul>          
+    <form action ="/anuncios" method="GET" id ="form_buscador">
+    <label>BUSCA TU PERRO&nbsp;</label>
+    <input type = "text" name = "criterio" value = "{{valor_en_buscador}}"  placeholder="filtra por criterio..." id = "buscador"/>
+    <input type ="submit" value = "BUSCAR" id ="submit"/> 
+    </form>
+    <br/>
+    <span id = "anuncios_totales">&nbsp;Anuncios totales : {{anuncios_totales}}</span>
+    <br/>
+    {% if filtrado == True %}
+        <div id = "btn_limpiar">    
+        <a href = "/anuncios" id = "limpiar" ><button>{{limpiar}}</button></a>    
+        </div>
+    {% endif %}
+    <br/>
+    </nav>
+    <main>
 
-titulo: <input type="text" name="name_valor_en_buscador" value="{{valor_en_buscador}}" /> 
+        <table>
+            <tr class = "cabecera_anuncios">
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Edad</th>
+                <th>Color de pelo</th>
+                <th>Defectos fisicos</th>
+                <th>Vacunado</th>
+                <th>Categoria</th>
+                <th>Foto</th>     
+                <th>Tf Contacto</th>
+            </tr>    
+            
+            {% for perro in anuncios %}
+                <tr class = "linea">
+                    <td>{{ perro.nombre}}</td>
+                    <td>{{ perro.raza}}</td>
+                    <td>{{ perro.edad}}</td>
+                    <td>{{ perro.color_pelo}}</td>
+                    <td>
+                        {% if perro.defectos_fisicos == True %}
+                        SI
+                        {% elif perro.defectos_fisicos == False %}
+                        NO                        
+                        {% endif %}
+                    </td>                    
+                    <td>
+                        {% if perro.vacunado == True %}
+                        SI
+                        {% elif perro.vacunado == False %}
+                        NO                        
+                        {% endif %}
+                    </td>
+                    <td>{{perro.categoria.categoria}}</td>
+                    <td id = "celda_foto"><img src = "{{ruta_imagenes}}/{{perro.id}}.jpg?um={{perro.ultima_modificacion}}" alt = "Foto no disponible" id = "foto_perro" /></td>  
+                    <td>{{perro.usuario.telefono}}</td>
+                </tr>
+                {% endfor %}      
+        
+    </table>
+    </main>
+    <footer>        
 
-<input type="submit" value="BUSCAR" /> 
+        {% if filtrado == False %}
+    
+            {% if siguiente < anuncios_totales and siguiente == paginacion %}
+                <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+           
+            {% elif siguiente < anuncios_totales and siguiente > paginacion %}
+                <a href="/anuncios?comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
+                <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
 
-<a href="/anuncios">resetear busqueda</a>
+            {% elif anuncios_totales < paginacion %}
+                <span>&nbsp;&nbsp;&nbsp;NO HAY MAS ANUNCIOS</span>
 
-</form>
+            {% else %}
+                <a href="/anuncios?comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
 
-Ej. VIEWS (añadiendo al context valor_en_buscador, se queda pintado en el buscador hasta que se haga un reset)
+            {% endif %}
 
-    resultado = models.Anuncio.objects.order_by("-id").prefetch_related('categoria','usuario')    
+        {% elif filtrado == True %}
 
+            {% if siguiente < anuncios_totales and siguiente == paginacion %}
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
+
+            {% elif siguiente < anuncios_totales and siguiente > paginacion %}   
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a> 
+
+            {% elif anuncios_totales < paginacion %}
+                <span>&nbsp;&nbsp;&nbsp;NO HAY MAS ANUNCIOS</span>
+
+            {% else %}
+                <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" class = "paginacion"><<< ANTERIOR&nbsp;&nbsp;&nbsp;</a>
+
+            {% endif %}
+
+        {% endif %}
+        
+    </footer> 
+
+</body>
+</html>
+
+En el VIEWS
+
+def inicio(request):
+    anuncios = models.Perros.objects.all().order_by("-ultima_modificacion" ,"-id").prefetch_related("categoria", "usuario")
+
+    criterio = ""
     valor_en_buscador = ""
+    filtrado = False
 
-    if "name_valor_en_buscador" in request.GET:
+    if "criterio" in request.GET:
+        criterio = request.GET["criterio"]
+        filtrado = True
+        if len(anuncios.filter(nombre__contains=criterio)) != 0:
+            anuncios = anuncios.filter(nombre__contains=criterio)
+        elif len(anuncios.filter(raza__contains=criterio)) != 0:
+            anuncios = anuncios.filter(raza__contains=criterio)
+        elif len(anuncios.filter(edad__contains=criterio)) != 0:
+            anuncios = anuncios.filter(edad__contains=criterio)
+        elif len(anuncios.filter(color_pelo__contains=criterio)) != 0:
+            anuncios = anuncios.filter(color_pelo__contains=criterio)
+        elif len(anuncios.filter(defectos_fisicos__contains=criterio)) != 0:
+            anuncios = anuncios.filter(defectos_fisicos__contains=criterio)
+        elif len(anuncios.filter(vacunado__contains=criterio)) != 0:
+            anuncios = anuncios.filter(vacunado__contains=criterio)
+        else:
+            categorias = models.Categorias.objects.filter(categoria__contains=criterio)
+            anuncios_finales = []
 
-	criterio = request.GET["name_valor_en_buscador"]
+            for c in categorias:
+                anuncios_finales.extend(anuncios.filter(categoria=c))
+            anuncios = anuncios_finales
 
-        if len(anuncios.filter(columna1__contains = criterio)) != 0:
-            anuncios = anuncios.filter(columna1__contains = criterio)
-
-        elif len(anuncios.filter(columna2__contains = criterio)) != 0:
-            anuncios = anuncios.filter(columna2__contains = criterio)
-
-	elif len(anuncios.filter(columna3__contains = criterio)) != 0:
-            anuncios = anuncios.filter(columna3__contains = criterio)
-
-        etc...
-
-        valor_en_buscador = request.GET["name_valor_en_buscador"] --> Esto va al context para dejarlo pintado en la caja del buscador	 
-
-BUSCADOR EN COLUMAS CON FOREIGN KEYS
-
-Ej. con categorias de anuncios
-
-En este caso hay que localizar primero en la tabla a la que llama la foreign key el texto del id_categoria en el cual estamos buscando
-
-categorias = models.Categorias.objects.filter(columna_con_ForeignKey__contains = criterio)
-
-Luego hay que crear un array que contendrá los objetos finalmente coincidentes
-
-anuncios_finales = []
-
-Y finalmente recorrer con un bucle los objetos que hemos sacado antes desde la tabla Categorias en la variable categorias 
-y añadirlos al array
-
-for c in categorias:
-    anuncios_finales.extend(anuncios.filter(categoria = c))
-
-anuncios = anuncios_finales
-
-
-###############################  PAGINACION  #############################################################################
-
-Ej. HTML (usamos en la URL la variable comienzo)
-
-<div>
-    
-    total de anuncios en base de datos: {{total_resultados}} <br/>
-    
-    {% if anterior >= 0 %}
-        <a href="/anuncios?comienzo={{anterior}}">ANTERIOR</a>
-    {% endif %}
-    
-    {% if siguiente < total_resultados %}
-        <a href="/anuncios?comienzo={{siguiente}}">SIGUIENTE</a>
-    {% endif %}
-</div>
-
-Ej. VIEWS ( caso de 5 resultados por página haciendo un slice a la lista de objetos que viene de la BBDD)
-
-    listado = models.Anuncio.objects.order_by("-id").prefetch_related('categoria','usuario')
-
+    valor_en_buscador = criterio
+    valor_buscado = criterio
+    anuncios_totales = len(anuncios)
     comienzo = 0
-    if "comienzo" in request.GET :
-        comienzo = int(request.GET["comienzo"])
-    listado = listado[comienzo:comienzo+5]
-    total_resultados = models.Anuncio.objects.count()    
-    
-    siguiente = comienzo + 5
-    anterior = comienzo - 5
-    context = {
-            "anuncios" : listado,
-            "valor_en_buscador" : valor_en_buscador,
-            "siguiente" : siguiente,
-            "anterior" : anterior,
-            "total_resultados": total_resultados
-	    }
 
+    if "comienzo" in request.GET:
+        comienzo = int(request.GET["comienzo"])
+
+    paginacion = 5
+    paginado = anuncios[comienzo:comienzo + paginacion]
+    longitud_paginado = len(paginado)
+    siguiente = comienzo + paginacion
+    anterior = comienzo - paginacion
+
+    context = {
+        "anuncios" : paginado, 
+        "anuncios_totales" : anuncios_totales, 
+        "siguiente" : siguiente,
+        "anterior": anterior,
+        "valor_en_buscador": valor_en_buscador,
+        "limpiar": "LIMPIAR BUSQUEDA",
+        "filtrado": filtrado,
+        "valor_buscado" : valor_buscado,
+        "paginacion" : paginacion
+
+        }    
+    return render(request, "index.html", context)
 
 ############################ SUBIR PROYECTOS DJANGO A PYTHON ANYWHERE  ###############################################
 

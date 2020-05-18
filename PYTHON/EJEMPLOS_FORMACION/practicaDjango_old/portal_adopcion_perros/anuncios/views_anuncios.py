@@ -10,21 +10,60 @@ from . import utilities
 # Create your views here.
 
 def inicio(request):
-    lista = models.Perros.objects.all().order_by("-ultima_modificacion" ,"-id").prefetch_related("categoria", "usuario")
-    anuncios_totales = lista.count()
+    anuncios = models.Perros.objects.all().order_by("-ultima_modificacion" ,"-id").prefetch_related("categoria", "usuario")
+
+    criterio = ""
+    valor_en_buscador = ""
+    filtrado = False
+
+    if "criterio" in request.GET:
+        criterio = request.GET["criterio"]
+        filtrado = True
+        if len(anuncios.filter(nombre__contains=criterio)) != 0:
+            anuncios = anuncios.filter(nombre__contains=criterio)
+        elif len(anuncios.filter(raza__contains=criterio)) != 0:
+            anuncios = anuncios.filter(raza__contains=criterio)
+        elif len(anuncios.filter(edad__contains=criterio)) != 0:
+            anuncios = anuncios.filter(edad__contains=criterio)
+        elif len(anuncios.filter(color_pelo__contains=criterio)) != 0:
+            anuncios = anuncios.filter(color_pelo__contains=criterio)
+        elif len(anuncios.filter(defectos_fisicos__contains=criterio)) != 0:
+            anuncios = anuncios.filter(defectos_fisicos__contains=criterio)
+        elif len(anuncios.filter(vacunado__contains=criterio)) != 0:
+            anuncios = anuncios.filter(vacunado__contains=criterio)
+        else:
+            categorias = models.Categorias.objects.filter(categoria__contains=criterio)
+            anuncios_finales = []
+
+            for c in categorias:
+                anuncios_finales.extend(anuncios.filter(categoria=c))
+            anuncios = anuncios_finales
+
+    valor_en_buscador = criterio
+    valor_buscado = criterio
+    anuncios_totales = len(anuncios)
     comienzo = 0
+
     if "comienzo" in request.GET:
         comienzo = int(request.GET["comienzo"])
 
-    paginado = lista[comienzo:comienzo + 5]
-    siguiente = comienzo + 5
-    anterior = comienzo - 5
+    paginacion = 5
+    paginado = anuncios[comienzo:comienzo + paginacion]
+    longitud_paginado = len(paginado)
+    siguiente = comienzo + paginacion
+    anterior = comienzo - paginacion
 
     context = {
         "anuncios" : paginado, 
         "anuncios_totales" : anuncios_totales, 
-        "siguiente" : siguiente, 
-        "anterior": anterior
+        "siguiente" : siguiente,
+        "anterior": anterior,
+        "valor_en_buscador": valor_en_buscador,
+        "limpiar": "LIMPIAR BUSQUEDA",
+        "filtrado": filtrado,
+        "valor_buscado" : valor_buscado,
+        "paginacion" : paginacion
+
         }    
     return render(request, "index.html", context)
     
@@ -192,51 +231,4 @@ def borrar_anuncio(request, id_anuncio):
     else:
         return redirect("/anuncios/inicio-sesion-usuario")
 
-def buscador(request):
-    anuncios = models.Perros.objects.all().order_by("-id").prefetch_related("categoria", "usuario")
-    if "criterio" in request.GET:
-        criterio = request.GET["criterio"]
-        if len(anuncios.filter(nombre__contains = criterio)) != 0:
-            anuncios = anuncios.filter(nombre__contains = criterio)
-        elif len(anuncios.filter(raza__contains = criterio)) != 0:
-            anuncios = anuncios.filter(raza__contains=criterio)
-        elif len(anuncios.filter(edad__contains = criterio)) != 0:
-            anuncios = anuncios.filter(edad__contains=criterio)
-        elif len(anuncios.filter(color_pelo__contains = criterio)) != 0:
-            anuncios = anuncios.filter(color_pelo__contains=criterio)
-        elif len(anuncios.filter(defectos_fisicos__contains = criterio)) != 0:
-            anuncios = anuncios.filter(defectos_fisicos__contains=criterio)
-        elif len(anuncios.filter(vacunado__contains = criterio)) != 0:
-            anuncios = anuncios.filter(vacunado__contains=criterio)        
-        else:
-            categorias = models.Categorias.objects.filter(categoria__contains = criterio)
-            anuncios_finales = []
-            
-            for c in categorias:                
-                
-                anuncios_finales.extend(anuncios.filter(categoria = c))
-            anuncios = anuncios_finales           
-            
 
-        anuncios_totales = len(anuncios)     
-
-        comienzo = 0
-        
-        if "comienzo" in request.GET:
-            comienzo = int(request.GET["comienzo"])
-    
-        paginado = anuncios[comienzo:comienzo + 5]        
-        anuncios_paginados = len(paginado)
-        siguiente = comienzo + 5
-        anterior = comienzo - 5
-
-        context = {
-            "anuncios" : paginado, 
-            "limpiar": "LIMPIAR BUSQUEDA", 
-            "anuncios_totales":anuncios_totales,
-            "anuncios_paginados":anuncios_paginados, 
-            "siguiente" : siguiente, 
-            "anterior": anterior, 
-            "valor_en_buscador": criterio
-        }
-        return render(request, "index.html", context)
