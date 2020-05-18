@@ -82,11 +82,16 @@
     </table>
             <input type = "hidden" name = "id_anuncio" value = "{{id_anuncio}}" />
             <br/>
+            <input type = "hidden" name = "id_usuario" value = "{{id_usuario}}" />
+            <br/>
             <input type = "submit" value = "MODIFICAR" />
             &nbsp;  
             
     </form>
-    <br/> 
+    <br/>
+    <div id = "modifacion_anuncio_erronea">
+        {{error_campo}}
+    </div>
     
 
 </body>

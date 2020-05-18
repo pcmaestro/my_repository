@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from . import models
 import email
@@ -33,8 +34,6 @@ def guardar_usuario(request):
         
     if password1 == password2:
         password = password2
-    else:
-        pass_no_match = "Las valores de los campos de contraseña no coinciden"
     
     #Variable para comprobar en la BD si el mail ya está registrado    
     comprobacion_mail = email
@@ -45,60 +44,91 @@ def guardar_usuario(request):
     validacion_telefono = validador_telefono.match(telefono)
     validacion_mail = validador_mail.match(email)
     validacion_password = validador_password.match(password)
+    validacion_email_duplicado = len(models.Usuarios.objects.filter(email = comprobacion_mail))
     
     validacion = True
     
     if validacion_nombre and validacion_apellido_1 and validacion_apellido_2 and validacion_telefono and validacion_mail and validacion_password:
-        validacion = True
+        validacion1 = True
     else:
-        validacion = False     
-    
-       
-    context = {}
-    if len(models.Usuarios.objects.filter(email = comprobacion_mail)) == 1:        
+        validacion1 = False
+
+    if validacion_email_duplicado == 0:
+        validacion2 = True
+    else:
+        validacion2 = False
+
+
+    if validacion1 == True and validacion2 == True:
+        nuevo_usuario = models.Usuarios(nombre = nombre,
+                                        apellido_1 = apellido_1,
+                                        apellido_2 = apellido_2,
+                                        telefono = telefono,
+                                        email = email,
+                                        password = password
+                                        )
+        nuevo_usuario.save()
+        usuario = models.Usuarios.objects.get(email = email)
+        request.session["id_usuario"] = usuario.id
+
+        template = get_template("correo.html")
+        context = {"id_usuario" : usuario.id}
+        content = template.render(context)
+
+        mailing = EmailMultiAlternatives(
+            "Bienvenido al portal de adopción de perros",
+            "Bienvenido al portal de adopción de perros",
+            settings.EMAIL_HOST_USER,
+            [usuario.email]
+        )
+
+        mailing.attach_alternative(content, "text/html")
+
+        mailing.send()
+
+        return render(request,"gracias.html")
+
+    elif validacion1 == False and validacion2 == False:
+        errores_registro = '''
+        Revise que todos los campos son correctos:
+
+            Los campos de nombre y apellidos sólo pueden contender texto sin acentos.
+
+            El campo Telefono debe contener un número español de 9 dígitos.
+
+            El campo Email debe contener una dirección de correo válida que no se encentre ya registrada en el sistema.
+
+            El campo Contraseña debe contener numeros o letras entre 4 y 8 digitos.
+        '''
+        mail = request.POST["email"]
         context = {
-            "error_mail" : "El correo ya está registrado, debe indicar uno distinto"
-        }
-        return render(request,"registro-usuario.html", context)
-    elif password1 != password2:
-        context = {
-            "pass_no_match" : pass_no_match
-            }
-        return render(request,"registro-usuario.html", context)
-    else:   
-        if validacion == True:
-            nuevo_usuario = models.Usuarios(nombre = nombre,
-                                            apellido_1 = apellido_1,
-                                            apellido_2 = apellido_2,
-                                            telefono = telefono,
-                                            email = email,
-                                            password = password
-                                            )
-            nuevo_usuario.save()
-            usuario = models.Usuarios.objects.get(email = email)
-            request.session["id_usuario"] = usuario.id
+            "errores_registro" : errores_registro,
+            "mail_duplicado": "La dirección " + mail + " ya está registrada en el sistema"
+                   }
 
-            template = get_template("correo.html")
-            context = {"id_usuario" : usuario.id}
-            content = template.render(context)
+        return render(request, "registro-usuario.html", context)
 
-            mailing = EmailMultiAlternatives(
-                "Bienvenido al portal de adopción de perros",
-                "Bienvenido al portal de adopción de perros",
-                settings.EMAIL_HOST_USER,
-                [usuario.email]
-            )
+    elif validacion1 == False:
+        errores_registro = '''
+        Revise que todos los campos son correctos:
+        
+            Los campos de nombre y apellidos sólo pueden contender texto sin acentos.
+        
+            El campo Telefono debe contener un número español de 9 dígitos.
+        
+            El campo Email debe contener una dirección de correo válida que no se encentre ya registrada en el sistema.
+        
+            El campo Contraseña debe contener numeros o letras entre 4 y 8 digitos.
+        '''
+        context = { "errores_registro" : errores_registro}
+        return render(request, "registro-usuario.html", context)
 
-            mailing.attach_alternative(content, "text/html")
+    elif validacion2 == False:
+        mail = request.POST["email"]
+        context = {"mail_duplicado": "La dirección " + mail + " ya está registrada en el sistema"}
+        return render(request, "registro-usuario.html", context)
 
-            mailing.send()
 
-            return render(request,"gracias.html")
-        else:
-            context = {
-                "validacion_ko" : "Alguno de los campos no es correcto"
-                }
-            return render(request,"registro-usuario.html", context)
 
 def inicio_sesion_usuario(request):    
     return render(request, "login.html")
@@ -138,6 +168,7 @@ def home_usuario(request):
         return render(request, "home.html", context)
     else:
         return redirect("/anuncios/inicio-sesion-usuario")
+
 
 def validar_correo(request):
     id_usuario = request.GET["id_usuario"]
@@ -231,7 +262,12 @@ def guardar_usuario_modificado(request,id_usuario):
         
         else:
             context = {
-                "error_campo" : "Algún campo no es correcto"
+                "error_campo" : "Algún campo no es correcto",
+                "nombre": usuario.nombre,
+                "apellido_1" : usuario.apellido_1,
+                "apellido_2" : usuario.apellido_2,
+                "telefono" : usuario.telefono,
+                "email" : usuario.email
                 }
             return render(request, "modificacion-usuario.html", context)
      

@@ -19,20 +19,20 @@ def inicio(request):
     if "criterio" in request.GET:
         criterio = request.GET["criterio"]
         filtrado = True
-        if len(anuncios.filter(nombre__contains=criterio)) != 0:
-            anuncios = anuncios.filter(nombre__contains=criterio)
-        elif len(anuncios.filter(raza__contains=criterio)) != 0:
-            anuncios = anuncios.filter(raza__contains=criterio)
+        if len(anuncios.filter(nombre__contains=criterio.replace("áéíóúÁÉÍÓÚ", "aeiouAEIOU").lower().title())) != 0:
+            anuncios = anuncios.filter(nombre__contains=criterio.replace("áéíóúÁÉÍÓÚ", "aeiouAEIOU").lower().title())
+        elif len(anuncios.filter(raza__contains=criterio.replace("áéíóúÁÉÍÓÚ", "aeiouAEIOU").lower().title())) != 0:
+            anuncios = anuncios.filter(raza__contains=criterio.replace("áéíóúÁÉÍÓÚ", "aeiouAEIOU").lower().title())
         elif len(anuncios.filter(edad__contains=criterio)) != 0:
             anuncios = anuncios.filter(edad__contains=criterio)
-        elif len(anuncios.filter(color_pelo__contains=criterio)) != 0:
-            anuncios = anuncios.filter(color_pelo__contains=criterio)
+        elif len(anuncios.filter(color_pelo__contains=criterio.replace("áéíóúÁÉÍÓÚ", "aeiouAEIOU").lower())) != 0:
+            anuncios = anuncios.filter(color_pelo__contains=criterio.replace("áéíóúÁÉÍÓÚ", "aeiouAEIOU").lower())
         elif len(anuncios.filter(defectos_fisicos__contains=criterio)) != 0:
             anuncios = anuncios.filter(defectos_fisicos__contains=criterio)
         elif len(anuncios.filter(vacunado__contains=criterio)) != 0:
             anuncios = anuncios.filter(vacunado__contains=criterio)
         else:
-            categorias = models.Categorias.objects.filter(categoria__contains=criterio)
+            categorias = models.Categorias.objects.filter(categoria__contains=criterio.replace("áéíóú", "aeiou").replace("ÁÉÍÓÚ", "AEIOU").lower().capitalize())
             anuncios_finales = []
 
             for c in categorias:
@@ -141,6 +141,7 @@ def guardar_anuncio(request):
 
 def modificacion_anuncio(request, id_anuncio):  
     if "id_usuario" in request.session:
+        id_usuario = request.session["id_usuario"]
         anuncio = models.Perros.objects.get(pk = id_anuncio)
         context = {
             "nombre" : anuncio.nombre, 
@@ -149,7 +150,8 @@ def modificacion_anuncio(request, id_anuncio):
             "pelo" : anuncio.color_pelo, 
             "defectos" : int(anuncio.defectos_fisicos),
             "vacunado" : anuncio.vacunado, 
-            "id_anuncio" : id_anuncio
+            "id_anuncio" : id_anuncio,
+            "id_usuario" : id_usuario
             }
         return render(request, "modificacion-anuncio.html", context)
     else:

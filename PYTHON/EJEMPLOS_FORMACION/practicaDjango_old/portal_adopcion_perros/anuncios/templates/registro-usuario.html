@@ -20,7 +20,7 @@
     <header
     <h1>INDIQUE SUS DATOS PARA REGISTRARSE EN EL PORTAL</h1>
     </header>
-    <form method="POST" action="guardar-usuario" onsubmit="return validar_usuario()">
+    <form method="POST" action="guardar-usuario" onsubmit="return validar_usuario(event)">
 
         {% csrf_token %}
 
@@ -28,11 +28,11 @@
 
             <tr>
                 <td><label>Nombre</label></td>
-                <td><input type="text" name="nombre" class = "text" /></td>
+                <td><input type="text" name="nombre" id = "nombre" /></td>
                 <td><label>Primer apellido</label></td>
-                <td><input type="text" name="apellido_1" class = "text" /></td>
+                <td><input type="text" name="apellido_1" id = "apellido_1" /></td>
                 <td><label>Segundo apellido</label></td>
-                <td><input type="text" name="apellido_2" class = "text" /></td>
+                <td><input type="text" name="apellido_2" id = "apellido_2" /></td>
                 <td><label>Teléfono</label></td>
                 <td><input type="text" name="telefono" id = "telefono"/></td>
             </tr>
@@ -40,9 +40,9 @@
                 <td><label>Email</label></td>
                 <td><input type="text" name="email" id = "email" /></td>
                 <td><label>Contraseña</label></td>
-                <td><input type = "password" name = "password1" class = "password"/></td>
+                <td><input type = "password" name = "password1" id = "password1"/></td>
                 <td><label>Confirmar contraseña</label></td>
-                <td><input type = "password" name = "password2" class = "password" /></td>
+                <td><input type = "password" name = "password2" id = "password2" /></td>
                 <td></td>
                 <td></td>
             </tr>           

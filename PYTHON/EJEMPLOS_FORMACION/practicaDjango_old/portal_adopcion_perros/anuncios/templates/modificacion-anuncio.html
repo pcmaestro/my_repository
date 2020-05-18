@@ -17,7 +17,7 @@
     <h1>MODIFICACION DE ANUNCIOS</h1>
     </header>
     <br/>
-    <a href = "/anuncios/home-usuario"><button>VOLVER A MIS ANUNCIOS</button></a>
+    <a href = "volver-home"><button>VOLVER A MIS ANUNCIOS</button></a>
     <br/> 
     <form action = "guardar-anuncio-modificado/{{id_anuncio}}" method = "POST" enctype="multipart/form-data">
     
@@ -81,6 +81,8 @@
 
     </table>
             <input type = "hidden" name = "id_anuncio" value = "{{id_anuncio}}" />
+            <br/>
+            <input type = "hidden" name = "id_usuario" value = "{{id_usuario}}" />
             <br/>
             <input type = "submit" value = "MODIFICAR" />
             &nbsp;  

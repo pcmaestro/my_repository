@@ -15,7 +15,11 @@
     <header>
     <h1>REGISTRO DE ANUNCIOS</h1>
     </header>
-
+    <br/>
+    <br/>
+    <a href = "volver-home"><button id = "boton" >VOLVER A MIS ANUNCIOS</button></a>
+    <br/>
+    <br/>
     <form action = "guardar-anuncio" method = "POST" enctype="multipart/form-data">
     
     {% csrf_token %}
@@ -67,7 +71,7 @@
 
     </form>        
     <br/>
-    <a href = "volver-home"><button id = "boton" onclick = "preventDefault()">VOLVER A MIS ANUNCIOS</button></a>
+
     <br/> 
 
     <span id ="error_campo"><h2>{{ error_campo }}</h2></span>

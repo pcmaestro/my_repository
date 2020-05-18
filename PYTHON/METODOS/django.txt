@@ -425,7 +425,20 @@ DATABASES = {
 	'USER': 'nobre_usuario_de_la_bd',
 	'PASSWORD': 'contraseña_de_la_bd',
 	'HOST': 'IP_de_la_bd o host_name_de_la_bd',
-	'DATABASE_PORT': 'puerto_de_la_bd',
+	'PORT': 5432
+    }
+}
+
+MySQL -->
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nombre_base_datos',
+        'USER' : 'usuario_bd',
+        'PASSWORD' : 'password_bd',
+        'HOST' : 'IP_de_la_bd o host_name_de_la_bd',
+        'PORT' : 3306
     }
 }
 
@@ -745,6 +758,8 @@ Finalmente, en la consola BASH ejecutamos estas sentencias ( en este caso con Py
 python3.8 manage.py makemigrations nombre_app
 
 python3.8 manage.py migrate
+
+python3.8 manage.py collectstatic ( sin esto no reconoce el contenido de static)
 
 Con esto nuestro proyecto Django ya está listo para trabajar con él
 

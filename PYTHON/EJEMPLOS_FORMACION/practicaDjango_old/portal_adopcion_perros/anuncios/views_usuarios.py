@@ -139,6 +139,7 @@ def home_usuario(request):
     else:
         return redirect("/anuncios/inicio-sesion-usuario")
 
+
 def validar_correo(request):
     id_usuario = request.GET["id_usuario"]
     usuario = models.Usuarios.objects.get(pk = id_usuario)
@@ -231,7 +232,12 @@ def guardar_usuario_modificado(request,id_usuario):
         
         else:
             context = {
-                "error_campo" : "Algún campo no es correcto"
+                "error_campo" : "Algún campo no es correcto",
+                "nombre": usuario.nombre,
+                "apellido_1" : usuario.apellido_1,
+                "apellido_2" : usuario.apellido_2,
+                "telefono" : usuario.telefono,
+                "email" : usuario.email
                 }
             return render(request, "modificacion-usuario.html", context)
      
