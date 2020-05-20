@@ -90,7 +90,24 @@ ourRequest.send();
 Debemos importar el archivo de JQUERY e instalarlo en un directoria del proyecto, luego lo invocamos en el HTML
 y escribimos nuestro Javascript haciendo uso de sus funciones:
 
-https://jquery.com/download/
+https://jquery.com/download/ --> Hacemos copy paste directamente del texto por ejemplo en un archivo llamado
+				 jquery.js
+
+O podemos llamar directamente al Google API de Ajax:
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+O podemos llamar al CDN de Jquery cargando la RUL minified según la última versión publicada (recomendado)
+
+
+Los scripts de llamada y los derivados de JQuery o Javascript puro,  irán luego dentro de un <script> al final del <body>
+
+Lo común es que esté primero al final del body el script de llamada al API o el CDN , y luego otro script con el código o
+con la llamada src a otro archivo a parte donde esté el código JQuery y Javascript
+
+Si en Visual Studio Code instalamos la libreria Jquery Code Snippets, nos permite cargar las distintas funciones Jquery
+simplemente tecleando jq
+
 
 Todo el código JQuery de nuestro proyecto deberá estar envuelto por esta funcion:
 
@@ -100,13 +117,23 @@ $(document).ready(function(){
 
 });
 
+Ej .  Este código oculta un párrafo al hacer click sobre él:
+
+$(document).ready(function(){
+  $("p").click(function(){
+    $(this).hide();
+  });
+});
+
 Para tomar un elemento en el DOM ,  el formato es $("#id"), $(".class"), $("h1")...etc
 
-Para leer el contendio de una caja de texto o un textarea :  $("#id").val()
+Para leer el contenido de una caja de texto o un textarea :  $("#id").val()
 
-Para escribir html :  $("#id").html(texto_a_insertar)
+Para insertar texto :  $("#id").html(texto_a_insertar)
 
-Para escuchar eventos : $("#id").click(funcion_a_ejecutar)
+Para escuchar eventos : $("#id").click(function(){...})
+
+Para escuchar multiples eventos a la vez: $("#id").bind({click:function(){...}, mouseenter:function(){...}, etc...})
 
 Para mostrar y ocultar elementos : $("#id").show()  // $("#id").hide() // $("#id").toggle() --> En los parentesis podemos añadir los milisegundos
 												que dura el efecto de mostrar u ocultar para que 
@@ -119,17 +146,35 @@ Para aplicar CSS : $("#id").css("atributo", "valor") --> Ej ("background-color",
 
 Para aplicar varios atributos CSS: $("#id").css( {color: "blue" , background: "green", font-weight: "bold"} )
 
-Para aplicar selectores : $("div h1") --> Todos los h1 dentro de un div
+Para aplicar selectores descendentes : $("div h1") --> Todos los h1 dentro de un div
+
+Para aplicar pseudoselectores : $("div h1:first") --> El primer h1 dentro de un div
 
 Para añadir elementos al DOM : $("#id").append("<h1>Nuevo texto a mostrar</h1>) --> Dentro del elemento con cierta id, añade un h1
 
+Para añadir elementos al DOM : $("#id").preppend("<h1>Nuevo texto a mostrar</h1>) --> Antes del elemento con cierta id, añade un h1
+
 Para eliminar elementos del DOM : $("#id").remove() --> Elimina el elemento con cierto id
 
-Para añadir/quitar una clase : $("div").addClass("class") / $("div").removeClass("class") --> Añade o quita una clase CSS a un elemento
+Para añadir/quitar una clase : $("div").addClass("class") / $("div").removeClass("class") / $("div").toggleClass("class")  --> Añade o quita una clase CSS a un elemento
 
 Para establecer atributos de un elemento : $("img").attr("src", "home/pictures/25.jpg") // $("img").attr("height", "150")
 
 Para usar expresiones regulares : $("#id").attr("value").match("Aquí la expresión regular");
+
+Para enviar formularios : $("#id_form").submit(function(e){
+				e.preventDefault()
+				var input_usuario = $("id_caja_texto").val
+
+			})
+
+
+
+Para cargar datos de un servidor o HTML en un elemento del DOM : $(tipo_selector).load(ruta/url , opcional_data - formato clave:valor -, opcional_callback - funcion_a_ejecutar_tras_cargtar_url)
+
+Para hacer refrescos automáticos de contenidos en la página :  setInterval(nombre_funcion_sin_parentesis, intervalo_refresco_milisegundos)
+
+Para hacer animaciones --> Ver documentación de animate()
 
 Para enviar la información a través de AJAX :  
 
@@ -139,7 +184,7 @@ Para enviar la información a través de AJAX :
 
 $.ajax{	
     url: "ruta-web-python",
-    data: {clave1:valor1, clave2:valor2, clave3:valor3.......},
+    data: {clave1:valor1, clave2:valor2, clave3:valor3.......},  --> También se puede pasar automaticamente a JSON con $("id_form").serialize()
     success : function(resultado){
 			   if(resultado != "ok"){
 					código a ejecutar......
@@ -152,3 +197,105 @@ Para recibir información a través de AJAX:
 $.getJSON("ruta-web-python", funcion_a_ejecutar)
 
 </script>
+
+Ej. Envio de formulario por Ajax usando el método general pintando un spin de espera de carga en un div con "id_cargando" junto al boton submit 
+    en lo que se envia la información
+
+$(document).ready(function(){
+
+	$("id_form").submit(function(e){
+		
+		e.preventDefault();
+		
+		var peticion = $("id_form").attr("action"); --> Almacenamos en la variable la ruta-python
+		
+		var metodo = $("id_form").attr("method"); --> Almacenamos en la variable el método del formulario
+
+		$.ajax({
+			beforeSend: function(){
+				$("id_cargando").spin({radius:3, width:2, heigh:2, length:4})
+			},
+			url : peticion,
+			type : metodo,
+			data : $("id_form).serialize(), --> Pasa la información de todo el <form> a JSON, también podemos incluir un diccionario a mano
+			success : function(response){
+				#response = return que devuelva la función del servidor, podria ser por ejemplo OK
+				if(response == OK)
+					código a ejecutar en caso de operacion correcta con el servidor........
+				},
+			error : function(jqXHR, status, error){
+				#jqXHR --> Es el objeto XMLhttpRequest
+				#status --> Puede tener los valores timeout, error, abort, parsererror
+				#error --> Puede devolver Not Found,  http error, internal server error, etc...
+				código a ejecutar en caso de operacion incorrecta con el servidor......
+				},
+			complete : function(jqXHR, status){
+				#status --> Puede tener los valores success, notmodified, timeout, error, abort, parsererror	
+				código a ejecutar en caso de operación completada con éxito......
+				},
+			timeout: tiempo_espera_milisegundos  --> Si se alcanza, lo devuelve en el status de error
+
+			});		
+		
+		});
+
+});
+
+Ej -  Traer información con Ajax usando el método GET
+
+$(document).ready(function(){
+
+	var diccionario = {clave1:valor1, clave2:valor2, etc...} --> Parametros que necesitemos añadir
+								     a lo que venga en data
+	
+	$.get("ruta/url", opcional_diccionario, function(data){
+		#data --> datos que traemos de la ruta/url
+		código a ejecutar con el contenido del data....
+		
+	});
+
+});
+
+Ej- Enviar información con Ajax usando el método POST
+
+$(document).ready(function(){
+	
+	var peticion = $("id_form").attr("action");
+
+	$("id_form").submit(function(e){
+		
+		e.preventDefault();
+		
+		var info = $("id_form").serialize(); --> Lee y pasa a JSON la información de los formularios
+		
+		$.post(peticion, info).error(function(response){...}).success(function(response){...}); --> Para ejecutar funciones
+													    callback según el return de
+													    la función del servidor sea 
+													    OK o error
+
+	});
+	
+});
+
+Las funciones error y success traen estos argumentos en este orden : response, status, jqXHR .  como mínimo vamos a necesitar siempre el
+response ( return de la función python del servidor)
+
+Ej- Traer información en Ajax usando el método getJSON ( la información vendrá en formato JSON)
+
+$(document).ready(function(){
+	
+	$.getJSON("ruta/url", function(json_response){
+		
+		$.each(json_response, function(clave, valor){
+		
+			$("id").html("El " + clave + " es = " + valor)
+		});
+	
+	});
+	
+});
+
+Aqui recorremos el JSON obtenido con el método each(), que es un bucle FOR
+
+
+Si se necesita importar un script de Javascript o de la web de Jquery, ver documentación del método getScript()

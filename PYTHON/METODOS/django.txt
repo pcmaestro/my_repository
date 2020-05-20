@@ -649,7 +649,7 @@ En el HTML
                 <a href="/anuncios?comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
                 <a href="/anuncios?comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a>
 
-            {% elif anuncios_totales < paginacion %}
+            {% elif anuncios_totales <= paginacion %}
                 <span>&nbsp;&nbsp;&nbsp;NO HAY MAS ANUNCIOS</span>
 
             {% else %}
@@ -666,7 +666,7 @@ En el HTML
                 <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{anterior}}" id = "paginacion2">&nbsp;&nbsp;&nbsp;<<< ANTERIOR</a>
                 <a href="/anuncios/?criterio={{valor_buscado}}&comienzo={{siguiente}}" class = "paginacion" >SIGUIENTE >>>&nbsp;&nbsp;&nbsp;</a> 
 
-            {% elif anuncios_totales < paginacion %}
+            {% elif anuncios_totales <= paginacion %}
                 <span>&nbsp;&nbsp;&nbsp;NO HAY MAS ANUNCIOS</span>
 
             {% else %}
@@ -899,7 +899,7 @@ Con este código podemos ver toda la información de usuario que se almacena en 
     texto += elementos_en_META
     return HttpResponse(texto)
 
-La funcionalidad de obtener IP no suele estar en los archivos views.py , suelen estar en uno a parte llamado utilities.py:
+La funcionalidad de obtener IP no suele estar en los archivos views.py , suelen estar en uno a parte llamado utils.py:
 
 
 def obtener_ip(request):
@@ -919,9 +919,9 @@ Y luego en el views.py hacemos uso de esta función:
 
 Ej.  Captura de la IP al guardar un anuncio
 
-from . import utilities
+from . import utils
 
-anuncio.ip = utilities.obtener_ip(request)
+anuncio.ip = utils.obtener_ip(request)
 
 
 Para geolocalizar la IP,  es necesario hacer uso de un servicio REST externo, como por ej. https://www.infosniper.net
