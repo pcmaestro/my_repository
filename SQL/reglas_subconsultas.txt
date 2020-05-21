@@ -1,0 +1,13 @@
+Reglas para crear una subconsulta
+
+Ponga la subconsulta entre paréntesis.
+
+En una subconsulta, especifique sólo una columna o expresión a no ser que esté utilizando IN, ANY, ALL o EXISTS.
+
+Una subconsulta no puede contener una cláusula BETWEEN ni LIKE.
+
+Una subconsulta no puede contener una cláusula ORDER BY.
+
+Una subconsulta de una sentencia UPDATE no puede recuperar datos de la misma tabla en la que deben actualizarse los datos.
+
+Una subconsulta de una sentencia DELETE no puede recuperar datos de la misma tabla de la que deben suprimirse los datos

@@ -19,8 +19,8 @@
     <br/>
     <header
     <h1>INDIQUE SUS DATOS PARA REGISTRARSE EN EL PORTAL</h1>
-    </header>
-    <form method="POST" action="guardar-usuario" onsubmit="return validar_usuario(event)">
+    </header>m"
+    <form method="POST" action="guardar-usuario" id = "id_form">
 
         {% csrf_token %}
 
@@ -61,6 +61,51 @@
         {{mail_duplicado}}
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function(){        
+
+        $("id_form").submit(function(e){
+
+            e.preventDefault();
+
+            var peticion = $("id_form").attr("action");
+
+            var regexText = new RegExp("^[a-zA-Z0-9]+\s?[a-zA-Z0-9]*\s?[a-zA-Z0-9]*\s?[a-zA-Z0-9]*$");
+            var regexTf = new RegExp("^[6-9]{1}[0-9]{8}$");
+            var regexMail = new RegExp("^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
+            var regexPass = new RegExp("[a-z0-9_-]{4,8}$");
+
+            var v_nombre = $("#nombre").attr("value").match(regexText);
+            var v_apellido_1 = $("#apellido_1").attr("value").match(regexText);
+            var v_apellido_2 = $("#apellido_2").attr("value").match(regexText);
+            var v_telefono = $("#telefono").attr("value").match(regexTf);
+            var v_email = $("#email").attr("value").match(regexMail);
+            var v_password1 = $("#password1").attr("value").match(regexPass);
+            var v_password2 = $("#password2").attr("value").match(regexPass);
+
+            var validacion = false;
+
+            if(v_nombre && v_apellido_1 && v_apellido_2 && v_telefono && v_email && v_password1 && v_password2){
+
+                validacion = true;
+            }
+           
+            if(validacion){
+
+                var info = $("id_form").serialize();
+                
+            }
+           
+            
+
+
+        })//end submit
+
+    });//end jquery
+
+    </script>
 
 </body>
 

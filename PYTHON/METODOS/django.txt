@@ -491,6 +491,109 @@ IMPORTANTE -  La lectura de valores en variables incluidas en las rutas del nave
 CSRF - Django no permite el envio de información POST si no se incluye al principo del <form> el Token {% csrf_token %}
 
 
+-------------------------------------------  API FORMS  --------------------------------------------------------------
+
+Django incorpora un módulo para la creación y validación de formularios
+
+Debemos crear un módulo python específico en el mismo directorio donde estén ubicados los views
+
+forms.py
+
+Y dentro de este módulo debemos crear la clase que construirá los formularios ( una clase por cada formulario ), las instancias
+de dicha clase serán objetos HTML en formato de lineas de tabla que podremos incluir en nuestros templates envueltas en un <form><table>
+
+
+Ej. con un formulario de contacto
+
+
+from django import forms
+
+class FormularioContacto(forms.Form):
+	
+	asunto = forms.CharField()
+	email = forms.EmailField()
+	mensaje = forms.CharField()
+
+
+Si al crear la instancia no deseamos el formato tabla,  podemos convertir la variable en , por ejemplo , párrafos o listas :
+
+miFormulario = FormularioContacto()
+
+miFormulario = miFormulario.as_p()  // miFormulario.as_ul() --> Convertimos el HTML a párrafo o lista desordenada
+
+Por defecto ,  los campos tienen el atributo "required" y el EmailField valida el formato correcto del email
+
+Podemos verificar que todas las validaciones son correctas con este método
+
+validacion = miFormulario.is_valid() --> Devuelve True o False
+
+
+Con este otro méotodo,  leemos los formularios y guardamos su contenido en un diccionario
+
+informacion = miFormulario.cleaned_data  --> Crea {"name_formulario":"valor_formulario", etc....}
+
+
+En la vista donde guardamos la información del formulario, deberemos hacer lo siguiente:
+
+
+from nombre_app.forms import FormularioContacto
+
+def guardar_formulario(request):
+
+	if request.method == "POST": --> Esto significa "si el usuario pulsa el submit"
+
+		miFormulario = FormularioContacto(request.POST) 
+
+		if miFormulario.is_valid():
+
+			info = miFormulario.cleaned_data --> Podemos acceder a la información con los métodos de los diccionarios
+
+		insercion_bd = models.Contacto(asunto = info["asunto"] ,  email = info["email"] , mensaje = info["mensaje"])
+		insercion_bd.save()
+			
+	else:
+		miFormulario = FormularioContacto() --> Pintamos la tabla de formulario por defecto
+		
+		context = {"form":miFormulario}
+
+	
+	return render(request, "formularios.html", context)
+
+
+En el HTML :
+
+<html>
+<body>
+
+		{% if form.errors %}
+		<p style = "color: red;">Revise que este campo sea correcto</p>
+		{% endif %}
+
+	<form action = "guardar-formulario" method = "POST"> {% csrf_token %}		
+		
+		<table>
+			
+			{{form.as_table}}  --> Tenemos que indicar el formato en que viene del views
+
+		</table>
+
+		<input type = "submit" value = "ENVIAR" />
+	</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
 ########################################  REDIRECCION DE RUTAS  #########################################################
 
 from django.shortcuts import redirect
@@ -1006,7 +1109,7 @@ content = template.render(context)
 
 email = EmailMultialternatives(
 	"asunto_correo",
-	"texto_descripcion_correo",
+	"texto_plano_alternativo_del_correo",
 	settings.EMAIL_HOST_USER,
 	["destinatario1@gmail.com","destinatario2@gmail.com"],
 )
