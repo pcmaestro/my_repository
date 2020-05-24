@@ -1,0 +1,14 @@
+
+
+textarea { resize:both; } /* reescalado horizontal y vertical */
+textarea { resize:none; } /* desactiva el reescalado */
+textarea { resize:vertical; } /* reescalado solo vertical */
+textarea { resize:horizontal; } /* reescaldo solo horizontal */
+
+Tamaño mínimo y máximo de redimensionamiento
+
+textarea {
+   resize: vertical;
+   min-height: 60px;
+   max-height: 300px;
+}

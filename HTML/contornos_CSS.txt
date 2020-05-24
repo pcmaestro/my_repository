@@ -1,0 +1,11 @@
+Los contornos son unas lineas punteadas que aparecen cuando se han seleccionado los enlaces, 
+estos contornos se muestran alrededor de los enlaces para resaltarlos e indicar que el enlace 
+tiene el foco. Estos contornos se pueden controlar con estilos mediante la propiedad outline.
+
+ancho: thin (fino), medium (mediano) o thick (grueso).
+estilo: none, dotted, dashed, solid, double, groove, ridge, inset, outset.
+color: el cual es el código hexadecimal del color (Ej: #666666).
+
+Ej.
+
+div a{ outline: thin solid #CC0000; }

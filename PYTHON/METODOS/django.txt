@@ -525,6 +525,11 @@ class FormularioContacto(forms.ModelForm):
 	class Meta:
 		model = models.Nombre_clase
 		fields = "__all__" --> o también ["asunto", "email", "mensaje"]
+		widgets = {
+			"asunto" : forms.TextInput(attrs=("id":"id_asunto","required":True,"placeholder":"Asunto del mensaje")),
+			"email" : forms.EmailInput(attrs=(ming_length = 6),
+			"mensaje" : forms.Textarea(attrs{"class":"nombre_clase", "id":"nombre_id", "rows":nº_filas, "cols":nº_columnas})
+			}
 
 En este segundo método podemos sobreescribir los campos del modelo con algo distinto o personalizarlos		
 
@@ -548,8 +553,17 @@ Por defecto el label es el campo de la clase,  pero se puede personalizar : form
 Si deseamos que por defecto en el campo de formulario se pinte un valor X : forms.CharField(initial = "X")
 
 Podemos añadir widgets y ponerles atributos :  forms.CharField(widget = forms.Textarea(attrs{"class":"nombre_clase", "id":"nombre_id", "rows":nº_filas, "cols":nº_columnas})																					
-					       forms.CharField(widget = forms.Textinput(attrs{"placeholder":"indique su email aqui"})
-Para ver todo los widgets de los formularios,  ver django documentation forms widgets
+					       forms.CharField(widget = forms.TextInput(attrs{"placeholder":"indique su email aqui"})
+
+Para ver todo los widgets de los formularios,  ver django documentation forms widgets:
+
+    'Media', 'MediaDefiningClass', 'Widget', 'TextInput', 'NumberInput',
+    'EmailInput', 'URLInput', 'PasswordInput', 'HiddenInput',
+    'MultipleHiddenInput', 'FileInput', 'ClearableFileInput', 'Textarea',
+    'DateInput', 'DateTimeInput', 'TimeInput', 'CheckboxInput', 'Select',
+    'NullBooleanSelect', 'SelectMultiple', 'RadioSelect',
+    'CheckboxSelectMultiple', 'MultiWidget', 'SplitDateTimeWidget',
+    'SplitHiddenDateTimeWidget', 'SelectDateWidget',
 
 Si al crear la instancia no deseamos el formato tabla,  podemos convertir la variable en , por ejemplo , párrafos o listas :
 miFormulario = FormularioContacto()
@@ -561,7 +575,7 @@ Podemos verificar que todas las validaciones son correctas con este método
 validacion = miFormulario.is_valid() --> Devuelve True o False
 
 
-Con este otro méotodo,  leemos los formularios y guardamos su contenido en un diccionario
+Con este otro método,  leemos los formularios y guardamos su contenido en un diccionario
 
 informacion = miFormulario.cleaned_data  --> Crea {"name_formulario":"valor_formulario", etc....}
 
