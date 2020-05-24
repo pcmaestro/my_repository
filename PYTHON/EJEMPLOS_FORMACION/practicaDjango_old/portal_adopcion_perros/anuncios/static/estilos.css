@@ -186,3 +186,13 @@ footer{
     color: white;
     padding: 1%;
 }
+
+#errores_registro_usuario{
+    font-weight: bold;
+    color: red;
+}
+
+#modifacion_anuncio_erronea{
+    font-weight: bold;
+    color: red;
+}

@@ -3,8 +3,9 @@ function hola(){
     console.log("llego al javascript")
 }
 
-function validar_usuario(event){
-    console.log("iniciada validacion")
+function validacion(){
+
+    validacion = false;
 
     var regexText = new RegExp("^[a-zA-Z0-9]+\s?[a-zA-Z0-9]*\s?[a-zA-Z0-9]*\s?[a-zA-Z0-9]*$");
     var regexTf = new RegExp("^[6-9]{1}[0-9]{8}$");
@@ -18,10 +19,6 @@ function validar_usuario(event){
     var email = document.getElementById("email").value;
     var password1 = document.getElementById("password1").value;
     var password2 = document.getElementById("password2").value;
-
-    var validacion = true;
-
-    console.log("Al empezar validacion tiene el valor " + validacion)
 
     if(regexText.test(nombre)){
         document.getElementById("nombre").style.border = "1px solid black";
@@ -56,7 +53,6 @@ function validar_usuario(event){
         validacion = false;
         console.log("Apellido_2" + validacion)
     }
-
 
     if(regexTf.test(telefono)){
         document.getElementById("telefono").style.border = "1px solid black";        
@@ -101,10 +97,28 @@ function validar_usuario(event){
         console.log("Password2 es " + validacion)
     }
 
-    if(validacion == false){
-        preventDefault()
-        alert("Los campos en rojo no son correctos");
+    if(password1 == password2){
+        document.getElementById("password1").style.border = "1px solid black";
+        document.getElementById("password2").style.border = "1px solid black";
+        validacion = true;
+    }else{
+        document.getElementById("password1").style.border = "2px solid red";
+        document.getElementById("password2").style.border = "2px solid red";
+        validacion = false;
+        console.log("La verificación de password no coincide")
+
     }
 
     return validacion;
+
+}
+
+function validar_usuario(event){
+
+    if(validacion() == false){
+
+        event.preventDefault();
+        validar = false;
+    }  
+    return validar;
 }

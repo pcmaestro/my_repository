@@ -17,7 +17,7 @@
     <h1>MODIFICACION DE ANUNCIOS</h1>
     </header>
     <br/>
-    <a href = "volver-home"><button>VOLVER A MIS ANUNCIOS</button></a>
+    <a href = "/anuncios/home-usuario"><button>VOLVER A MIS ANUNCIOS</button></a>
     <br/> 
     <form action = "guardar-anuncio-modificado/{{id_anuncio}}" method = "POST" enctype="multipart/form-data">
     
@@ -88,7 +88,10 @@
             &nbsp;  
             
     </form>
-    <br/> 
+    <br/>
+    <div id = "modifacion_anuncio_erronea">
+        {{error_campo}}
+    </div>
     
 
 </body>

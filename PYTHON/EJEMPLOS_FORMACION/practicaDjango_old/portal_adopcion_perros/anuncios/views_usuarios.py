@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from . import models
 import email
@@ -7,66 +8,60 @@ from django.utils import timezone
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from django.http import JsonResponse
 
 
 def registro_usuario(request):    
     return render(request, "registro-usuario.html")
 
 def guardar_usuario(request):
-    patron_texto = r"^[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]+\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*$"
-    patron_telefono = r"^[6-9]{1}[0-9]{8}$"
-    patron_mail = r"^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
-    patron_password = r"[a-zñA-ZÑ0-9_-]{4,8}$"
-    
-    validador_texto = re.compile(patron_texto)
-    validador_telefono = re.compile(patron_telefono)
-    validador_mail = re.compile(patron_mail)
-    validador_password = re.compile(patron_password)   
-    
-    nombre = request.POST["nombre"].lower().title()
-    apellido_1 = request.POST["apellido_1"].lower().title()
-    apellido_2 = request.POST["apellido_2"].lower().title()
-    telefono = request.POST["telefono"]
-    email = request.POST["email"]  
-    password1 = request.POST["password1"]
-    password2 = request.POST["password2"]        
+    if request.method == "POST":
+        patron_texto = r"^[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]+\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*$"
+        patron_telefono = r"^[6-9]{1}[0-9]{8}$"
+        patron_mail = r"^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+        patron_password = r"[a-zñA-ZÑ0-9_-]{4,8}$"
         
-    if password1 == password2:
-        password = password2
-    else:
-        pass_no_match = "Las valores de los campos de contraseña no coinciden"
-    
-    #Variable para comprobar en la BD si el mail ya está registrado    
-    comprobacion_mail = email
-    
-    validacion_nombre = validador_texto.match(nombre)
-    validacion_apellido_1 = validador_texto.match(apellido_1)
-    validacion_apellido_2 = validador_texto.match(apellido_2)
-    validacion_telefono = validador_telefono.match(telefono)
-    validacion_mail = validador_mail.match(email)
-    validacion_password = validador_password.match(password)
-    
-    validacion = True
-    
-    if validacion_nombre and validacion_apellido_1 and validacion_apellido_2 and validacion_telefono and validacion_mail and validacion_password:
+        validador_texto = re.compile(patron_texto)
+        validador_telefono = re.compile(patron_telefono)
+        validador_mail = re.compile(patron_mail)
+        validador_password = re.compile(patron_password)   
+        
+        nombre = request.POST["nombre"].lower().title()
+        apellido_1 = request.POST["apellido_1"].lower().title()
+        apellido_2 = request.POST["apellido_2"].lower().title()
+        telefono = request.POST["telefono"]
+        email = request.POST["email"]  
+        password1 = request.POST["password1"]
+        password2 = request.POST["password2"]        
+            
+        if password1 == password2:
+            password = password2
+        
+        #Variable para comprobar en la BD si el mail ya está registrado    
+        comprobacion_mail = email
+        
+        validacion_nombre = validador_texto.match(nombre)
+        validacion_apellido_1 = validador_texto.match(apellido_1)
+        validacion_apellido_2 = validador_texto.match(apellido_2)
+        validacion_telefono = validador_telefono.match(telefono)
+        validacion_mail = validador_mail.match(email)
+        validacion_password = validador_password.match(password)
+        validacion_email_duplicado = len(models.Usuarios.objects.filter(email = comprobacion_mail))
+        
         validacion = True
-    else:
-        validacion = False     
-    
-       
-    context = {}
-    if len(models.Usuarios.objects.filter(email = comprobacion_mail)) == 1:        
-        context = {
-            "error_mail" : "El correo ya está registrado, debe indicar uno distinto"
-        }
-        return render(request,"registro-usuario.html", context)
-    elif password1 != password2:
-        context = {
-            "pass_no_match" : pass_no_match
-            }
-        return render(request,"registro-usuario.html", context)
-    else:   
-        if validacion == True:
+        
+        if validacion_nombre and validacion_apellido_1 and validacion_apellido_2 and validacion_telefono and validacion_mail and validacion_password:
+            validacion1 = True
+        else:
+            validacion1 = False
+
+        if validacion_email_duplicado == 0:
+            validacion2 = True
+        else:
+            validacion2 = False
+
+
+        if validacion1 == True and validacion2 == True:
             nuevo_usuario = models.Usuarios(nombre = nombre,
                                             apellido_1 = apellido_1,
                                             apellido_2 = apellido_2,
@@ -94,11 +89,48 @@ def guardar_usuario(request):
             mailing.send()
 
             return render(request,"gracias.html")
-        else:
+
+        elif validacion1 == False and validacion2 == False:
+            errores_registro = '''
+            Revise que todos los campos son correctos:
+
+                Los campos de nombre y apellidos sólo pueden contender texto sin acentos.
+
+                El campo Telefono debe contener un número español de 9 dígitos.
+
+                El campo Email debe contener una dirección de correo válida que no se encentre ya registrada en el sistema.
+
+                El campo Contraseña debe contener numeros o letras entre 4 y 8 digitos.
+            '''
+            mail = request.POST["email"]
             context = {
-                "validacion_ko" : "Alguno de los campos no es correcto"
-                }
-            return render(request,"registro-usuario.html", context)
+                "errores_registro" : errores_registro,
+                "mail_duplicado": "La dirección " + mail + " ya está registrada en el sistema"
+                    }
+
+            return render(request, "registro-usuario.html", context)
+
+        elif validacion1 == False:
+            errores_registro = '''
+            Revise que todos los campos son correctos:
+            
+                Los campos de nombre y apellidos sólo pueden contender texto sin acentos.
+            
+                El campo Telefono debe contener un número español de 9 dígitos.
+            
+                El campo Email debe contener una dirección de correo válida que no se encentre ya registrada en el sistema.
+            
+                El campo Contraseña debe contener numeros o letras entre 4 y 8 digitos.
+            '''
+            context = { "errores_registro" : errores_registro}
+            return render(request, "registro-usuario.html", context)
+
+        elif validacion2 == False:
+            mail = request.POST["email"]
+            context = {"mail_duplicado": "La dirección " + mail + " ya está registrada en el sistema"}
+            return render(request, "registro-usuario.html", context)
+
+
 
 def inicio_sesion_usuario(request):    
     return render(request, "login.html")
@@ -114,7 +146,7 @@ def guardar_sesion_usuario(request):
         request.session["id_usuario"] = usuario.id
         context = {
             "nombre" : usuario.nombre + " " + usuario.apellido_1 +
-             " " + usuario.apellido_2, "mis_anuncios" : anuncios_usuario
+            " " + usuario.apellido_2, "mis_anuncios" : anuncios_usuario
             }
         return render(request,"home.html", context)
     else:

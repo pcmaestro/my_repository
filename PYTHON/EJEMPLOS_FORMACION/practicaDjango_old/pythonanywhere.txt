@@ -1,0 +1,19 @@
+http://pcmaestro.pythonanywhere.com/
+
+pcmaestro
+
+pass : Arroba01
+
+pcmaestro.pythonanywhere.com
+
+
+BD pcmaestro$anuncios
+Database host address:pcmaestro.mysql.pythonanywhere-services.com
+Username:pcmaestro
+Pass : root1234
+
+pedro.cast.curso.python@gmail.com
+
+pass web: curso1234
+
+pass aplicaciones : xkavemhchrofovlr

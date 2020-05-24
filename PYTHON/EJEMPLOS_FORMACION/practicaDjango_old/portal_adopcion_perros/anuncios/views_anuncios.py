@@ -218,9 +218,9 @@ def guardar_anuncio_modificado(request, id_anuncio):
             return redirect("/anuncios/home-usuario")
         else:
             context = {
-                "error_campo": "Alguno de los campos es erróneo"
+                "error_campo": "Debe seleccionar alguna opción en los desplegables",
             }
-            return render(request, "registro-anuncio.html", context)
+            return render(request, "modificacion-anuncio.html", context)
 
     else:
         return redirect("/anuncios/inicio-sesion-usuario")

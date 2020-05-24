@@ -81,7 +81,7 @@ Ej.  def inicio(request , posible_parametro_adicional):
 
 Para cada "vista" que creemos que en el views.py , debemos asignarle una ruta en el archivo urls.py
 
-Es buena práctica crear un urls.py para cada proyecto y luego llamarlo desde el urls.py de la subcarpeta principal del proyecto
+Es buena práctica crear un urls.py para cada proyecto/app y luego llamarlo desde el urls.py de la subcarpeta principal del proyecto
 de esta manera:
 
 Ej.  
@@ -89,7 +89,7 @@ Ej.
 from django.urls.conf import include
 
 urlpatterns = [
-    path('nombre_app/',include("nombre_app.urls")),
+    path('nombre_app/',include("nombre_app.urls")),  --> Si sólo tenemos una app, podemos dejar la ruta como ""
     path('admin/', admin.site.urls),
 ]
 
@@ -99,6 +99,7 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
+    path("", views.nombre_funcion_inicio_pagina),
     path("nombre_ruta/", views.nombre_funcion_asociada_a_la_ruta)
     ]
 
@@ -503,7 +504,7 @@ Y dentro de este módulo debemos crear la clase que construirá los formularios 
 de dicha clase serán objetos HTML en formato de lineas de tabla que podremos incluir en nuestros templates envueltas en un <form><table>
 
 
-Ej. con un formulario de contacto
+Ej. con un formulario de contacto (método raw)
 
 
 from django import forms
@@ -512,16 +513,48 @@ class FormularioContacto(forms.Form):
 	
 	asunto = forms.CharField()
 	email = forms.EmailField()
-	mensaje = forms.CharField()
+	message = forms.CharField(widget=forms.Textarea)
 
+Ej. con un formulario de contacto (método Model)
+
+from django import forms
+from . import models
+
+class FormularioContacto(forms.ModelForm):
+	asunto = forms.CharField(initial = "Hola Mundo") --> opcional, para sobreescribir en un campo lo que viene del models
+	class Meta:
+		model = models.Nombre_clase
+		fields = "__all__" --> o también ["asunto", "email", "mensaje"]
+
+En este segundo método podemos sobreescribir los campos del modelo con algo distinto o personalizarlos		
+
+
+Por defecto ,  los campos tienen el atributo "required" y el EmailField valida el formato correcto del email.  Si deseamos que un
+campo no sea requerido, en sus argumentos debemos indicar por ejemplo forms.CharField(required = False)
+
+Podemos personalizar las validaciones añadiendo métodos a la clase :
+
+Ej.
+
+def clean_asunto(self, *args, **kwargs)
+	asunto = self.cleaned_data.get("asunto")
+	if asunto = " ":
+		raise forms.ValidationError("El campo no puede estar en blanco")
+	else:
+		return asunto
+
+Por defecto el label es el campo de la clase,  pero se puede personalizar : forms.CharField(label = "etiqueta_formulario")
+
+Si deseamos que por defecto en el campo de formulario se pinte un valor X : forms.CharField(initial = "X")
+
+Podemos añadir widgets y ponerles atributos :  forms.CharField(widget = forms.Textarea(attrs{"class":"nombre_clase", "id":"nombre_id", "rows":nº_filas, "cols":nº_columnas})																					
+					       forms.CharField(widget = forms.Textinput(attrs{"placeholder":"indique su email aqui"})
+Para ver todo los widgets de los formularios,  ver django documentation forms widgets
 
 Si al crear la instancia no deseamos el formato tabla,  podemos convertir la variable en , por ejemplo , párrafos o listas :
-
 miFormulario = FormularioContacto()
 
 miFormulario = miFormulario.as_p()  // miFormulario.as_ul() --> Convertimos el HTML a párrafo o lista desordenada
-
-Por defecto ,  los campos tienen el atributo "required" y el EmailField valida el formato correcto del email
 
 Podemos verificar que todas las validaciones son correctas con este método
 
@@ -548,13 +581,14 @@ def guardar_formulario(request):
 
 			info = miFormulario.cleaned_data --> Podemos acceder a la información con los métodos de los diccionarios
 
-		insercion_bd = models.Contacto(asunto = info["asunto"] ,  email = info["email"] , mensaje = info["mensaje"])
-		insercion_bd.save()
-			
+			insercion_bd = models.Contacto(asunto = info["asunto"] ,  email = info["email"] , mensaje = info["mensaje"])
+			insercion_bd.save()
+			miFormulario = FormularioContacto() --> Esto resetea el contenido del formulario
+
 	else:
 		miFormulario = FormularioContacto() --> Pintamos la tabla de formulario por defecto
 		
-		context = {"form":miFormulario}
+	context = {"form":miFormulario}
 
 	
 	return render(request, "formularios.html", context)
@@ -1130,3 +1164,82 @@ python manage.py loaddata nombre_app.json
 
 
 https://riptutorial.com/django/example/17482/fixtures
+
+###################################  SERVICIO REST  ##############################################################
+
+Creamos una app llamada nombre_app donde residirá el API:
+
+pip install django restframework
+
+En INSTALLED_APPS añadimos la linea
+
+'rest-framework'
+
+En la carpeta de la nombre_app crear el archivo serializer.py:
+
+from rest_framework import serializers
+from . import models
+
+class Nombre_appSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.nombre_clase
+		fileds = "__all__"  --> Podemos optar por indicar una lista [] varios campos del modelo
+
+Luego creamos el archivo viewsets.py :
+
+from rest_framework import viewsets
+from . import models
+from . import serializer
+
+class Nombre_appViewSet(viewsets.ModelViewSet):
+	queryset = models._Nombre_clase.objects.all()  --> Generar el tipo de queryset que haga falta con la BBDD
+	serializerClass = serializer.Nombre_appSerializer
+
+En el archivo urls.py:
+
+from rest_framewokr import routers
+from . import viewsets
+
+router = routers.SimpleRouter()
+router.register("nombre_app", Nombre_appViewSet)
+
+urlpatterns = router.urls
+
+En el achivo urls.py de la carpeta principal del proyecto, incluir las rutas nuestra nueva app:
+
+from django.urls import include
+
+urlpatterns = [
+	path("api/v1.0/", include("nombre_app.urls")
+]
+
+Con esto podemos probar el API de la siguiente manera :
+
+http://www.dominio.com/api/v1.0/nombre_app , esto presentará la información en formato JSON
+
+
+############################### EXCEPCION DOESNOTEXIST  ######################################################
+
+Podemos gestionar las excepciones de Django para mostrar al usuario lo que consideremos conveniente
+
+En este caso manejamos la excepción DoesNotExist que muestra Django si en la URL espera un parámetro (id) y este no existe
+
+from django.http import Http404
+
+from django.shortcuts import render, get_object_or_404
+
+from . import models
+
+def dynamic_lookup_view(request, id):
+
+	try:
+	    obj = models.Nombre_clase.objects.get(pk = id)	 
+   
+	except models.Nombre_clase.DoesNotExist:
+	    raise Http404
+
+	context = {"object":obj}
+
+	return render (request, "mi_pagina.html", context)
+	
+

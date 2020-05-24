@@ -137,7 +137,12 @@ def click_raton(evento):
                 messagebox.showinfo(
                     "Mensaje", "No has acertado, te quedan " + 
                     str(10 - oportunidades) + " oportunidades")
-
+        '''       
+            else:          
+                messagebox.showinfo(
+                    "Mensaje", "OOOOH !! , agotaste tus oportunidades"
+                    )
+        '''        
         
         if clicks == 10:
                 messagebox.showinfo(
@@ -151,7 +156,7 @@ def click_raton(evento):
             tiempo_ejecucion = tiempo_final - tiempo_inicial        
             messagebox.showinfo(
                 "Mensaje", "Acertaste todas las diferencias, has tardado " + 
-                                str( round(tiempo_ejecucion, 0) ) + " segundos" 
+                                str( round(tiempo_ejecucion, 2) ) + " segundos" 
                                 )
             ventana.destroy()
             tiempo_usuario()
@@ -193,7 +198,7 @@ etiqueta1 = Label(
                 + " Indica tu nombre :").place(x = 10, y = 50
     )
 entrada_usuario = StringVar()
-campo = Entry(alert, textvariable = entrada_usuario).place(x = 400 ,y = 50)
+campo =Entry(alert, textvariable = entrada_usuario).place(x = 400 ,y = 50)
 Button(alert, text = "Enviar", command = caja_texto).place(x = 10, y = 80)
 alert.geometry("700x150")
 alert.mainloop()

@@ -1,0 +1,25 @@
+
+
+import json
+
+
+#Para crear una cadena JSON a partir de un diccionario:
+
+datos = {
+	"nomnbre" : "Manolo",
+	"apellido" : "Escobar",
+	"telefono" : 910000000	
+	}
+
+cadena_json = json.dumps(datos)
+
+#Para escribir un archivo JSON llamado fichero1.json
+
+with open("fichero1.json", "w") as f:
+	json.dump(cadena_json, f)
+
+
+#Para leer un archivo JSON llamado fichero2.json
+
+with open("fichero2.json", "w") as f:
+	cadena_json = json.load(f)

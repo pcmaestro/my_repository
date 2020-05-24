@@ -8,8 +8,7 @@
     <title>Registro de usuarios</title>
 
     <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
-    
-    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+  
 
 </head>
 
@@ -20,7 +19,7 @@
     <header
     <h1>INDIQUE SUS DATOS PARA REGISTRARSE EN EL PORTAL</h1>
     </header>
-    <form method="POST" action="guardar-usuario" onsubmit="return validar_usuario(event)">
+    <form method="POST" action="guardar-usuario" id = "id_form" onsubmit = "return validar_usuario()">
 
         {% csrf_token %}
 
@@ -52,11 +51,18 @@
         <input type="submit" value="REGISTRAR" />
         <br/>
         <br/>
-        <span id = "error_mail"><h2>{{ error_mail }}</h2></span>
-        <span id = "pass_no_match"><h2>{{ pass_no_match }}</h2></span>
-        <span id = "validacion_ko"><h2>{{ validacion_ko }}</h2></span>
 
     </form>
+    <div id = "errores_registro_usuario">
+        {{errores_registro}}
+        <br/>
+        <br/>
+        {{mail_duplicado}}
+    </div>
+
+    <script language="javascript" src = "{% static 'javascript.js' %}"></script>
+
+
 </body>
 
 </html>

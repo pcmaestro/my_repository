@@ -1,0 +1,15 @@
+ICONOS
+
+https://ionicons.com/
+
+FONTS
+
+https://fonts.google.com/
+
+CSS
+
+https://getbootstrap.com/
+
+PLANTILLAS HTML 
+
+https://www.wix.com/html5bing/templatesnr-b-c-f?utm_source=bing&utm_campaign=ms_en_e_1_NEW%5Ehtml_tp_x&experiment_id=html+free+templates%5Ebe%5E79508482574253%5Ehtml+free+templates&msclkid=909e45eb15bf197b34091b230c44ea55&utm_medium=cpc
