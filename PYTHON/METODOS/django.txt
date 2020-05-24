@@ -632,14 +632,135 @@ En el HTML :
 </html>
 
 
+----------------------------------------------  AJAX  --------------------------------------------------------------------
+
+Con Ajax podemos hacer submit de formularios POST evitando que se recargue la página , lo cual nos permite validar con javascript en
+el DOM para ayudar al usuario a rellenarlos correctamente
 
 
+Ej- 
+
+Función jquery a ejecutar en el evento submit
 
 
+$('#id_form').on('submit', function(event){
+    event.preventDefault();
+    console.log("form submitted!") --> comprobación de ejecución
+    código de validación....
+    if(validacion){
+    	create_post();  --> función que hará el post
+	};
+});
 
 
+function create_post() {
+    console.log("create post is working!") --> comprobación de ejecución
+    $.ajax({
+        url : "guardar-formulario", --> ruta python
+        type : "POST",
+        data : $("id_form).serialize(),
+       	success : function(json) {
+			$('#id_caja_texto').val(''); --> restea el valor de un input text (por ejemplo)
+			console.log(json); --> pinta en la consola el objeto JSON
+			$("#div_id_ok").html("<span> Información registrad con exito  </span>"); --> pinta el mensaje de OK en un div
+			console.log("success"); --> comprobación de seguridad
+			},
+        error : function(xhr,errmsg,err) {
+            $('#div_id_ko').html("<span> Ha habido un problema, vuelva a intentarlo  </span>"); --> pinta el mensaje de KO en un div
+            console.log(xhr.status + ": " + xhr.responseText); --> pinta el error en la consola
+            }
+    }); // end ajax
+}; // end function
+
+Funciones de validación CSRF (simplemente hacer copy-paste tal cual al final de nuestro javascript.js)
+
+$(function() {
 
 
+    // This function gets cookie with a given name
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    /*
+    The functions below will create a header with csrftoken
+    */
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Send the token to same-origin, relative URLs only.
+                // Send the token only if the method warrants CSRF protection
+                // Using the CSRFToken value acquired earlier
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+});
+
+
+Códgio en el views para tratar la peticón
+
+
+def guardar_formulario(request):
+    
+    if request.method == "POST":
+	asunto = request.POST["asunto"]
+	email = request.POST["email"]
+	mensaje = request.POST["mensaje"]
+	response_data = {}  --> le añadiremos contenido con los métodos de los diccionarios
+	
+	código de validación......
+
+	if validacion:
+
+    		insercion_bd = models.Contacto( asunto = asunto, email = email, mensaje = mensaje)
+		insercio_bd.save()
+		
+		response_data["div_id_ok"] = "Mensaje registrado correctamente" --> mensaje que pintaremos en el DOM en el elemento con id "div_id_ok"
+
+		context = json.dumps(response_data) --> objeto json que recibirá ajax
+
+		return render(request, "mi_pagina.html", context)
+	else:
+		response_data["div_id_ko"] = "El mensaje no ha podido ser registrado" --> mensaje que pintaremos en el DOM en el elemento con id "div_id_ok"
+		
+		context = json.dumps(response_data) --> objeto json que recibirá ajax
+		
+		return render(request, "mi_pagina.html", context)	
+	
 
 
 ########################################  REDIRECCION DE RUTAS  #########################################################

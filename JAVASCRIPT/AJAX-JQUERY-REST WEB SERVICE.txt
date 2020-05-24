@@ -152,7 +152,7 @@ Para aplicar pseudoselectores : $("div h1:first") --> El primer h1 dentro de un 
 
 Para añadir elementos al DOM : $("#id").append("<h1>Nuevo texto a mostrar</h1>) --> Dentro del elemento con cierta id, añade un h1
 
-Para añadir elementos al DOM : $("#id").preppend("<h1>Nuevo texto a mostrar</h1>) --> Antes del elemento con cierta id, añade un h1
+Para añadir elementos al DOM : $("#div_id").prepend("<h1>Nuevo texto a mostrar</h1>) --> dentro del elemento div "div_id" añade justo al principio del contenido un h1
 
 Para eliminar elementos del DOM : $("#id").remove() --> Elimina el elemento con cierto id
 
