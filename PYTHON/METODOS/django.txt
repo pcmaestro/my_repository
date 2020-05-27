@@ -640,39 +640,108 @@ el DOM para ayudar al usuario a rellenarlos correctamente
 
 Ej- 
 
-Función jquery a ejecutar en el evento submit
+#clase para los formularios en forms.py ( las regexp están en un módulo a parte)
+
+from django import forms
+from . import models
+from . import regexp
+import re
+
+class FormularioUsuario(forms.ModelForm):
+    class Meta:
+        model = models.Usuario
+        fields = "__all__"
+        widgets = {
+            "nombre": forms.TextInput(),
+            "apellido_1": forms.TextInput(),
+            "apellido_2": forms.TextInput(),
+            "telefono": forms.NumberInput(),
+            "email": forms.EmailInput()
+        }
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get("nombre")
+        validacion_nombre = re.compile(regexp.patron_texto)
+        if not validacion_nombre:
+            raise forms.ValidationError("El formato del nombre no es correcto")
+        else:
+            return nombre
+    def clean_apellido_1(self):
+        apellido_1 = self.cleaned_data.get("apellido_1")
+        validacion_apellido_1 = re.compile(regexp.patron_texto)
+        if not validacion_apellido_1:
+            raise forms.ValidationError("El formato del apellido no es correcto")
+        else:
+            return apellido_1
+
+    def clean_apellido_2(self):
+        apellido_2 = self.cleaned_data.get("apellido_2")
+        validacion_apellido_2 = re.compile(regexp.patron_texto)
+        if not validacion_apellido_2:
+            raise forms.ValidationError("El formato del apellido no es correcto")
+        else:
+            return apellido_2
+
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get("telefono")
+        validacion_telefono = re.compile(regexp.patron_telefono)
+        if not validacion_telefono:
+            raise forms.ValidationError("El formato del tf no es correcto")
+        else:
+            return telefono
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        validacion_email = re.compile(regexp.patron_mail)
+        if not validacion_email:
+            raise forms.ValidationError("El formato del email no es correcto")
+        else:
+            return  email
 
 
-$('#id_form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!") --> comprobación de ejecución
-    código de validación....
-    if(validacion){
-    	create_post();  --> función que hará el post
-	};
-});
+#Función jquery a ejecutar en el evento submit
 
 
-function create_post() {
-    console.log("create post is working!") --> comprobación de ejecución
-    $.ajax({
-        url : "guardar-formulario", --> ruta python
-        type : "POST",
-        data : $("id_form).serialize(),
-       	success : function(json) {
-			$('#id_caja_texto').val(''); --> restea el valor de un input text (por ejemplo)
-			console.log(json); --> pinta en la consola el objeto JSON
-			$("#div_id_ok").html("<span> Información registrad con exito  </span>"); --> pinta el mensaje de OK en un div
-			console.log("success"); --> comprobación de seguridad
-			},
-        error : function(xhr,errmsg,err) {
-            $('#div_id_ko').html("<span> Ha habido un problema, vuelva a intentarlo  </span>"); --> pinta el mensaje de KO en un div
-            console.log(xhr.status + ": " + xhr.responseText); --> pinta el error en la consola
-            }
-    }); // end ajax
-}; // end function
+$(document).ready(function(){
 
-Funciones de validación CSRF (simplemente hacer copy-paste tal cual al final de nuestro javascript.js)
+    $('#id_form').on('submit', function(event){
+        event.preventDefault();
+        console.log("form submitted!");
+        validacion = validar() --> Creamos una función que valide los campos
+        if(validacion){
+            create_post();
+        }else{
+            $("#resultado").html("Revise los campos marcados en rojo")
+        }; //end event
+    }); //end submit
+
+
+##Funcion AJAX
+$.ajax({
+	url: "guardar-formulario",
+	type: "POST",
+	data: $("#id_form").serialize(), --> Lectura y paso a JSON de los datos del formulario
+	success: function(json){
+		$("#id_nombre").val("");  --> Reseteo en blanco de los formularios
+		$("#id_apellido_1").val("");
+		$("#id_apellido_2").val("");
+		$("#id_telefono").val("");
+		$("#id_email").val("");
+		$("#resultado").html("REGISTRO CORRECTO");
+		console.log("ajax success OK")
+		},
+
+	error: function(xhr,errmsg,err){
+		$("#resultado").html("REGISTRO INCORRECTO");
+		console.log("ajax error")
+		console.log(xhr)
+		console.log(errmsg)
+		console.log(err)
+		}
+
+}); //end ajax
+
+##Funciones de validación CSRF (simplemente hacer copy-paste tal cual al final de nuestro javascript.js)
 
 $(function() {
 
@@ -731,36 +800,31 @@ $(function() {
 });
 
 
-Códgio en el views para tratar la peticón
+##Códgio en el views para tratar la peticón
 
 
 def guardar_formulario(request):
-    
+    context = {}
     if request.method == "POST":
-	asunto = request.POST["asunto"]
-	email = request.POST["email"]
-	mensaje = request.POST["mensaje"]
-	response_data = {}  --> le añadiremos contenido con los métodos de los diccionarios
-	
-	código de validación......
+        formulario = forms.FormularioUsuario(request.POST)
+        if formulario.is_valid():
+            usuario = models.Usuario(nombre = formulario.clean_nombre(), --> metodo clean creado en el forms
+                                     apellido_1 = formulario.clean_apellido_1(),
+                                     apellido_2 = formulario.clean_apellido_2(),
+                                     telefono = formulario.clean_telefono(),
+                                     email = formulario.clean_email()
+                                     )
+            usuario.save()
+            formulario = forms.FormularioUsuario()
 
-	if validacion:
-
-    		insercion_bd = models.Contacto( asunto = asunto, email = email, mensaje = mensaje)
-		insercio_bd.save()
-		
-		response_data["div_id_ok"] = "Mensaje registrado correctamente" --> mensaje que pintaremos en el DOM en el elemento con id "div_id_ok"
-
-		context = json.dumps(response_data) --> objeto json que recibirá ajax
-
-		return render(request, "mi_pagina.html", context)
-	else:
-		response_data["div_id_ko"] = "El mensaje no ha podido ser registrado" --> mensaje que pintaremos en el DOM en el elemento con id "div_id_ok"
-		
-		context = json.dumps(response_data) --> objeto json que recibirá ajax
-		
-		return render(request, "mi_pagina.html", context)	
-	
+            context = {
+                "formulario":formulario
+            }
+            return render(request, "index.html", context)
+    else:
+        context = {
+            "formulario":formulario,
+        }
 
 
 ########################################  REDIRECCION DE RUTAS  #########################################################

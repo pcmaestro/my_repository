@@ -15,7 +15,7 @@ def registro_usuario(request):
     return render(request, "registro-usuario.html")
 
 def guardar_usuario(request):
-    if request.is_ajax():
+    if request.method == "POST":
         patron_texto = r"^[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]+\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*\s?[a-zñA-ZÑáéíóúÁÉÍÓÚ0-9]*$"
         patron_telefono = r"^[6-9]{1}[0-9]{8}$"
         patron_mail = r"^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
@@ -87,13 +87,7 @@ def guardar_usuario(request):
             mailing.attach_alternative(content, "text/html")
 
             mailing.send()
-            '''
-            response = {
-                "msg": "Te hemos enviado un correo para verificar tu mail"
-            }
 
-            return JsonResponse(response)
-            '''
             return render(request,"gracias.html")
 
         elif validacion1 == False and validacion2 == False:
@@ -113,13 +107,7 @@ def guardar_usuario(request):
                 "errores_registro" : errores_registro,
                 "mail_duplicado": "La dirección " + mail + " ya está registrada en el sistema"
                     }
-            '''
-            response = {
-                "msg": "Hay errores de validación"
-            }
 
-            return JsonResponse(response)
-            '''
             return render(request, "registro-usuario.html", context)
 
         elif validacion1 == False:
@@ -135,25 +123,11 @@ def guardar_usuario(request):
                 El campo Contraseña debe contener numeros o letras entre 4 y 8 digitos.
             '''
             context = { "errores_registro" : errores_registro}
-            '''
-            response = {
-                "msg":"Hay errores de validación"
-            }
-
-            return JsonResponse(response)
-            '''
             return render(request, "registro-usuario.html", context)
 
         elif validacion2 == False:
             mail = request.POST["email"]
             context = {"mail_duplicado": "La dirección " + mail + " ya está registrada en el sistema"}
-            '''
-            response = {
-                "msg":"Hay errores de validación"
-            }
-
-            return JsonResponse(response)
-            '''
             return render(request, "registro-usuario.html", context)
 
 

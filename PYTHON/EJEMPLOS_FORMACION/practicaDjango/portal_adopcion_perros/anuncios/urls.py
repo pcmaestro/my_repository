@@ -5,7 +5,7 @@ urlpatterns = [
     path("", views_anuncios.inicio),
     path("/admin", views_usuarios.panel_administracion),
     path("registro-usuario", views_usuarios.registro_usuario),
-    path("guardar-usuario", views_usuarios.guardar_usuario, name = "guardar-usuario"),
+    path("guardar-usuario", views_usuarios.guardar_usuario),
     path("inicio-sesion-usuario", views_usuarios.inicio_sesion_usuario),
     path("guardar-sesion-usuario", views_usuarios.guardar_sesion_usuario),
     path("home-usuario", views_usuarios.home_usuario),

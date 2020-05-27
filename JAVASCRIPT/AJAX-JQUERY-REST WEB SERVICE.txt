@@ -97,7 +97,7 @@ O podemos llamar directamente al Google API de Ajax:
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-O podemos llamar al CDN de Jquery cargando la RUL minified según la última versión publicada (recomendado)
+O podemos llamar al CDN de Jquery cargando la URL minified según la última versión publicada (recomendado)
 
 
 Los scripts de llamada y los derivados de JQuery o Javascript puro,  irán luego dentro de un <script> al final del <body>
