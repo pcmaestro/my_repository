@@ -1,0 +1,265 @@
+INSTALACION:
+
+Ir en Google al sitio oficial de Bootstrap y descargar el archivo compiled CSS and JS
+
+El ZIP descargado lo llevamos a la carpeta de nuestro proyecto web y lo descomprimimos dentro
+
+Dentro de la carpeta bootstrap que se crea, están las subcarpetas css y js con los contenidos
+
+En la web de bootstrap hay una starter template, es buena práctica usarla como base de nuestro
+proyecto, ya que trae por defecto los enlaces externos de bootstrap, jquery y tether. Es opción
+del desarrollador hacer uso de los enlaces externos, o suprimirlos y en su lugar hacer uso del
+archivo descargado en local ( será mas rápido y no sujeto a caida de servidores externos)
+
+Para hacer uso del archivo local,  lo haremos con el archivo css/bootstrap.min.css
+
+<link rel = "stylesheet" href = "css/bootstrap.min.css"
+
+Igualmente para javascript
+
+<script src = "js/bootstrap.min.js>     </script>
+
+Los enlaces externos de jquery , popper y tether (librerias js para posicionamiento absoluto de elementos y pop ups)  es mejor no tocarlos, pero se pueden sustituir también por
+archivos en local
+
+
+
+CLASES:
+
+Bootstrap dispone de unas clases CSS prediseñadas
+
+container - añade margenes y centra el contenido
+
+container-fluid - ocupa todo el ancho de pantalla
+
+row -  crea filas
+
+col - crea columnas
+
+Mediante una serie de atributos, podemos manipular el comportamiento de estas clases
+
+A parte de esto, podemos crear clases propias a las cuales aplicar con el método tradicional
+el estilo CSS ,   de hecho incluso podemos combinar las clases bootstrap con las nuestras propias
+
+Ej.
+
+<div class = "row mi_clase"> --> Podemos aplicar en la fila CSS personalizado sobre mi_clase
+
+
+Modelo 12 columnas (Grid Layout):
+
+Utilizamos las 12 columnas para crear espacios ( div, article, section... ) que luego podemos rellenar con texto , imagenes,
+iconos,  colores....
+
+Es necesario crear siempre un row(fila) antes de manipular las columnas,  dicho row no puede estar incluido
+en el mismo div que un container. Asi pues, como mínimo habrá un fila, pero podemos dividir el container en
+las que necesitemos
+
+<div class = "container"> <div class = "row"> <div class = "col-4">Hola Mundo</div></div></div>
+
+Se pueden crear directamente escribiendo por ej div.container , div.row , div.col-4.....
+
+No se puede ocupar más espacio de las 12 columnas porque los bloques se descolocará, las 12 columnas se
+cuentan respecto del contenedor del html que queramos escribir, lo cual quiere decir que se puede hacer
+por ejemplo esto:
+
+<div class = "container">
+	<div class = "row">
+		<div class = "col-9">
+			<div class = row">
+				<div class = "col-6"> </div>
+				<div class = "col-6"> </div>	
+			</div>		
+		</div>
+	</div>
+</div>
+
+Aqui henos creado primero un row y tomado un espacio de 9 columnas , dentro de dicho espacio hemos creado
+otro row interno,  el cual a su vez vuelve a tener 12 columnas, y lo hemos dividido en dos partes de 6
+
+Disposición responsiva de columnas:
+
+Para que el layout de las columnas se vea bien sea cual sea el tamaño de la pantalla del dispositivo, 
+bootstrap disponer de unos breakpoints que disponen a su vez de estos prefijos de clase:
+
+Extra small (smart watch y moviles pequeños) - .col-xs-  < 575px
+
+Small (smart phone) -  .col-sm- 576-767px
+
+Medium (tablets) - .col-md- 768-991px
+
+Large (PC) - .col-lg-  992-1199px
+
+Extra Large (TV) - .col-xl-  > 1200px
+
+Ej.  Disposición para que un div ocupe 12 columnas en smart phone, 6 columnas en tablet y 4 en PC:
+
+<div class = "col-12 col-sm-12 col-md-6 col-lg-4"> </div> --> Por defecto, col-12 = col-xs-12
+
+Se recomiendo empezar a trabajar siempre visualizando de menor a mayor tamaño, Google Chrome dispone de
+un visualizador de páginas web en el display de diferentes dispositivos
+
+ALINEAMIENTO VERTICAL
+
+Por defecto el contenido(columnas) siempre se aliena en la parte superior de un espacio (div) , pero bootstrap
+dispone de funcionalidades de Flexbox que permite manipular fácilmente el alineamiento de los row dentro
+de un container :
+
+<div class = "row align-items-start">  alinea los elementos en la parte de arriba del container
+<div class = "row align-items-center"> alinea los elementos en el centro del container
+<div class = "row align-items-end"> alinea los elementos en la parte de abajo del container
+
+Esto se puede aplicar a una fila completa, pero podemos además aplicar dentro de una fila diferentes
+alineamientos a las columnas (efecto que parte la linea) usando esto :
+
+<div class = "row align-self-start">  alinea los elementos en la parte de arriba del container
+<div class = "row align-self-center"> alinea los elementos en el centro del container
+<div class = "row align-self-end"> alinea los elementos en la parte de abajo del container
+
+ALINEAMIENTO HORIZONTAL
+
+Por defecto el contenido(columnas) siempre se alinea a la izquierda , pero podemos hacer que se alineen
+al centro o a la derecha:
+
+<div class = "row justify-content-start">
+<div class = "row justify-content-center">
+<div class = "row justify-content-end">
+<div class = "row justify-content-between">  si tenemos 2 o mas columnas, 2 se pegan a los lados y el resto al centro
+
+
+COMBINAR ALINEAMIENTOS
+
+Ej .  Texto alineado horizontalmente a la derecha, pero verticalmente en el centro
+
+<div class = "row justify-content-end align-items-center">
+
+
+TIPOGRAFIAS
+
+Bootstrap disponer de los clásicos cabeceras HTML h1, h2, h3.... con estilos predfinidos de tamaño y tipo de letra, pero
+además los puedes invocar como clases .h1, .h2, .h3.... para aplicarlas a párrafos. Si se combinan estas clases con la
+etiqueta <small class = ".h2"> el texto toma el 80 % del tamaño original.  
+
+class display
+También se pueden usar las clases display:
+
+<h1 class = "display-1"> --> Van del 1 al 4 , o sea, de mayor a menor con mayor a menor grosor de letra
+
+La clase display es en bootstrap la forma más elegante de crear títulos
+
+class text-muted
+Colorea el texto con un gris elegante
+
+class lead
+Colorea el texto con un gris elegante y le pone un grosor estilizado
+
+Ver el resto de clases de tipografias en la documentación oficial de Bootstrap
+
+CONTENIDOS ( textos )
+
+Alineamiento de texto:
+
+Los textos por defecto se alinean a las izquierda
+
+class text-justify --> justifica el texto
+class text-center --> centra el texto en el contenedor
+class text-right --> alinea el texto a la derecha del contenedor
+
+Usando los prefijos -sm-,  -md- , -lg- y -xl- podemos hacer además las alineaciones responsivas al viewport
+
+Clases para poner el texto todo en minusculas, todo en mayusculas o capitalizado
+
+class text-lowercase
+class text-uppercase
+clas text-capitalized
+
+Efecto Font Weight
+
+class font-weight-bold  --> equivale a la etiqueta <b>
+class font-weight-normal
+class font-weight-italic  --> equivale a la etiqueta <i>
+
+ESPACIADOS
+
+rem --> unidad de medida equivalente a 16px , que es el tamaño estandar el texto HTML
+
+Los espaciados los hacemos aplicando las clases margin y padding:
+
+m --> margin
+p --> padding
+
+A estas clases hay que añadir un valor de espaciado, que podrá ser :
+
+0 - 0 rem
+1 - 0,25 rem
+2 - 0,50 rem
+3 - 1 rem
+4 - 1,5 rem
+5 - 3 rem
+
+Y una zona de aplicación :
+
+t - top
+b - bottom
+l - left
+r - right
+x - eje x a ambos lados (left & right)
+y - eje y arriba y abajo (top & bottom)
+
+Ej. Párrafo con padding top de 0,50 rem
+
+<p class = "pt-2">
+
+Ej. div con un margen de 3 rem a ambos lados
+
+<div class = "mx-5"
+
+
+
+
+
+
+class = "text-muted" --> pinta un texto en gris
+
+
+NAVBAR
+
+Bootstrap dispone de código para copiar-pegar con un menù de navegación sencillo y responsivo a pantallas pequeñas
+que nosotros podemos manipular según nuestras necesidades
+
+BOTONES
+
+Bootstrap disponer de varias clases de botonos con distintos colores
+
+Ej.  <input type = "button" class = "btn btn-primary">
+
+Esto crea un botón de color azul y texto blanco con bordes redondeados
+
+Ver en l documentación las distintas clases de botones ( primary, secondary, success , danger, warning, info, ligth,
+dark y link)
+
+BORDES
+
+class border --> crea bordes estilizados, finos y grises
+
+OCULTACION RESPONSIVA
+
+d = display
+
+d-none --> ocultar
+d-block --> mostrar
+
+d-xs-none --> ocultar en dispositivos extra small
+d-sm-none --> ocultar en dispositivos smart phone
+d-md-block --> mostrar en tablets
+d-lg-block --> mostrar en PC
+d-xl-block --> mostrar en TV
+
+Como la filosofia Bootstrap es small first , si defino ocultar o mostrar por ejemplo en un dispositivo md y no digo nada
+más de los superiores,  estos se comportarán con lo definido para el md
+
+
+
+
+
+
