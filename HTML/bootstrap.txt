@@ -125,6 +125,22 @@ al centro o a la derecha:
 <div class = "row justify-content-center">
 <div class = "row justify-content-end">
 <div class = "row justify-content-between">  si tenemos 2 o mas columnas, 2 se pegan a los lados y el resto al centro
+<div class = "row justify-content-around">   si tenemos 2 o mas columnas, 2 se pegan a los lados, pero dejando un espacio (centrandose)
+
+FLOAT
+
+class float-left --> alinea el elemento a la izquierda
+class float-right --> alinea el elemento a la derecha
+class clearfix --> se indica en el elemento padre para que los elementos flotados respeten su individualidad cuando ya
+		   hay mucho contenido
+class float-none --> el elemento no flota en ninguna dirección
+
+class float-sm-right --> el elemento en un smart phone se alineará a la derecha
+class float-md-left --> el elemento en una tablet se alineará a la izquierda
+
+CENTRAR CONTENEDORES
+
+mx-auto --> margin en el eje x auto
 
 
 COMBINAR ALINEAMIENTOS
@@ -216,12 +232,6 @@ Ej. div con un margen de 3 rem a ambos lados
 
 
 
-
-
-
-class = "text-muted" --> pinta un texto en gris
-
-
 NAVBAR
 
 Bootstrap dispone de código para copiar-pegar con un menù de navegación sencillo y responsivo a pantallas pequeñas
@@ -247,7 +257,8 @@ OCULTACION RESPONSIVA
 d = display
 
 d-none --> ocultar
-d-block --> mostrar
+d-block --> mostrar en pila
+d-inline-block --> mostrar en linea
 
 d-xs-none --> ocultar en dispositivos extra small
 d-sm-none --> ocultar en dispositivos smart phone
