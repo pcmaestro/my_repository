@@ -733,8 +733,41 @@ Son elementos que van pasando imágenes hacia un lado según se va haciendo clic
 
     </div>
 
+VENTANAS MODALES
+
+Los modales son ventanas flotantes de javascript con informaciones que el usuario puede cerrar , se componen de un cabecera,
+un cuerpo y un pié:	
 
 
+<div class="modal fade" id = "mimodal">
+
+        <div class="modal-dialog"></div>
+            <div class="modal-content">
+                
+                <!--HEADER-->
+                <div class="modal-header">
+                    <h4 class="modal-title">CABECERA</h4>
+                    <button type = "button" class="close" data-dismiss = "modal">&times;</button>
+
+                </div>
+                <!--BODY-->
+                <div class="modal-body">
+                    Texto contenido en el modal
+                </div>  
+                <!--FOOTER-->
+                <div class="modal-footer"></div>
+                <button type = "button" class ="btn btn-danger" data-dismiss = "modal">CERRAR</button>                
+
+            </div>
+
+    </div>
+
+
+TOOLTIPS
+
+En este ejemplo lo ponemos sobre un link, pero puede ser una imágen, un <span> , etc..
+
+<a href="#" data-toggle="tooltip" title="Esto es el tooltip">Pon el ratón aqui encima para ver el mensaje</a>
 
 
 
