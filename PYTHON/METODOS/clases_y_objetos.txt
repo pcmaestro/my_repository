@@ -1,0 +1,80 @@
+Las clases se definen con propiedades y métodos que nos permiten instanciar objetos
+
+En Python podemos usar o no constructores para instanciar objetos, la misión del constructor
+es inicalizar el objeto a la vez que se instancia. La palabra reservada self representa al
+futuro objeto que será instanciado
+
+Podemos ver una representación del contenido de los objetos invocando estos métodos:
+
+object.__repr__() --> representación en cualquier formato válido (string, lista, tupla...)
+object.__str__()  --> representación en string
+
+Las clases pueden heredar unas de otras , lo normal es heredar de una única clase (herencia simple)
+pero se puede heredar a la vez de varias (herencia multiple) , pero esto último no se recomienda
+ya que en programas de gran tamaño es dificil de gestionar.
+
+Si son clases creadas simplemente para que otras hereden ( no se instancian objetos ) se
+denominan clases abstractas
+
+Las propiedades se heredan directamente,  pero los métodos deben ser invocados mediante la función
+super().nombre_método , al que primero hay que llamar siempre es al método constructor de la clase
+padre.  Esta función sigue un esquema ascendente de herencia llamado MRO (Method Resolution Order),
+que viene a significar que si hay una herencia de clases en cadena,  podemos invocar con super()
+un determinado método de cualquiera de las clases superiores en el arbol , pero aqui hay que tener
+en cuenta que el método hijo y el ancestro deben recibir los mismos argumentos, si no está claro
+que esto pueda ser asi , en los ancestros es recomendable usar las expresiones *args y **Kwargs
+para solicitar los argumentos
+
+
+
+Ej. clase con constructor usando argumentos , propiedades marca, modelo, color, motor, precio,
+    método arrancar
+
+class Coche():
+    
+    def __init__(self, marca, modelo, color, motor, precio):
+        
+        self.marca = marca
+        self.modelo = modelo
+        self.color = color
+        self.motor = motor
+        self.precio = precio
+
+   def arrancar(self)
+	
+	print("coche arrancado")
+
+Si no sabemos cuantos argumentos serán necesarios, podemos incluir la expresion *args
+
+
+
+Ej. clase con constructor usando argumentos clave:valor
+
+class Juguete():
+    def __init__(self, nombre="", precio = 0):
+        self.nombre_producto = nombre
+        self.precio_producto = precio
+
+Si no sabemos cuantos argumentos serán necesarios, podemos incluir la expresion **kwargs
+
+
+Ej.   Herencia ( el método super() permite llamar a los métodos de la clase padre)
+
+class MyWindow(Ui_MainWindow):
+
+    def __init__(self):
+        super().__init__()
+
+    def setupUi(self, MainWindow):
+        super().setupUi(MainWindow)  
+
+Si en la clase padre el método requiere argumentos,  al invocarlo con super() en la
+clase hija, habrá que solicitarlos también
+
+Los métodos que se heredan , se pueden a su vez sobreescribir con otras funciones en la clase
+hija,  esto es llamado POLIMORFISMO. Es necesario tener en cuenta que si el método padre pide
+unos argumentos, y al sobreescribir se añade alguno más, en el método hijo habrá que solicitarlos
+todos
+
+
+

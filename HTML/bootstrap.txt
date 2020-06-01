@@ -149,6 +149,17 @@ Ej .  Texto alineado horizontalmente a la derecha, pero verticalmente en el cent
 
 <div class = "row justify-content-end align-items-center">
 
+ANCHO Y ALTO DE ELEMENTOS
+
+w = width
+h = height
+
+La unidad de medida será % 
+
+Ej .
+
+<div class = "w-50 h-50">  este div ocupará el 50% del ancho y alto de su contenedor
+
 
 TIPOGRAFIAS
 
@@ -163,23 +174,64 @@ También se pueden usar las clases display:
 
 La clase display es en bootstrap la forma más elegante de crear títulos
 
+class small
+Crea letra un poco más pequeña y estilizada del tamaño normal del texto
+
+class mark
+Crea un sombreado de otro color alrededor del texto
+
 class text-muted
 Colorea el texto con un gris elegante
 
 class lead
 Colorea el texto con un gris elegante y le pone un grosor estilizado
 
+class jumbotron
+Toma un texto y lo mete dentro de una caja sombreada con un padding lateral, con jumbotron-fluid el texto se espande
+por toda la caja suprimiendo el padding, se usa para resaltar textos
+
+class alert
+Hace lo mismo que el anterior, pero sin sombrear. Si se combina con colores bootstrap, sombrea y colorea el texto
+
+class badge (insignia)
+Crea una letra algo más pequeña y en negrita, se puede colorear el fondo , lo cual deja la letra de color blanco
+
+Ej
+
+<span class = "badge badge-primary"> Insignia </span>
+
+<span class = "badge badge-primary badge-pill"> Insignia </span> --> esto redondea los bordes y crea una pildora
+
+
 Ver el resto de clases de tipografias en la documentación oficial de Bootstrap
+
+ALERTAS
+
+Volviendo a la clase alert,  permite crear alertas que se pueden ocultar pulsando una X pintada dentro de un botón
+
+Ej.
+
+<p class = "alert alert-primary alert dismissable>
+
+	operacion concluida
+
+	<button type = "button" class = "close" data-dismiss = "alert">&times;</button>
+
+</p>
+
+
 
 CONTENIDOS ( textos )
 
 Alineamiento de texto:
 
-Los textos por defecto se alinean a las izquierda
+Los textos por defecto se alinean a las izquierda (class text-left)
 
 class text-justify --> justifica el texto
 class text-center --> centra el texto en el contenedor
 class text-right --> alinea el texto a la derecha del contenedor
+class text-nowrap --> el texto se extiende en una sóla linea sin corte (salto de línea), creando un
+		      un scroll en el eje x
 
 Usando los prefijos -sm-,  -md- , -lg- y -xl- podemos hacer además las alineaciones responsivas al viewport
 
@@ -230,23 +282,32 @@ Ej. div con un margen de 3 rem a ambos lados
 
 <div class = "mx-5"
 
+COLORES
 
+Bootstrap trae unos colores predefinidos
 
-NAVBAR
+primary (azul claro)
+secondary (gris oscuro)
+dark (gris muy oscuro)
+light (gris claro)
+danger (rojo granate)
+warning (naranja)
+success (verde)
+info (azul grisaceo)
+white (blanco)
 
-Bootstrap dispone de código para copiar-pegar con un menù de navegación sencillo y responsivo a pantallas pequeñas
-que nosotros podemos manipular según nuestras necesidades
+Se pueden aplicar a los elementos de esta manera:
 
-BOTONES
+text-primary --> colorea el texto
+bg-dark --> colorea el fondo (background)
 
-Bootstrap disponer de varias clases de botonos con distintos colores
+podemos aplicar los colores a cualquier clase definida en Bootstrap invocando la clase , y luego clase + color
 
-Ej.  <input type = "button" class = "btn btn-primary">
+Ej
 
-Esto crea un botón de color azul y texto blanco con bordes redondeados
+<ul class = "list-group list-group-primary">
+<button class = "btn btn-dark">
 
-Ver en l documentación las distintas clases de botones ( primary, secondary, success , danger, warning, info, ligth,
-dark y link)
 
 BORDES
 
@@ -268,6 +329,418 @@ d-xl-block --> mostrar en TV
 
 Como la filosofia Bootstrap es small first , si defino ocultar o mostrar por ejemplo en un dispositivo md y no digo nada
 más de los superiores,  estos se comportarán con lo definido para el md
+
+
+POSICIONES DE ELEMENTOS
+
+Clases comunes de posicionamiento (no son responsivas)
+
+<div class="position-static">...</div>
+<div class="position-relative">...</div>
+<div class="position-absolute">...</div>
+<div class="position-fixed">...</div>
+<div class="position-sticky">...</div>
+
+class fixed-top
+class fixed-bottom
+class sticky-top --> Solo se fija cuando el scroll la sobrepasa
+
+TABLAS
+
+En Visual Studio Code podemos crear elementos <tr> y <td> de forma automática, por ejemplo, esto crea 5 celdas:
+
+td*5
+
+Bootstrap dispone de esta clase:
+
+class table --> Separa las filas con una linea horizontal delgada y estiizada en gris claro , su comportamiento es
+		responsivo
+
+class table-striped --> igual que la anterior, pero sombreando en gris claro una linea si y otra no
+
+class table-hover --> sombrea sólo la linea sobre la que está el cursor
+
+class  table-bordered --> Crea bordes delgados y estilizados color gris claro
+
+class table-dark --> Usa el color dark de bootstrap como fondo, y el texto se pone blanco (pueden ser otros colores bootstrap)
+
+IMAGENES
+
+class img-fluid --> La imagen se adapta de forma responsiva a su contenedor
+
+class rounded --> las esquinas de la imagen se redondean levemente  ( con rounded-circle se crea un círculo)
+
+class img-thumbnail --> Crea un marco alrededor de la imagen
+
+ENLACES
+
+class alert-link --> alinea el color del link con el del texto, pero en negrita y más oscuro
+
+
+BOTONES
+
+Usamos la etiqueta <button>
+
+class btn --> Crea un botón gris de bordes redondeados sin efecto dimensional
+
+
+Para definir los colores, se vuelven más claros al hacer hover:
+
+Ej
+
+<button class =  "btn btn-primary">
+
+
+Para colorear solo el borde, se colorea el fondo al hacer hover:
+
+Ej
+
+<button class =  "btn btn-outline-primary">
+
+
+Para modificar el tamaño:
+
+Ej
+
+<button class =  "btn btn-lg"> --> mayor
+
+<button class =  "btn btn-sm"> --> menor
+
+<button class =  "btn btn-block"> --> ocupa todo el ancho del contenedor
+
+
+Para deshabilitar el botón (aparece de color más claro y no funciona)
+
+Ej
+
+<button class =  "btn btn-sm disabled">  --> con active sería al revés, botón más resaltado
+
+Para agrupar botones (simula un menú con una flecha hacia abajo)
+
+<div class = "btn-group"> --> Los botones se pegan en modo inline-block
+<div class = "btn-group btn-group-verical"> --> Los botones se pegan verticalmente en modo block
+
+Luego dentro del div creamos los <button>
+
+Para desplegar el menú a partir de este grupo de botones, creamos otro div dentro del div que los
+contiene
+
+
+	<div class = "btn-group">  
+
+		<button class ="btn dropdown-toggle" data-toogle = "dropdown"> ELEGIR OPCION </button>
+		<div class = "dropdown-menu"
+		<a href = "#" class = "dropdown-item"> OPCION 1 </a>
+		<a href = "#" class = "dropdown-item"> OPCION 2 </a>
+		</div>
+
+	</div>
+
+BOTON TOOGLE
+
+Con este botón podemos mostrar y ocultar un texto, por ejemplo de ayuda o comentario
+
+<button data-toggle = "collapse" data-target = "#texto_oculto"></button> --> Si cambias data-target por href, se pinta un link
+
+<div id = "texto_oculto" class = "collapse">
+    Texto que se muestra y oculta al pulsar el botón
+</div>
+
+
+
+MENU DESPLEGABLE
+
+    <div class="dropdown"> --> con dropup se despliega hacia arriba
+
+        <button class = "btn btn-primary dropdown-toggle" data-toggle = "dropdown">
+        DEPLEGABLE
+        </button>
+
+        <div class="dropdown-menu">
+	    <div class = ·"dropdown-header">Cabecera</div> --> opcional, pinta un cabecera con letra de color más tenue
+            <a href="#" class="dropdown-item">Link 1</a>
+            <a href="#" class="dropdown-item">Link 2</a>
+	    <div class = "dropdown-divider"></div>  --> opcional, pinta una linea divisoria entre los elementos
+            <a href="#" class="dropdown-item">Link 3</a>
+        </div>
+    </div>
+
+BARRA DE PROGESO
+
+Bootstrap permite crear barras de progreso (son estáticas, no tienen efecto real de progreso) , sus valores son 25,50 y 75 %
+
+<div class = "progress"> --> por defecto la barra de deslizamiento del progreso se crea de extremo a extremo del contenedor
+
+	<div class = "progress-bar w-50 bg-success"> 50% </div> --> Hay que indicar el ancho del progreso en la barra
+
+</div>
+
+Si queremos pintar un valor distinto de 25, 50 o 75 % , tendremos que hacer uso del atributo style para el ancho
+
+dentro del <div class = "progress"> podemos meter varios <div class = "progress-bar"> con diferentes valores para crear
+una barra con varios porcentajes
+
+ACORDEONES
+
+Los acordeones son elementos que se muestran y ocultan al clickarlos , si se usan cajas tipo card, tenemos un header
+que el ser clickado muestra y oculta un texto debajo
+
+<div id="acordion">
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <a href="#primero" class="card-link" data-toggle="collapse" data-parent="#acordion">
+                PRIMERO
+            </a>
+        </div>
+
+        <div id="primero" class="collapse show">
+            <div class="card-body">Texto para ocultar y mostrar</div>
+        </div>
+
+        <div class="card-header">
+
+            <a href="#segundo" class="card-link" data-toggle="collapse" data-parent="#acordion">
+                SEGUNDO
+            </a>
+        </div>
+
+        <div id="segundo" class="collapse show">
+            <div class="card-body">Otro texto para ocultar y mostrar</div>
+        </div>
+    </div>
+</div>
+
+
+
+PAGINACION
+
+La paginación se lleva a cabo en python o PHP , pero en HTML Bootstrap permite pintar un elegante conjunto de cuadritos
+en modo inline-block para poner los links a las diferentes páginas , al hacer hover se sombrea en gris el fondo
+
+<div class="pagination">
+
+    <li class = "page-item"><a class = "page-link" href="#">1</a></li>
+    <li class = "page-item"><a class = "page-link" href="#">2</a></li>
+    <li class = "page-item active"><a class = "page-link" href="#">3</a></li> --> este se sombrea en color sólido como página activa actual
+    <li class = "page-item"><a class = "page-link" href="#">4</a></li>
+
+</div>
+
+Podemos hacer los cuadritos más grandes o más pequeños:
+
+<div class="pagination patinagtion-sm">
+
+MIGAS DE PAN
+
+Los breadcrumbs son una forma de navegación mediante links que se utiliza a modo de estructura de directorios para indicar al usuario
+en que lugar de la web se encuentra
+
+Ej
+
+INICIO / OPCIONES / OPCION 1
+
+Para crear esto las clases son las siguientes:
+
+<ul class="breadcrumb">
+
+    <li class = "breadcrumb-item"><a href="#">INICIO</a></li>
+    <li class = "breadcrumb-item"><a href="#">OPCIONES</a></li>
+    <li class = "breadcrumb-item"><a href="#">OPCION 1</a></li>
+
+</ul>
+
+
+LISTAS
+
+Esto pinta los elementos de la lista dentro de celdas que ocupan todo el ancho del contenedor
+
+<ul class="list-group">
+    <li class = "list-item">LUNES</li>
+    <li class = "list-item">MARTES</li>
+    <li class = "list-item disabled">MIERCOLES</li> --> la letra se pone en un gris ténue
+    <li class = "list-item">JUEVES</li>
+    <li class = "list-item">VIERNES</li>
+    <li class = "list-item active">SABADO</li> --> sombreado en color sólido
+    <li class = "list-item">DOMINGO</li>
+</ul>
+
+MENU DE NAVEGACION
+
+Creamos una lista y la clase nav la pone en modo inline , añadiendo la clase flex-colum se pondria en modo block
+
+    <ul class="nav justify-content-center"> --> por defecto se alinea a la izquierda del contenedor , si utilizamos
+						nav-justified, se distribuyen por todo el ancho del contenedor
+
+        <li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Link 2</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Link 3</a></li>
+        <li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle = "dropdown">Link 4</a></li> --> con submenús
+		<div class = "dropdown-menu">
+		    <a href = "#" class = "dropdown-item">Submenu 1</a>
+		    <a href = "#" class = "dropdown-item">Submenu 2</a>
+		    <a href = "#" class = "dropdown-item">Submenu 3</a>
+
+    </ul>
+
+
+BARRA DE NAVEGACION (NAVBAR)
+
+Bootstrap dispone de código para copiar-pegar un navbar sencillo y responsivo a pantallas pequeñas que nosotros podemos manipular 
+según nuestras necesidades, incluye un icono de rallitas horizontales para pantallas pequeñas. En cualquier caso , también podemos crearlo:
+
+
+    <nav class="navbar navbar-expand-md fixed-top"> --> Horizontal de tablet para arriba, vertical en pantallas pequeñas
+
+        <a href="#" class="navbar-brand">NOMBRE DE LA EMPRESA</a> --> Pinta el nombre de la empresa delante del menú
+        (puede ser una imagen)
+
+        <button class="navbar-toggler" type="button" data-toggler="collapse" data-target="#uno">
+
+            <span class="navbar-toggler-icon"></span> --> botón con forma de rallitas horizontales, en este caso se
+            mostrará
+            en pantallas inferiores a tablet
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="uno">
+
+            <ul class="navbar-nav">
+
+                <li class="nav-item"><a href="#" class="nav-link">Link 1</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Link 2</a></li>
+                <li class="nav-item-dropdown">
+
+                    <a href="#" class="nav-link-dropdown-toggle" data-toggle="dropdown" id="navbardrop">Link 3</a>
+
+                    <div class="dropdown-menu">
+
+                        <a href="#" class="dropdown-item">Submenu 1</a>
+                        <a href="#" class="dropdown-item">Submenu 2</a>
+                        <a href="#" class="dropdown-item">Submenu 3</a>
+
+                    </div>
+                </li>
+                <form action = "#" method="POST" class = "form-inline"> --> Caja de búsqueda incluida en el menú
+                    <input type="text" name="nombre" class = "form-control mr-sm-2" />
+                    <button class="btn btn-success" type = "submit">BUSCAR</button>
+                </form>
+            </ul>
+        </div>
+    </nav>
+
+
+TARJETAS
+
+Una tarjeta de presentación tiene 3 elementos :  header, body & footer
+
+La tarjeta es un objeto que permite crear un cuadro de presentación en el cual podemos poner una imagen
+
+    <div class="card w-50">
+        <div class="card-header">
+            <p>Cargo en la empresa</p>
+        </div>
+
+        <img src="imagenes/foto.png" />
+
+        <div class="card-body">
+            <h3 class="card-title">Nombre de la persona</h3>
+            <p class="card-text">Breve descripción o comentario</p>
+            <a href="#" class="btn btn-primary">VER PERFIL</a>
+        </div>
+
+        <div class="footer">
+            <p>Comentarios de pide de tarjeta</p>
+        </div>
+
+    </div>
+
+El header y el footer son opcionales
+
+
+FORMULARIOS
+
+<input type = "text" class = "form-control">
+<input type = "checkbox" class = "form-check-input"> --> en el <label> podemos usar la class = "form-check-label"
+<textarea> --> No hay clases, Bootstrap los maneja por defecto
+<select>  --> No hay clases, Bootstrap los maneja por defecto
+<input type = "radio" class = "radio-inline"> --> Se muestran en modo inline , si los separamos metidos en <div class = "radio">
+						  se pitan en modo block
+
+<input type = "submit" value = "ENVIAR" class = "btn btn-success">
+
+En el <form> podemo añadir la class = "inline" para que los formularios salgan en línea
+
+
+CARRUSELES
+
+Son elementos que van pasando imágenes hacia un lado según se va haciendo click
+
+ <div class="carousel slide" data-ride="carousel" id="demo">
+
+        <!--INDICADORES-->
+
+        <ul class="carousel-indicators"> --> Crear tantos como imagenes a mostrar
+
+            <li data-target="demo" data-slide-to="0" class="active"></li>
+            <li data-target="demo" data-slide-to="1"></li>
+            <li data-target="demo" data-slide-to="2"></li>
+
+        </ul>
+
+        <!--IMAGENES-->
+
+        <div class="carousel-inner"> --> Crear tantos items como imagenes a mostrar
+
+            <div class="carousel-item active">
+                <img src="imagenes/foto1.jpg" class="img-fluid">
+                <div class="carousel-caption">
+                    <h3>TITULO</h3>
+                    <p>descripción de la imagen 1</p>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <img src="imagenes/foto2.jpg" class="img-fluid">
+                <div class="carousel-caption">
+                    <h3>TITULO</h3>
+                    <p>descripción de la imagen 2</p>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <img src="imagenes/foto3.jpg" class="img-fluid">
+                <div class="carousel-caption">
+                    <h3>TITULO</h3>
+                    <p>descripción de la imagen 3</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--CONTROLES-->
+
+        <a href="#demo" class="carousel-control-prev" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+
+        <a href="#demo" class="carousel-control-next" data-slide="prev">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+
+    </div>
+
+
+
+
+
+
+
+
+
 
 
 
