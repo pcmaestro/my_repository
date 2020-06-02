@@ -770,9 +770,57 @@ En este ejemplo lo ponemos sobre un link, pero puede ser una imágen, un <span> 
 <a href="#" data-toggle="tooltip" title="Esto es el tooltip">Pon el ratón aqui encima para ver el mensaje</a>
 
 
+POPOVERS
+
+Los popover son tooltips mas avanzados,  tienen la forma de los bocadillos de los comic
+
+Estos elementos son inicializados y posicionados por librerias externas como Tether o Popper que deberemos tener instaladas en nuestro
+proyecto, al menos puesto el enlace a su CDN , estas librerias son de javascript
+
+Una vez disponemos de la libreria elegida,  debemos indicar mediante javascript que estos elementos sean usados en el DOM de estas
+dos maneras:
+
+Example: Enable popovers everywhere
+One way to initialize all popovers on a page would be to select them by their data-toggle attribute:
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+
+Example: Using the container option
+When you have some styles on a parent element that interfere with a popover, you’ll want to specify a custom container so that the popover’s 
+HTML appears within that element instead.
+
+$(function () {
+  $('.example-popover').popover({
+    container: 'body'
+  })
+})
+
+
+Para ver todas las propiedades que podemos incluir dentro de la función .popover() , ver la documentación oficial de Bootstrap, la más util
+probablemente es hover, que seria bueno combinar con un delay (en milisegundos) para evitar que el popover aparezca simplemente con pasar
+accidentalmente el ratón por el punto donde se encuentra programado
+
+Ej esto simula a un tooltip avanzado
+
+$(function () {
+  $('[data-toggle="popover"]').popover(placement:"bottom", trigger:"hover", delay:500)
+})
 
 
 
+Ej en el HTML
+
+<button type = "button"
+	class = "btn btn-lg btn-success" 
+	role = "button" data-toggle = "popover" 
+	data-trigger = "focus" 
+	data-placement = "top" --> opcional, esto indica por donde aparece el popover /top/right/left/bottom y se puede hacer con javascript
+	title = "titulo_del_popover" 
+	data-content = "contenido_del_popover">
+</button
 
 
 

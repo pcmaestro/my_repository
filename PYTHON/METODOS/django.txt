@@ -123,6 +123,20 @@ Ej.  path("ruta1/<parametro_string>/<int:parametro_numerico>/" , funcion_vista)
          código.............
 
 
+-----------------------------------  RUTAS CON EXPRESIONES REGULARES  ----------------------------------------------
+
+from django.urls import re_path
+
+Con esto podemos crear patrones de URLs que en caso de coincidencia a la hora de escribir una URL, llamará a una función determinada
+del views
+
+El formato en la lista urlpatterns es el siguiente:
+
+re_path(r'^....$' , views.nombre_vista)
+
+
+
+
 #####################################  TEMPLATES  ###############################################################3
 
 Dentro de la subcarpeta del proyecto, creamos la subcarpeta templates e incluinos en ella todas las plantillas HTML
@@ -169,10 +183,26 @@ En la plantilla Padre hay que definiar los bloques cambiantes:
 
 Para el título --> <title> {% block title %}  {% endblock %} </title>
 
-Para el contenido  --> <body> {% block content %}  {% endblock %}
+Para el contenido  --> <body> {% block content %}  {% endblock %} </body>
 
-Y estos mismos bloques son invocados en las plantillas hijas dentrás de {% extends "plantilla_padre.html" %} para personalizar su contenido
+Y estos mismos bloques son invocados en las plantillas hijas detrás de {% extends "plantilla_padre.html" %} para personalizar su contenido
 HTML individual , donde podremos incluso incrustar otras plantillas con {% include "sub_plantilla.html" %}
+
+URL LINKING
+
+En la lista urlpatterns podemos añadir un "name" que nos servirá para llamar al función del views mediante URL linking
+
+Ej.
+
+urlpatterns[ "lista-articulos", views.listado_articulos, name = "lista" ]
+
+
+<a href = "{% url 'lista' %}"> LISTADO DE ARTICULOS </a>
+
+
+En este enlace se ejecutará la función views.listado_articulos y renderizará el template que le corresponda . Esta forma de llamar
+a las funciones, nos permite modificar el nombre de la función o incluso la ruta sin modificar nada en el HTML, ya que este siempre
+buscará el "name" en el urlpatterns
 
 
 CARGADOR DE PLANTILLAS
@@ -472,6 +502,24 @@ Este ejemplo usará una SQL para extraer el id de sesión (Django siempre lo hac
 pintando en lugar del categoria_id y el usuario_id de la clase Anuncio ,  los nombres que tienen estas en las tablas hacia las
 que apuntan las Foreigh Keys. Si sabemos que sólo obtendremsos un unico registro, podemos usar select_related()
 
+USO DE QUERYS CON EL METODO RAW
+
+Si en el models.py creamos este modelo :
+
+class Person(models.Model):
+    first_name = models.CharField(...)
+    last_name = models.CharField(...)
+    birth_date = models.DateField(...)
+
+en la BBDD se creará tabla llamada nombre_app_person:
+
+>>> for p in Person.objects.raw('SELECT * FROM myapp_person'):
+...     print(p)
+John Smith
+Jane Jones
+
+
+
 #########################################  FORMULARIOS  #################################################################
 
 FORMULARIOS HTML
@@ -537,16 +585,80 @@ En este segundo método podemos sobreescribir los campos del modelo con algo dis
 Por defecto ,  los campos tienen el atributo "required" y el EmailField valida el formato correcto del email.  Si deseamos que un
 campo no sea requerido, en sus argumentos debemos indicar por ejemplo forms.CharField(required = False)
 
+Para introducir fechas : forms.DateField() --> Le corresponde el widget DateInput()
+
+Estos son los campos de formularios disponibles :
+
+BooleanField, CharField, ChoiceField, TypedChoiceField, DateField, DateTimeField, DecimalField, DurationField, EmailField, FileField, 
+FilePathField, FloatField, ImageField, IntegerField, GenericIPAddressField, MultipleChoiceField, TypedMultipleChoiceField, NullBooleanField, 
+RegexField, SlugField, TimeField, URLField, UUIDField, ComboField, MultiValueField, SplitDateTimeField, ModelMultipleChoiceField, ModelChoiceField​​​​.
+
+Los argumentos más comunes que pueden recibir la mayoria de los campos son estos:
+
+required: If True, the field may not be left blank or given a None value. Fields are required by default, so you would set required=False to allow blank values in the form.
+
+label: The label to use when rendering the field in HTML. If label is not specified then Django would create one from the field name by capitalising the first letter and replacing underscores with spaces (e.g. Renewal date).
+
+label_suffix: By default a colon is displayed after the label (e.g. Renewal date:). This argument allows you to specify as different suffix containing other character(s).
+
+initial: The initial value for the field when the form is displayed.
+
+widget: The display widget to use.
+
+help_text (as seen in the example above): Additional text that can be displayed in forms to explain how to use the field.
+
+error_messages: A list of error messages for the field. You can override these with your own messages if needed.
+
+validators: A list of functions that will be called on the field when it is validated.
+
+localize: Enables the localisation of form data input (see link for more information).
+
+disabled: The field is displayed but its value cannot be edited if this is True. The default is False.
+
+
+
 Podemos personalizar las validaciones añadiendo métodos a la clase :
 
 Ej.
 
+from django.core.exceptions import ValidationError
+
 def clean_asunto(self, *args, **kwargs)
-	asunto = self.cleaned_data.get("asunto")
+	asunto = self.cleaned_data["asunto"]
 	if asunto = " ":
 		raise forms.ValidationError("El campo no puede estar en blanco")
 	else:
 		return asunto
+
+O podemos añadir validadores directamente en el form invocando funciones que hagan la validación:
+
+Ej
+
+Creamos un módulo llamado validators.py
+
+from django.core.exceptions import ValidationError
+
+def validar_menor_que_cien(value):
+    if value >= 100:
+        raise ValidationError("El número no es menor que 100")
+
+Y en el forms.py
+
+from . import validators
+
+class MyModel(forms.Form):
+    numero_menor_cien = forms.IntegerField(validators=[validar_menor_que_cien]) --> Los validadores se pueden usar también en el models
+										    es buena práctica validar en el models y el form
+
+
+Podemos usar validadores predefinidos, por ejemplo, para usar expresiones regulares :
+
+forms.CharField(validators=[RegexValidator('^(\d){1,2}\:(\d){1,2}$', message="please enter the time in this format: MM:SS")] --> Podemos invocar una variable
+																 que contenga la regexp
+
+Para ver todos los validadores predefinidos disponibles , ver Validators en la documentación oficial de Django
+    
+
 
 Por defecto el label es el campo de la clase,  pero se puede personalizar : forms.CharField(label = "etiqueta_formulario")
 
@@ -878,6 +990,10 @@ Arriba del todo del template
 Para el CSS
 
 <link rel="stylesheet" href="{% static 'estilos.css' %}"/>
+
+Para el Bootstrap
+
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
 
 Para el Javascript
 
