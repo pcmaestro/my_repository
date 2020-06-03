@@ -12,7 +12,8 @@ class FormularioUsuario(forms.ModelForm):
             "apellido_1": forms.TextInput(),
             "apellido_2": forms.TextInput(),
             "telefono": forms.NumberInput(),
-            "email": forms.EmailInput()
+            "email": forms.EmailInput(),
+            "publicidad": forms.CheckboxInput()
         }
 
     def clean_nombre(self):

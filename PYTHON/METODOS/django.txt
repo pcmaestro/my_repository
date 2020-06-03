@@ -272,11 +272,24 @@ Ej . class Productos(models.Model):
 	   nombre = models.CharField(max_lenght = 200)
 	   precio = models.FloatField(default = 0)
 	   stock = models.IntegerField(default = 0)
-	   proveedor = models.ForeignKey(Proveedores, on_delete = models.CASCADE)
+	   proveedor = models.ForeignKey(Proveedores, on_delete = models.CASCADE) --> Como habrá muchos proveedores, podemos usar
+										      también models.ManyToManyField(Proveedores),
+										      que apuntaría hacia la clase Proveedores
 	   email_proveedor = models.EmailField(max_length = 100 , unique = True)
 	   descuentos = models.BooleanField(default = False)
-	   fecha_creacion = models.DateField(blank = True, null = True)  --> Para no se requerido en el panel de administración
+	   fecha_creacion = models.DateField(blank = True, null = True)  --> Para no ser requerido en el panel de administración
 									     y admitir registros null
+
+	   imagen = models.ImageField(upload_to = "images") --> La carpeta images se crea automáticamente dentro de media
+
+	   class Meta: --> Opcional para metadatos, ver https://docs.djangoproject.com/en/3.0/ref/models/options/
+
+		constraints = [models.CheckConstraint(check=models.Q(precio__lte=500), name='precio_lte_500')]
+		indexes = [models.Index(fields= ["nombre"], name = "nombre_idx")
+		ordering = ["-precio"]
+		db_table = "nombre_personalizado_de_la_tabla"
+		etc......
+		
 	
 
 Si no se especifica, Djando añade automáticamente un campo Id autoincrementable como primary key, por defecto los campos serán NOT NULL
@@ -586,6 +599,55 @@ Por defecto ,  los campos tienen el atributo "required" y el EmailField valida e
 campo no sea requerido, en sus argumentos debemos indicar por ejemplo forms.CharField(required = False)
 
 Para introducir fechas : forms.DateField() --> Le corresponde el widget DateInput()
+			 
+			 forms.DateTimeField() --> El widget es DateTimeInput() , con los atributos auto_now_add = True y auto_now = True
+			 			   lo rellenamos con un timestamp de datetime al crearlo y al modificarlo respectivamente
+
+			 Ver widget datepicker en los apuntes de Bootstrap
+
+
+Para checkbox : models.BooleanField() // forms.CheckboxInput()
+
+		Para comprobar si un checkbox está marcado en el views:
+
+		if "name_checkbox" in request.POST:
+			variable = True
+
+Para radio button : Es necesario crear en el models una lista de tuplas , dentro de cada tupla irá esta información
+
+			("nombre_en_bd", "nombre_legible_por_usuario") --> Podemos incluir la lista de tuplas dentro de una variable en MAYUSCULAS
+
+		    models.CharField(choices = CHOICES)
+		    
+		    forms.CharField( label = "Marque una opción" , widget = forms.RadioSelect(choices = CHOICES) )
+
+		    Para comprobar si un radio button está marcado en el views:
+
+			if "name_radio_button" in request.POST:
+			    variable = True
+
+
+Para select : Es necesario crear en el models una lista de tuplas , dentro de cada tupla irá esta información
+
+			("nombre_en_bd", "nombre_legible_por_usuario") --> Podemos incluir la lista de tuplas dentro de una variable en MAYUSCULAS
+
+		   model.CharField(choices = [("A", "opción A"), ("B", "opción B")]) 
+
+		   forms.ChoiceField(choices = [("A", "opción A"), ("B", "opción B")]) --> El widget por defecto es el select
+
+		   En el views podemos leerlo con request.POST["name_select"]
+
+
+Para select multiple :  model.ManyToMany(Clase_enlazada)
+			forms.MultipleChoiceField(chocies = CHOICES) --> Widget por defecto, select multiple, CHOICES deberá contener las opciones
+			que vienen de Clase_enlazada
+			
+			En este ejemplo vamos a cambiar el widget por defecto por un CheckboxSelectMultiple , que en lugar de pintar un select,
+			pinta unos checkbox
+
+		  	test = forms.MulitpleChoiceField(choices=TEST_CHOICES,  widget=forms.CheckboxSelectMultiple(), requrired=False)
+
+		   
 
 Estos son los campos de formularios disponibles :
 

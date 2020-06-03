@@ -8,4 +8,5 @@ class Usuario(models.Model):
     apellido_2 = models.CharField(max_length=50)
     telefono = models.IntegerField()
     email = models.EmailField(max_length= 100)
+    publicidad = models.BooleanField()
 
