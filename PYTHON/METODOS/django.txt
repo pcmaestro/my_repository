@@ -122,24 +122,133 @@ Ej.  path("ruta1/<parametro_string>/<int:parametro_numerico>/" , funcion_vista)
      def funcion_vista(request, parametro_string, parametro_numerico):
          código.............
 
+------------------------------------  RESOLUCION INVERSA DE RUTAS  -------------------------------------------------
 
------------------------------------  RUTAS CON EXPRESIONES REGULARES  ----------------------------------------------
+En el urlpatterns podemos incluir un argumento "name" con el cual invocar fácilmente desde los templates a la ruta en cuestión y ejecutar
+su función asociada:
+
+Ej en el urlpatterns
+
+path("articulos/<int:year>", views.achivo_historico , name = "archivo-historico")
+
+Ej en el HTML
+
+<a href = "{% url 'archivo-historico' variable_year %}> ARCHIVO HISTORICO DE NOTICIAS </a>
+
+
+Esto nos permite no necesitar modificar los templates si modificamos cosa en el views , simplemente hay que mantener el mismo name
+
+
+También se puede usar en el views, en este ejemplo hacemos una redirección de ruta usando la función reverse():
+
+
+def redirect_to_year(request):
+    código...
+    year = 2006
+    return redirect( reverse("archivo-historico", args = (year,) )
+
+
+Es una buena práctica nombrar los "name" haciendo mención a la app a la que corresponden,  para poder tenerlo todo ordenado y facil de
+identificar , en el ejemplo indicado podría ser myapp-archivo-historico
+
+
+---------------------------------------------  NAMESPACE  --------------------------------------------------------------------
+
+Las rutas con namespace se invocan el formato nombre_app:name_en_el_views , en este ejemplo tenemos la app llamada polls (se usan class-based-views);
+
+urls.py
+from django.urls import include, path
+
+urlpatterns = [
+    path('polls/', include('polls.urls')),
+]
+
+
+polls/urls.py
+from django.urls import path
+
+from . import views
+
+app_name = 'polls'  --> imprescindible incluir esto en el urls.py
+urlpatterns = [
+    path('', views.IndexView.as_view(), name='index'),
+    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    ...
+]
+
+En este caso en el template podemos llamar a la ruta con name = detail indicando -->  {% url 'polls:detail' %}
+
+
+
+-----------------------------------  RUTAS CON EXPRESIONES REGULARES  ---------------------------------------------------------
 
 from django.urls import re_path
 
 Con esto podemos crear patrones de URLs que en caso de coincidencia a la hora de escribir una URL, llamará a una función determinada
-del views
+del views . La sintaxis para crear grupos de expresiones regulares es (?P<name>pattern) ,  donde name es la variable que pasamos al 
+views y pattern es el patrón que debe cumplir, por ejemplo, en estos dos urlpatterns estamos indicando lo mismo:
 
-El formato en la lista urlpatterns es el siguiente:
+urlpatterns = [
+    path('articles/2003/', views.special_case_2003),
+    path('articles/<int:year>/', views.year_archive),
+    path('articles/<int:year>/<int:month>/', views.month_archive),
+    path('articles/<int:year>/<int:month>/<slug:slug>/', views.article_detail),
+]
 
-re_path(r'^....$' , views.nombre_vista)
+urlpatterns = [
+    path('articles/2003/', views.special_case_2003),
+    re_path(r'^articles/(?P<year>[0-9]{4})/$', views.year_archive),
+    re_path(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.month_archive),
+    re_path(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<slug>[\w-]+)/$', views.article_detail),
+
+
+Como podemos ver en el ejemplo, el formato regexp del urlpatterns es el siguiente:
+
+re_path(r'^(?P<name>pattern)/(?P<name>pattern)/(?P<name>pattern)$' , views.nombre_vista) --> En el path no tienen por qué ser todo regexp
+
+Hay que tener en cuenta que con este método, todo lo que enviamos al views va en formato str , con lo cual quizá sea necesario transformarlo
+en el views para poder usarlo
+
+ARGUMENTOS ANIDADOS
+
+Puede ocurrir que en una ruta, el views sólo necesite capturar una parte del path,  pera estos casos, se pueden usar las expresiones regulares
+de la siguiente manera:
+
+
+re_path(r'^comments/(?:page-(?P<page_number>\d+)/)?$', comments)
+
+En este caso el path comments/page-32 sería válido , como podemos ver, el formato es (?:parte_irrelevante_en_views(variable_relevante_en_views)),
+el simbolo ? que cierra toda la regexp es para indicar que puede haber una o ninguna coincidencia con la ruta
+
+AGREGACION DE RUTAS
+
+Podemos agregar fácilmente rutas en urlpatters haciendo uso de include , por ejemplo, estos dos urlpatterns son equivalentes:
+
+from django.urls import include
+
+urlpatterns = [
+    path('<page_slug>-<page_id>/history/', views.history),
+    path('<page_slug>-<page_id>/edit/', views.edit),
+    path('<page_slug>-<page_id>/discuss/', views.discuss),
+    path('<page_slug>-<page_id>/permissions/', views.permissions),
+]
+
+
+urlpatterns = [
+    path('<page_slug>-<page_id>/', include([
+        path('history/', views.history),
+        path('edit/', views.edit),
+        path('discuss/', views.discuss),
+        path('permissions/', views.permissions),
+    ])),
+]
 
 
 
 
-#####################################  TEMPLATES  ###############################################################3
+#####################################  TEMPLATES  ##################################################################################
 
-Dentro de la subcarpeta del proyecto, creamos la subcarpeta templates e incluinos en ella todas las plantillas HTML
+Dentro de la subcarpeta del proyecto, creamos la subcarpeta templates e incluimos en ella todas las plantillas HTML
 
 Para renderizar las plantillas, en las vistas de view.py devolvemos lo siguiente :
 
@@ -1015,11 +1124,23 @@ return redirect --> Para llamar a una determinada ruta al ejecutar una vista
 return nombre_vista(request) --> Para llamar a otra vista tras finalizar la ejecución de una vista
 
 
-#######################################  SESIONES DE USUARIO  ###########################################################
+######################################## MODULO DE USUARIOS  #####################################################################
+
+Django incorpora un módulo de gestión de usuarios,  la forma más normal es disponer de una clase User en el models y crear un
+superusuario para el portal de administración con python manage.py createsuperuser (nos pide el usuario y contraseña administrador),
+con dicho superusuario podemos crear y eliminar usuarios en el portal de administración
+
+Podemos cambiar la password de un usuario mediante el comando python manage.py changepassword nombre_usuario
+
+
+Ver https://docs.djangoproject.com/en/3.0/topics/auth/default/#django.contrib.auth.views.LoginView
+
+
+#######################################  SESIONES DE USUARIO  ####################################################################
 
 AUTENTICACION DE USUARIOS
 
-Tomaos el usuaro y la contraseña :
+Tomaos el usuario y la contraseña :
 
 usuario_insertado = request.POST["usuario"]
 clave_insertada = request.POST["clave"]
@@ -1028,7 +1149,7 @@ Tendremos una clase Usuarios para la tabla de usuarios con el Id de usuario, el 
 
 Buscamos en dicha tabla lo que leemos en los formularios:
 
-lista_resultado = models.Usuarios.objects.filter(usuario == usuario_insertado, clave == clave_insertada)
+resultado = models.Usuarios.objects.filter(usuario == usuario_insertado, clave == clave_insertada)
 
 La lista de objetos que se crea puede localizar una coincidencia o ninguna en la tabla de usuarios:
 
@@ -1254,6 +1375,45 @@ def inicio(request):
 
         }    
     return render(request, "index.html", context)
+
+############################  VISTAS BASADAS EN CLASES ( CLASS-BASED-VIEWS)  ##########################################
+
+Django incorpora una serie de clases predefinidas que podemos usar como si fueran funciones en el views usando la funcion
+as_view() ,  dicha función puede recibir argumentos que sobreescribiran las propiedades de la la clase
+
+Existen dos formas de usar estas clases :
+
+Primera :
+
+from django.urls import path
+from django.views.generic import TemplateView
+
+urlpatterns = [
+    path('about/', TemplateView.as_view(template_name="about.html")),
+]
+
+En este caso indicamos a la función as_view() directamente la propiedad que deseamos sobreescribir
+
+Segunda :
+
+En esta segunda forma creamos subclases heredando de la clase padre predefinida y sobreescribiendo la propiedad en ellas:
+
+from django.views.generic import TemplateView
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+# urls.py
+from django.urls import path
+from some_app.views import AboutView
+
+urlpatterns = [
+    path('about/', AboutView.as_view()),
+]
+
+
+Para más información ver https://docs.djangoproject.com/en/3.0/topics/class-based-views/
+
 
 ############################ SUBIR PROYECTOS DJANGO A PYTHON ANYWHERE  ###############################################
 
