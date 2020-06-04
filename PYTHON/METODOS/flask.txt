@@ -200,6 +200,130 @@ atributo enctype="multipart/form-data":
 <form action="/ruta_creada_en_python" method="POST" enctype="multipart/form-data">   
 
 
+
+############################  FORMULARIOS CON FLASK-WTF  #################################
+
+pip install Flask-WTF
+
+Creamos el modulo forms.py en la misma ruta del flask_app.py
+
+Creamos un formulario de tipo Sign-up
+
+from flask_wtf import FlaskForm
+
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, Email, Length
+
+class SignupForm(FlaskForm):
+	name = StringField('Nombre', validators=[DataRequired(), Length(max=64)])
+	password = PasswordField('Password', validators=[DataRequired()])
+	email = StringField('Email', validators=[DataRequired(), Email()])
+	submit = SubmitField('Registrar')
+
+El validador DataRequired() evita que los campos obligatorios estén vacíos
+El validador Email() comprueba si una dirección de e-mail tiene un formato válido
+El validador Length() permite establecer un máximo de caracteres
+
+
+Ej . en el HTML, instanciando de la clase SignupForm el objeto form
+
+novalidate --> atributo que añadimos al form para que el navegador no valide los formularios y lo haga nuestra
+	           clase creada en el forms.py
+
+form.hidden.tag -->    Añade todos los campos de tipo hidden que pudiera haber en el formulario , por defecto
+		       Siempre hay un campo oculto con un token CSRF. Dicho token debemos crearlo en el flak_app.py
+
+				app.config['SECRET_KEY'] = “token_hexadecimal_de_x_digitos”
+
+		       también podemos crear el token añadiendo en el flask_app la línea :
+
+		       		csrf = CsrfProtect(app)
+
+		       y en el HTML la invocamos añadiendo {{ csrf_token() }}
+
+		      
+
+form.nombre_campo.label --> Crea el label para el formulario
+
+form.nombre_campo --> Crea el formulario
+
+bucle for para form.nombre_campo_errors  --> Recorremos con el bucle el diccionario errors para mostrar al usuario los posibles errores de 
+					     validación que haya en el mismo.
+
+{% extends "base_template.html" %}
+
+{% block title %}Registro de usuarios{% endblock %}
+
+{% block content %}
+
+<form action="" method="post" novalidate>
+
+  {{ form.hidden_tag() }}
+  <div>
+    {{ form.name.label }} {{ form.name(size=64) }}<br>
+    {% for error in form.name.errors %}
+    <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.email.label }} {{ form.email }}<br>
+    {% for error in form.email.errors %}
+    	<span style="color: red;">{{ error }}</span>
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.password.label }} {{ form.password }}<br>
+    {% for error in form.password.errors %}
+    	<span style="color: red;">{{ error }}</span>
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.submit() }}
+  </div>
+</form>
+
+{% endblock %}
+
+
+En el flask_app:
+
+app.route(“registro-usuario”,  methods=["GET", "POST"])
+def mostrar_formulario():
+	form = SignupForm()
+	if form.validate_on_submit():
+	    Código para registrar y renderizar…
+
+
+La función .validate_on_submit() comprueba que los validadores incluidos en el formulario se cunplen
+
+Ejemplos de tipos de campos wtforms:
+
+name = StringField('Nombre', validators=[DataRequired(), Length(max=64)])
+
+password = PasswordField('Password', validators=[DataRequired()])
+
+email = StringField('Email', validators=[DataRequired(), Email()])
+
+submit = SubmitField('Registrar')
+
+radio_button = RadioField('Label', choices=[('value','description'),('value_two','whatever')])
+
+checbox = CheckboxField('Label', choices=[('value','description'),('value_two','whatever')])
+
+multi_checkbox = MultiCheckboxField('Label', choices = [('value','description'),('value_two','whatever')])
+
+select_multiple = SelectMultipleField(choices = [('value','description'),('value_two','whatever')])
+
+
+
+Ver más campos en https://wtforms.readthedocs.io/en/2.3.x/fields/
+
+Ver widgets en https://wtforms.readthedocs.io/en/2.3.x/widgets/
+
+Ver validadores en https://wtforms.readthedocs.io/en/2.3.x/validators/
+
+
+
 ####################  ADMINISTRACION Y SESION DE USUARIO  ##########################################
 
 from flask.globals import session
