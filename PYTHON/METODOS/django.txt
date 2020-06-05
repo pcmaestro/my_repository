@@ -1,4 +1,4 @@
-pip intall django
+pip install django  (con pip install django == nº_version podemos instalar la versión que queramos, por defecto se instala la última)
 
 python -m django --version
 
@@ -10,6 +10,15 @@ View -->  Funciones Python
 
 Templates --> Plantillas HTML
 
+Si queremos nuestros proyectos en un entorno virtual, lo podmeos hacer de dos maneras :
+
+PYCHARM - El IDE Pycharm permite crear un entorno virtual para cada proyecto
+
+MANUALMENTE - python -m venv nombre_entorno_virtual --> se crea un archivo activate.bat que debemos ejecutar
+
+Una vez creado el entorno virtual, si la instalación de Django la hemos hecho de forma global, deberemos volver a instalarlo en dicho
+entorno virtual
+
 
 ##########################################  CREAR UN PROYECTO  ####################################################################
 
@@ -17,7 +26,7 @@ Templates --> Plantillas HTML
 de este modo:
 
 django-admin startproject nombre_proyecto
-im
+
 Esto crea la carpeta nombre_proyecto y colgando de ella una subcarpeta de archivos de proyecto con el mismo nombre y el archivo manage.py
 que contiene los comandos de Django
 
@@ -30,7 +39,7 @@ urls.py --> Contiene las rutas
 
 Dentro de la carpeta de proyecto , en la linea de comandos ejecutamos esto:
 
-python manage.py migrate
+python manage.py migrate --> Si no queremos SQLite, primero modificar el settings para la BD deseada
 
 Esto crea el archivo db.sqlite3 para la base de datos (luego se pueden modificar configuraciones para conectar con otras)
 
@@ -40,9 +49,12 @@ python manage.py runserver
 
 La URL que nos da la podemos cargar en el navegador para ver que el proyecto está arrancado
 
-- El proyecto estará dividido en varias apps,  para crear una app:
-
-python manage.py startapp nombre_app
+- El proyecto estará dividido en varias apps, por convenciòn se crea un paquete python llamado apps y se van creando las aplicaciones dentro
+  de él, si no tenemos un IDE que pueda crear paquetes python, basta con crear una carpeta e incluir un archivo en blanco llamado __init__.py
+  El comando para crear una aplicación es el siguiente:
+	
+	django-admin.py startapp nombre_app --> si sólo vamos a tener una aplicación, no hace falta crear el paquete apps y entonces podemos
+						crear la aplicación con python manage.py startapp nombre_app
 
 Esto crea otra subcarpeta con el nombre de la app, y dentro a su vez se creará otra subcarpeta llamada migrations y varios archivos:
 
@@ -58,7 +70,7 @@ Para hacerlo, necesitamos saber el nombre de clase que se ha creado para nuestra
 Ej.
 
 INSTALLED_APPS = [
-    'nombre_app.apps.nombre_clase',
+    'nombre_app.apps.nombre_clase', --> tener en cuenta en la ruta si hemos creado o no el paquete app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -284,17 +296,17 @@ También podemos incrustar plantillas HTML dentro de otra plantilla
 
 {% include "sub_plantilla.html" %}
 
-Y podemos usar HERENCIA DE PLANTILLAS creando un plantilla Padre e invocandola en las hijas mediante
+Y podemos usar HERENCIA DE PLANTILLAS creando un plantilla base.html e invocandola en las hijas mediante
 
-{% extends "plantilla_padre.html" %}
+{% extends "base.html" %}
 
-En la plantilla Padre hay que definiar los bloques cambiantes:
+En la plantilla base hay que definiar los bloques cambiantes:
 
 Para el título --> <title> {% block title %}  {% endblock %} </title>
 
 Para el contenido  --> <body> {% block content %}  {% endblock %} </body>
 
-Y estos mismos bloques son invocados en las plantillas hijas detrás de {% extends "plantilla_padre.html" %} para personalizar su contenido
+Y estos mismos bloques son invocados en las plantillas hijas detrás de {% extends "base.html" %} para personalizar su contenido
 HTML individual , donde podremos incluso incrustar otras plantillas con {% include "sub_plantilla.html" %}
 
 URL LINKING
@@ -367,7 +379,9 @@ El token debe ir incluido dentro del <form> antes que los inputs
 ########################################  BASES DE DATOS  #############################################################
 
 Django contiene por defecto un módulo de SQLite y además soporta oficilamente MySQL, PostgreSQL y Oracle,  se pueden añadir
-otras como DB2 y SQL Server mediante conectores de terceros
+otras como DB2 y SQL Server mediante conectores de terceros . Se cual sea el que usemos, la BD la tenemos que crear siempre
+en blanco (y configurarlas en el settings) , ya que las tablas será creadas por el models.py . Por defecto Django crea 10
+tablas por defecto con contenido interno
 
 En SQLite Django puede crear las tablas mediante la clase Model
 
@@ -401,10 +415,15 @@ Ej . class Productos(models.Model):
 		
 	
 
-Si no se especifica, Djando añade automáticamente un campo Id autoincrementable como primary key, por defecto los campos serán NOT NULL
+Si no se especifica, Djando añade automáticamente un campo Id autoincrementable como primary key, por defecto los campos serán NOT NULL ,
+si queremos definir nosotros el primary key , seria por ej id_producto = models.CharField(primary_key = True)
 
 
 Para ver los tipos de campos -->  https://docs.djangoproject.com/en/1.10/ref/models/fields/#field-options
+
+Si necesitamos campos que acepten registros null , añadir a los argumentos null = True
+
+Si necesitamos campos que se puedan guardar sin que el usuario haya guardado nada ,  required = False, blank = True
 
 Una vez creadas las tablas y la subcarpeta de la app,  esta última hay que registrarla en el archivo settings.py del proyecto, para
 ello iremos a la lista INSTALLED_APPS donde añadiremos "nombre_aplicacion.apps.nombre_clase_app" siendo nombre_clase_app el que se haya
@@ -549,7 +568,11 @@ python manage.py migrate
 
 RELACIONES ENTRE TABLAS
 
-Podemos pintar en el template un campo proveniente de otra tabla mediante la Foreign Key:
+Muchos a uno - ForeignKey:
+
+Un registro uno a muchos sería por ejemplo un usuario que ha publicado varios anuncios
+
+Podemos pintar en el template un campo proveniente de otra tabla mediante la Foreign Key
 
 Ej  class Categoria(models.Model):
         nombre_categoria = models.CharField()  --> Nombre de la categoria
@@ -563,7 +586,28 @@ Ej  class Categoria(models.Model):
 							   a la Foreign Key , se pinta el campo nombre_categoria de la tabla
 							   Categoria (usar el nombre los campos en las clases, independientemente
 							   de si en la BBDD aparecen con el sufijo _id al ejecutar las migraciones)
+
+Uno a uno - OneToOneField:
+
+	En este caso es un registro que apunta únicamente hacia otra tabla, por ej, un anunciante sólo puede tener una cuanta bancaria
 	
+	cuenta_anunciante = models.OneToOneField(CuentaBancaria , max_length = 20)
+
+Muchos a muchos - ManyToManyField
+	
+	Esto requiere de la existencia de una tabla intermedia que contenga los id de los modelos relacionados . Por ejemplo , tenemos
+	por un lado varios niños y varias vacunas ,  cada niño puede tener puestas varias vacunas, y cada vacuna puede estar puesta en
+	varios niños
+
+	class Vacuna(models.Model):
+		nombre_vacuna = models.CharField(max_length = 50)		
+	
+	class Kid(models.Model):
+		nombre_kid = models.CharField(max_length = 50)
+		vacuna_recibida = models.ManyToManyField(Vacuna)
+	
+	Django crea automáticamente la tabla intermadia con los id de las tablas relacionadas
+
 
 INSTALAR OTROS GESTORES DE BBDD
 
@@ -1417,6 +1461,34 @@ Para más información ver https://docs.djangoproject.com/en/3.0/topics/class-ba
 
 ############################ SUBIR PROYECTOS DJANGO A PYTHON ANYWHERE  ###############################################
 
+Estructura de directorios por defecto en Python Anywhere
+
+/mysite
+	/mysite
+		settings.py
+		urls.py
+		wgsi.py
+	/my_app
+		/migrations
+		/templates
+		admin.oy
+		apps.py
+		models.py
+		tests.py
+		urls.py
+		utilities.py
+		views.py
+	/static
+		/admin
+			/css
+			/fonts
+			/img
+			/js
+	/media
+
+
+	manage.py
+
 Al crear un poryecto Django en PythonAnywhere , se crean automáticamente los archivos settins.py y urls.py del proyecto,
 con lo cual nosotros sólo debemos subir el contenido de la carpeta donde se encuentre nuestra APP, creando el directorio
 con el nombre de dicha APP y las subcarpetas static, templates......
@@ -1779,4 +1851,12 @@ def dynamic_lookup_view(request, id):
 
 	return render (request, "mi_pagina.html", context)
 	
+
+##################################  CMS (CONTENT MANAGEMENT SYSTEM)  ########################################
+
+Existen multiples plataformas CMS para Django , las más populares son Mezzanine y Wagtail
+
+Wagtail tiene la interfaz más amigable, pero no permite generar en el models campos ManyToMany
+
+
 

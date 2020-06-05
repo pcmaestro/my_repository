@@ -1,0 +1,3 @@
+Con este comando podemos ver los paquetes python instalados y sus versiones
+
+pip freeze
