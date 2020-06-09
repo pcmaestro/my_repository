@@ -309,6 +309,9 @@ Para el contenido  --> <body> {% block content %}  {% endblock %} </body>
 Y estos mismos bloques son invocados en las plantillas hijas detrás de {% extends "base.html" %} para personalizar su contenido
 HTML individual , donde podremos incluso incrustar otras plantillas con {% include "sub_plantilla.html" %}
 
+tanto para usar extends como include, tener encuenta si la plantilla en cuestión está en la misma ruta que la que hereda , o
+en otra distinta, ya que en caso afirmativo, habrá que indicarla en la expresión , por ej , {% extends "base/base.html" %}
+
 URL LINKING
 
 En la lista urlpatterns podemos añadir un "name" que nos servirá para llamar al función del views mediante URL linking
@@ -376,7 +379,7 @@ evitar este tipo de ataques, al incluir la siguiente etiqueta, Django genera el 
 
 El token debe ir incluido dentro del <form> antes que los inputs
 
-########################################  BASES DE DATOS  #############################################################
+########################################  BASES DE DATOS (QUERYSETS) #############################################################
 
 Django contiene por defecto un módulo de SQLite y además soporta oficilamente MySQL, PostgreSQL y Oracle,  se pueden añadir
 otras como DB2 y SQL Server mediante conectores de terceros . Se cual sea el que usemos, la BD la tenemos que crear siempre
@@ -528,7 +531,8 @@ lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado) --> Esto g
 
 lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).count() --> Cuenta los registros obtenidos
 
-lista = nombre_clase.objects.filter(nombre_campo__contains = valor_contenido) --> Filtra los registros según un valor X que contengan
+lista = nombre_clase.objects.filter(nombre_campo__contains = valor_contenido) --> Filtra los registros según un valor X que contengan, si usamos
+										  icontains la busqueda es case-insensitive
 
 lista = nombre_clase.objects.filter(nombre_campo = valor_de_filtrado).distinct() --> Filtra los registros haciendo un select distinct
 
@@ -684,7 +688,48 @@ en la BBDD se creará tabla llamada nombre_app_person:
 John Smith
 Jane Jones
 
+MANAGERS
 
+Una manager es la inferfaz a través de la cual son provistas las queries de SQL en los modelos de Django
+
+Cada modelo tiene al menos un manager, que por defecto se llama objects ,  para invocar sus métodos la sintaxis
+es Mi_clase.objects.metodo()
+
+Podemos sobreescribir los métodos del Manager heredando de la clase models.Manager para personalizar nuestros propios
+querysets añadiendo al cursor nuestras propias querys de SQL
+
+Ej. añadiendo un método a la clase models.Manager para crear un queryset personalizado llamado with_counts()
+
+from django.db import models
+
+class PollManager(models.Manager):
+    def with_counts(self):
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT p.id, p.question, p.poll_date, COUNT(*)
+                FROM polls_opinionpoll p, polls_response r
+                WHERE p.id = r.poll_id
+                GROUP BY p.id, p.question, p.poll_date
+                ORDER BY p.poll_date DESC""")
+            result_list = []
+            for row in cursor.fetchall():
+                p = self.model(id=row[0], question=row[1], poll_date=row[2])
+                p.num_responses = row[3]
+                result_list.append(p)
+        return result_list
+
+class OpinionPoll(models.Model):
+    question = models.CharField(max_length=200)
+    poll_date = models.DateField()
+    objects = PollManager()
+
+class Response(models.Model):
+    poll = models.ForeignKey(OpinionPoll, on_delete=models.CASCADE)
+    person_name = models.CharField(max_length=50)
+    response = models.TextField()	
+
+Con esto podemos usar el queryset personalizado OpinionPoll.objects.with_counts()
 
 #########################################  FORMULARIOS  #################################################################
 
@@ -729,7 +774,7 @@ class FormularioContacto(forms.Form):
 	email = forms.EmailField()
 	message = forms.CharField(widget=forms.Textarea)
 
-Ej. con un formulario de contacto (método Model)
+Ej. con un formulario de contacto (método Model)  -->  RECOMENDADO
 
 from django import forms
 from . import models
@@ -744,8 +789,11 @@ class FormularioContacto(forms.ModelForm):
 			"email" : forms.EmailInput(attrs=(ming_length = 6),
 			"mensaje" : forms.Textarea(attrs{"class":"nombre_clase", "id":"nombre_id", "rows":nº_filas, "cols":nº_columnas})
 			}
+		labels = {"nombre_campo", "etiqueta_campo"}
 
-En este segundo método podemos sobreescribir los campos del modelo con algo distinto o personalizarlos		
+
+En este segundo método podemos sobreescribir los campos del modelo con algo distinto o personalizarlos, en los atributos podemos incluir
+clases, como por ejenplo las clases de bootstrap	
 
 
 Por defecto ,  los campos tienen el atributo "required" y el EmailField valida el formato correcto del email.  Si deseamos que un
@@ -957,6 +1005,26 @@ En el HTML :
 
 </body>
 </html>
+
+Para pintar en el formulario un objeto
+
+
+Si necesitamos hacer un update (o incluso un delete) de un objeto en la BD,  necesitaremos pintarlo en el formulario,
+para ello podemos usar el argumento "instance" de la clase ModelForm
+
+Ej.
+
+def mascota_edit(request, id_mascota):
+	mascota = Mascota.objects.get(id = id_mascota)
+	if request.method == "GET":
+		form = MascotaForm(instance = mascota)
+	else:
+		form = MascotaForm(request.POST, instance = mascota)
+		if form.is_valid():
+			form.save()
+		return redirect("mascota:mascota_list")
+	return render(request, "mascota_form.html", {"form":form})
+
 
 
 ----------------------------------------------  AJAX  --------------------------------------------------------------------
@@ -1422,7 +1490,7 @@ def inicio(request):
 
 ############################  VISTAS BASADAS EN CLASES ( CLASS-BASED-VIEWS)  ##########################################
 
-Django incorpora una serie de clases predefinidas que podemos usar como si fueran funciones en el views usando la funcion
+Django incorpora una serie de clases predefinidas que podemos usar, heredar e incluso modificar en nuestro views usando la funcion
 as_view() ,  dicha función puede recibir argumentos que sobreescribiran las propiedades de la la clase
 
 Existen dos formas de usar estas clases :
@@ -1455,8 +1523,309 @@ urlpatterns = [
     path('about/', AboutView.as_view()),
 ]
 
+CLASES ABSTRACTAS
 
-Para más información ver https://docs.djangoproject.com/en/3.0/topics/class-based-views/
+En su class Meta indicamos abstract = True , con esto sus clases hijas heredan directamente sus propiedades, y ya no es
+necesario vover a escribir esas propiedades en las hijas , en este ejemplo la clase Estudiante hereda nombre y edad:
+
+
+class InfoComun(models.Model):
+    nombre = models.CharField(max_length=100)
+    edad = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True
+
+class Estudiante(InfoComun):
+    grupo = models.CharField(max_length=5)
+
+
+Las clases hijas , si no definen parámetros meta,  heredan de la abstracta, pero pueden extender los parámetros meta
+de esta úlitma, como en este ejemplo
+
+class InfoComun(models.Model):
+    ...
+    class Meta:
+        abstract = True
+        ordering = ['nombre']
+
+class Estudiante(InfoComun):
+    ...
+    class Meta(InfoComun.Meta):
+        db_table = 'estudiantes_info'
+
+
+------------------------------------------  CLASS-BASED-VIEWS CRUD  ----------------------------------------------------------
+
+
+SELECT - ListView (listados):
+
+
+
+Clase predefinida para pintar listados , podemos heredar de ella para crear nuestros propios listados
+
+En el views.py
+
+from django.views.generic import ListView
+from . import models
+
+class Mi_clase_listar(ListView):
+
+	model = models.Mi_modelo
+	template_name = "nombre_app/mi_listado.html"
+	paginate_by = numero_entero --> Resultados por página
+
+En el urls.py  --> IMPORTANTE, el context no trae un diccionario, sino un object_list
+
+from . import views
+
+urlpatterns = [path("ruta-listado", views.Mi_clase_listar.as_view() , name = "mi_lista")]
+
+En template
+
+Aqui debemos tener en cuenta que el context ya no trae un diccionario clave:valor,  lo que viene es un object_list
+
+{% if object_list %}
+{% for mi_objeto in object_list %}
+	mi_objeto.propiedad1
+	mi_objeto.propiedad2
+	etc....
+{% endfor %}
+
+A efectos de hacer más comprensible el object_lista ,  Django nos permite cambiarle el nombre al crear la clase en el view
+de esta manera:
+
+context_object_name = 'mis_autores_favoritos'  --> En el template el bucle for podría ser por ejemplo for autor in mis_autores_favoritos
+
+INSERT - CreateView
+
+
+En el views.py
+
+from django.views.generic import CreateView
+from . import forms
+from . import models
+from django.core.urlresolvers import reverse_lazy
+
+class Mi_clase_crear(CreateView):
+	
+	model = models.Mi_modelo
+	form_class = forms.Mi_formularioForm
+	template_name = "nombre_app/mi_form.html"
+	success_url = reverse_lazy("mi_app:mi_lista") --> Esta linea redirige al url con name = mi_lista de mi_app
+
+
+En el urls.py
+
+from . import views
+
+urlpatterns = [path("mi-formulario", views.Mi_clase_crear.as_view(), name = "mi_insert")]
+
+
+UPDATE- UpdateView
+
+En el views.py
+
+from django.views.generic import UpdateView
+from django.core.urlresolvers import reverse_lazy
+from . import models
+from . import forms
+
+class Mi_clase_update(UpdateView):
+
+	model = models.Mi_modelo
+	form_class = forms.Mi_formularioForm
+	template_name = "nombre_app/mi_form.html"
+	success_url = reverse_lazy("mi_app:mi_lista") 
+
+En el urls.py
+
+from . import views
+
+urlpatterns = [path("mi-upate/<int:pk>", views.Mi_clas_update.as_view(), name = "mi_update")] --> importante pasar el parámetro pk (primary key)
+
+En el template
+
+Recordar que no viene un diccionario, sino un object o un object_list
+
+Para pintar un objeto en el template sería con object.propiedad1, object.propiedad.2 , etc....
+
+
+DELETE - DeleteView
+
+En el views.py
+
+from django.views.generic import DeleteView
+from django.core.urlresolvers import reverse_lazy
+from . import models
+from . import forms
+
+class Mi_clase_detele(DeleteView):
+
+	model = models.Mi_modelo
+	form_class = forms.Mi_formularioForm
+	template_name = "nombre_app/mi_form.html"
+	success_url = reverse_lazy("mi_app:mi_lista") 
+
+
+En el urls.py
+
+
+from . import views
+
+urlpatterns = [path("mi-upate/<int:pk>", views.Mi_clas_delete.as_view(), name = "mi_delete")] --> importante pasar el parámetro pk (primary key)
+
+
+En el template
+
+Recordar que no viene un diccionario, sino un object o un object_list
+
+Para pintar un objeto en el template sería con object.propiedad1, object.propiedad.2 , etc....
+
+
+SOBREESCRITURA DE LAS CLASES CRUD PREDEFINIDAS 
+
+Podemos sobreescribir las propiedades y métodos de las clases predefinidas, esto es muy util cuando necesitamos renderizar en una misma
+web por ejemplo dos formularios que vienen de modelos distintos
+
+Ej Persona que solicita adoptar una o más mascotas
+
+En el models.py
+
+class Persona(models.Model):
+	nombre = models.CharField(max_length = 50)
+	apellidos = models.CharField(max_length = 100)
+	edad = models.IntegerField()
+	telefono = models.CharField(max_length = 9)
+	email = models.EmailField()
+	domicilio = models.TextField()
+
+class Solicitud(models.Model):
+	persona = models.ForeignKey(Persona, null = True, blank = True)
+	numero_mascotas = models.IntegerField()
+	razones = models.TextField()
+
+En el forms.py
+
+Damos creados los formularios PersonaForm y SolicitudForm con meta clases que contienen los model, fields, label y widgets , en el
+segundo no hace falta definir el field persona , ya que ese dato se relaciona con el primero
+
+
+En el views.py
+ 
+
+class SolicitudList(ListView):
+	model = models.Solicitud
+	template_name = "nombre_app/solicitud_list.html"
+
+class SolicitudCreate(CreateView):
+	model = models.Solicitud
+	template_name = "nombre_app/solicitud_form.html"
+	form_class = SolicitudForm --> Primer formulario
+	second_form_class = PersonaForm --> Segundo formulario
+	success_url = reverse_lazy("adopcion:listado") --> app adopcion,  url con =  name = listado
+
+	def get_context_data(self, **kwargs): --> Para sumar los dos formularios al mismo context, sobreescribimos el método get_context_data()
+
+		context = super(SolicitudCreate, self).get_context_data(**kwargs)
+		if "form" not in context:
+			context["form"] = self.form_class(self.request.GET)
+		if "form2" not in context:
+			context["form2"] = self.second_form_class(self.request.GET)
+	
+	def post(self, request, *args, **kwargs):
+
+		self.object = self.get_object --> Accedemos al objeto POST del formulario
+		form = self.form_class(request.POST)
+		form2 = self.second_form_class(request.POST)
+		if form.is_valid() and form2.is_valid():		
+			solicitud = form.save(commit = False) --> Evitamos el commit hasta no guardar el segundo formulario
+			solicitud.persona = form2.save() --> Creamos la relación entre formularios
+			solicitud.save()
+			return redirect(self.get_success_url)
+		else:
+			return render(request, "solicitud_form.html",  self.get_context_data(form = form, form2 = form2)
+
+
+En el template.html
+
+	Para pintar por ejemplo las cajas solicitando el nombre y los apellidos
+
+	<label for = {{form2.nombre.nombre}}> {{form2.nombre.label}} </label> --> Accedemos a la propiedad label definida en forms.py
+	{{form2.nombre}}
+
+	<label for = {{form2.nombre.apellido}}> {{form2.apellidos.label}} </label> --> Accedemos a la propiedad label definida en forms.py
+	{{form2.apellidosg}}
+
+
+----------------------------------------  LISTADO DE GENERIC VIEWS  ---------------------------------------------
+
+View --> Clase maestra, todas las class-based views heredan de ella
+Metodos:
+as_view()
+setup()
+dispatch()
+http_method_not_allowed()
+options()
+
+TemplateView --> Renderiza una plantilla dada, con un contexto conteniendo parámetros capturados en la URL
+Métodos:
+setup()
+dispatch()
+http_method_not_allowed()
+get_context_data()
+
+RedirectView --> Redirige a otra URL
+Métodos:
+setup()
+dispatch()
+http_method_not_allowed()
+get_redirect_url()
+
+
+DetailView --> Vista genérica de datalles de objetos
+Métodos:
+setup()
+dispatch()
+http_method_not_allowed()
+get_template_names()
+get_slug_field()
+get_queryset()
+get_object()
+get_context_object_name()
+get_context_data()
+get()
+render_to_response()
+
+ListView --> Lista de objetos
+Métodos:
+setup()
+dispatch()
+http_method_not_allowed()
+get_template_names()
+get_queryset()
+get_context_object_name()
+get_context_data()
+get()
+render_to_response()
+
+FormView --> Muestra un formulario, ante errores de validación , vuelve a mostrar el formulario con dichos erroes. En caso de éxito,
+	     redirige a una nueva URL
+
+CreateView --> Muestra un formulario para crear un objeto, muestra errores de validación y guarda el objeto
+atributos : object (el objeto que estamos creando) , mientras usamos esta clase podemos accederlo con self.object
+
+UpdateView --> Mustra un formulario para editar un objeto existente ,  muestra errores de validación y guarda los cambios
+atributos : object (el objeto que estamos modificando) , mientras usamos esta clase podemos accederlo con self.object
+
+DeleteView --> Muestra una página de confirmación y elimina un objeto
+
+
+A parte de estas, existen unas Generic Date Views, una serie de Mixins para herencia múltiple (clases que contienen métodos que pueden usar otras clases)
+
+Para más información sobre vistas basdas en clases ver https://docs.djangoproject.com/en/3.0/topics/class-based-views/
+
+Para más información sobre las clases internas de Django ( sus métodos y atributos) ver https://docs.djangoproject.com/en/3.0/ref/class-based-views/flattened-index/
 
 
 ############################ SUBIR PROYECTOS DJANGO A PYTHON ANYWHERE  ###############################################

@@ -857,4 +857,190 @@ Este es el código para el widget datepicker de FengYuanChen:
 </html>
 
 
+MEDIA QUERIES
+
+Las media queries no son propiedades de Bootstrap, fueron introducidas por CSS3, pero son una herramienta muy util
+para aplicar Bootstrap , se trata de aplicar estilos distintos en función del tamaño de la pantalla, se definen
+mediante el decorador @media para incluir unas reglas CSS si cierta condición se cumple
+
+Siguiendo la filosofía Mobile First , debemos pensar en hacer los diseños para pantallas pequeñas, y que su comportamiento
+cambie cuando las pantallas tienen un ancho superior a 768px (limite bootstrap entre pantallas sm y md) 
+
+Sintaxis
+
+@media not|only mediatype and (mediafeature and|or|not mediafeature) {
+  CSS-Code;
+}
+
+not:  aplica a todo lo no incluido en los argumentos de la media query
+
+only: no tiene efecto en los navegadores modernos, 
+
+mediatype : Lo normal es que sea screen ( smart phones, tables, PC...) , pero hay otros
+
+media features : Hay una larga lista, pero lo normal es aplicar min-width y max-width en pixeles y también es común
+		 usar orientation: portrait/landscape según esté o no girada la pantalla del terminal
+
+
+Podemos tener diferentes hojas de estilos según la media query que deseemos aplicar
+
+<link rel="stylesheet" media="screen and (min-width: 900px)" href="widescreen.css">
+<link rel="stylesheet" media="screen and (max-width: 600px)" href="smallscreen.css">
+etc....
+
+Breakpoints
+
+Si añadimos un breakpoint, a ambos lados de este el diseño se comportará de forma distinta , por ej, si lo añadimos en
+768 px , el display de nuestra web será diferente en dispositivos móviles y en pantallas de PC o TV
+
+En este ejemplo las columnas del grid tendrán anchuras distintas según el ancho de pantalla sea mayor o menor de 
+768 px
+
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+
+Podemos añadir un único breakpoint, como en el caso anterior, pero podemos añadir todos los que queramos, lo normal es
+que haya uno cada uno de los 5 anchos estandar:
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {...}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {...}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {...}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {...}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {...}
+
+
+
+Ej con dos breakpoints
+
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+Combinación de argumentos
+
+Podemos combinar varios argumentos
+
+Ej.
+
+@media screen and (max-width: 900px) and (min-width: 600px), (min-width: 1100px) {
+  div.example {
+    font-size: 50px;
+    padding: 50px;
+    border: 8px solid black;
+    background: yellow;
+  }
+}
+
+Orientación de la pantalla
+
+Los dispositivos móviles disponen de la capacidad de girar la pantalla, con lo cual tienen dos formas de presentar
+una web;
+
+Portrait - altura > anchura
+
+Landscape - anchuca > altura
+
+Podemos usar una media query para modificar la apariencia en función del display Portrait / landscape
+
+Ej.
+
+@media only screen and (orientation: landscape) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+
+Ocultar elementos
+
+Podemos usar las media queries para ocultar elementos en función del tamaño de la pantalla
+
+Ej.
+
+/* If the screen size is 600px wide or less, hide the element */
+@media only screen and (max-width: 600px) {
+  div.example {
+    display: none;
+  }
+}
+
+Cambia tamaño de fuentes
+
+Podemos usar los media queries para cambiar el tamaño de las fuentes en función del tamaño de
+la pantalla
+
+/* If the screen size is 601px or more, set the font-size of <div> to 80px */
+@media only screen and (min-width: 601px) {
+  div.example {
+    font-size: 80px;
+  }
+}
+
+/* If the screen size is 600px or less, set the font-size of <div> to 30px */
+@media only screen and (max-width: 600px) {
+  div.example {
+    font-size: 30px;
+  }
+}
 

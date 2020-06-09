@@ -89,6 +89,8 @@ os.getcwd() : Devuelve una cadena con la ruta del directorio actual
 
 os.rmdir(ruta) : Borra el directorio de la ruta, siempre y cuando esté vacío
 
+os.path.join(paths) --> Une un array de paths en uno solo separado por /
+
 Ejemplos:
 
 import os

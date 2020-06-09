@@ -1,0 +1,29 @@
+Con este método podemos ejecutar funciones JS según sea el tamaño de la pantalla:
+
+if (window.matchMedia("(max-width: 700px)").matches) {
+  /* The viewport is less than, or equal to, 700 pixels wide */
+} else {
+  /* The viewport is greater than 700 pixels wide */
+}
+
+El argumento de la función. matchMedia() puede ser cualquiera de las media features de los
+media queries de CSS3 (max-width, min-width, orientation, etc..)
+
+La función .matches() devuelve true o false
+
+Podemos añadir una función addListener() que "escuche" los cambios en la pantalla y ejecute
+el código
+
+Ej.
+
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    document.body.style.backgroundColor = "yellow";
+  } else {
+    document.body.style.backgroundColor = "pink";
+  }
+}
+
+var x = window.matchMedia("(max-width: 700px)")
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction) // Attach listener function on state changes
