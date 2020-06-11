@@ -2,6 +2,7 @@ pip install django  (con pip install django == nº_version podemos instalar la v
 
 python -m django --version
 
+
 Los proyectos de Django se dividen en tres partes (MVT) :
 
 Model --> Bases de datos
@@ -1827,6 +1828,36 @@ Para más información sobre vistas basdas en clases ver https://docs.djangoproj
 
 Para más información sobre las clases internas de Django ( sus métodos y atributos) ver https://docs.djangoproject.com/en/3.0/ref/class-based-views/flattened-index/
 
+------------------------------------  USER MODEL CLASS  -----------------------------------------------------------------------
+
+Django dispone de una clase models.User ,  los objetos User tienen las siguientes propiedades:
+
+username --> Requerido, max 150 caracteres, admite _ @ + - (customizar a 191 si usamos MySQL con codificación utf8mb4)
+
+first_name --> Opcional (blank = True), max 30 caracteres
+
+last_name --> Opcional (blank = True), max 150 caracteres
+
+email --> Opcional (blanck = True)
+
+password --> Requerido, pueden ser de cualquier longitud y cualquier caracter, Django las guarda encriptadas, en el
+	     settings.py se requiere configurar una lista de algortimos llamada PASSWORD_HASHERS
+	     También hay una lista de AUTH_PASSWORD_VALIDATORS con unos requerimientos mínimos de seguirdad a la hora
+	     de que un usuario establezca su contraseña, con help_text de ayuda, es customizable . La longitud por defecto
+	     es de 8 caracteres
+	     ver documentación en https://docs.djangoproject.com/en/3.0/topics/auth/passwords/
+
+Existen más propiedades, ver https://docs.djangoproject.com/en/3.0/ref/contrib/auth/
+
+
+------------------------------------  AUTENTICACION (class LoginView)  -------------------------------------------
+
+Podemos usar para el login de usuarios la clase LoginView , o heredar de ella para customizar nuestra propia clase
+
+
+Ver https://docs.djangoproject.com/en/3.0/topics/auth/default/#django.contrib.auth.views.LoginView
+
+
 
 ############################ SUBIR PROYECTOS DJANGO A PYTHON ANYWHERE  ###############################################
 
@@ -2219,6 +2250,91 @@ def dynamic_lookup_view(request, id):
 	context = {"object":obj}
 
 	return render (request, "mi_pagina.html", context)
+
+
+##################################  DJANGO REST FRAMEWORK  ##################################################
+
+pip install djangorestframework
+
+En settings.py
+
+INSTALLED_APPS = (
+    ...
+    'rest_framework',
+)
+
+También podemos declarar en los settings de django el diccionario REST_FRAMEWORK donde podremos añadir optativamente
+múltiples opciones de configuración de DRF
+
+REST_FRAMEWORK = {
+}
+
+DRF se basa fundamentalmente en 3 componentes: los serializadores, las vistas y los routers
+
+Los routers son una herramienta que nos permiten definir las urls de nuestro API (url que servirá la información del API)
+
+Las views no son más que extensiones de las class-view de django
+
+Los serializadores nos permiten definir al detalle cómo serán las respuestas que devolverá nuestro API y cómo procesaremos 
+el contenido de las peticiones que nos lleguen.
+
+
+Ej
+En este caso definimos un serializador asociado al modelo User de django que modeliza los usuarios de la aplicación. De todos los 
+posibles campos del modelo user le decimos a nuestro serializador que sólo use el nombre de usuario y el correo electrónico.
+
+#serializers.py
+
+from django.contrib.auth.models import User
+from rest_framework import serializers
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
+
+Y ahora creamos la vista heredando de la clase ModelViewSet , que recupera y renderiza la información del serializador
+
+#views.py
+
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from . import serializers
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = serializers.UserSerializer
+
+
+Y por último definimos la URL donde se expondrá nuestro API
+
+#urls.py
+
+
+from django.conf.urls import path, include
+from rest_framework import routers
+from . import views
+
+router = routers.DefaultRouter()
+
+router.register(r'users', views.UserViewSet)
+
+urlpatterns = [
+    path("", include(router.urls))
+]
+
+Las configuraciones adicionales (tamaño de página, excepciones, formato de fecha y hora, paginazión...) se realizan en el
+diccionario REST_FRAMEWORK del settings.py .  Ver https://www.django-rest-framework.org/tutorial/quickstart/
+
+Ej paginación
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 	
 
 ##################################  CMS (CONTENT MANAGEMENT SYSTEM)  ########################################

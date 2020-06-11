@@ -1,0 +1,83 @@
+INSTALACION
+
+Necesitamos instalar lo primero de todo el framework Node.js , la versión LTS es la estable
+
+Una vez instalado, hay que actualizar el gestor de paquetes de Node.js llamado NPM a su última versión entrando
+en CMD y escribiendo:
+
+npm install -g npm@latest
+
+Y luego limpiamos la caché:
+
+npm cache clean --force
+
+Como vamos a descargar paquetes seguros para instalar ANGULAR, no necesitamos que se hagan las auditorias
+internas de los paquetes NPM:
+
+npm set audit false
+
+Y por último procedemos a instalar ANGULAR:
+
+npm install -g @angular/cli@latest
+
+Una vez instalado ANGULAR,  podemos crear nuestro primer proyecto en la carpeta que deseemos:
+
+ng new
+
+Y dentro de la carpeta del nuevo proyecto indicamos lo siguiente para arrancar el servidor:
+
+ng serve
+
+ARCHIVOS DEL PROYECTO
+
+Dentro de nuestra carpeta de proyecto se generan varios archivos,  los que empiezan por ts... son archivos
+de lenguaje Typescript, versión de Javascript con tipado fuerte desarrollada por Microsoft
+
+package.json --> archivo que contiene las librerias instaladas en el proyecto, aqui se incluyen las que necesitemos
+		 instalar posteriormente
+
+package-lock.json --> Se genera al instalar nuevos módulos de Node.js
+
+Karma.conf.js --> Fichero para configurar pruebas
+
+angular.json --> archivo de configuración de angular que permite registrar librerias externas
+
+.gitignore --> archivos y directorios que no queremos que sean subidos al repositorio GIT
+
+.editconfig --> fichero de configuración para el editor de código
+
+e2e --> carpeta de testing
+
+node_modules --> carpeta con las librerias del framework y paquetes de Node.js
+
+src --> carpeta principal del proyecto:
+	
+	main.ts --> archivo typescript principal del proyecto
+	app --> carpeta que contiene las vistas y componentes
+		app.components.ts --> componente de la primera pantalla de bienvenida de Angular, el resto de
+				      app_components son relativos a este archivo
+		app.module.ts --> primer componente de nuestro proyecto por defecto
+
+
+COMPONENTES
+
+Angular es un framework orientado a componentes,  o sea,  "trozos de pantalla" que vamos configurando
+
+Los componentes residen en la ruta src/app ,  y todos tienen la extensión .ts, mientras que las vistas
+tienen la extension .html
+
+
+La configuración básica de un archivo de componente es la siguiente:
+
+import {component} from @angular/core;
+
+@component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
+})
+
+export class AppComponent{
+    title = "Bienvenido a mi web"
+}
+
