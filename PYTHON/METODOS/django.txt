@@ -2264,7 +2264,7 @@ INSTALLED_APPS = (
 )
 
 También podemos declarar en los settings de django el diccionario REST_FRAMEWORK donde podremos añadir optativamente
-múltiples opciones de configuración de DRF
+múltiples opciones de configuración de Django Rest Framework (DRF)
 
 REST_FRAMEWORK = {
 }
@@ -2287,10 +2287,137 @@ posibles campos del modelo user le decimos a nuestro serializador que sólo use 
 
 from django.contrib.auth.models import User
 from rest_framework import serializers
+
+OPCION 1 usando la clase Serializer
+
+class UserSerializer(serializers.Serializer):
+	#aqui definimos los mismos campos que en el model
+	user = serializers.CharField(max_length = 50)
+	email = serializers.EmailField()
+	etc...
+
+	def create(self, validated_data): ------------------> método para añadir objetos en el Model
+		return User.objects.create(validated_data)	
+
+	def update(self, instance, validated_data): ------------------> método para hacer updates en el Model
+		instance.user = validated_data.get("user", instance.user)	
+		instance.email = validated_data.get("email", instance.email)	
+		etc...
+		instance.save()
+		return instance
+
+Aqui debemos tener en cuenta las pautas que sigue la serialización,  ejemplo usando el shell de Django:
+
+#Abrimos el shell de Django
+
+python manage.py shell
+
+from . import models
+from . import serializers
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+
+#Creamos un objeto en el Model
+
+usuario = models.User("user" = mi_usuario, email = "mail@gamil.com")
+usuario.save()
+
+#Creamos el serializador
+
+serializer = serializers.UserSerializer(usuario)
+
+#Esta propiedad contiene el diccionario de python creado por el serializador
+
+serializer.data -->  {"user":"mi_usuario", "mail":"mail@gmail.com"}
+
+#Y este otro muestra el JSON
+
+content = JSONRenderer().render(serializer.data)
+
+Podemos seralizar directamente un queryset del Model
+
+serializer = serializers.UserSerializer(User.objects.all(), many = True) --> El segundo argumento es necesario para
+									     serializar más de un objeto
+
+#Y ahora creamos la vista basada en una función en el views.py:
+
+from django.http import HttpResponse, JsonResponse
+from rest_framework.parsers import JSONParser
+from . import models
+from . import serializers
+from django.views.decorators.csrf import csrf_exempt  --> Esto es para añadir el decorador @csrf_exempt , que a 
+						          efectos de hacer pruebas, anula la necesidad de tener
+							  un csrf_token al hacer un POST
+
+@csrf_exempt
+def user_list(request):
+	if request.method == "GET":
+		usuarios = models.User.objects.all()
+		serializer = serializers.UserSerializer(usuarios, many = True)
+		return = JsonResponse(serializer.data, safe = False) --> El segundo argumento va en False para que
+									 los datos puedan ser cualquier objeto
+									 serializable en JSON, si va en True, sólo
+									 admite diccionarios
+									 
+	elif request.method == "POST":
+		data = JSONParser().parse(request)
+		serializer = serializers.UserSerializer(data = data)
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data, status = 201) --> status de creación OK
+		else:
+			return JsonResponse(serializer.errors, status = 400) --> Los datos de la petición no son válidos
+
+#Y finalmente añadimos el API al urls.py
+
+urls.py del proyecto
+
+from django urls import path, include
+
+urlpatterns = [path("", include("mi_api_app.urls")]
+
+urls.py del app que contiene el API
+
+from . import views
+
+urlpatterns = [path("usuarios", views.user_list)]
+
+Existe una herramienta llamada POSTMAN que permite hacer pruebas de peticiones GET y POST con archivos JSON hacia
+nuestro Model
+
+#Si necesitamos que la vista recupere el detalle de un objeto en concreto:
+
+@csrf_exempt
+def user_detail(request, id):
+	try:
+		usuario = models.User.objects.get(pk = id)
+	except models.User DoesNotExist:
+		return HttpResponse(status = 404)
+
+	if request.method == "GET":
+		serializer = serializers.UserSerializer(usuario)
+		return JsonResponse(serializer.data, safe = False)
+	if request.method == "POST":
+		data = JSONParser().parse(request)
+		serializer = serializers.UserSerializer(data = data)
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data, status = 201) --> status de creación OK
+		else:
+			return JsonResponse(serializer.errors, status = 400) --> Los datos de la petición no son válidos
+
+#Y en la ruta
+
+urlpatterns = [path("user-detail/<int:id>", views.user_detail)]
+
+
+
+OPCION 2 usando la clase ModelSerializer (RECOMENDADA)
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('username', 'email')
+        model = models.User
+        fields = ('username', 'email') --> todos, o sólo los que queramos
 
 
 Y ahora creamos la vista heredando de la clase ModelViewSet , que recupera y renderiza la información del serializador
@@ -2337,10 +2464,125 @@ REST_FRAMEWORK = {
 }
 	
 
+Para testear el API, existe la libreria httpie , que es muy sencilla de usar:
+
+pip install httpie
+
+Y luego para usarla en el python shell 
+
+http http://127.0.0.1:8000/mi_api
+
+O directamente podemos cargar la URL en un navegador
+
+
+------------------------------------- API VIEW DECORATOR -------------------------------------
+
+from rest_framework.decorators imoprt api_view
+from rest_framework.response import Response
+from rest_framework import status
+from . import serializers
+from . impor models
+
+El decorador @api_view() recibe los argumentos GET y POST y nos ayuda a reducir un poco todo lo
+codificado anteriormente, según esté diseñada la vista, tambien podria recibir los métodos PUT y
+DELETE
+
+
+@api_view(["GET", "POST"])
+def user_list(request):
+	if request.method == "GET":
+		usuarios = models.User.objects.all()
+		serializer = serializers.UserSerializer(usuarios, many = True)
+		return Response(serializer.data)  --> Usamos Response en lugar de JSONResponse
+
+	elif request.method == "POST":
+		serializer = serializers.UserSerializer(data = request.data) --> No necesitamos el JSONParser
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+		else:
+			return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+
+Como vemos , con este decorador ahorramos un poco de código
+
+
+--------------------------------  CLASS BASED API VIEWS  --------------------------------------------
+
+Podemos crear vistas basadas en clases en lugar de funciones
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from . import serializers
+from . impor models
+
+class UserAPIView(APIView):
+	def get(self, request):
+		usuarios = models.User.objects.all()
+		serializer = serializers.UserSerializer(usuarios, many = True)
+		return Response(serializer.data)
+
+	def post(self, request):
+		serializer = serializers.UserSerializer(data = request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+		else:
+			return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+Para trabajar con un objeto en concreto, habría que añadir el id a los argumentos de ambos métodos,
+modificar el queryset y suprimir el many = True
+	
+En el urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [path("listado-usuarios", views.UserAPIView.as_view()]
+
+
+Heredando de APIView hemos reducido aún mas las lineas de código necesarias para crear la vista del API
+
+
+-----------------------------  GENERIC VIEWS & MIXINS  -------------------------------------------------
+
+from rest_framework import generic
+from rest_framework import mixins
+from . import serializers
+from . import models
+
+class GenericAPIView(generics.GenericAPIView, 
+		     mixins.ListModelMixin, 
+		     mixins.CreateModelMixin, 
+                     mixins.UpdateModelMixin,
+		     mixins.RetrieveModelMixin,
+		     mixins.DestroyModelMixin):
+
+	serializer_class = serializers.UserSerializer
+	queryset = models.User.objects.all() --> si trabajamos con un id, models.User.objects.get(pk = id)
+	lookup_field = "id"
+
+	def get(self, request, id):
+		if id:
+		    return self.Retrieve(request) --> Propiedad de RetrieveModelMixin
+		else:
+		    return self.list(request) --> Propiedad de la clase ListModelMixin
+
+	def post(self, request):
+		return self.create(request) --> Propiedad de la clase CreateModelMixin
+
+	def put(self, request, id):
+		return self.update(request, id) --> Propiedad de la clase UpdateModelMixin
+
+	def delete(self, request, id)
+		return self.destroy(request, id)  --> Propiedad de la clase DestroyModelMixin
+	
+
 ##################################  CMS (CONTENT MANAGEMENT SYSTEM)  ########################################
 
 Existen multiples plataformas CMS para Django , las más populares son Mezzanine y Wagtail
-
+	
 Wagtail tiene la interfaz más amigable, pero no permite generar en el models campos ManyToMany
 
 
