@@ -1249,30 +1249,6 @@ Podemos cambiar la password de un usuario mediante el comando python manage.py c
 Ver https://docs.djangoproject.com/en/3.0/topics/auth/default/#django.contrib.auth.views.LoginView
 
 
-#######################################  SESIONES DE USUARIO  ####################################################################
-
-AUTENTICACION DE USUARIOS
-
-Tomaos el usuario y la contraseña :
-
-usuario_insertado = request.POST["usuario"]
-clave_insertada = request.POST["clave"]
-
-Tendremos una clase Usuarios para la tabla de usuarios con el Id de usuario, el nombre de usuario y la clave
-
-Buscamos en dicha tabla lo que leemos en los formularios:
-
-resultado = models.Usuarios.objects.filter(usuario == usuario_insertado, clave == clave_insertada)
-
-La lista de objetos que se crea puede localizar una coincidencia o ninguna en la tabla de usuarios:
-
-if len(resultado == 1):
-    usuario = resultado[0] --> Tomamos el objeto usuario de la lista de objetos traida de la BBDD
-    request.session["id_usuario"] = usuario.id  --> Ponemos el "sello" de la sesión
-
-Y finalmente, para cerrar la sesión :
-
-request.session.clear()
 
 ####################################  ELEMENTOS ESTATICOS  ##############################################################
 
@@ -1435,7 +1411,7 @@ def inicio(request):
     anuncios = models.Perros.objects.all().order_by("-ultima_modificacion" ,"-id").prefetch_related("categoria", "usuario")
 
     criterio = ""
-    valor_en_buscador = ""
+f    valor_en_buscador = ""
     filtrado = False
 
     if "criterio" in request.GET:
@@ -1488,6 +1464,138 @@ def inicio(request):
 
         }    
     return render(request, "index.html", context)
+
+
+############################################  COOKIES  ################################################################
+
+Las cookies son archivos con información del usuario y su actividad que el servidor guarda en los navegadores, cada vez
+que el usuario vuelva a visitar un site , su navegador enviará la cookie junto con la petición GET/HTTP
+
+LEER COOKIES
+
+Cada objeto request contiene a su vez un objeto COOKIES que se comporta como un diccionario,  podemos usar dicho objeto
+para leer cualquier cookie que el navegador del usuario haya enviado a la vista de Django
+
+Ej
+
+def show_color(request):
+    if "favorite_color" in request.COOKIES:
+        return HttpResponse("Your favorite color is %s" % request.COOKIES["favorite_color"])
+    else:
+        return HttpResponse("You don't have a favorite color.")
+
+ENVIAR COOKIES
+
+Debemos usar el método set_cookie() en un objeto de tipo HttpResponse. He aquí un ejemplo que define la cookie favorite_color 
+utilizando el valor que se le pasa como parámetro GET:
+
+def set_color(request):
+    if "favorite_color" in request.GET:
+
+        # Create an HttpResponse object...
+        response = HttpResponse("Your favorite color is now %s" % request.GET["favorite_color"])
+
+        # ... and set a cookie on the response
+        response.set_cookie("favorite_color", request.GET["favorite_color"])
+
+        return response
+
+    else:
+        return HttpResponse("You didn't give a favorite color.")
+
+Hay una serie de parámetros opcionales que puedes pasar a response.set_cookie() y que te permiten controlar determinadas 
+características de la cookie:
+
+max_age: el tiempo (en segundos) que la cookie debe permanecer activa. Si este parámetro es la cookie, desaparecerá 
+	 automáticamente cuando se cierre el navegador. (valor por defecto: None)
+
+expires: la fecha y hora en que la cookie debe expirar. Debe estar en el formato "Wdy, DD-Mth-YY HH:MM:SS GMT". 
+	 Si se utiliza este parámetro, su valor tiene preferencia sobre el definido mediante max_age. (valor por defecto: None)
+
+path: la ruta o path para la cual es válida la cookie. Los navegadores solo reenviarán la cookie a las páginas que estén en dicha 
+      ruta. Esto impide que se envíe esta cookie a otras secciones de la web. Es especialmente útil si no se tiene el control del 
+      nivel superior de directorios del servidor web. (valor por defecto: "/")
+
+domain: el dominio para el cual es válida la cookie. Se puede usar este parámetro para definir una cookie que sea apta para varios 
+	dominios. Por ejemplo, definiendo domain=".example.com" la cookie será enviada a los dominios www.example.com, www2.example.com 
+	y aun.otro.subdominio.example.com. Si a este parámetro no se le asigna ningún valor, la cookie solo será enviada al dominio que 
+	la definió. (valor por defecto: "/")
+
+secure: si este valor se define como True, se le indica al navegador que sólo retorne esta cookie a las páginas que se accedan de forma 
+	segura (protocolo HTTPS en vez de HTTP). (valor por defecto: False)
+
+Como no podemos saber si un usuario tiene habilitadas las cookies, lo cual puede ser un problema para enviarle la cookie
+de sesión de usuario,  Django dispone de un mecanismo para enviar una cookie de prueba y luego comprobar si esta ha funcionado:
+
+
+def login(request):
+
+    # If we submitted the form...
+    if request.method == 'POST':
+
+        # Check that the test cookie worked (we set it below):
+        if request.session.test_cookie_worked():
+
+            # The test cookie worked, so delete it.
+            request.session.delete_test_cookie()
+
+            # In practice, we'd need some logic to check username/password
+            # here, but since this is an example...
+            return HttpResponse("You're logged in.")
+
+        # The test cookie failed, so display an error message. If this
+        # was a real site we'd want to display a friendlier message.
+        else:
+            return HttpResponse("Please enable cookies and try again.")
+
+    # If we didn't post, send the test cookie along with the login form.
+    request.session.set_test_cookie()
+    return render('login_form.html')
+
+
+#######################################  SESIONES DE USUARIO  ####################################################################
+
+AUTENTICACION DE USUARIOS
+
+Usamos la propiedad session del objeto request, que funciona como un diccionario y envia una cookie con un hash pseudo-aleatorio de 32 
+caracteres, que es el valor que se almacena en la cookie
+
+Tomaos el usuario y la contraseña :
+
+usuario_insertado = request.POST["usuario"]
+clave_insertada = request.POST["clave"]
+
+Tendremos una clase Usuarios para la tabla de usuarios con el Id de usuario, el nombre de usuario y la clave
+
+Buscamos en dicha tabla lo que leemos en los formularios:
+
+resultado = models.Usuarios.objects.filter(usuario == usuario_insertado, clave == clave_insertada)
+
+La lista de objetos que se crea puede localizar una coincidencia o ninguna en la tabla de usuarios:
+
+if len(resultado == 1):
+    usuario = resultado[0] --> Tomamos el objeto usuario de la lista de objetos traida de la BBDD
+    request.session["id_usuario"] = usuario.id  --> Ponemos el "sello" de la sesión
+
+Y finalmente, para cerrar la sesión :
+
+request.session.clear()
+
+En la documentación existen otras opciones para la gestión de sesiones mediante configuraciones en el settings.py:
+
+SESSION_COOKIE_SECURE: indica si se debe usar una cookie segura para la cookie de sesión. Si el valor es True, la cookie 
+		       se marcará como segura, lo que significa que sólo se podrá utilizar mediante el protocolo HTTPS. 
+		       (Valor por defecto: False).
+
+SESSION_COOKIE_AGE:  Tiempo en segundos que tarda en expirar la cookie de sesión, por defecto 1.209.600 seg, o sea, 2 semanas
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE: Por defecto su valor es False, esto quiere decir que las session cookies serán almacenadas
+				 en el navegador del usuario durante el tiempo indicado en SESSION_COOKIE_AGE. Esto es util
+				 si no queremos que nuestros usuarios tengan que logarse cada vez que abran el navegador.
+				 Si establecemos el valor a True, la cookie de sesión expira al cerrar el navegador y cada
+				 vez que el usuario lo abra, tendrá que logarse de nuevo
+
+
 
 ############################  VISTAS BASADAS EN CLASES ( CLASS-BASED-VIEWS)  ##########################################
 
@@ -2206,7 +2314,7 @@ class Nombre_appViewSet(viewsets.ModelViewSet):
 
 En el archivo urls.py:
 
-from rest_framewokr import routers
+from rest_framework import routers
 from . import viewsets
 
 router = routers.SimpleRouter()
@@ -2577,13 +2685,344 @@ class GenericAPIView(generics.GenericAPIView,
 
 	def delete(self, request, id)
 		return self.destroy(request, id)  --> Propiedad de la clase DestroyModelMixin
+
+
+-----------------------------------  AUTENTICACION  ------------------------------------------------------
+
+
+Tipos de autenticación:
+
+Basic Authentication - recomendada sólo para propósitos de testing
+
+Session Authentication - recomendada para clientes AJAX , usa el sello de sesión de Django
+
+Token Authentication - La más recomendada en escenarios de producción
+
+Es necesario añadir en el settings.py el escenario de autenticación que se va a utilizar:
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',	
+    ]
+}
 	
+También se puede añadir directamente en las vistas basadas en la clase APIView (ver API GUIDE- authentication
+en la documentación oficial). Ej de autenticación básica y de sesión
 
-##################################  CMS (CONTENT MANAGEMENT SYSTEM)  ########################################
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framewok.permissions import IsAuthenticated
 
-Existen multiples plataformas CMS para Django , las más populares son Mezzanine y Wagtail
+class GenericAPIView(generics.GenericAPIView, 
+		     mixins.ListModelMixin, 
+		     mixins.CreateModelMixin, 
+                     mixins.UpdateModelMixin,
+		     mixins.RetrieveModelMixin,
+		     mixins.DestroyModelMixin):
+
+	serializer_class = serializers.UserSerializer
+	queryset = models.User.objects.all()
+	lookup_field = "id"
+	authentication_classes = [SessionAuthentication, BasicAuthentication]--> añadimos las clases de autenticación,
+										 el framework buscará el modo de autenticación
+										 según el orden en la lista
+	permission_classes = [IsAuthenticated]
+
+	def get(self, request, id):
+		if id:
+		    return self.Retrieve(request)
+		else:
+		    return self.list(request)
+
+	def post(self, request):
+		return self.create(request)
+
+	def put(self, request, id):
+		return self.update(request, id)
+
+	def delete(self, request, id)
+		return self.destroy(request, id)
+
+Con estos modelos de autenticación, si el usuario ya está logado en la sesión Django , tendrá acceso, y si no lo está,
+podrá acceder simplemente facilitando un usuario y contraseña
+
+Ej usando la autenticación mediante Token (RECOMENDADA)
+
+INSTALLED_APPS = [
+	'rest_framework.authtoken'
+]
+
+python manage.py migrate --> necesario para añadir la nueva clase de autenticación al modelo
+
+Una vez hecho esto, debemos ir al panel de administración para crear un token para cada usuario que vaya a tener
+acceso al API
+
+En el views.py
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framewok.permissions import IsAuthenticated
+
+class GenericAPIView(generics.GenericAPIView, 
+		     mixins.ListModelMixin, 
+		     mixins.CreateModelMixin, 
+                     mixins.UpdateModelMixin,
+		     mixins.RetrieveModelMixin,
+		     mixins.DestroyModelMixin):
+
+	serializer_class = serializers.UserSerializer
+	queryset = models.User.objects.all()
+	lookup_field = "id"
+	authentication_classes = [TokenAuthentication]
+	permission_classes = [IsAuthenticated]
+
+	def get(self, request, id):
+		if id:
+		    return self.Retrieve(request)
+		else:
+		    return self.list(request)
+
+	def post(self, request):
+		return self.create(request)
+
+	def put(self, request, id):
+		return self.update(request, id)
+
+	def delete(self, request, id)
+		return self.destroy(request, id)
+
+En este caso el usuario debe enviar el token definido junto con su solicitud (aqui ya no es necesario usuario
+y password)
+
+-------------------------------------  VIEWSETS & ROUTERS  --------------------------------------------------
+
+Usando la clase Viewset
+
+En el views.py
+
+from rest_framework impor viewsets
+from rest_framework.response import Response
+from django.shortcuts impor get_object_or_404
+from . import models
+from . import serializers
+
+class UserViewset(viewsets.Viewset):
+
+	def list(self, request):
+		usuarios = models.User.objects.all()
+		serializer = serializers.UserSerializer(usuarios, many = True)
+		return Response(serializer.data)
+
+	def create(self, request):
+		serializer = serializers.UserSerializer(data = request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+		else:
+			return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 	
-Wagtail tiene la interfaz más amigable, pero no permite generar en el models campos ManyToMany
+	def retrieve(self, request, pk = None):
+		queryset = models.Usuario.objects.all()
+		usuario = get_object_or_404(queryset, pk = pk)
+		serializer = serializers.UserSerializer(usuarios, many = True)
+		return Response(serializer.data)
+
+	def update(self, request, pk = None):
+		queryset = models.Usuario.objects.get(pk = pk)
+		usuario = get_object_or_404(queryset)
+		serializer = serializers.UserSerializer(usuario, data = request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+	
+En el urls.py
+
+from . import views
+from rest_framework.routers import DefaultRouter
+from django.urls import path, include
+
+router = DefaultRouter()
+
+router.register = ("usuarios", UserViewset, basename = "gestion-usuarios")
+
+urlpatterns = [
+	path("", include(router.urls),
+	path(""/<int:pk>, include(router.urls)
+]
+
+En los argumentos de router.register tenemos "usuarios" , que es el prefijo URL que vamos a usar, y luego
+al UserViewset le ponemos el basename "gestion-usuarios" , lo cual dejará nuestra URL de esta manera
+
+.../usuarios/gestion-usuarios
+
+Si no definimos un basename,  el framework le asignará prefijo_url-nombre_viewset
 
 
+----------------------------------  GENERIC VIEWSETS  ----------------------------------------------------
+
+from rest_framework import viewsets
+from rest_framework import mixins
+
+class UserViewSet(viewsets.genericViewSet,
+		  mixins.ListModelMixin, 
+		  mixins.CreateModelMixin, 
+                  mixins.UpdateModelMixin,
+		  mixins.RetrieveModelMixin,
+		  mixins.DestroyModelMixin):
+
+	serializer_class = serializers.UserSerializer
+	queryset = models.User.objects.all()
+
+En este caso ya no hace falta añadir nada más para usar los métodos de los mixins debido al código que traemos
+al heredar de genericViewSet
+
+--------------------------------  MODEL VIEWSETS  ----------------------------------------------------------
+
+from rest_framework import viewsets
+from . import serializers
+from . import models
+
+Esta clase ya trae incluidas las acciones disponibles en los mixins , con lo cual ya no necesitamos heredar
+de ellos
+
+
+class UserViewSet(viewsets.ModelViewSet):
+	serializer_class = serializers.UserSerializer
+	quertset = models.User.objects.all()
+	
+Con esto nuestra API ya puede realizar todas las acciones CRUD
+
+
+
+##################################  DJANGO CMS (CONTENT MANAGEMENT SYSTEM)  ########################################
+
+Django CMS es un gestor de contenido Open Source , creamos en PyCharm un nuevo entorno virtual y lo activamos, le instalamos 
+al env la versión de Python que nos interese y luego instalamos dentro de dicho entorno Django CMS:
+
+pip install djangocms-installer
+
+Una vez instalado , podemos indicarle la creación de un nuevo proyecto y de una carpeta para este
+
+djangocms -p nombre_proyecto nombre_carpeta
+
+El sistema crea el administrador admin / admin
+
+Para acceder , añadimos a la URL de nuestra página /?edit , entonces nos pedirá el usuario y contraseña del CMS en la
+parte superior de la página, si añadimos /admin, accedemos al panel de administracion de Django
+
+Elementos del toolbar :
+
+nombre_del_site --> (en local example.com) Panel de administración, arbol de páginas del site y su organización y otros elementos de administración,
+		    los links a mostrar dependerán de los permisos del usuario
+		    En el arbol del site, la página principal aparece con el icono de una casa, y si alguna página tiene
+		    subpáginas (esto se ve en el path de la URL , ej  pagina/subpagina) aparece un icono de mostrar/ocultar
+		    en el desplegable las subpaginas hijas. Simplemene haciendo drag & drop podemos convertir una subpágina
+		    en hija de una página distinta
+		    El check Menu indica si la página está incluida o no en la navegación pública
+		    La opción EN (o ES si el lenguaje es español) indica si la página tiene versión publica sin borrador (verde) , 
+		    versión publica + borrador (azul) o sólo borrador (gris). Si el site tiene versión en más de un idioma, habrá 
+		    una columna con estos datos por cada uno, los circulos de colores son clickables para publicar o despublicar
+		    una página
+		    La opción View nos muestra la página
+		    El icono del engranaje permite modificar el título , el slug, los metadatos...
+		    Las Acciones permiten copiar, pegar y borrar la página , el simbolo + permite añadir una subpágina hija
+		    (que luego se puede cambiar de sitio haciendo drag & drop)
+		    En info podemos ver la fecha de modificación, usuario de la modificación, etc...
+		    En el filtro existe la opción de programar la fecha de publicación y de expiración de una página
+
+Page --> Muestra los elementos de la web que estamos administrando actualmente, se puede por ejemplo ocultar
+	 temporalmente un elemento usando Hide in navigation y haciendo doble click sobre el elemento en cuestión,
+	 para volver a mostrarlo pulsamos Display in navigation
+
+History --> log de cambios en el site
+
+Language --> Para cambiar de idioma
+
+Create --> botón para crear contenido ( nueva página, nueva subpágina, nuevo elemento ) , en la creación de nueva página
+	   si no ponemos nada en el slug, este se creará automáticamente
+
+Content --> Abre la web en modo edición, haciendo doble click sobre cualquier elemento, podemos modificarlo
+
+Publish changes --> Botón que publica las modificaciones
+
+View published --> Vista para ver la versión pública (lo que ven los usuarios), no se modifica mientras no
+		   se pulse el botón Publish changes
+
+Structure --> Estructura del site , aqui aparecerán los placehoders que hayamos incluidos en los templates. Dichos placeholders
+	      nos permiten agregar contenidos y plug ins, como por ejemplo djangocms-bootstrap4 (nos permirá crear los contenedores,
+	      las filas y las columnas con sus correspondientes clases), el de Google Maps , agregar etiquetas HTML,  estilos...
+	      Ver http://docs.django-cms.org/en/latest/topics/commonly_used_plugins.html
+
+Plantilla base para proyectos Django CMS:
+
+Por defecto se usará la primera de CMS_TEMPLATES en settings.py
+
+CMS_TEMPLATES = (
+    ## Customize this
+    ('fullwidth.html', 'Fullwidth'),
+    ('sidebar_left.html', 'Sidebar Left'),
+    ('sidebar_right.html', 'Sidebar Right')
+)
+
+Que será de serie fullwidth.html , pero podemos añadir la que queramos
+
+PLACEHOLDERS
+
+Son una manera sencilla de reservar espacio en la web para nuestros contenidos
+
+{% placeholder "content" %} --> Podemos añadir el nombre que queramos al placeholder
+
+
+Este es el esqueleto mínimo de un template en Django CMS
+
+{% load cms_tags menu_tags sekizai_tags %} --> Librerias de Django CMS necesarias
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% page_attribute "page_title" %}</title>
+    {% render_block "css" %}
+</head>
+<body>
+    {% cms_toolbar %}
+    {% block content %}
+    {% placeholder "content" %}
+    {% endblock content %}
+    {% render_block "js" %}
+</body>
+</html>
+
+Dispondremos de una plantilla base.htnl de la cual heredarán el resto de templates, añadiendo
+siempre {% load cms_tags %},  ejemplo:
+
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block title %}{% page_attribute "page_title" %}{% endblock title %}
+
+{% block content %}
+{% placeholder "feature" %}
+{% placeholder "content" %}
+{% placeholder "splashbox" %}
+{% endblock content %}
+
+Existe la posibilidad de usar static placeholders que mostrarán el mismo contenido en todas las páginas
+del site ( por ej un mismo footer), en el Structure de Django CMS aparecerán con el icono de una chincheta
+
+{% static_placeholder 'footer' %}
+
+MENÚS
+
+Para renderizar el menú CMS la plantilla debe contener primero {% load menu_tags %} para cargar la librería 
+necesaria para usar show_menu , y luego usar por ejemplo una expresión similar a esta:
+
+<ul class="nav navbar-nav">
+    {% show_menu 0 100 100 100 "menu.html" %}
+</ul>
+
+La carga de menu_tags y otras librerias necesarias se hace siempre al principio del template:
+
+{% load cms_tags menu_tags sekizai_tags %}
 
