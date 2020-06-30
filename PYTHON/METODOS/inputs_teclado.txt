@@ -1,0 +1,17 @@
+La información que nos pase un usuario por el teclado vendrá siempre en formato string,
+por lo tanto, si queremos tratarla de otra manera, tendremos que hacer el casting correspondiente
+
+print("indique su nombre")
+nombre = input()
+
+O también
+
+nombre = input("indique su nombre")
+
+Podemos hacer que el input se escriba en la misma linea que nuestro texto
+
+nombre = input("indique su nombre" , end ="")
+
+Haciendo casting a la información que aporta el usuario
+
+edad = int(input("indique su edad"))

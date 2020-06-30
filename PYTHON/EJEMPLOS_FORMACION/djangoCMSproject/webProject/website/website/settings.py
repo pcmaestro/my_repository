@@ -181,6 +181,7 @@ INSTALLED_APPS = [
     'djangocms_video',
     'website',
     'polls'
+    'polls_cms_integration'
 ]
 
 LANGUAGES = (

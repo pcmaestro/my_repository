@@ -1,0 +1,53 @@
+Ver doc  tipos_datos.pdf
+
+Las declaraciones de variables se hacen antes del nombre de variable:
+
+int miNumero;
+
+miNumero = 50;
+
+O también:
+
+int miNiumero = 50;
+
+CASTING
+
+Para poder convertir el tipo de dato que contiene una variable, es necesario hacer casting. IMPORTANTE, no podemos
+hacer operaciones aritméticas con varialbes de diferentes tipos, todas deben ser del mismo tipo
+
+Ej
+
+double primerNumero = 10.55;
+
+int segundoNumero = (int)primerNumero;
+
+Pero la forma ortodoxa de hacerlo es parseando los valores:
+
+Ej
+
+String text = "777";
+
+int number = Integer.parseInt(text);
+
+Tipos comunes de parseados:
+
+string a numero entero --> int newVariable = Integer.parseInt(variable);
+
+numero entero a string --> String newVariable = Integer.toString(variable);
+
+string a float --> float newVariable = Float.parseFloat(variable);
+
+float a string --> String newVariable = Float.toString(variable);
+
+numero entero a numero decimal grande --> double newVariable = Double.parseDouble(variable);
+
+decimal grande a string --> String newVariable = String.valueOf(variable);
+
+char a string --> String newVariable = Character.toString(variable);
+
+string a booleano --> boolean newVariable = Boolean.parseBoolean(variable);
+
+booleano a string --> String newVariable = Boolean.toString(variable);
+
+
+

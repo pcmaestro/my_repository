@@ -1,0 +1,30 @@
+La indentación no es obligatoria, pero si recomendable por cuestión de orden:
+
+CONDICIONALES IF
+
+if(condicion1){
+	código a ejecutar...
+}else if(condicion2){
+	código a ejecutar...
+}else if(condicion3){
+	código a ejecutar... 
+}else{
+	código a ejecutar...
+
+
+CONDICIONALES SWITCH
+
+Compara la condición incluida en el switch, y ejecuta el código vinculado al case que
+coincida , los case pueden incluir valores numéricos o string, expresiones de comporación...
+
+switch(condicion){
+	case valor1 : código a ejecutar....;
+		break;
+	case valor2 : código a ejecutar....;
+		break;
+	case valor3 : código a ejecutar....;
+		break;
+	default: código a ejecutar si no coincide ningún case....;
+		break;
+
+}

@@ -1,0 +1,98 @@
+ARITMETICOS
+
+Todas las variables deben ser del mismo tipo
+
++ suma
+
+- resta
+
+% módulo
+
+Potencias --> Math.pow(base, exponente);
+
+Orden de ejecución de las operaciones --> () , potencia, multiplicación, división, suma, resta
+
+
+ASIGNACION
+
+= asignación de valor a una variable
+
++= incremento aritmético ( ej. int variable = 5; / variable += 10 --> 15)
+
+-= decremento aritmético
+
+*= incremento geométrico
+
+/= decremento geométrico
+
+%= mòdulo ( ej,  int numero = 54; / numero %= 10 --> 4)
+
+
+COMPARACION (siempre devuelven true o false)
+
+== igual a algo
+
+!= distinto de algo
+
+< menor que algo
+
+> mayor que algo
+
+<= menor o igual que algo
+
+>= mayor o igual que algo
+
+
+LOGICOS (siempre devuelven true o false)
+
+&& --> and (si se cumplen las dos condiciones)
+
+|| --> or ( si se cumplen una o las dos condiciones)
+
+^ --> xor ( si cumple una de las dos condiciones, pero nunca las dos a la vez)
+
+! --> diferente (si va delante de un paréntesis, invierte la operación lógica contenida dentro,
+                 delante de una variable, indica que su valor es falso)
+
+
+INCREMENTO
+
+++ --> incremento en una unidad , ++variable (prefijo, suma la unidad antes de ejecutar una acción)
+				  variable++ (postfijo, suma la unidad después de ejecutar la acción)
+
+-- --> decremento en una unidad,  prefijo y postfijo, igual que en lo anterior
+
+CONCATENACION
+
+Ej Todo se convierte a string
+
+        int numeroA = 5;
+
+        int numeroB = 6;
+        
+        int suma = numeroA + numeroB;
+
+        String resultado = "El resultado de " + numeroA + " + " + numeroB + " es " + suma;
+
+INSTANCIA
+
+El operador instanceof permite saber si un objeto es instancia de una determinada clase, su valor será
+true o false:
+
+Ej.  coche instanceof Vehiculo --> true
+
+BITWISE
+
+Ver documentación oficial
+
+
+
+
+
+
+
+
+
+
+
+

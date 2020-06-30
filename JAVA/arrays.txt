@@ -1,0 +1,131 @@
+ARRAY
+
+Un array en Java es una colección de strings de longitud fija, con lo cual al declararla
+debemos indicar el número de elementos que la van a componer. Todos los datos deben ser
+del mismo tipo, si queremos que almacenen distintos tipos de datos, entonces el array
+debemos crearlo con Object (array de objetos)
+
+Podemos declarar el array y luego ir añadiendo elementos
+
+String[] semana = new String[7];  --> definimos que el array sólo puede tener 7 elementos
+
+semana[0] = "lunes";
+semana[1] = "martes";
+semana[2] = "miercoles";
+semana[3] = "jueves";
+semana[4] = "viernes";
+semana[5] = "sabado";
+semana[6] = "domingo";
+
+O podemos declarar directamente el array con sus elementos
+
+String[] semana = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"}
+
+
+Podemos acceder a los elementos del array a través de su indice, que siempre empezará por cero
+
+System.out.println(semana[5]) -->  sabado
+
+Los array también pueden contener números
+
+int[] secuencia = {1,2,3,4,5,6,7,8,9,10}
+
+System.out.println(secuencia[0]) --> 1
+
+
+HASHTABLES (diccionarios)
+
+import java.util.Hashtable;
+
+Hashtable<integer, String> semana = new Hashtable<integer, String>();
+
+semana.put(22, "lunes)
+semana.put(23, "martes")
+semana.put(24, "miercoles")
+
+System.out.println(semana.get(23)); -->  martes
+
+Los elementos de las claves y de los valores pueden ser cualquier dato primario admitido en Java
+
+
+MATRICES MULTIDIMENSIONALES
+
+int[][] lista = new int[2][3];  --> Array que contiene a su vez dos array, los cuales tienen 3
+				    elementos cada uno
+
+Graficamente esto sería una tabla de 2 filas y 3 columnas
+
+lista[0][0] = 10;	lista[0][1] = 20;	lista[0][2] = 30 ;
+lista[1][0] = 15;	lista[1][1] = 25;	lista[1][2] = 35 ;
+
+System.out.println(lista[1][1]) --> 25
+
+Podemos declarar directamente el array bidimensional:
+
+int[][] lista = { 
+	{10,20,30}, 
+	{15,25,35}
+};
+
+Podemos añadir los niveles de profundidad que necesitemos:
+
+int[][][] lista = {
+
+	{	
+		{10,20,30}, 
+		{15,25,35}
+
+	},
+	
+	{
+		{40,50,60},
+		{45,55,65}
+	}
+
+};
+
+System.out.println(lista[1][0][2]) --> 60
+
+
+ARRAYLIST
+
+Tipo de array donde se pueden asignar elementos de forma dinámica
+
+import java.util.ArrayList
+
+ArrayList<String> semana = new ArrayList();
+
+semana.add("lunes")
+semana.add(1, "martes") --> Aqui indicamos en que indice añadimos el elemento, si bien
+			    no es necesario porque la asignación de índice es automática
+			    y no podemos saltarnos su orden
+
+semana.get(1); --> martes
+semana.contains("martes"); --> true
+semana.size(); --> 2
+semana.indexOf("martes"); --> 1  (con lastIndexOf() obtenemos el índice más alto
+						     donde ocurre la coincidencia)
+semana.remove(1) --> elimina "martes"
+semana.clear() --> elimina todos los elemento
+semana.isEmpty() --> devuelve false si el array contiene algún elemento, true si está vacío
+
+Clonado de ArrayList:
+ArrayList<String> lista2 = new ArrayList(lista1);
+
+Pasar de ArrayList a Array
+String[] lista = new String[semana.size()];
+semana.toArray(lista);
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,197 @@
+CLASES
+
+En el arbol del proyecto tendremos esta estructura:
+
+nombreProyecto
+	Source Packages
+		nombrePaquete
+			nombreClase.java
+
+
+El archivo main del proyecto de JAVA debe contener como mínimo el nombre el paquete y una clase 
+con el mismo nombre que el proyecto + el método main
+
+package nombre_paquete;
+
+public class Nombre_clase{
+
+	public static void main(String[] args){
+
+	}
+
+}
+
+Todos los archivos que vayamos creando dentro de los paquetes serán clases de Java
+
+El modificador "public" indica que la clase en cuestión es accesible por otras clases o paquetes
+
+El modificador "protected" indica que la clase sólo puede ser accedida desde su mismo paquete y por
+sus subclases
+
+Estos indicadores "public" y "protected" también los podemos aplicar a las variables de las propiedades
+
+El modificador "private" indica que una propiedad sólo puede ser accedida desde su propia clase
+
+El modificador "abstract" indica que una clase es abstracta, o sea, que es una superclase de la cual
+no se van a instanciar objetos, y simplemente servirá para que otras hereden de ella
+
+Las propiedades tendrán por defecto el modificador indicado en la clase ( no será necesario volver a
+indicarlo al declararlas, salvo que alguna deba tener otro distinto)
+
+Para crear una clase la sintaxis sería (el modificador habitual es public):
+
+public class nombre_clase{
+
+}
+
+PROPIEDADES
+
+Para las propiedades debemos declarar variables que las contengan
+
+Ej.
+
+public class Perro{
+    String nombre = "Killer";
+    String raza = "Pastor Aleman";
+    int edad = "3";
+    boolean vacunado = true;
+}
+
+Si sólo declaramos las variables, podremos asignar los valores que queramos, pero al igual que
+en el ejemplo, les podemos asignar directamente valores absolutos
+
+Si al declarar una propiedad, anteponemos la palabra reservada "final" , el valor de dicha propiedad
+no podrá ser modificado:
+
+final int altura = 2;
+
+En este caso la propiedad altura será siempre 2 , sin posibilidad de ser alterada
+
+Si anteponemos la palabra "static" , dicha propiedad podrá ser accedida directamente desde otra clase
+sin necesidad de instanciar un objeto de la clase que lo contiene. Esto es algo que debemos hacer en
+muy rara ocasión
+
+Ej
+
+public class Hombre{
+
+	static int altura = 2;
+}
+
+
+System.out.println(Hombre.altura);
+
+En este caso, la propiedad altura de la clase Hombre es static, y por lo tanto la hemos podido invocar
+sin necesidad de instanciar previamente un objeto
+
+
+METODOS
+
+Los métodos son funciones contenidas en las clases
+
+Podemos añadir junto con el modificador, el tipo de dato que contendrá (String, double, int...) , pero
+tenemos la opción de no indicar ningún tipo de dato usando "void"
+
+La sintáxis sería esta:
+
+public class Perro{
+
+    public void ladrar(){
+
+	System.out.println("guau, guau");
+
+	}
+}
+
+En los métodos se puede trabajar con las variables de las propiedades de la clase, o bien
+declarar nuevas variables para el método
+
+Podemos pedir parámetros para ejecutar el método:
+
+public class Perro{
+
+    public void coger_pelota(String pelota){
+
+	if(pelota){
+		System.out.println("ir a por la pelota");
+		return "tengo la pelota";
+		}
+	}
+}
+
+Si queremos que un método (función) devuelva un valor, debemos usar la setencia return,  pero debemos
+tener en cuenta que ya no podemos usar el modificador "void" , habrá que indicar el tipo de dato
+primario que queremos que devuelva (String, boolean, double, float, int...)
+
+
+CONSTRUCTOR
+
+Es el método que crea e inicializa los objetos , su nombre debe ser el mismo que la clase, puede
+solicitar o no parámetros. No es necesario indicar el "void" ni ningún modificador
+
+public class Perro{
+	
+	String nombre;
+	String raza;
+	int edad;
+	boolean vacunado;
+
+	public Perro(String name, String race, int age, boolean vaccine){
+	
+		nombre = name;
+		raza = race;
+		edad = age;
+		vacunado = vaccine;
+	}
+}
+
+Si no pedimos argumentos, habrá que ir indicando los valores de las propiedades
+una vez creado el objeto
+
+
+OBJETOS
+
+Los objetos son instancias de las clases y son instanciados en el main llamando a los archivos
+que contienen el resto de clases
+
+La sintaxis de la instancia es la siguiente:
+
+Nombre_clase nombre_objeto = new Nombre_clase();
+
+Los objetos pueden ser instancias de las clases que hayamos creado nosotros, o de librerias importadas
+con clases ya creadas
+
+Los propiedades y métodos se acceden con la notación del punto
+
+Ej.
+
+Perro perro_guardian = Pedrro("Paco", "Pastor Aleman", "3", true):
+
+perro.nombre
+perro.raza
+perro.edad
+perro.vacunado
+perro.ladrar()
+
+
+HERENCIA
+
+Sólo se pueden heredar las propiedades y métodos de otras clases que no sean privados, en Java no existe la
+herencia múltiple
+
+public class Lobo extends Perro{
+
+
+}
+
+Simplemente con esto en la clase Lobo ya podemos instanciar objetos que tendrán las propiedades y métodos
+de la clase Perro
+
+
+Podemos sobreescribir los métodos heredados, a esto se le concoce como POLIMORFISMO
+
+En las clases hijas podemos añadir a su vez nuevas propiedades y métodos que se sumarán a los heredados
+
+
+
+

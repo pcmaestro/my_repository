@@ -1,0 +1,23 @@
+CAPTURA DE INPUTS DEL TECLADO
+
+import java.util.Scanner;
+
+public class Formacion{
+
+	public static void main(String[] args){
+
+	//Con este objeto creamos el cursor para escribir con el teclado
+	Scanner lectura = new Scanner(System.in);
+
+	//Con este método guardamos lo que escriba el usuario si es texto
+	String texto = lectura.next();
+
+	//Con este otro guardamos lo que escriba el usuario si es un número entero
+	int numero = lectura.nextInt();
+
+	//Con este otro guardamos lo que escriba el usuario si es un número decimal
+	double numero = lectura.nextDouble();
+
+	}
+
+}

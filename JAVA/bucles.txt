@@ -1,0 +1,55 @@
+WHILE
+
+El código se ejecuta mientras se cumpla la condición
+
+Opción 1
+
+while(condición){
+   código a ejecutar....
+};
+
+
+Opción 2
+
+do{
+    código a ejecutar....
+}while(condición);	
+
+En la primera estructura el código se puede ejecutar o no
+
+En la segunda el código se ejecuta siempre al menos una vez
+
+
+FOR
+
+Java permite declarar variables dentro del for
+
+Ej. esto imprime los números del 1 al 10
+
+for(int numero = 1; numero <= 10; numero++){
+    System.out.println(numero)
+}
+
+Otra forma de hacerlo con la estructura conocida como for each , que nos sirve para recorrer
+un objeto iterable:
+
+String[]semana = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"}
+
+for(String dia: semana){
+    System.out.println(dia)
+}
+
+BREAK & CONTINUE
+
+Si en una estructura de control condicional o iterativa incluimos una sentencia break,
+esta detiene la ejecución del programa al alcanzarlo
+
+Si incluimos una sentencia continue,  la ejecución se salta el punto donde este se encuentra
+y pasa al siguiente
+
+
+
+
+
+
+for(String i
