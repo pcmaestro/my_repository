@@ -103,6 +103,7 @@ semana.add(1, "martes") --> Aqui indicamos en que indice añadimos el elemento, 
 semana.get(1); --> martes
 semana.contains("martes"); --> true
 semana.size(); --> 2
+semana.length() -> 2
 semana.indexOf("martes"); --> 1  (con lastIndexOf() obtenemos el índice más alto
 						     donde ocurre la coincidencia)
 semana.remove(1) --> elimina "martes"

@@ -1,0 +1,4 @@
+En MS-DOS
+java --version
+
+O abriendo el panel de configuración de Java

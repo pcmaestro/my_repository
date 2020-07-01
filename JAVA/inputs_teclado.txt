@@ -10,7 +10,7 @@ public class Formacion{
 	Scanner lectura = new Scanner(System.in);
 
 	//Con este método guardamos lo que escriba el usuario si es texto
-	String texto = lectura.next();
+	String texto = lectura.next(); --> con nextLine() lee una linea entera
 
 	//Con este otro guardamos lo que escriba el usuario si es un número entero
 	int numero = lectura.nextInt();

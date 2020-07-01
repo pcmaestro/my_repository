@@ -1,0 +1,30 @@
+Un paquete en Java se usa para agrupar clases
+
+Existe dos tipos de paquetes:
+
+Built-in , del API de Java
+
+Definidos por el programador
+
+
+El API de Java es una libreria de paquetes y clases ya creados que podemos importar
+en nuestro proyecto para usarlos, bien el paquete completo, o bien una determinada
+clase
+
+Para importar un paquete:
+
+import nombre_paquete
+
+Para importar una clase:
+
+import nombre_paquete.nombre_clase
+
+
+El paquete java.util posee clases para leer inputs de teclado,  manejar tiempo y fecha, manejar Arrays
+Hashtables,  etc...
+
+En todos los archivos de clase que definamos, es necesario indicar el paquete al cual pertenecen, si usamos
+un IDE, este ya lo hace automáticamente
+
+Los nombres de los paquetes deben estar escritos en minúsculas para evitar conflictos con las clasesg
+

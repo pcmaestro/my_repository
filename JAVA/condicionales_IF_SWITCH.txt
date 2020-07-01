@@ -28,3 +28,15 @@ switch(condicion){
 		break;
 
 }
+
+
+OPERADOR TERNARIO
+
+Es una forma de escribir de forma resumida que hacer si una condición se cumple o no:
+
+variable = (condición) ? opcion1 : opcion2;
+
+Ej.
+	String saludo = (hora < 14) ? "Buenos dias" : "Buenas tardes";
+
+	En función del valor de la variable hora,  la variable saludo almacenará un saludo u otro

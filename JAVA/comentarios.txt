@@ -1,0 +1,3 @@
+// --> Para comentar una línea
+
+/* texto comentado */ --> Para comentar varias líneas

@@ -8,8 +8,16 @@ nombreProyecto
 			nombreClase.java
 
 
+Para crear una clase la sintaxis sería (el modificador habitual es public):
+
+public class nombre_clase{
+
+}
+
+
 El archivo main del proyecto de JAVA debe contener como mínimo el nombre el paquete y una clase 
-con el mismo nombre que el proyecto + el método main
+con el mismo nombre que el proyecto + el método main() , todo el código incluido dentro de dicho
+método será ejecutado
 
 package nombre_paquete;
 
@@ -21,9 +29,11 @@ public class Nombre_clase{
 
 }
 
-Todos los archivos que vayamos creando dentro de los paquetes serán clases de Java
+Todos los archivos que vayamos creando dentro de los paquetes serán clases de Java, y las clases que
+contengan los archivos deberán llamarse igual que el propio archivo .java
 
-El modificador "public" indica que la clase en cuestión es accesible por otras clases o paquetes
+El modificador "public" indica que la clase en cuestión es accesible por otras clases o paquetes, por
+defecto una clase sólo es accesible por otras clases de su mismo paquete
 
 El modificador "protected" indica que la clase sólo puede ser accedida desde su mismo paquete y por
 sus subclases
@@ -33,16 +43,23 @@ Estos indicadores "public" y "protected" también los podemos aplicar a las vari
 El modificador "private" indica que una propiedad sólo puede ser accedida desde su propia clase
 
 El modificador "abstract" indica que una clase es abstracta, o sea, que es una superclase de la cual
-no se van a instanciar objetos, y simplemente servirá para que otras hereden de ella
+no se van a instanciar objetos, y simplemente servirá para que otras hereden de ella, dentro de ella
+puede haber a su vez métodos abstractos (sin cuerpo) y métodos normales
+
+abstract class Animal {
+  public abstract void animalSound();
+  public void sleep() {
+    System.out.println("Zzz");
+  }
+}
+
+El modificador "final" indica que la clase no puede ser heredada por otras clases
 
 Las propiedades tendrán por defecto el modificador indicado en la clase ( no será necesario volver a
 indicarlo al declararlas, salvo que alguna deba tener otro distinto)
 
-Para crear una clase la sintaxis sería (el modificador habitual es public):
 
-public class nombre_clase{
 
-}
 
 PROPIEDADES
 
@@ -69,7 +86,8 @@ En este caso la propiedad altura será siempre 2 , sin posibilidad de ser altera
 
 Si anteponemos la palabra "static" , dicha propiedad podrá ser accedida directamente desde otra clase
 sin necesidad de instanciar un objeto de la clase que lo contiene. Esto es algo que debemos hacer en
-muy rara ocasión
+muy rara ocasión, lo normal es indicar "public", con lo cual para acceder al método será necesario
+hacerlo a través de un objeto
 
 Ej
 
@@ -123,6 +141,36 @@ Si queremos que un método (función) devuelva un valor, debemos usar la setenci
 tener en cuenta que ya no podemos usar el modificador "void" , habrá que indicar el tipo de dato
 primario que queremos que devuelva (String, boolean, double, float, int...)
 
+Sobrecarga de métodos:
+
+Java permite "sobrecargar" los métodos , de tal manera que podemos denominar a dos métodos con el mismo
+nombre , siempre y cuando los parámetros que les pasemos sean de distinto tipo
+
+Ej
+
+static int plusMethod(int x, int y) {
+  return x + y;
+}
+
+static double plusMethod(double x, double y) {
+  return x + y;
+}
+
+public static void main(String[] args) {
+  int myNum1 = plusMethod(8, 5);
+  double myNum2 = plusMethod(4.3, 6.26);
+  System.out.println("int: " + myNum1);
+  System.out.println("double: " + myNum2);
+}
+
+Con el modificador "abstract" podemos crear un método abstracto ( sólo en clases abstractas) , el cual no tendrá 
+cuerpo (bloque {}) , dicho cuerpo lo tendrán los métodos con el mismo nombre en las clases que hereden de la clase
+abstracta
+
+Ej. 
+
+abstract void method();
+
 
 CONSTRUCTOR
 
@@ -148,6 +196,41 @@ public class Perro{
 Si no pedimos argumentos, habrá que ir indicando los valores de las propiedades
 una vez creado el objeto
 
+Los métodos constructores son opcionales, si no definimos ninguno,  Java lo hace por defecto,
+pero en ese caso no podremos inicializar el objeto con unos valores determinados en las propiedades
+
+
+ENCAPSULACION
+
+La encapsulación se usa para ocultar datos sensibles a otros usuarios, se aplica usando la
+palabra reservada "private"
+
+Declarar propiedades con el modificador "private" significa que sólo se pueden acceder
+desde dentro de su propia clase, no obstante , es posible el acceso desde el exterior
+mediante los métodos "get" y "set" para ver y establecer el valor de la propiedad
+
+Su sintaxis es get/set + variable con la primera letra en mayuscula
+
+Ej.
+
+public class Person {
+  private String name; // private = restricted access
+
+  // Getter --> devuelve el valor de name
+  public String getName() {
+    return name;
+  }
+
+  // Setter --> establece el valor de name
+  public void setName(String newName) {
+    this.name = newName;
+  }
+}
+
+Asi pues , para acceder a name , debemos instanciar un objeto de Person y llamar los métodos getName() y setName(),
+o sólo a uno de ellos, en función de si queremos que se pueda modificar name, o no.
+
+
 
 OBJETOS
 
@@ -157,6 +240,12 @@ que contienen el resto de clases
 La sintaxis de la instancia es la siguiente:
 
 Nombre_clase nombre_objeto = new Nombre_clase();
+
+Ej
+
+clase Perro
+
+Perro dalmata = new Perro();
 
 Los objetos pueden ser instancias de las clases que hayamos creado nosotros, o de librerias importadas
 con clases ya creadas
@@ -172,6 +261,9 @@ perro.raza
 perro.edad
 perro.vacunado
 perro.ladrar()
+
+
+Podemos usar la palabra reservada "this" para referirnos dentro de una clase al objeto que se instacia de ella
 
 
 HERENCIA
@@ -193,5 +285,130 @@ Podemos sobreescribir los métodos heredados, a esto se le concoce como POLIMORF
 En las clases hijas podemos añadir a su vez nuevas propiedades y métodos que se sumarán a los heredados
 
 
+CLASES INTERNAS
 
+En Java es posible anidar clases dentro de otras , para instanciar objetos de la clase interna, primero es 
+necesario instanciar un objeto de la clase externa y luego el objeto de la clase interna
+
+class OuterClass {
+  int x = 10;
+
+  class InnerClass {
+    int y = 5;
+  }
+}
+
+public class MyMainClass {
+  public static void main(String[] args) {
+    OuterClass myOuter = new OuterClass();
+    OuterClass.InnerClass myInner = myOuter.new InnerClass();
+    System.out.println(myInner.y + myOuter.x);
+  }
+}
+
+
+Las clases internas pueden acceder a los métodos y propiedades de la clase externa
+
+class OuterClass {
+  int x = 10;
+
+  class InnerClass {
+    public int myInnerMethod() {
+      return x;
+    }
+  }
+}
+
+public class MyMainClass {
+  public static void main(String[] args) {
+    OuterClass myOuter = new OuterClass();
+    OuterClass.InnerClass myInner = myOuter.new InnerClass();
+    System.out.println(myInner.myInnerMethod());
+  }
+}
+
+
+Si la clase interna tiene el modificador "static" , podemos instanciar su objeto directamente,
+pero no podrá tener acceso a las propiedades y métodos de la clase externa:
+
+
+class OuterClass {
+  int x = 10;
+
+  static class InnerClass {
+    int y = 5;
+  }
+}
+
+public class MyMainClass {
+  public static void main(String[] args) {
+    OuterClass.InnerClass myInner = new OuterClass.InnerClass();
+    System.out.println(myInner.y);
+  }
+}
+
+
+Las clases internas también pueden tener el modificador "private" o "protected"
+
+
+INTERFACES
+
+Un interfaces viene a ser una clase abstracta absoluta, la cual sólo contiene métodos sin cuerpo
+
+interface Animal {
+  public void animalSound(); // interface method (does not have a body)
+  public void run(); // interface method (does not have a body)
+}
+
+Para acceder a los métodos del interface , dicho interface debe ser implementado por otra clase
+mediante la palabra reservada "implements"
+
+
+// Interface
+interface Animal {
+  public void animalSound(); // interface method (does not have a body)
+  public void sleep(); // interface method (does not have a body)
+}
+
+// Pig "implements" the Animal interface
+class Pig implements Animal {
+  public void animalSound() {
+    // The body of animalSound() is provided here
+    System.out.println("The pig says: wee wee");
+  }
+  public void sleep() {
+    // The body of sleep() is provided here
+    System.out.println("Zzz");
+  }
+}
+
+class MyMainClass {
+  public static void main(String[] args) {
+    Pig myPig = new Pig();  // Create a Pig object
+    myPig.animalSound();
+    myPig.sleep();
+  }
+}
+
+Un interfaz no sirve para instanciar objetos, pero si para simular una herencia múltiple, la cual no
+es posible en Java
+
+Podemos implementar en una misma clase varios interfaces separándolos con una coma al declarar la clase
+
+interface FirstInterface {
+  public void myMethod(); // interface method
+}
+
+interface SecondInterface {
+  public void myOtherMethod(); // interface method
+}
+
+class DemoClass implements FirstInterface, SecondInterface {
+  public void myMethod() {
+    System.out.println("Some text..");
+  }
+  public void myOtherMethod() {
+    System.out.println("Some other text...");
+  }
+}
 

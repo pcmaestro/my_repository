@@ -7,15 +7,11 @@ import java.util.ArrayList;
 public class NewClass {
     public static void main(String[] args){
         
-        ArrayList<String> semana = new ArrayList();
+        double numero;
         
-        semana.add("lunes");
-        semana.add(1, "martes");
+        numero = 10.55;
         
-        String[] lista = new String[semana.size()];
-        semana.toArray(lista);
-        
-        System.out.println(lista[0]);
+        System.out.println(numero);
         
         
     }

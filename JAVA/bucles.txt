@@ -30,8 +30,8 @@ for(int numero = 1; numero <= 10; numero++){
     System.out.println(numero)
 }
 
-Otra forma de hacerlo con la estructura conocida como for each , que nos sirve para recorrer
-un objeto iterable:
+Otra forma de hacerlo con la estructura conocida como FOR-EACH , que nos sirve para recorrer
+un array:
 
 String[]semana = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"}
 
