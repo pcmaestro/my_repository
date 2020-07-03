@@ -1,0 +1,43 @@
+TRY-CATCH
+
+Estructura de control para capturar errores:
+
+
+try{
+    código a ejecutar...
+}catch(Exception e){
+    código a ejecutar en caso de error....
+}finally{
+    código a ejecutar pase lo que pase
+}
+
+Esto nos permite en caso de error que este sea capturado sin que se detenga la ejecución 
+del programa, con la palabra reservada finally además hacemos que se ejecute código sea
+cual sea el resultado de la evaluación realizada por try
+
+
+THROW
+
+Con la palabra reservada "throw" podemos personalizar un mensaje de error, esta palabra es
+usada junto con uno de los tipos de excepción que existen en Java :
+
+ArithmeticException, FileNotFoundException, ArrayIndexOutOfBoundsException, SecurityException, etc...
+
+Ej
+
+public class MyClass {
+  static void checkAge(int age) {
+    if (age < 18) {
+      throw new ArithmeticException("Access denied - You must be at least 18 years old.");
+    }
+    else {
+      System.out.println("Access granted - You are old enough!");
+    }
+  }
+
+Esto devolvería el siguiente error:
+
+Exception in thread "main" java.lang.ArithmeticException: Access denied - You must be at least 18 years old.
+
+
+

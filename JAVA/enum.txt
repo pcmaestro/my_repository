@@ -1,0 +1,56 @@
+Un enum es una clase especial para agrupar constantes, no permite instanciar objetos ni heredar
+de ella
+
+En enum (enumerations) puede tener métodos y propiedades, pero sus variables son constantes,
+esto quiere decir que el escenario de uso de este tipo de clases es cuando vamos
+a tener unas constantes con valores inmutables como nombres de colores, nombres de
+meses, etc...
+
+Las constanters de un enum son "public", "static" y "final" (inmutables)
+
+enum Level {
+  LOW,
+  MEDIUM,
+  HIGH
+}
+
+Level nombre_variable = Level.MEDIUM; --> aunque incluyamos el enum dentro de una clase,
+					  podemos accederlo directamente por ser "static"	
+
+
+Podemos usar el valor de una constante del enum en una estructrua SWITCH-CASE
+
+enum Level {
+  LOW,
+  MEDIUM,
+  HIGH
+}
+
+public class MyClass {
+  public static void main(String[] args) {
+    Level myVar = Level.MEDIUM;
+
+    switch(myVar) {
+      case LOW:
+        System.out.println("Low level");
+        break;
+      case MEDIUM:
+         System.out.println("Medium level");
+        break;
+      case HIGH:
+        System.out.println("High level");
+        break;
+    }
+  }
+}
+
+
+El enum dispone del método values() que muestra las constantes del enum en un array, ç
+el cual podemos recorrer con un bucle FOR-EACH
+
+for (Level myVar : Level.values()) {
+  System.out.println(myVar);
+}
+
+
+

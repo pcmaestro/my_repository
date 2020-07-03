@@ -48,8 +48,66 @@ Si incluimos una sentencia continue,  la ejecución se salta el punto donde este
 y pasa al siguiente
 
 
+ITERADORES
 
+Los interadores son objetos que podemos usar para recorrer colecciones (ArrayList, HashSet, etc..)
 
+Modo de uso:
 
+// Import the ArrayList class and the Iterator class
+import java.util.ArrayList;
+import java.util.Iterator;
 
-for(String i
+public class MyClass {
+  public static void main(String[] args) {
+
+    // Make a collection
+    ArrayList<String> cars = new ArrayList<String>();
+    cars.add("Volvo");
+    cars.add("BMW");
+    cars.add("Ford");
+    cars.add("Mazda");
+
+    // Get the iterator
+    Iterator<String> it = cars.iterator();
+
+    // Print the first item
+    System.out.println(it.next());
+
+    while(it.hasNext()) {
+        System.out.println(it.next());
+    }
+  }
+}
+
+El objeto cars es un ArrayList , con el método interator() lo guardamos en la variable it como
+objeto iterador.  Con el método next() obtenemos un elemento del iterador, al conbinarlo en un
+bucle while con el método hasNext() vamos recorriendo el iterador y obteniendo los objetos que
+lo componen uno a uno
+
+Usando el método remove() para borrar elementos mientras iteramos:
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class MyClass {
+  public static void main(String[] args) {
+    ArrayList<Integer> numbers = new ArrayList<Integer>();
+    numbers.add(12);
+    numbers.add(8);
+    numbers.add(2);
+    numbers.add(23);
+    Iterator<Integer> it = numbers.iterator();
+    while(it.hasNext()) {
+      Integer i = it.next();
+      if(i < 10) {
+        it.remove();
+      }
+    }
+    System.out.println(numbers);
+  }
+}
+
+Esta ultima opción de borrado es importante, si intentamos ir borrando en una colección objetos
+con un bucle FOR o un FOR-EACH, no funcionará correctamente ya que la hacerlo vamos cambiando el
+tamaño de la colección

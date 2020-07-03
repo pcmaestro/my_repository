@@ -1,18 +1,18 @@
 
 package com.mycompany.mavenproject1;
  
-import java.util.Hashtable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NewClass {
-    public static void main(String[] args){
-        
-        double numero;
-        
-        numero = 10.55;
-        
-        System.out.println(numero);
-        
-        
-    }
+  public static void main(String[] args) {
+    // Create a HashMap object called capitalCities
+    HashMap<String, String> capitalCities = new HashMap<String, String>();
+
+    // Add keys and values (Country, City)
+    capitalCities.put("England", "London");
+    capitalCities.put("Germany", "Berlin");
+    capitalCities.put("Norway", "Oslo");
+    capitalCities.put("USA", "Washington DC");
+    System.out.println(capitalCities);
+  }
 }

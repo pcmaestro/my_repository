@@ -75,7 +75,7 @@ Ej  double numero1;
 
 TERMINACIONES
 
-Los valores float hay que termnarlos con una f
+Los valores float hay que termnarlos con una f (los decimales por defecto son double)
 
 Los valores long hay que terminarlos con una L
 
@@ -91,7 +91,33 @@ Una variable declarada dentro de un método, es accesible sólo dentro de dicho 
 Una variable declarada dentro de un bloque {} es accesible dentro de dicho bloque
 
 
+VALORES POR DEFECTO
 
+Todos los tipos de datos primitivos tienen un valor por defecto en caso de declarar las 
+variables sin indicar ningún valor:
+
+int --> 0
+
+double --> 0.0d
+
+float --> 0,0f
+
+char --> 'u0000'
+
+boolena --> false
+
+byte --> 0
+
+long --> 0L
+
+short --> 0
+
+En el caso de los tipos de datos de referencia( clases, Arrays, Enumarations, interfaces, Annotations), 
+su valor por defecto es null
+
+Los Strings (clase) y cualquier objeto, tiene por defecto el valor null
+
+Los datos primitivos no se pueden inicializar con valor null
 
 
 

@@ -10,14 +10,20 @@ public class Formacion{
 	Scanner lectura = new Scanner(System.in);
 
 	//Con este método guardamos lo que escriba el usuario si es texto
-	String texto = lectura.next(); --> con nextLine() lee una linea entera
+	String texto = lectura.nextLine();
 
-	//Con este otro guardamos lo que escriba el usuario si es un número entero
-	int numero = lectura.nextInt();
-
-	//Con este otro guardamos lo que escriba el usuario si es un número decimal
-	double numero = lectura.nextDouble();
 
 	}
 
 }
+
+Los métodos a usar van en función del tipo de dato que introducirá el usuario
+
+nextBoolean()	Reads a boolean value from the user
+nextByte()	Reads a byte value from the user
+nextDouble()	Reads a double value from the user
+nextFloat()	Reads a float value from the user
+nextInt()	Reads a int value from the user
+nextLine()	Reads a String value from the user
+nextLong()	Reads a long value from the user
+nextShort()	Reads a short value from the user

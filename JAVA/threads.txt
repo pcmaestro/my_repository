@@ -1,0 +1,111 @@
+Los threads permiten a un programa hacer multiples cosas al mismo tiempo, se pueden usar
+para hacer tareas complejas en el background sin interrumpir el programa principal
+
+CREACION DE THREADS
+
+Existen dos maneras, una es heredando de la clase Thread y sobreescribiendo su método run()
+
+public class MyClass extends Thread {
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+
+y la otra es implementando el interface Runnable
+
+public class MyClass implements Runnable {
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+
+EJECUCION DE THREADS
+
+Si heredamos de la clase Thread,  podemos ejecutar el thread instanciando un objeto y llamando
+al método start()
+
+public class MyClass extends Thread {
+  public static void main(String[] args) {
+    MyClass thread = new MyClass();
+    thread.start();
+    System.out.println("This code is outside of the thread");
+  }
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+
+
+Si implementamos el interface Runnable, el thread puede ser ejecutado pasando una instancia
+de la clase al constructor de la clase Thread y llamando luego al método start()
+
+public class MyClass implements Runnable {
+  public static void main(String[] args) {
+    MyClass obj = new MyClass();
+    Thread thread = new Thread(obj);
+    thread.start();
+    System.out.println("This code is outside of the thread");
+  }
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+
+La diferencia de usar uno u otro método radica en que si heredamos de la clase Thread, ya no
+podremos heredar de otra clase si lo necesitamos (en Java no hay multi-herencia), pero si
+implementamos el interface Runnable , sería posible heredar de otra clase
+
+Ej
+
+MyClass extends OtherClass implements Runnable{
+
+}
+
+PROBLEMAS DE CONCURRENCIA
+
+Debido a que los thread corren al mismo tiempo que otras partes del programa, no hay forma
+de saber en que orden se ejecutará el código, si el main y los thread están leyendo y escribiendo
+en las mismas variables, los valores resultantes son impredecibles, a esto se le llama problema
+de concurrencia
+
+public class MyClass extends Thread {
+  public static int amount = 0;
+
+  public static void main(String[] args) {
+    MyClass thread = new MyClass();
+    thread.start();
+    System.out.println(amount);
+    amount++;
+    System.out.println(amount);
+  }
+
+  public void run() {
+    amount++;
+  }
+}
+
+Para evitar este problema, lo mejor es compartir la menor cantidad posible de propiedades entre hilos, pero
+si las propiedades necesitan ser compartidas, una posible solución es usar el método isAlive() del thread
+para comprobar si este ya ha finalizado antes de utilizar en otro sitio una propiedad que el thread pueda
+estar usando
+
+public class MyClass extends Thread {
+  public static int amount = 0;
+
+  public static void main(String[] args) {
+    MyClass thread = new MyClass();
+    thread.start();
+    // Wait for the thread to finish
+    while(thread.isAlive()) {
+    System.out.println("Waiting...");
+  }
+  // Update amount and print its value
+  System.out.println("Main: " + amount);
+  amount++;
+  System.out.println("Main: " + amount);
+  }
+  public void run() {
+    amount++;
+  }
+}
+

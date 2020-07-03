@@ -1,0 +1,296 @@
+ARRAY
+
+Un array en Java es una colección de strings de longitud fija, con lo cual al declararla
+debemos indicar el número de elementos que la van a componer. Todos los datos deben ser
+del mismo tipo, si queremos que almacenen distintos tipos de datos, entonces el array
+debemos crearlo con Object (array de objetos)
+
+Podemos declarar el array y luego ir añadiendo elementos
+
+String[] semana = new String[7];  --> definimos que el array sólo puede tener 7 elementos
+
+semana[0] = "lunes";
+semana[1] = "martes";
+semana[2] = "miercoles";
+semana[3] = "jueves";
+semana[4] = "viernes";
+semana[5] = "sabado";
+semana[6] = "domingo";
+
+O podemos declarar directamente el array con sus elementos
+
+String[] semana = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"}
+
+
+Podemos acceder a los elementos del array a través de su indice, que siempre empezará por cero
+
+System.out.println(semana[5]) -->  sabado
+
+Los array también pueden contener números
+
+int[] secuencia = {1,2,3,4,5,6,7,8,9,10}
+
+System.out.println(secuencia[0]) --> 1
+
+
+HASHTABLES / HASHMAPS (diccionarios)
+
+Ambos implementan el interface Map
+
+El HasTable almacena pares de clave=valor
+
+import java.util.Hashtable;
+
+Hashtable<integer, String> semana = new Hashtable<integer, String>();
+
+semana.put(22, "lunes)
+semana.put(23, "martes")
+semana.put(24, "miercoles")
+
+System.out.println(semana.get(23)); -->  martes
+
+Los elementos de las claves y de los valores pueden ser cualquier dato primario admitido en Java
+
+Los métodos de los HashTables son :
+
+put("clave", "valor") --> añade un objeto
+
+get("clave") --> recupera el valor de la clave
+
+remove("clave") --> elimina un objeto
+
+clear() --> elimina todos los objetos
+
+size() --> devuelve la cantidad de pares clave=valor
+
+
+Para comprobar el contenido , es necesario recurrir a la clase Enumeration junto con el método elements()
+
+Hashtable contenedor=new Hashtable();
+
+Enumeration enumeration = contenedor.elements();
+while (enumeration.hasMoreElements()) {
+  System.out.println(""+"claves del HashTable: " + enumeration.nextElement());
+}
+
+E igualmente para comprobar las claves junto en el método keys()
+
+Enumeration llaves = contenedor.keys();
+while (llaves.hasMoreElements()) {
+  System.out.println(""+"claves del HashTable: " + llaves.nextElement());
+}
+
+Para interarlo , debemos usar un bucle FOR-EACH , con el método Keyset() para obtener las claves, y el
+método values() para obtener sólo sus valores:
+
+for (String i : capitalCities.keySet()) {
+  System.out.println(i);
+}
+
+Si combinamos en la iteración el método get() con el método keyset() , conseguiremos la clave + valor
+
+for (String i : capitalCities.keySet()) {
+  System.out.println("key: " + i + " value: " + capitalCities.get(i));
+}
+
+Si el HashTable no contiene Strings, será necesario indicar el tipo de datos usando las "clases envolventes", 
+Integer, Boolean, Character, Double:
+
+HashMap<String, Integer> people = new HashMap<String, Integer>();
+
+
+Un HashMap tiene las mismas caracteristicas y métodos del HashTable , 
+
+import.util.HashMap
+
+Estas son las direfencias entre ambos:
+
+HashMap --> Permite un null key y cualquier cantidad de null values
+HashTable --> No permite ningún null ni en clave ni en valor
+
+HashTable --> Debe usarse en aplicaciones multi-thread, ya que todos sus métodos son sincronizados
+HashMap --> No debe usarse en aplicaciones multi-thread
+
+HasTable --> Se considera legacy class y su uso está decayendo
+HashMap --> Al no tener métodos sincronizados, tiene mejor rendimiento, y por tanto es mas usado
+
+HASHSET
+
+Es una colección donde todos los objetos son únicos (no pueden estar repetidos)
+
+import java.util.HashSet;
+
+HashSet<String> cars = new HashSet<String>();
+
+Métodos
+
+add("item") --> añade un objeto
+contains("item") --> devuelve true o false
+remove("item") --> borra un elemento
+clear() --> borra todos los elementos
+size() --> devuelve la cantidad de elementos
+
+Podemos recorrer el HashSet con un bucle FOR-EACH
+
+Al igual que el resto de colecciones, sus elementos son objetos, si son diferentes de String, debemos
+usar "clases envolventes" al declararlo : Integer, Boolean, Double, Character....
+
+
+
+MATRICES MULTIDIMENSIONALES
+
+int[][] lista = new int[2][3];  --> Array que contiene a su vez dos array, los cuales tienen 3
+				    elementos cada uno
+
+Graficamente esto sería una tabla de 2 filas y 3 columnas
+
+lista[0][0] = 10;	lista[0][1] = 20;	lista[0][2] = 30 ;
+lista[1][0] = 15;	lista[1][1] = 25;	lista[1][2] = 35 ;
+
+System.out.println(lista[1][1]) --> 25
+
+Podemos declarar directamente el array bidimensional:
+
+int[][] lista = { 
+	{10,20,30}, 
+	{15,25,35}
+};
+
+Podemos añadir los niveles de profundidad que necesitemos:
+
+int[][][] lista = {
+
+	{	
+		{10,20,30}, 
+		{15,25,35}
+
+	},
+	
+	{
+		{40,50,60},
+		{45,55,65}
+	}
+
+};
+
+System.out.println(lista[1][0][2]) --> 60
+
+
+ARRAYLIST
+
+Tipo de array donde se pueden asignar elementos de forma dinámica
+
+import java.util.ArrayList
+
+ArrayList<String> semana = new ArrayList<String>();
+
+semana.add("lunes")
+semana.add(1, "martes") --> Aqui indicamos en que indice añadimos el elemento, si bien
+			    no es necesario porque la asignación de índice es automática
+			    y no podemos saltarnos su orden
+
+semana.get(1); --> martes
+semana.set(1, "miercoles") --> Cambia la posición uno de martes a miercoles
+semana.contains("martes"); --> true
+semana.size(); --> 2
+semana.length() -> 2
+semana.indexOf("martes"); --> 1  (con lastIndexOf() obtenemos el índice más alto
+						     donde ocurre la coincidencia)
+semana.remove(1) --> elimina "martes"
+semana.clear() --> elimina todos los elemento
+semana.isEmpty() --> devuelve false si el array contiene algún elemento, true si está vacío
+
+Clonado de ArrayList:
+ArrayList<String> lista2 = new ArrayList(lista1);
+
+Pasar de ArrayList a Array
+String[] lista = new String[semana.size()];
+semana.toArray(lista);
+
+Los ArrayList contienen realmente objetos , no datos primarios, esto quiere decir
+que si en lugar de Strings contienen otra cosa, tendremos que usar clases
+"envolventes" como Integer, Boolean, Character o Double
+
+
+COLECCIONES
+
+La clase Collections posee el método sort() , que permite ordenar listas por número o
+alfabéticamente
+
+import java.util.ArrayList;
+import java.util.Collections;  // Import the Collections class
+
+public class MyClass {
+  public static void main(String[] args) {
+    ArrayList<String> cars = new ArrayList<String>();
+    cars.add("Volvo");
+    cars.add("BMW");
+    cars.add("Ford");
+    cars.add("Mazda");
+    Collections.sort(cars);  // Sort cars
+    for (String i : cars) {
+      System.out.println(i);
+    }
+  }
+}
+
+
+LINKEDLIST
+
+Es similar al ArrayList, puede contender diferentes cantidades de objetos del mismo tipo,
+y posee los mismos métodos para añadir , obtener y eliminar objetos , pero contiene algunos
+mas:
+
+
+import java.util.LinkedList;
+
+public class MyClass {
+  public static void main(String[] args) {
+    LinkedList<String> cars = new LinkedList<String>();
+    cars.add("Volvo");
+    cars.add("BMW");
+    cars.add("Ford");
+    cars.add("Mazda");
+    System.out.println(cars);
+  }
+}
+
+Métodos adicionales del LinkedList:
+
+addFirst()	Adds an item to the beginning of the list.	
+addLast()	Add an item to the end of the list	
+removeFirst()	Remove an item from the beginning of the list.	
+removeLast()	Remove an item from the end of the list	
+getFirst()	Get the item at the beginning of the list	
+getLast()	Get the item at the end of the list
+
+
+La direncia con el ArrayList radica en la forma en la cual se construyen un y otro:
+
+Cuando añadimos un nuevo objeto a un ArrayList , si este no es lo bastante grande, se borra
+y se crea uno nuevo añadiendo el nuevo objeto
+
+El LinkedList almacena los objetos en "contenedores" , cada contenedor tiene un enlace con 
+el siguiente contenedor de la lista, cuando añadimos un nuevo objeto, este se almacena en
+un nuevo contenedor
+
+Cuando usar el ArrayList o el LinkedList:
+
+
+ArrayList --> Cuando necesitamos acceder de manera aleatoria y frecuente a los objetos, o sólo
+	      necesitamos añadir/quitar objetos del final de la lista
+
+LinkedList --> Cuando sólo usamos la lista para interar a través de ella, o cuando necesitamos
+	       de manera frecuente acceder a objetos del principio o el interior de la lista
+
+
+HASHMAPS
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,75 @@
+Java no posee una clase Built-in para trabajar con expresiones regulares, pero si
+dispone de este paquete
+
+java.util.regex;
+
+El paquete contiene estas clases
+
+Pattern - Defines a pattern (to be used in a search)
+Matcher - Used to search for the pattern
+PatternSyntaxException - Indicates syntax error in a regular expression pattern
+
+Ej
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class MyClass {
+  public static void main(String[] args) {
+    Pattern pattern = Pattern.compile("w3schools", Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher("Visit W3Schools!");
+    boolean matchFound = matcher.find();
+    if(matchFound) {
+      System.out.println("Match found");
+    } else {
+      System.out.println("Match not found");
+    }
+  }
+}
+
+Em este ejemplo creamos el patrón mediante le método Pattern.compile(), su primer parámetro
+indica el patrón a buscar( la expresión regular ), el segundo es un flag y es opcional para indicar que
+no distinga mayusculas de minusculas
+
+El método matcher() se usa para busar el patrón en un string
+
+El método find() devuelve true si el patrón es encontrado en el string, y false en caso contrario
+
+Los flags del método compile() sirven para determinar como buscar el patrón en el string:
+
+Pattern.CASE_INSENSITIVE - The case of letters will be ignored when performing a search.
+Pattern.LITERAL - Special characters in the pattern will not have any special meaning and will be treated as ordinary characters when performing a search.
+Pattern.UNICODE_CASE - Use it together with the CASE_INSENSITIVE flag to also ignore the case of letters outside of the English alphabet
+
+Rangos de caracteres:
+
+[abc]	Find one character from the options between the brackets
+[^abc]	Find one character NOT between the brackets
+[0-9]	Find one character from the range 0 to 9
+
+Metacaracteres:
+
+|	Find a match for any one of the patterns separated by | as in: cat|dog|fish
+.	Find just one instance of any character
+^	Finds a match as the beginning of a string as in: ^Hello
+$	Finds a match at the end of the string as in: World$
+\d	Find a digit
+\s	Find a whitespace character
+\b	Find a match at the beginning of a word like this: \bWORD, or at the end of a word like this: WORD\b
+\uxxxx	Find the Unicode character specified by the hexadecimal number xxxx
+
+Cuantificadores:
+
+n+	Matches any string that contains at least one n
+n*	Matches any string that contains zero or more occurrences of n
+n?	Matches any string that contains zero or one occurrences of n
+n{x}	Matches any string that contains a sequence of X n's
+n{x,y}	Matches any string that contains a sequence of X to Y n's
+n{x,}	Matches any string that contains a sequence of at least X n's
+
+Caracter de escape
+
+Si en nuestro patrón necesitamos buscar algún caracter especial de los indicados en los putnos anteriores, debemos
+debemos anteponer el escape \ , si es el propio backslash el que debemos buscar , lo tenemos que escapar también
+escribiendo \\
+

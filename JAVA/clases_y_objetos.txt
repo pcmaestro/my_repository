@@ -412,3 +412,74 @@ class DemoClass implements FirstInterface, SecondInterface {
   }
 }
 
+CLASES ENVOLVENTES
+
+Estas clases proporcionan la manera de usar datos primitivos como objetos
+
+
+Primitive Data Type	Wrapper Class
+byte			Byte
+short			Short
+int			Integer
+long			Long
+float			Float
+double			Double
+boolean			Boolean
+char			Character
+
+En las colecciones (Array, ArrayList, HashMaps, etc...) no podemos usar datos primitivos,
+es necesario hacerlo a través de estas clases envolventes, ya que sólo pueden contener objetos
+
+Ej
+
+ArrayList<Integer> myNumbers = new ArrayList<Integer>();
+
+Podemos crear directamente objetos envolventes usando estas clases en lugar de datos primitivos
+al declarar las variables
+
+Ej
+
+public class MyClass {
+  public static void main(String[] args) {
+    Integer myInt = 5;
+    Double myDouble = 5.99;
+    Character myChar = 'A';
+    System.out.println(myInt);
+    System.out.println(myDouble);
+    System.out.println(myChar);
+  }
+}
+
+En estos casos, al trabajar con objetos, podemos usar ciertos métodos para obtener sus valores,
+según el tipo de dato que contienen
+
+intValue(), byteValue(), shortValue(), longValue(), floatValue(), doubleValue(), charValue(), booleanValue().
+
+Ej
+
+public class MyClass {
+  public static void main(String[] args) {
+    Integer myInt = 5;
+    Double myDouble = 5.99;
+    Character myChar = 'A';
+    System.out.println(myInt.intValue());
+    System.out.println(myDouble.doubleValue());
+    System.out.println(myChar.charValue());
+  }
+}
+
+Un método muy util es toString() , que se usa para convertir objetos envolventes en strings
+
+public class MyClass {
+  public static void main(String[] args) {
+    Integer myInt = 100;
+    String myString = myInt.toString();
+    System.out.println(myString.length());
+  }
+}
+
+En este ejemplo hemos convertido un objeto Integer en string y hemos usado el método length() de los
+string para conocer su longitud
+
+
+
