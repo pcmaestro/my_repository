@@ -1,0 +1,172 @@
+Para manejar archivos, usaremos la clase File
+
+import java.io.File;
+
+Para usar esta clase, hay que instanciar un objeto y especificar el nombre del
+archivo o directorio
+
+File myObj = new File("filename.txt");
+
+
+Metodos de la clase File:
+
+Method			Type		Description
+canRead()		Boolean		Tests whether the file is readable or not
+canWrite()		Boolean		Tests whether the file is writable or not
+createNewFile()		Boolean		Creates an empty file
+delete()		Boolean		Deletes a file
+exists()		Boolean		Tests whether the file exists
+getName()		String		Returns the name of the file
+getAbsolutePath()	String		Returns the absolute pathname of the file
+length()		Long		Returns the size of the file in bytes
+list()			String[]	Returns an array of the files in the directory
+mkdir()			Boolean		Creates a directory
+
+CREAR ARCHIVOS
+
+Para crear un archivo usaremos el método createNewFile(), este metodo devuelve true si el
+archivo es creado correctamente y false su el archivo ya existe
+
+Este método debe ser envuelto SIEMPRE en un try-catch , ya que arroja la excepcion IOException
+si el archivo no puede ser creado por cualquier razón
+
+import java.io.File;  // Import the File class
+import java.io.IOException;  // Import the IOException class to handle errors
+
+public class CreateFile {
+  public static void main(String[] args) {
+    try {
+      File myObj = new File("filename.txt");
+      if (myObj.createNewFile()) {
+        System.out.println("File created: " + myObj.getName());
+      } else {
+        System.out.println("File already exists.");
+      }
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+  }
+}
+
+Para crear un archivo en una ruta determinada, la indicamos como parámetro al instanciar
+el objeto de la clase File, con la especialidad de que si trabajamos en windows, las 
+contrabarras hay que escaparlas con un backslash:
+
+File myObj = new File("C:\\Users\\MyName\\filename.txt");
+
+Si trabajamos en Mac o en Linux las rutas se construyen con / y no es necesario el escape
+
+ESCRIBIR ARCHIVOS
+
+Aqui usaremos la clase FileWriter y su método write()
+
+Cuando hayamos terminado de escribir ,  tendremos que cerrar el fichero con el método close()
+
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.IOException;  // Import the IOException class to handle errors
+
+public class WriteToFile {
+  public static void main(String[] args) {
+    try {
+      FileWriter myWriter = new FileWriter("filename.txt");
+      myWriter.write("Files in Java might be tricky, but it is fun enough!");
+      myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+  }
+}
+
+LEER ARCHIVOS
+
+Para leer archivos usaremos la clase Scanner
+
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+
+public class ReadFile {
+  public static void main(String[] args) {
+    try {
+      File myObj = new File("filename.txt");
+      Scanner myReader = new Scanner(myObj);
+      while (myReader.hasNextLine()) {
+        String data = myReader.nextLine();
+        System.out.println(data);
+      }
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+  }
+}
+
+BORRAR UN ARCHIVO
+
+Para borrar un archivo usaremos el método delete()
+
+import java.io.File;  // Import the File class
+
+public class DeleteFile {
+  public static void main(String[] args) { 
+    File myObj = new File("filename.txt"); 
+    if (myObj.delete()) { 
+      System.out.println("Deleted the file: " + myObj.getName());
+    } else {
+      System.out.println("Failed to delete the file.");
+    } 
+  } 
+}
+
+BORRAR UNA CARPETA
+
+Para borrar una carpeta es necesario que esté vacía
+
+import java.io.File; 
+
+public class DeleteFolder {
+  public static void main(String[] args) { 
+    File myObj = new File("C:\\Users\\MyName\\Test"); 
+    if (myObj.delete()) { 
+      System.out.println("Deleted the folder: " + myObj.getName());
+    } else {
+      System.out.println("Failed to delete the folder.");
+    } 
+  } 
+}
+
+CONSEGUIR OTRAS INFORMACIONES
+
+La clas File disponer de varios métodos para conseguir información de los archivos
+
+import java.io.File;  // Import the File class
+
+public class GetFileInfo { 
+  public static void main(String[] args) {
+    File myObj = new File("filename.txt");
+    if (myObj.exists()) {
+      System.out.println("File name: " + myObj.getName());
+      System.out.println("Absolute path: " + myObj.getAbsolutePath());
+      System.out.println("Writeable: " + myObj.canWrite());
+      System.out.println("Readable " + myObj.canRead());
+      System.out.println("File size in bytes " + myObj.length());
+    } else {
+      System.out.println("The file does not exist.");
+    }
+  }
+}
+
+OTRAS CLASES
+
+Hay muchas clases disponibles en el API de Java para manejar archivos :
+
+FileReader, BufferedReader, Files, Scanner, FileInputStream, FileWriter, 
+BufferedWriter, FileOutputStream, etc...
+
+Cual de ellas usar, depende de la versión de Java y de si necesitamos leer archivos
+con tipos byte o character, de si se necesitamos conocer el tamaño archivo o una linea, etc...
+
