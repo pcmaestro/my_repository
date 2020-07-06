@@ -20,11 +20,23 @@ Para importar una clase:
 import nombre_paquete.nombre_clase
 
 
+Podemos evitar el import si en la clase en cuestion usamos otra clase indicando el nombre de la ruta
+completa donde se encuentras esta sengunda
+
+Ej 
+
+nombre_paquete.nombre_clase
+
+
 El paquete java.util posee clases para leer inputs de teclado,  manejar tiempo y fecha, manejar Arrays
 Hashtables,  etc...
 
 En todos los archivos de clase que definamos, es necesario indicar el paquete al cual pertenecen, si usamos
 un IDE, este ya lo hace automáticamente
 
-Los nombres de los paquetes deben estar escritos en minúsculas para evitar conflictos con las clasesg
+Existe la posibilidad de crear subpaquetes dentro de los paquetes
+
+nombre_paquete.nombre_subpaquete.nombre_clase
+
+Los nombres de los paquetes deben estar escritos en minúsculas para evitar conflictos con las clases
 

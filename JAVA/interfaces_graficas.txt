@@ -1,0 +1,94 @@
+SWING
+
+Ej
+
+//Clases de la interfaz gráfica
+import javax.swing.JButton; --> Crea botones
+import javax.swing.JFrame; --> Crea la ventana
+import javax.swing.JLabel; --> Crea etiquetas
+import javax.swing.JOptionPane; --> Ventanas de dialogo tipo alert
+import javax.swing.JPanel; --> Crea los paneles que contienen los componentes de la ventana (necesario al menos un panel)
+import javax.swing.JTextField; --> Caja tipo input_text, recibe como parámetro el ancho en nº de caracteres
+
+//Interfaces de eventos
+import java.awt.event.ActionEvent; --> Añade eventos
+import java.awt.event.ActionListener; --> Escucha los eventos
+
+//Clases para redondear números decimales
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class VentanaPrincipal extends JFrame implements ActionListener{
+		
+	//Se definen aqui las varialbles que vayan a usar más de un método
+	JTextField entradaEuros = new JTextField(10);
+
+	JButton botonDolares = new JButton("Convertir a dolares");			
+	
+	JButton botonLibras = new JButton("Convertir a libras");	
+	
+	JButton botonPesos = new JButton("Convertir a pesos");
+	
+	
+		public VentanaPrincipal(){
+			System.out.println("se ejecuta el constructor");			
+			this.PrepararVentana();
+		} //end constructor
+
+		
+		void PrepararVentana() {
+			//this representa al objeto instanciado en esta clase	
+			//Componentes de la ventana
+			JLabel labelTexto = new JLabel();
+			labelTexto.setText("intrude la cantidad de euros");			
+
+			//Como mínimo hace falta un panel donde meter los componentes
+			JPanel panel = new JPanel();
+			panel.add(labelTexto);
+			panel.add(entradaEuros);
+			panel.add(botonDolares);
+			panel.add(botonLibras);
+			panel.add(botonPesos);
+			
+			this.setContentPane(panel);
+			this.setSize(400, 400);
+			this.setVisible(true);
+			this.setLocation(100, 100);
+			this.setDefaultCloseOperation(3);
+			
+			botonDolares.addActionListener(this);
+			botonLibras.addActionListener(this);
+			botonPesos.addActionListener(this);
+			
+		} //end prepararVentana
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("boton pulsado");						
+			
+			String introducido = entradaEuros.getText().replace(",", ".");
+			double introducidoDouble = Double.parseDouble(introducido);
+
+			//El método getSource() guarda el elemento que produce el evento
+			if(e.getSource() == botonDolares ) {
+				double moneda = introducidoDouble * 1.13;
+				//Redondeamos los decimales a 2 digitos
+				BigDecimal moneda2d = new BigDecimal(moneda);
+				moneda2d = moneda2d.setScale(2, RoundingMode.HALF_UP);
+				String resultado = moneda2d.toString().replace(".", ",");
+				JOptionPane.showMessageDialog(this, "dolares : " + resultado);
+			}else if(e.getSource() == botonLibras) {
+				double moneda = introducidoDouble * 0.91;			
+				BigDecimal moneda2d = new BigDecimal(moneda);
+				moneda2d = moneda2d.setScale(2, RoundingMode.HALF_UP);
+				String resultado = moneda2d.toString().replace(".", ",");
+				JOptionPane.showMessageDialog(this, "libras : " + resultado);
+			}else if(e.getSource() == botonPesos) {
+				double moneda = introducidoDouble * 25.21;			
+				BigDecimal moneda2d = new BigDecimal(moneda);
+				moneda2d = moneda2d.setScale(2, RoundingMode.HALF_UP);
+				String resultado = moneda2d.toString().replace(".", ",");
+				JOptionPane.showMessageDialog(this, "pesos : " + resultado);
+			} //end if
+		} //end actionPerformed
+} //end class VentanaPrincipal

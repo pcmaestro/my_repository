@@ -21,7 +21,7 @@ String nombre, apellido1, apellido2;
 CASTING
 
 Para poder convertir el tipo de dato que contiene una variable, es necesario hacer casting. IMPORTANTE, no podemos
-hacer operaciones aritméticas con varialbes de diferentes tipos, todas deben ser del mismo tipo
+hacer operaciones aritméticas con variables de diferentes tipos, todas deben ser del mismo tipo
 
 Ej
 
@@ -104,7 +104,7 @@ float --> 0,0f
 
 char --> 'u0000'
 
-boolena --> false
+boolean --> false
 
 byte --> 0
 
@@ -118,6 +118,8 @@ su valor por defecto es null
 Los Strings (clase) y cualquier objeto, tiene por defecto el valor null
 
 Los datos primitivos no se pueden inicializar con valor null
+
+
 
 
 

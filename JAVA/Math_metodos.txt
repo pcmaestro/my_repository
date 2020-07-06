@@ -7,6 +7,18 @@ Math.max(x,y)
 Para usar el método random() hay que tener en cuenta que los números que genera son de 0 a 1,
 si necesitamos que genere números mayores, habrá que multiplicar su resultado por otro número
 
+REDONDEO DE DECIMALES
+
+Podemos limitar la salida de la cantidad de números decimales mediante las clases BigDecimal
+y RoundingMode
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+double numero = 5.5236345747
+BigDecimal numero2d = new BigDecimal(numero);
+numero2d = numero2d.setScale(2, RoundingMode.HALF_UP); --> con HALF_DOWN redondea a la baja	
+
 
 TABLA DE METODOS
 
