@@ -21,29 +21,45 @@ public class MyClass implements Runnable {
 
 EJECUCION DE THREADS
 
+Siempre habrá como mínimo un hilo para la aplicación que se ejecuta desde el Main , y luego nostros
+podremos añadir nuevos hilos mediante la clase Thread o el interfaz Runnable. Se debe tener en cuenta
+la capacidad de procesamiento de la máquina donde se van a ajectuar las tareas multi-threading
+
 Si heredamos de la clase Thread,  podemos ejecutar el thread instanciando un objeto y llamando
 al método start()
 
 public class MyClass extends Thread {
   public static void main(String[] args) {
+
+    private boolean threadActive = true;
+ 
     MyClass thread = new MyClass();
-    thread.start();
+    thread.start();  --> inicia el contenido del método run()
     System.out.println("This code is outside of the thread");
   }
   public void run() {
-    System.out.println("This code is running in a thread");
+    while(threadActive){
+   	 System.out.println("This code is running in a thread"); --> Este método contiene el código que
+								     se debe ejecutar en el hilo
+	}
   }
+
+ public void detenerHilo(){
+      threadActive = false;  --> la invocación de este método detiene la ejecución del hilo
+
+     }
 }
 
 
 Si implementamos el interface Runnable, el thread puede ser ejecutado pasando una instancia
-de la clase al constructor de la clase Thread y llamando luego al método start()
+de nuestra clase al constructor de la clase Thread y llamando luego al método start()
 
 public class MyClass implements Runnable {
   public static void main(String[] args) {
     MyClass obj = new MyClass();
-    Thread thread = new Thread(obj);
-    thread.start();
+    Thread myThread = new Thread(obj); --> se puede usar la palabra this , en cuyo caso no hace
+					 falta instanciar el objeto de nuestra clase
+    myThread.start();
     System.out.println("This code is outside of the thread");
   }
   public void run() {
@@ -51,15 +67,21 @@ public class MyClass implements Runnable {
   }
 }
 
+
+
 La diferencia de usar uno u otro método radica en que si heredamos de la clase Thread, ya no
 podremos heredar de otra clase si lo necesitamos (en Java no hay multi-herencia), pero si
-implementamos el interface Runnable , sería posible heredar de otra clase
+implementamos el interface Runnable , sería posible heredar de otra clase e incluso añadir
+más interfaces
 
 Ej
 
 MyClass extends OtherClass implements Runnable{
 
 }
+
+Para ejecutar y detener hilos, se recomienda usar un booleano de hiloActivo, el método stop() está obsoleto
+
 
 PROBLEMAS DE CONCURRENCIA
 
@@ -109,3 +131,5 @@ public class MyClass extends Thread {
   }
 }
 
+TIEMPO DE ESPERA
+Podemos hacer "dormir" un hilo mediante el método Thread.sleep(milisegundos)

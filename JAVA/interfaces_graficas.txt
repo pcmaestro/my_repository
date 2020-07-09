@@ -1,6 +1,59 @@
-SWING
+####################################   SWING   ################################################################
 
-Ej
+Swing es una librería que contiene widgets para interfaces gráficas
+
+La estructura de una aplicación gráfica es un objeto de la clase JFrame en el cual se incluye como mínimo
+un objeto de la clase JPanel,  y este último contiene los objetos que se muestran al usuario en pantalla
+
+Lo normal es , en el Main,  crear una clase que hereda de JFrame donde instanciamos un objeto que usará
+los métodos de JFrame para aplicar tamaño, ubicación, contenido (panel),visibilidad de la ventana, fin de la ventana,
+etc....
+
+Ej.
+
+package cursojava10ejercicioDiferencias;
+
+import javax.swing.JFrame;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		JFrame ventana = new JFrame("Haz click en la diferencia de la derecha");
+		ventana.setSize(800, 400);
+		ventana.setLocation(100,100);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setContentPane(new MiPanel(ventana));
+		ventana.setVisible(true);
+	}
+
+}
+
+Y luego crear otra clase que hereda de JPanel, y si es necesario, implementa interfaces de gestión de eventos 
+(ratón, teclado..), esta última clase dispondrá de un constructor de objetos donde añadiremos los elementos,
+imágenes y "Listeners" de eventos , dicho constructor deberá pedir como argumento el objeto "JFrame ventana"
+
+public class MiPanel extends JPanel implements ActionListener{
+	
+	public MiPanel(JFrame ventana){
+	....
+	}
+}
+
+Si necesitamos mostrar imágenes o dibujos Java,  además debemos sobreescribir el método paint(Graphics g) de
+la clase JPanel (Graphics es otra clase que va a requerir un import), mediante el método drawImage() indicaremos
+el tamaño y ubicación de la imagen en el panel
+
+Ej.
+
+public void paint(Graphics g) {
+
+	g.drawImage(primeraImagen, 0,0, 800, 400, this); --> Ver más abajo IMAGENES
+}
+
+
+
+Ej de aplicación gráfica
 
 //Clases de la interfaz gráfica
 import javax.swing.JButton; --> Crea botones
@@ -12,7 +65,7 @@ import javax.swing.JTextField; --> Caja tipo input_text, recibe como parámetro 
 
 //Interfaces de eventos
 import java.awt.event.ActionEvent; --> Añade eventos
-import java.awt.event.ActionListener; --> Escucha los eventos
+import java.awt.event.ActionListener; --> Escucha los eventos en los botones
 
 //Clases para redondear números decimales
 import java.math.BigDecimal;
@@ -92,3 +145,157 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 			} //end if
 		} //end actionPerformed
 } //end class VentanaPrincipal
+
+FONDO
+
+El color de fondo del JPanel debemos incluirlo en el constructor con el método
+
+this.setBackground(Color.NOMBRE_COLOR); --> también admite el color con new Color(r,g,b)
+
+
+IMAGENES
+
+Para mostrar una imagen en la clase JPanel, es necesario guardarla en una variable de la subclase Image:
+
+Ej .  private Image var_imagen = null;
+
+Y luego indicar su ruta y leerla con la clase ImageIO.read(var_imagen) dentro de un constructor:
+
+	public Panel() {
+		File imagen1 = new File("C:\\ruta\\imagen.jpg);
+
+		try {
+			var_imagen = ImageIO.read(imagen1);
+		
+		} catch (IOException e) {			
+			System.out.println("No se localiza la imagen");
+		}
+
+Por última hay que "pintar" el tamaño y ubicación de la imagen en el JPanel con el método paint + la clase Graphics:
+
+Ej.  
+
+	public void paint(Graphics g) {
+		g.drawImage(var_imagen, 0, 0, 450, 350, this);--> Coordenadas ubicación, coordenadas tamaño, observer
+		
+
+	}
+
+La clase Graphics tiene métodos para dibujar figuras, como por ej fillOval(), fillRect()... , o colorearlas, ej setColor()
+
+
+
+REFRESCO DE VENTANAS
+
+Puede surgir la necesidad de modificar el contenido de la ventana ( cambiar un panel por otro ) , para que
+esto funcione correctamente es necesario usar un método de refresco de la ventana
+
+SwingUtilities.updateComponentTreeUI(this.ventana);
+
+O también le método repaint()
+
+Si no usamos estos métodos, en la ventana no serán visibles las modificaciones
+
+
+INTERFAZ MOUSELISTENER
+
+La interfaz MouseListener implementa una serie de métodos para "escuchar" eventos del ratón
+
+La diferencia entre MousePressed y MouseClicked radica en que la primera ejecuta el evento al pulsar
+el botón del ratón y la segunda al pulsarlo y después soltarlo
+
+Si queremos escuchar los eventos en algún objeto del JPanel,  lo haremos añadiendo el método addMouseListener()
+en el constructor
+
+Ej .  this.addMouseListener(this);
+
+INTERFAZ ACTIONLISTENER
+
+Maneja estos eventos:
+
+al pulsar un botón.
+al hacer doble clic en un elemento de lista.
+al pulsar INTRO en una caja de texto.
+al elegir un menú.
+
+Sólo implementa el método actionPerformed(ActionEvent e) , en el constructor se escuchan los eventos con 
+this.addActionListener(this);
+
+INTERFAZ KEYLISTENER
+
+Esta interfaz escucha los eventos en el teclado, implementa estos métodos:
+
+public void keyPressed(KeyEvent e){
+}
+
+Este método se ejecuta cada vez que presionas una tecla.
+
+
+public void keyReleased(KeyEvent e){
+}
+
+Este método se ejecuta cada vez que sueltas una tecla.
+
+public void keyTyped(KeyEvent e){
+}
+
+Este método se ejecuta cada vez que se presiona y se suelta una tecla
+
+Esta interfaz numera las teclas con contantes que las relacionan con números enteros
+
+En el constructor los eventos se escuchan con this.addKeyListener(this) , pero antes es necesario
+conceder foco al panel con el método this.setFocusable(true);
+
+COMPONENTES
+
+Exsite una amplia lista de componentes de SWING en la web (botones, checkbox, scroll, menú, etc...)
+
+https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+
+
+
+#######################   WINDOWBUILDER  ########################################################
+
+WindowBuilder es un plug-in GUI de Eclipse Marketplace que se usa para construir interfaces gráficas
+mediante la herramienta Swing Designer
+
+Estructura básica de un proyecto:
+
+	Paquete main
+		Main class --> Se incluye una instancia de la clase GestorVentanas
+	
+	Paquete modelo
+		Producto1 class
+		Producto2 class
+		etc..
+
+	Paquete vista
+		Panel1 class
+		Panel2 class
+		etc...
+
+	Paquete daos
+		Producto1DAO interface
+		Producto2DAO interface
+		etc...
+		Producto1DAOimpl class
+		Producto2DAOimpl class
+		etc...
+
+	Paquete gestorVentanas
+		GestorVentanas class implements ActionListener
+
+
+Las variables de los componentes incluidos en los paneles son private,  para poder acceder
+a ellos debemos usar métodos Getter , para lo cual hay que clickar sobre ellos con
+botón derecho y seleccionar Expose,  lo cual nos crea dicho método en la clase del objeto
+seleccionado
+
+
+
+
+
+
+
+
+

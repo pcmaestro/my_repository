@@ -9,7 +9,7 @@ nombreProyecto
 
 
 Para crear una clase la sintaxis sería (el modificador habitual es public):
-
+int
 public class nombre_clase{
 
 }
@@ -40,11 +40,17 @@ sus subclases
 
 Estos indicadores "public" y "protected" también los podemos aplicar a las variables de las propiedades
 
-El modificador "private" indica que una propiedad sólo puede ser accedida desde su propia clase
+El modificador "private" indica que una propiedad sólo puede ser accedida desde su propia clase, no puede ser
+modificada desde fuera
 
 El modificador "abstract" indica que una clase es abstracta, o sea, que es una superclase de la cual
 no se van a instanciar objetos, y simplemente servirá para que otras hereden de ella, dentro de ella
-puede haber a su vez métodos abstractos (sin cuerpo) y métodos normales
+puede haber a su vez métodos abstractos (sin cuerpo) y métodos normales. No obstante, las clases
+abstractas pueden disponer de métodos para crear instancias , debemos ver su documentación para
+ver que tienen disponible
+
+En baso de que una clase abstracta a demás tenga métodos abstractos, estos deben ser implementados
+obligatoriamente por la clase hija
 
 abstract class Animal {
   public abstract void animalSound();
@@ -57,7 +63,6 @@ El modificador "final" indica que la clase no puede ser heredada por otras clase
 
 Las propiedades tendrán por defecto el modificador indicado en la clase ( no será necesario volver a
 indicarlo al declararlas, salvo que alguna deba tener otro distinto)
-
 
 
 
@@ -100,7 +105,12 @@ public class Hombre{
 System.out.println(Hombre.altura);
 
 En este caso, la propiedad altura de la clase Hombre es static, y por lo tanto la hemos podido invocar
-sin necesidad de instanciar previamente un objeto
+sin necesidad de instanciar previamente un objeto, no obstante podemos acceder también a ella a través
+de los objetos instanciados, pero en este caso todos tendrán el mismo valor de propiedad
+Ej  Hombre bajito = new Hombre() // bajito.altura --> 2 
+
+CUIDADO - Si se altera el valor de una variable static, se altera para todos los objetos de esa clase !!!
+
 
 
 METODOS
@@ -171,6 +181,8 @@ Ej.
 
 abstract void method();
 
+Si a un método le añadimos el modificador "final", impediremos que las clases hijas puedan sobreescribirlo
+
 
 CONSTRUCTOR
 
@@ -199,8 +211,24 @@ una vez creado el objeto
 Los métodos constructores son opcionales, si no definimos ninguno,  Java lo hace por defecto,
 pero en ese caso no podremos inicializar el objeto con unos valores determinados en las propiedades
 
+Si creamos un constructor que pida argumentos, ya no será posible usar el constructor vacío por
+defecto de Java, salvo que creemos también un segundo constructor que no pida argumentos
 
-ENCAPSULACION
+SUPER()
+
+En el caso de Herencia,  las instanciar un objeto de la clase hija , si la clase padre tiene más de
+un constructor , por ejemplo uno que pide argumentos y otro que no , podemos seleccionar cual de ellos
+ejecutar mediante el método super()
+
+super()
+super(x,y)
+
+El método super() además se puede usar en el polimorfismo , cuando por ejemplo una clase tiene dos
+métodos que se llaman igual, uno pidiendo argumentos y el otro no , en el primero podemos hacer
+que al invocarlo se ejecute primero el segundo indicando super().segundoMetodo()
+
+
+ENCAPSULACION Y METODOS DE ACCESO (Getter, setter)
 
 La encapsulación se usa para ocultar datos sensibles a otros usuarios, se aplica usando la
 palabra reservada "private"
@@ -218,7 +246,7 @@ public class Person {
 
   // Getter --> devuelve el valor de name
   public String getName() {
-    return name;
+    return name; --> Siempre tiene que devolver un valor
   }
 
   // Setter --> establece el valor de name
@@ -268,6 +296,9 @@ Podemos usar la palabra reservada "this" para referirnos dentro de una clase al 
 
 HERENCIA
 
+La raiz de herencia en Java es la clase Object, si no indicamos que una clase hereda de otra, por defecto
+hereda de la superclase Object
+
 Sólo se pueden heredar las propiedades y métodos de otras clases que no sean privados, en Java no existe la
 herencia múltiple
 
@@ -282,8 +313,9 @@ de la clase Perro
 
 Podemos sobreescribir los métodos heredados, a esto se le concoce como POLIMORFISMO
 
-En las clases hijas podemos añadir a su vez nuevas propiedades y métodos que se sumarán a los heredados
-
+En las clases hijas podemos añadir a su vez nuevas propiedades y métodos que se sumarán a los heredados, en caso
+hacer sobreescritura, encima del método debemos incluir la anotación opcional pero conveniente @Override para que
+quien vea el código, sepa que ese método ha sido sobreescrito
 
 CLASES INTERNAS
 
@@ -353,7 +385,28 @@ Las clases internas también pueden tener el modificador "private" o "protected"
 
 INTERFACES
 
-Un interfaces viene a ser una clase abstracta absoluta, la cual sólo contiene métodos sin cuerpo
+Un interfaz viene a ser una clase abstracta absoluta, la cual sólo contiene métodos sin cuerpo, sirven para
+predeterminar que métodos debe tener como mínimo una determinada clase
+
+Ej.  Podemos crear un interfaz ProductosDAO indicando los métodos y parámetros que deben recibir
+     las clases que vayan a trabajar con productos , se registran los métodos con el cuerpo vacío
+     para que luego se incluya en ellos lo que haga falta en cada clase. Por convención , las clases
+     que usen este interfaz se llamarán ProductosDAOimpl_nombre_clase
+
+IMPORTANTE - Los métodos del interfaz son un contenido mínimo que debe tener la clase donde se implementa,
+	     pero según como instanciemos luego un objeto de dicha clase, podemos forzar que únicamente
+	     use los métodos contennidos en el infertaz:
+
+	     Ej
+	     interface Animal
+	     class AnimalImplPerro
+
+	     AnimalImplPerro chiguagua = new AnimalImplPerro(); --> Deberá tener los métodos de Animal y podemos añadir adicionales
+	     Animal chiguagua = new AnimalImplPerro(); --> Unicamente podrá contener los métodos definidos en el interface
+	     
+
+Existe interfaces para atender eventos ( ver documentación ) que indican los métodos que hay que deben
+disponer
 
 interface Animal {
   public void animalSound(); // interface method (does not have a body)
@@ -411,6 +464,9 @@ class DemoClass implements FirstInterface, SecondInterface {
     System.out.println("Some other text...");
   }
 }
+
+Al implementar un interfaz,  debemos dejar todos sus métodos , aunque sólo usemos alguno (los demás se quedan
+en blanco) , de lo contrario nos dará error
 
 CLASES ENVOLVENTES
 
@@ -482,4 +538,8 @@ En este ejemplo hemos convertido un objeto Integer en string y hemos usado el m�
 string para conocer su longitud
 
 
+ANOTACIONES
+
+@Override --> En los métodos donde aparece se indica que son métodos heredados de otras clase o
+	      implementados de un interfaz y que se sobreescriben, es opcional pero muy conveniente
 

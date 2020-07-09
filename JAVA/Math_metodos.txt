@@ -4,8 +4,20 @@ Todos estos métodos son de la clase interna Math, su sintaxis es la siguiente:
 
 Math.max(x,y)
 
+NUMEROS ALEATORIOS
+
 Para usar el método random() hay que tener en cuenta que los números que genera son de 0 a 1,
 si necesitamos que genere números mayores, habrá que multiplicar su resultado por otro número
+
+También hay que tener en cuenta que devuelve un double, con lo cual hay que hacer un redondeo
+y posterior conversión a numero entero
+
+double numero = Math.ceil(Math.random()*100);
+      
+int new_numero = (int)numero;
+
+Es más recomendable usar la clase Random();
+
 
 REDONDEO DE DECIMALES
 
@@ -18,6 +30,8 @@ import java.math.RoundingMode;
 double numero = 5.5236345747
 BigDecimal numero2d = new BigDecimal(numero);
 numero2d = numero2d.setScale(2, RoundingMode.HALF_UP); --> con HALF_DOWN redondea a la baja	
+
+También disponemos de la clase DecimalFormat()
 
 
 TABLA DE METODOS

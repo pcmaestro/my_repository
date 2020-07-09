@@ -1,4 +1,4 @@
-Para manejar archivos, usaremos la clase File
+RUTAS
 
 import java.io.File;
 
@@ -59,7 +59,7 @@ Si trabajamos en Mac o en Linux las rutas se construyen con / y no es necesario 
 
 ESCRIBIR ARCHIVOS
 
-Aqui usaremos la clase FileWriter y su método write()
+Aqui usaremos la clase FileWriter y su método write() , este método escribe y crea archivos
 
 Cuando hayamos terminado de escribir ,  tendremos que cerrar el fichero con el método close()
 
@@ -80,9 +80,41 @@ public class WriteToFile {
   }
 }
 
+Con FileWriter("archivo.txt", true) agrega texto sin pisar lo anterior
+
+La clase BufferdWriter() escribe en una memoria intermedia , pero no escribe realmente
+en el archivo hasta que llega al close() o se llena la memoria
+
+
 LEER ARCHIVOS
 
-Para leer archivos usaremos la clase Scanner
+FileReader()
+
+El método read() de esta clase lee letra a letra y devuelte un número entero con su
+identificador ASCII , con lo cual hay que hacer casting hacia char de cada letra
+
+Tenemos la opción de usar la clase BufferedReader() + método readline() que
+va almacenando lineas completas antes de leer los caracteres
+
+
+	try {
+				FileReader fr = new FileReader(archivo);
+				BufferedReader br = new BufferedReader(fr);
+				String linea = "";
+				while ( (linea=br.readLine()) != null ) {
+					System.out.println(linea);
+				}
+				br.close();
+				fr.close();			
+			} catch (FileNotFoundException e) {
+				System.out.println("no puedo leer del archivo");
+			} catch (IOException e) {
+				System.out.println("error al leer");
+			}
+
+
+
+Otra clase que podemos usar es Scanner(),  que también almacena lee linea a linea
 
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
@@ -114,7 +146,7 @@ import java.io.File;  // Import the File class
 public class DeleteFile {
   public static void main(String[] args) { 
     File myObj = new File("filename.txt"); 
-    if (myObj.delete()) { 
+	    if (myObj.delete()) { 
       System.out.println("Deleted the file: " + myObj.getName());
     } else {
       System.out.println("Failed to delete the file.");

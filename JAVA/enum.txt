@@ -6,7 +6,8 @@ esto quiere decir que el escenario de uso de este tipo de clases es cuando vamos
 a tener unas constantes con valores inmutables como nombres de colores, nombres de
 meses, etc...
 
-Las constanters de un enum son "public", "static" y "final" (inmutables)
+Las constantes de un enum son "public", "static" y "final" (inmutables) , y la ventana es que
+no hay que darles un valor
 
 enum Level {
   LOW,
@@ -52,5 +53,17 @@ for (Level myVar : Level.values()) {
   System.out.println(myVar);
 }
 
+Otro ejemplo de enumeracion, estados de un objeto incidencia
 
+
+enum Incidencia{
+	ABIERTA,
+	CERRADA,
+	ANULADA
+}
+
+En una estructura SWITCH-CASE o IF-ELSE podemos usar estas constantes para ejecutar código
+según el estado del objeto incidencia
+
+Incidencia incidencia = Incidencia.ABIERTA;
 

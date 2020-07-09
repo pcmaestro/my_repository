@@ -1,0 +1,11 @@
+VERSIONES DE JAVA
+
+JME - 	Java Micro Edition,  desfasada
+
+JSE - Java Standar Edition, sólo aplicaciones de escritorio
+
+JEE - Java Enterprise Edition, contiene a la JSE
+
+Para programar en Java es necesario el JDK ( Java development kit ), este contiene
+el JRE (Java Runtime Enviroment) , y a su vez el JRE contiene la JVM , que es la
+máquina virtual que compila Java

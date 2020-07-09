@@ -1,0 +1,13 @@
+
+Combinando final + static en una variable de clase,  creamos una constante
+
+package cursojava09constantes;
+
+public class ConstantesSQL {
+
+	final static String SQL_INSRETAR_JUGUETE = "insert into...";
+	final static String SQL_BORRAR_JUGUETE = "delete from ....";
+	
+}
+
+Estas constantes tendrán valores inamobibles para todos los objetos instanciados

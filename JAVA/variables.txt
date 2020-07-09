@@ -1,5 +1,11 @@
 Ver doc  tipos_datos.pdf
 
+Los char es un caracter entre comillas simples . Ej --> 'A' ( también admite su número en el código ASCII)
+
+Los double admiten 16 decimales y los float admiten 6 decimales
+
+Los numeros enteros son short/int/long según su rango , los long deben terminar en L y se suelen usar para los id
+
 Las declaraciones de variables se hacen antes del nombre de variable:
 
 int miNumero;
@@ -89,6 +95,8 @@ En Java las variables sólo son accesibles dentro del ámbito en el cual son cre
 Una variable declarada dentro de un método, es accesible sólo dentro de dicho método
 
 Una variable declarada dentro de un bloque {} es accesible dentro de dicho bloque
+
+Cuando Java ejecuta un método , "destruye" las variables para liberar memoria
 
 
 VALORES POR DEFECTO

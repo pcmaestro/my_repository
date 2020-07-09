@@ -1,0 +1,9 @@
+RANDOM
+
+Random r = new Random();
+
+int numero = r.nextInt(100); --> Genera un nº entero aleatorio del 0 al 100
+
+
+
+int numero = 100 + r.nextInt(100); --> Asi lo generamos de 100 a 200

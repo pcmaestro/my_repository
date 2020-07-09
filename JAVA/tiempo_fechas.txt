@@ -3,10 +3,14 @@ Para trabajar con tiempo y fechas, debemos importar el paquete java.time
 import java.time
 
 Class			Description
+
+Date			Represents a date and time ( see methods)
 LocalDate		Represents a date (year, month, day (yyyy-MM-dd))
 LocalTime		Represents a time (hour, minute, second and nanoseconds (HH-mm-ss-ns))
 LocalDateTime		Represents both a date and a time (yyyy-MM-dd-HH-mm-ss-ns)
+Calendar		Represents calendar objects
 DateTimeFormatter	Formatter for displaying and parsing date-time objects
+SimpleDateFormat	Formatter for displaying and parsing date-time objects
 
 FECHA ACTUAL (YYYY-MM-DD)
 import java.time.LocalDate;
@@ -27,7 +31,21 @@ java.time.LocalDateTime
 //Creamos el objeto con la fecha y tiempo actual
 LocalDateTime myObj = LocalDateTime.now();
 
+CALCULO DE TIEMPO DE EJECUCION (milisegundos)
+
+Date start = new Date();
+Date stop = new Date();
+
+double inicio = start.getTime();
+double fin = stop.getTime();
+
+double tiempo = fin - inicio;
+
+
 FORMATEO DE TIEMPO Y FECHA
+
+
+DateTimeFormatter
 
 import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
@@ -57,3 +75,23 @@ yyyy-MM-dd	"1988-09-29"
 dd/MM/yyyy	"29/09/1988"	
 dd-MMM-yyyy	"29-Sep-1988"	
 E, MMM dd yyyy	"Thu, Sep 29 1988"
+
+
+SimpleDateFormat
+
+import java.text.SimpleDateFormat;
+...
+SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+
+// Esto muestra la fecha actual en pantalla, más o menos así 26/10/2020
+System.out.println(formateador.format(new Date()));
+
+CALENDAR
+
+Calendar es una clase abstracta,  para crear objetos de ella debemos usar este método:
+
+Calendar calendario = Calendar.getInstance();
+
+Una vez creado el objeto, podemos acceder a sus métodos, por ejemplo,  para ver el dia del mes actual:
+
+calendario.get(Calendar.DAY_OF_MONTH);
