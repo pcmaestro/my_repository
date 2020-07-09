@@ -543,3 +543,16 @@ ANOTACIONES
 @Override --> En los métodos donde aparece se indica que son métodos heredados de otras clase o
 	      implementados de un interfaz y que se sobreescriben, es opcional pero muy conveniente
 
+METODO TOSTRING
+
+El método toString() pertenece a la clase Object, si lo sobreescribimos, podemos mostrar en formato string
+las propiedades de un objeto instanciado de una de nuestras clases
+
+Ej
+
+	@Override
+	public String toString() {
+		return "Coche [marca=" + marca + ", modelo=" + modelo + ", color=" + color + ", motor=" + motor
+				+ ", cilindrada=" + cilindrada + ", precio=" + precio + ", id=" + id + "]";
+	}
+

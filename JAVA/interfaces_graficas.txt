@@ -262,35 +262,88 @@ mediante la herramienta Swing Designer
 Estructura básica de un proyecto:
 
 	Paquete main
-		Main class --> Se incluye una instancia de la clase GestorVentanas
+		Main class --> Se incluye la instancia new GestorVentanas();
 	
 	Paquete modelo
-		Producto1 class
+		Producto1 class --> Constructor, método toString() , getters + setters
 		Producto2 class
 		etc..
 
 	Paquete vista
-		Panel1 class
+		VentanaPrincipal class --> Creada con WindowBuilder, hereda de JFrame y contiene los menús (Exponer menús)
+		Panel1 class --> Creada con WindowBuilder, hereda de JPanel (Exponer Widgets)
 		Panel2 class
 		etc...
 
 	Paquete daos
-		Producto1DAO interface
+		Producto1DAO interface --> Contiene los métodos CRUD
 		Producto2DAO interface
 		etc...
-		Producto1DAOimpl class
+		Producto1DAOimpl class --> Implementa los métodos del interfaz para hacer el CRUD
 		Producto2DAOimpl class
 		etc...
 
 	Paquete gestorVentanas
-		GestorVentanas class implements ActionListener
+		GestorVentanas class implements ActionListener --> Contiene un objeto de la claseDAOimpl (CRUD),
+								   objetos de VentanaPrincipal y los paneles,
+								   Un constructor con los controles de los widgets
+								   y los listener de eventos,
+								   un método actionPerformed(ActionEvent e) del
+								   interfaz ActionListener para ejecución de código
+								   ante los eventos e ir cambiando setContentPane(Panel)
+								   en función de lo que se vaya eligiendo en los menús
 
 
-Las variables de los componentes incluidos en los paneles son private,  para poder acceder
-a ellos debemos usar métodos Getter , para lo cual hay que clickar sobre ellos con
-botón derecho y seleccionar Expose,  lo cual nos crea dicho método en la clase del objeto
-seleccionado
 
+Las variables de los componentes incluidos en los menús y los paneles son private,  para poder acceder
+a ellos debemos usar métodos Getter , para lo cual hay que clickar sobre ellos con botón derecho y 
+seleccionar Expose,  lo cual nos crea dicho método en la clase del objeto seleccionado
+
+
+BARRAS DE MENU
+
+Se componen de JMenuBar + JMenu + JMenuItem, se incluyen en el JFrame (o clase que hereda de él)
+
+
+
+CONSTRUCTOR DEL GESTOR DE VENTANAS - 
+
+Ej
+
+public GestorVentanas() {
+		
+		//Añadimos los Listener de los menús mediante su Getter
+		ventanaPrincipal.getMenuRegistrarLibro().addActionListener(this);
+		ventanaPrincipal.getMenuListarLibros().addActionListener(this);
+		
+		//Añadimos los Listener de los botones mediante su Getter
+		panelInsertarLibro.getBotonRegistrarLibro().addActionListener(this);
+		
+		//Primer panel a mostrar al cargar la ventana
+		ventanaPrincipal.setContentPane(panelInsertarLibro);
+		
+		//Hacemos visible la ventana
+		ventanaPrincipal.setVisible(true);
+	}
+
+
+EJECUCION DE ACCIONES ANTE LOS EVENTOS
+
+En la clase Gestora de Ventanas implementamos el interfaz ActionListener, el cual
+crea el método actionPerformed(ActionEvent e)
+
+Podemos capturar los eventos con el método e.getSource() y guardarlos en una instancia
+de la clase Object
+
+Object elementoPulsado = e.getSource();
+
+Luego, mediante una estructura de IF podemos ir indicando el código a ejecutar ante
+cada evento capturado , accedemos a los elementos por sus Getter
+
+if (elementoSeleccionado == ventanaPrincipal.getMenuRegistrarLibro()) {
+	ventanaPrincipal.setContentPane(panelInsertarLibro);
+}else if(elementoPulsado == ventanaPrincipal.getMenuListarLibros()) {
+	ventanaPrincipal.setContentPane(panelListarLibros);
 
 
 
