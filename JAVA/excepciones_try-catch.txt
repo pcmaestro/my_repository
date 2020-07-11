@@ -40,4 +40,29 @@ Esto devolvería el siguiente error:
 Exception in thread "main" java.lang.ArithmeticException: Access denied - You must be at least 18 years old.
 
 
+THROWS
 
+Esta palabra reservada se incluye al declarar los métodos, sirve para indicar cual es la excepción que deben
+devolver en caso de error
+
+Ej
+
+public static void dividir() throws ArithmeticException {
+
+	System.out.println(dividendo / divisor);
+}
+
+
+TIPOS COMUNES DE EXCEPCIONES
+
+Exception class --> Todas las excepciones heredan de esta clase
+
+	IOException --> Archivo que no existe o no se puede leer por permisos
+
+		FileNotFoundException --> Hereda de IOException, archivo no encontrado
+
+		ClassNotFoundException --> Hereda de IOExceptionm , clase no encontrada
+
+	
+	NullPointerException --> Aparece cuando intentamos acceder al método de una clase y no hemos
+				 instanciado ningún objeto de ella primero

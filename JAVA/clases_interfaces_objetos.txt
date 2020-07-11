@@ -468,9 +468,14 @@ class DemoClass implements FirstInterface, SecondInterface {
 Al implementar un interfaz,  debemos dejar todos sus métodos , aunque sólo usemos alguno (los demás se quedan
 en blanco) , de lo contrario nos dará error
 
+Exiten también lo que se denominan "interfaces de marca" ,  que sólo sirven para marcar una clase, pero sin
+implementar ningún método obligatorio,  por ej el interfaz Serializable, que se usa para indicar que los objetos
+instanciados de una determinada clase pueden ser convertidos en cadenas de bits
+
 CLASES ENVOLVENTES
 
-Estas clases proporcionan la manera de usar datos primitivos como objetos
+Estas clases proporcionan la manera de usar datos primitivos como objetos (por ej para hacer casting entre
+números y objetos a través de los métodos de estas clases)
 
 
 Primitive Data Type	Wrapper Class

@@ -276,7 +276,7 @@ Estructura básica de un proyecto:
 		etc...
 
 	Paquete daos
-		Producto1DAO interface --> Contiene los métodos CRUD
+		Producto1DAO interface --> Contiene los métodos CRUD (No programar CRUD en las vistas !!!)
 		Producto2DAO interface
 		etc...
 		Producto1DAOimpl class --> Implementa los métodos del interfaz para hacer el CRUD
@@ -291,7 +291,9 @@ Estructura básica de un proyecto:
 								   un método actionPerformed(ActionEvent e) del
 								   interfaz ActionListener para ejecución de código
 								   ante los eventos e ir cambiando setContentPane(Panel)
-								   en función de lo que se vaya eligiendo en los menús
+								   en función de lo que se vaya eligiendo en los menús,
+								   los cambios de panel sólo son efectivos tras un
+								   refresco de pantalla
 
 
 
@@ -327,6 +329,11 @@ public GestorVentanas() {
 	}
 
 
+REFRESCO DE PANTALLA
+
+SwingUtilities.updateComponentTreeUI(ventanaPrincipal);
+
+
 EJECUCION DE ACCIONES ANTE LOS EVENTOS
 
 En la clase Gestora de Ventanas implementamos el interfaz ActionListener, el cual
@@ -344,6 +351,66 @@ if (elementoSeleccionado == ventanaPrincipal.getMenuRegistrarLibro()) {
 	ventanaPrincipal.setContentPane(panelInsertarLibro);
 }else if(elementoPulsado == ventanaPrincipal.getMenuListarLibros()) {
 	ventanaPrincipal.setContentPane(panelListarLibros);
+
+
+CONTROLES DE LOS WIDGETS
+
+Las clases donde codifiquemos los controles de los widgets deben implementar el interfaz ActionListener para
+gestionar los eventos sobre ellos
+
+Los "Listeners" deben incluirse en el constructor de la clase GestorVentanas, la cual a su vez debe ser instanciada
+en el método main para arrancar nuestra interfaz gráfica
+
+En los métodos de los interfaces de eventos,  el objeto evento dispone del método e.getSource() para ver que objeto
+ha provocado dicho evento
+
+Están muy bien explicados en la web GeeksForGeeks.org
+
+
+Etiquetas:
+
+JLabel("etiqueta) class
+
+
+Caja de Texto:
+
+JTextField class
+métodos usuales :  getText() , setText(), addActionListener()
+
+
+Text Area:
+
+JTextArea(int cols, int rows) class
+métodos usuales:  getText(), addActionListener()
+
+
+Radio Buttons
+
+JRadioButton("etiqueta") class + ButtonGroup class
+métodos usuales:  buttongroup.add(radiobutton) ,  radiobutton.setSelected(), radiobutton.isSelected(), 
+radiobutton.getText(), radiobutton.addActionListener()
+
+
+Check Boxes
+
+JCheckBox("etiqueta") class
+métodos usuales: setSelected(), isSelected(), getText(), addActionListener()
+
+
+Combo box
+
+JComboBox(Array[] nombre_array) class
+métodos usuales: addItem(), getItemAt(int nºindice), getSelectedItem(), setSelectedItem(), setSelectedIndex(int nºindice) ,
+addItemListener(ItemListener elemento)
+
+Select / Select Multiple
+
+JList(Array[] nombre_array) class
+métodos usuales: getSelectedIndex(), setSelectedIndex(int nºindice), isSelectedIndex(int nºindice), 
+setSelectionMode(ListSelectionModel.SINGLE_SELECTION), setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION),
+addListSelectionListener(ListSelectionListener elemento)
+
+
 
 
 

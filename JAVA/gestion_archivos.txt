@@ -82,8 +82,9 @@ public class WriteToFile {
 
 Con FileWriter("archivo.txt", true) agrega texto sin pisar lo anterior
 
-La clase BufferdWriter() escribe en una memoria intermedia , pero no escribe realmente
-en el archivo hasta que llega al close() o se llena la memoria
+Las clases BufferedReader() y BufferdWriter() leen y escriben en una memoria intermedia , pero no escriben
+realmente en el archivo hasta que llega al close() o se llena la memoria, es recomendable usarlas siempre, 
+ya que el proceso de lectura y escritura directamente en disco duro puede resultar muy costosoG
 
 
 LEER ARCHIVOS
@@ -200,5 +201,76 @@ FileReader, BufferedReader, Files, Scanner, FileInputStream, FileWriter,
 BufferedWriter, FileOutputStream, etc...
 
 Cual de ellas usar, depende de la versión de Java y de si necesitamos leer archivos
-con tipos byte o character, de si se necesitamos conocer el tamaño archivo o una linea, etc...
+con tipos byte o character, de si necesitamos conocer el tamaño archivo o una linea, etc...
 
+
+
+ARCHIVOS BINARIOS ( todos los que no sean texto plano)
+
+Se usan las clases FileInputStream y FileOutputStream , también las clases BufferdInputStream y
+BufferedOutputStream para guardar datos en memoria intermedia antes de hacerlo en el disco duro
+
+Ej.
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+public class CopiaFicheros {
+
+	public static void main(String[] args) {
+		copia ("c:/ficheroOrigen.bin", "c:/ficheroDestino.bin");
+	}
+
+	public static void copia (String ficheroOriginal, String ficheroCopia)
+	{
+		try
+		{
+                        // Se abre el fichero original para lectura
+			FileInputStream fileInput = new FileInputStream(ficheroOriginal);
+			BufferedInputStream bufferedInput = new BufferedInputStream(fileInput);
+			
+			// Se abre el fichero donde se hará la copia
+			FileOutputStream fileOutput = new FileOutputStream (ficheroCopia);
+			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput);
+			
+			// Bucle para leer de un fichero y escribir en el otro.
+			byte [] array = new byte[1000];
+			int leidos = bufferedInput.read(array);
+			while (leidos > 0)
+			{
+				bufferedOutput.write(array,0,leidos);
+				leidos=bufferedInput.read(array);
+			}
+
+			// Cierre de los ficheros
+			bufferedInput.close();
+			bufferedOutput.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+OBJETOS
+
+Se usan las clases ObjectInputStream y ObjectOutputStream, y los métodos readObject() y writeObject()
+
+Debemos cerrar siempre el objeto con el método close()
+
+Primero debemos instanciar un objeto de las clases FileInputStream/FileOutputStream, y luego pasarselo
+como argumento a ObjectInputStream/ObjectOutputStream
+
+
+SERIALIZACION (intefaz Serializable)
+
+Cuando queremos guardar un objeto en un archivo,  Java por detrás ejecuta un proceso llamado serialización,
+lo cual es transformar una información en una cadena de bits, o sea,  guarda el objeto en el archivo como
+una cadena binaria , pero para que ejecute dicho proceso estamos obligados a implementar en la clase de dicho
+objeto el interfaz Serializable.  Este interfaz es de marcado, con lo cual no crea ningún método adicional,
+pero indica a Java que si le pedimos guardar en un archivo un objeto de esa clase, primero debe serializarlo

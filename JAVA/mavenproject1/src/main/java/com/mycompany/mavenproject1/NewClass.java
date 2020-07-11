@@ -1,18 +1,20 @@
 
 package com.mycompany.mavenproject1;
  
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+
 
 
 public class NewClass {
   public static void main(String[] args) {
       
-           
-      double numero = Math.ceil(Math.random()*1000);
+      String[] itemlist = {"rojo", "verde", "azul"};
       
-      int new_numero = (int)numero;
-      
+      JList list = new JList(itemlist);
       
       
-      System.out.println(new_numero);
   }
 }
