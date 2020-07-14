@@ -1,0 +1,39 @@
+CONVERTIR A PROYECTO MAVEN EN ECLIPSE
+
+Botón derecho --> configure --> convert to maven project
+
+
+Las dependencias están en esta página:
+
+https://mvnrepository.com/
+
+
+O bien descargamos el archivo jar y lo instalamos en las librerias de nuestro proyecto de Eclipse:
+
+botón derecho --> Properties --> Java Build Path --> Libraries --> Add external library
+
+O bien lo añadimos en el pom.xml la dependencia que indique la web justo debajo de </build> , estos 
+fragmentos de XML están disponibles para copiar en la misma web del enlace de descarga del archivo jar
+
+<dependencies>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>8.0.18</version>
+	</dependency>
+</dependencies>
+
+El groupId suele ser el nombre de la empresa
+
+El artifactId suele ser el nombre del proyecto
+
+Si el proyecto no está en su version definitiva,  en <version> aparecerá la palabra SNAPSHOT
+
+Habrá una carpeta llamada bin donde aparecerán los bytecodes compilados de las clases del proyecto
+
+
+
+
+
+
+

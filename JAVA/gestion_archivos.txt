@@ -274,3 +274,9 @@ lo cual es transformar una información en una cadena de bits, o sea,  guarda el
 una cadena binaria , pero para que ejecute dicho proceso estamos obligados a implementar en la clase de dicho
 objeto el interfaz Serializable.  Este interfaz es de marcado, con lo cual no crea ningún método adicional,
 pero indica a Java que si le pedimos guardar en un archivo un objeto de esa clase, primero debe serializarlo
+
+El interfaz Serializable solicita implementar con un warning la variable serialVersionUID = 1L , esto es un número 
+de versión de la clase con un nº en formato Long.  Al incluir esta variable, se van guardando versiones de
+la clase y hay que aumentar a la versión xL según vayamos incluyendo modificaciones en ella
+
+Es común ver estas variables de versionado también en los Servlet

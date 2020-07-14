@@ -1,0 +1,74 @@
+
+La parte Web de Java está incluida en las especificaciones JEE, la cual está compuesta
+de especificaciones (manuales) y implementaciones (librerias de terceros) , lo más
+normal es que dichas implementaciones se gestionen con herramientas como Maven
+
+
+DYNAMIC WEB PROJECT
+
+En eclipse al crar un proyecto , seleccionamos Dynamic Web Project
+
+Los HTML los creamos en la carpeta WebContent
+
+Para los Servlet creamos un nuevo paquete y en el vamos creando una clase por cada uno de los Servlet.  
+
+Un servlet es una clase que contiene métodos que atienden las peticiones de los usuarios,
+lo normal es que tras hacer una operación, redirija al usuario hacia una determinada vista
+
+Las clases Servlet heredan de HttpServlet y llevan la anotación @WebServlet("/nombre_ruta"),
+contienen un constructor y métodos,  los más importantes son doGet() y doPost() , para ejecutar
+código en función de que las peticiones de los usuarios sean GET o POST
+
+Ej método doGet()
+
+En la parte back-end de java:
+
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		List<Anuncio> anuncios = new ArrayList<Anuncio>();
+		anuncios.add(new Anuncio("raton optico", "por 3,99 euros "
+				+ "llamar a 123456"));
+		anuncios.add(new Anuncio("portatil ", "por 499 euros "
+				+ "llamar a 6789012"));
+		anuncios.add(new Anuncio("raton optico", "por 4,99 euros "
+				+ "llamar a 8976543"));
+		
+		request.setAttribute("anuncios", anuncios);
+
+		
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/bienvenido.html");
+		dispatcher.forward(request, response);
+		
+	}
+
+En la parte HTML + JSP:
+
+Para traer el Attribute del objeto request, usamos el nombre que le hemnos dado en el back-end, en este caso "anuncios"
+
+<%
+List<Anuncio> listado = (List<Anuncio>)request.getAttribute("anuncios"); --> Los objetos llegan a JSP en formato Object,
+									     por lo que para usarlos en el HTML hay que
+									     hacerles un casting al tipo de dato deseado
+
+for( Anuncio a : listado){
+	out.print("<div>");
+	out.print("titulo: " + a.getTitulo() +"<br/>");
+	out.print("texto: " + a.getTexto());		
+	out.print("</div>");
+}
+%>
+
+
+Los JSP ( Java Server Pages) son páginas HTML con código java incrustado entre simbolos <% .... %>
+
+En las JSP se hacen impotaciones automáticas que aparecen con el formato <%@page import="nombre_clase_importada"%>
+
+Las módificaciones en HTML requieren reiniciar el servidor,  las JSP no lo requieren
+
+El código java de las JSP no es visible al visualizar código fuente en los navegadores
+
+Las Servlets realizan tareas de control , la interacción con los datos se hará con los DAO (Data Access Objects)
+
+
+
+

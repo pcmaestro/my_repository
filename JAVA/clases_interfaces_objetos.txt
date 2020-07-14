@@ -258,7 +258,7 @@ public class Person {
 Asi pues , para acceder a name , debemos instanciar un objeto de Person y llamar los métodos getName() y setName(),
 o sólo a uno de ellos, en función de si queremos que se pueda modificar name, o no.
 
-
+Si el dato al que tenemos que acceder es un booleano, el método a implementar ya no será getName() , si no isName()
 
 OBJETOS
 
@@ -471,6 +471,15 @@ en blanco) , de lo contrario nos dará error
 Exiten también lo que se denominan "interfaces de marca" ,  que sólo sirven para marcar una clase, pero sin
 implementar ningún método obligatorio,  por ej el interfaz Serializable, que se usa para indicar que los objetos
 instanciados de una determinada clase pueden ser convertidos en cadenas de bits
+
+Existe la posibilidad,  muy usada,  de declarar instancias de una clase usando el nombre de la intertaz que
+implementan , esto aplica una restricción sobre el objeto, de tal modo que sólo puede usar los métodos previstos
+en la interfaz, sin tener acceso a ningún otro método adicional que pudiera tener su clase
+
+Ej  interfaz AltaGama implementada en la clase CochesLujo
+
+AltaGama coche = new CocheLujo();
+
 
 CLASES ENVOLVENTES
 

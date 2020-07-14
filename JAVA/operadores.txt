@@ -42,6 +42,9 @@ COMPARACION (siempre devuelven true o false)
 
 >= mayor o igual que algo
 
+***IMPORTANTE - No se puedee usar el operador == para comprar una variable con un objeto String, para
+		esto hay que sar el método equals("cadena_string")
+
 
 LOGICOS (siempre devuelven true o false)
 

@@ -1,0 +1,116 @@
+
+IMPORTANTE - Los contenidos que vienen de las bases de datos tienen un indice que empieza por 1
+
+
+CONECTORES JDBC
+
+Debemos descargar e instalar una libreria JDBC del fabricante (conector) para la base de datos,  la mejor forma de hacerlo es
+a través de MAVEN
+
+
+Una vez hemos incorporado la libreria a nuestro proyecto (ver maven.txt) , debemos preparar el Main para cargarla
+
+import java.sql.Connection
+import java.sql.DriverManager
+
+public static void main(String[] args){
+
+	//Cargamos la librería
+	try{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		//Establecemos conexión con la BBDD con el interfaz Connection, ejemplo con MySQL
+		String url = "jdbc:mysql://direccion_ip:3306/bd_java_libros";
+		String usuario = ("nombre_usuario");
+		String password = ("contraseña");
+
+		Connection conexion = DriverManager.getConnection(url, usuario, password);
+
+		incluir Statement.... / incluir PreparedStatement....
+
+	}catch (ClassNotFound Exception e){
+		e.printStackTrace();
+		System.out.println("Error al cargar el driver");
+
+	}catch (SQL Exception e){
+		e.printStackTrace();
+		System.out.println("Error a conectar con la BBDD o al ejecutar la SQL");
+	}
+
+}
+
+
+La interacción con la BBDD la haremos a través de la creación de un paquete de DAOS (Data Object Access) y
+una clase que contenga contantes con las sentencias SQL
+
+Debemos tener en cuenta si el usuario va a poder incluir valores que alteren las SQL o no , en orden a evitar
+ataques de inyección de SQL
+
+Si el usuario no puede alterar las SQL , usaremos Statement (usar sólo cuando el texto de la SQL es fijo)
+
+Si el usuario si puede alterar las SQL, usaremos PreparedStatement (usar cuando el texto de la SQL es variable)
+
+En la práctica por seguridad y sencillez se usan casi siempre las PreparedStatement
+
+
+Ejemplo de Statement
+
+
+Libro l = new Libro("El Quijote", "Cervantes", 1200);
+
+Statement st = conexion.createStatement();
+
+String sql = "insert into tabla_libros (titulo, autor) values ('"+l.getTitulo()+"' , '"+l.getAutor()+"', '"+l.getPaginas()+"")";
+
+st.excuteUpdate(sql);
+
+conexion.close();
+
+
+
+
+INSERT
+
+Libro l = new Libro("El Quijote", "Cervantes", 1200);
+
+String sql = "insert into tabla_libros (titulo, autor) values (?,?,?)";
+
+PreparedStatement pst = conexion.prepareStatement(sql);
+
+pst.setString(1 , l.getTitulo());--> Usamos un método distinto según el tipo que almacena la BBDD
+				     setString(), setInt(), setDouble()... . Los parámetros son el 
+				     nº de posición en la SQL (empezando por 1) y el Getter con el 
+				     que traemos la información del objeto				     
+pst.setString(2 , l.getAutor());
+pst.setInt(2 , l.getPaginas());
+
+pst.executeUpdate();
+
+conexion.close();
+
+
+SELECT
+
+Si la SQL siempre va a ser igual , sin posiblidad de poder ser alteradas por el usuario, podemos usar
+Statement
+
+Statement st = conexion.createStatement();
+
+String sql = "select * from tabla_libros";
+
+ResultSet rs = st.executeQuery(sql);
+
+while (rs.next()) {
+	System.out.println("Titulo :" + rs.getString(1) + " Autor : " + rs.getString(2) + " Paginas : " + rs.getPaginas(3) );
+
+}   --> Se puede pasar como argumento el nombre del campo en la BBDD , pero es más seguro hacerlo por el indice (que empieza por 1)
+
+conexion.close();
+
+
+
+
+
+
+
+

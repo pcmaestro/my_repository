@@ -1,3 +1,14 @@
+
+
+El formato de los objetos contenidos en una colección se lo damos entre simbolos <....>,
+dicho formato pueden ser datos primitivos, String o directamente el nombre de la clase
+de la cual están instanciados los objetos. Ej Array<Coche> coches = new Array<Coche>();
+
+También podemos hacer que su contenido sean objetos de la clase Object, lo cual nos permite
+incluir objetos que sean de diferentes tipos de datos. Luego haría falta hacer un casting a un 
+determinado tipo de dato para mostrarlos
+
+
 ARRAY
 
 Un array en Java es una colección de strings de longitud fija, con lo cual al declararla
@@ -212,7 +223,7 @@ que si en lugar de Strings contienen otra cosa, tendremos que usar clases
 "envolventes" como Integer, Boolean, Character o Double
 
 
-COLECCIONES
+COLECCTIONS
 
 La clase Collections posee el método sort() , que permite ordenar listas por número o
 alfabéticamente
@@ -265,7 +276,7 @@ getFirst()	Get the item at the beginning of the list
 getLast()	Get the item at the end of the list
 
 
-La direncia con el ArrayList radica en la forma en la cual se construyen un y otro:
+La diferencia con el ArrayList radica en la forma en la cual se construyen un y otro:
 
 Cuando añadimos un nuevo objeto a un ArrayList , si este no es lo bastante grande, se borra
 y se crea uno nuevo añadiendo el nuevo objeto
@@ -280,11 +291,22 @@ Cuando usar el ArrayList o el LinkedList:
 ArrayList --> Cuando necesitamos acceder de manera aleatoria y frecuente a los objetos, o sólo
 	      necesitamos añadir/quitar objetos del final de la lista
 
-LinkedList --> Cuando sólo usamos la lista para interar a través de ella, o cuando necesitamos
+LinkedList --> Cuando sólo usamos la lista para iterar a través de ella, o cuando necesitamos
 	       de manera frecuente acceder a objetos del principio o el interior de la lista
 
 
 HASHMAPS
+
+//PENDIENTE BUSCAR INFORMACION
+
+
+INTERFAZ LIST
+
+Todas los tipos de array implementan la interfaz List , con lo cual es muy corriente hacer la
+declaración mediante List:
+
+List<String> lista = new LinkedList<String>();
+
 
 
 

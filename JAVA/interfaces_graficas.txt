@@ -367,48 +367,89 @@ ha provocado dicho evento
 Están muy bien explicados en la web GeeksForGeeks.org
 
 
-Etiquetas:
+***Etiquetas***
 
 JLabel("etiqueta) class
 
 
-Caja de Texto:
+***Caja de Texto***
 
 JTextField class
-métodos usuales :  getText() , setText(), addActionListener()
+métodos usuales :  getText() , setText(), addActionListener(this)
 
 
-Text Area:
+***Text Area***
 
 JTextArea(int cols, int rows) class
-métodos usuales:  getText(), addActionListener()
+métodos usuales:  getText(), addActionListener(this)
 
 
-Radio Buttons
+***Radio Buttons***
 
 JRadioButton("etiqueta") class + ButtonGroup class
 métodos usuales:  buttongroup.add(radiobutton) ,  radiobutton.setSelected(), radiobutton.isSelected(), 
-radiobutton.getText(), radiobutton.addActionListener()
+radiobutton.getText(), radiobutton.addActionListener(this)
 
 
-Check Boxes
+***Check Boxes***
 
 JCheckBox("etiqueta") class
-métodos usuales: setSelected(), isSelected(), getText(), addActionListener()
+métodos usuales: setSelected(), isSelected(), getText(), addActionListener(this)
 
 
-Combo box
+***Combo box***
 
 JComboBox(Array[] nombre_array) class
-métodos usuales: addItem(), getItemAt(int nºindice), getSelectedItem(), setSelectedItem(), setSelectedIndex(int nºindice) ,
-addItemListener(ItemListener elemento)
+métodos usuales: addItem(), getItemAt(int nºindice),getSelectedIndex(int nº indice), setSelectedIndex(int nºindice) ,
+addActionListener(this)
+Podemos añadir elementos desde un Array usando un bucle for + addItem()
 
-Select / Select Multiple
+***Select / Select Multiple (Listas)***
 
 JList(Array[] nombre_array) class
 métodos usuales: getSelectedIndex(), setSelectedIndex(int nºindice), isSelectedIndex(int nºindice), 
 setSelectionMode(ListSelectionModel.SINGLE_SELECTION), setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION),
 addListSelectionListener(ListSelectionListener elemento)
+
+Los datos de una lista se añaden desde un modelo , es conveniente sobreescribir el método toString de la clase que usamos
+para crear los datos
+
+Ej
+
+ArrayList<Coche> coches = cochesDAO.listarCoches();
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+
+		for (Coche c : coches) {
+			listModel.addElement(c.toString());
+		} // end for
+
+		panelListado.getList().setModel(listModel);
+
+***Tablas***
+
+JTable class 
+
+En Swing Designer podemos hacer click botón derecho sobre el JTable y hacer un surround with JScrollPane para usar un
+scroll en la tabla
+
+JTable tiene varios constructores , el más util es el que pide un Array con los nombres de columnas y otro Array 2d con
+los datos que irán en las filas
+
+JTable(Object[][] data, String[] nombres_columnas)
+
+Dada la complejidad de las JTable, es recomendable seguir la información oficial en la web de Oracle (How to use JTable)
+
+
+
+
+***Imagenes***
+
+Incluimos la imagen dentro un JLabel,  accedemos a él por su método Getter
+
+panelInicial.getLabelImagen().setIcon(new ImageIcon("src\\imagenes\\coche_fantastico.jpg"))
+
+Para incluir imagenes en un ejecutable deben ir una carpeta junto con dicho ejecutable
+
 
 
 
