@@ -3,12 +3,179 @@ La parte Web de Java está incluida en las especificaciones JEE, la cual está c
 de especificaciones (manuales) y implementaciones (librerias de terceros) , lo más
 normal es que dichas implementaciones se gestionen con herramientas como Maven
 
+Para poder ejecutar los proyectos web, es necesario instalar en Eclipse la libreria de un servidor, como
+por ejemplo Tomcat
+
+Los archivos ejecutables de los proyectos web tiene formato .war , y son los que se cargan en los servidores
+para publicar el site
+
 
 DYNAMIC WEB PROJECT
 
-En eclipse al crar un proyecto , seleccionamos Dynamic Web Project
+En Eclipse al crear un proyecto , seleccionamos Dynamic Web Project
 
-Los HTML los creamos en la carpeta WebContent
+La lógica de negocio en los proyectos web de Java reside en los servlets, y además podemos incluir código o
+etiquetas Java en el HTML en los archivos JSP . Los servlets heredan de la clase HttpServlet
+
+SERVLETS
+
+En los enlaces podemos redirigir al usuario directamente un HTML/JSP si sólo vamos a mostrar información,
+pero si se requiere hacer algo más (mostrar un desplegable, un formulario, etc..) le redirigeremos a un
+servlet, el cual pintará la nueva página aplicando la lógica de negocio
+
+Como buena práctica , al usar un servlet lo nombraremos lo más parecido posible a la ruta donde se ejecuta,
+icluso igual:
+
+Ej
+
+En el JSP
+<form action = "ServletRegistrarProducto" method = "POST">
+
+En el Servlet
+
+@WebServlet("/ServletRegistrarProducto")
+
+En las rutas que construimos con servlets en el JSP, podemos pasar un id o cualquier otra variable como parámetro:
+
+Ej
+
+<a href="ServletBorrarLibro?id=${libro.id}">BORRAR LIBRO</a>
+
+En el servlet podemos leer el parámetro que viene de la ruta con request.getParameter("id"), este método también
+sirve para leer los atributos "name" de los formularios HTML
+
+
+Los servlets disponen de tres tipos de métodos:
+
+doGet() --> atiende peticiones GET
+doPost() --> atiende peticiones POST
+service() --> mas moderno que los anteriores, puede atender GET y POST
+
+Estos métodos reciben como parámetros los objetos request (clase HttpServletRequest) y response (clase HttpServletResponse)
+
+Para leer formularios:
+
+Todo lo que recogemos en los formularios viene en formato String, por lo tanto las variables donde lo almacenemos serán de
+tipo String
+
+String nombre_variable = request.getParameter("name_formulario");
+
+Luego para manejar correctamente los datos , haremos el casting que sea necesario
+
+Para hacer redirecciones:
+
+Normal (se ejecuta en el servidor)
+RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("nombre_ruta o nombre_jsp");
+dispatcher.forward(request, response);
+
+Este método es una redirección interna del servidor, no modifica la URL que está viendo el usuario,
+si necesitamos pasar una varibla al JSP mediante el método request.setAttribute("var_en_jsp", var),
+este es el método que debemos usar, ya que conserva el dato en el request, mientras que sendRedirect()
+modifica la URL y se pierden los datos guardados en request. Al ser redirección interna, desde el punto
+de vista del funcionamiento de la aplicación, es menos costosa
+
+Forzada (se ejecuta en el navegador)
+response.sendRedirect("nombre_ruta"); --> Fuerza al navegador a pedir la ruta, cambia la URL que se presenta
+					  al usuario en el navegador y borra el contenido de request, se usa
+					  para redirigir cuando no hace falta llevar nada guardado en el request
+					  o cuando se redirige a una web externa
+
+
+
+En la medida de lo posible, en los formularios hay que evitar redirigir mientras los datos introducidos no sean
+todos correctos, ya que al hacerlo la página se recarga y se pierde lo escrito por el usuario, lo que hay que
+hacer es validar por Javascript en primera instancia, mostrando errores al usuario , y cuando el Javascript valide
+y envie la información al Servlet, que este vuelva a validar de nuevo (el usuario puede saltarse el Javascript)
+
+REQUEST Y RESPONSE
+
+HTTP se basa en un modelo solicitud / respuesta, de modo que hay dos tipos de mensajes HTTP: la solicitud y la respuesta. 
+
+El navegador abre una conexión a un servidor y realiza una solicitud (request)
+El servidor procesa la solicitud del cliente y devuelve una respuesta (response)
+
+Los objetos que se usan en los Servelets son instancias de HttpServletRequest y HttpServletResponse
+
+
+ESTRUCTURA DEL PROYECTO
+
+Estructura del proyecto
+
+Java Resources
+		src
+			paquetes Servlets (File --> new --> Servlet)
+				Servlet2
+				Servlet2
+				etc...
+			paquetes modelo (Clases con los productos)
+				Producto1
+				Producto2
+				etc...
+
+			paquetes filtros
+				Filtro_acceso1
+				Filtro_acceso2
+				etc...
+
+			paquetes constantesSQL
+				clase constantes1
+				clase constantes2
+				etc...
+			
+			paquetes validadores
+				clase validadora1 --> Expresiones regulares
+				clase validadora2
+				etc....
+
+			daos (Data Object Access)
+				Producto1DAO
+				Producto1DAOimpl  --> incluir constantes url/user/pass + 
+						      Objeto de Connection instanciado a null(para poder
+						      usarlo en los métodos de conexión y desconexión) +
+						      constructor que cargue el drivver de la BBDD +
+						      métodos de conexión/desconexión con BBDD + 
+				Producto2DAO
+				Producto2DAOimpl
+WebContent
+	index.jsp  --> Siempre es la primera página en cargar del proyecto
+	inicio.jsp
+	menu.jsp
+	accesoUserPassword.jsp  --> Incluir aqui el acceso al área de administración para que sea accesible por cualquiera
+	etc..
+
+	admin
+		index.jsp --> primera página que carga en el área de administración
+		menu.jsp
+		administracion1.jsp
+		administracion2.jsp
+		etc...
+
+	WEB-INF	
+		web.xml --> Aqui se indican las rutas de ejecución de los filtros
+		lib
+		    libreria de BBDD --> Necesaria para usar JSTL
+		    libreria JSTL  --> Etiquetas para incrustar Java de forma segura en HTML
+	
+	CSS
+		estilos.css
+	
+	JS
+		javascript.js
+
+TextPackages
+	paqueteTest1
+		test
+	paqueteTest2
+		test
+	etc..
+
+ProjectFiles
+	pom.xml --> Sólo en proyectos Maven, aqui se idican las dependencias de terceros que se instalan
+	   
+
+Los DAOS contienen el código para interactuar con las BBDD, en las interfaces preparamos los métodos CRUD
+y en las clases DAOimpl además de implementar el interfaz, añadimos los métodos de conexión/desconexión con BBDD
+y las constantes con la url, el usuario y la contraseña de la BBDD
 
 Para los Servlet creamos un nuevo paquete y en el vamos creando una clase por cada uno de los Servlet.  
 
@@ -45,7 +212,7 @@ En la parte HTML + JSP:
 
 Para traer el Attribute del objeto request, usamos el nombre que le hemnos dado en el back-end, en este caso "anuncios"
 
-<%
+
 List<Anuncio> listado = (List<Anuncio>)request.getAttribute("anuncios"); --> Los objetos llegan a JSP en formato Object,
 									     por lo que para usarlos en el HTML hay que
 									     hacerles un casting al tipo de dato deseado
@@ -56,8 +223,6 @@ for( Anuncio a : listado){
 	out.print("texto: " + a.getTexto());		
 	out.print("</div>");
 }
-%>
-
 
 Los JSP ( Java Server Pages) son páginas HTML con código java incrustado entre simbolos <% .... %>
 
@@ -69,6 +234,190 @@ El código java de las JSP no es visible al visualizar código fuente en los nav
 
 Las Servlets realizan tareas de control , la interacción con los datos se hará con los DAO (Data Access Objects)
 
+RUTAS
+
+Los Servlets ejecutan código asociado a una determinada ruta,  en los enlaces incluidos en las páginas JSP podemos
+indicar que se ejecute una ruta,  un archivo JSP,  o directamente un determinado servlet
+
+Las carpetas que añadamos a la de WebContent implican que su nombre pasa a formar parte de la ruta
+
+Ej 
+WebContet
+	admin
+	    index.jsp
+
+La ruta hacia este JSP será admin/index.jsp , si desde este index.jsp hubiera que redirigir a otro JSP que
+cuelgue directamente de WebContent, seria necesario indicar en la ruta ../otro.jsp
+
+También es importante tener en cuenta que las rutas de los Servlets que llamemos desde la subcarpeta admin
+serserán @WebServlet("/admin/Servlet_nombre")
+	
+SESIONES
+
+El "sello" de sesión puede ser cualquier cosa, normalmente es un String :
+
+request.getSession().setAttribute("adminOK", "ok"); --> El 1er parámetro será el que usemos para los filtros y
+						        comprobaciones, el segundo no tiene utilidad
+
+Para hacer el log out
+
+request.getSession().invalidate();
 
 
+LIBRERIA JSTL
+
+En las páginas JSP podemos incrustar Java,  pero esto no es seguro , lo mejor es usar las etiquetas, 
+la liberia JSTL nos da esas etiquetas si no estamos usando frame works como Spring , Struts, JSF...
+
+Esto requiere importar en la web la libreria JSTL y además la librería de la BBDD
+
+Ambas librerias las incluimos en nuestro proyecto en WebContent -> WEB-INF -> lib
+
+Para usar la JSTL en una web, es oblitario escribir al principio de esta lo siguiente:
+
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>  --> Esto permite usar c para tomar cualquier cosa
+									  de la librería
+
+
+Bucle for
+
+<c:forEach items = "${coches}" var = "coche">--> Esto permite hacer el for añadiendo HTML,  llama por defecto
+						 a los Getter de la clase instanciada y hace una traducción que
+						 que permite acceder directamente a la propiedad del objeto, pero
+						 si el Getter no exite en la clase, no funciona
+
+
+	<table>
+					<tr>
+						<th>MARCA</th>
+						<th>MODELO</th>
+						<th>COLOR</th>
+						<th>MOTOR</th>
+						<th>CILINDRADA</th>
+						<th>PRECIO</th>
+						<th>TF CONTACTO</th>
+						<th>EMAIL CONTACTO</th>
+					</tr>
+					
+					<tr>
+						<td>${coche.marca}</td>
+						<td>${coche.modelo}</td>
+						<td>${coche.color}</td>
+						<td>${coche.motor}</td>
+						<td>${coche.cilindrada}</td>
+						<td>${coche.precio}</td>
+						<td>${coche.telefono}</td>
+						<td>${coche.email}</td>					
+					</tr>
+		 </c:forEach>  
+				
+	</table>
+ 
+
+LENGUAJE DE EXPRESIONES JSP
+
+La expresión mas común es ${nombre_variable} , que contiene la información que introducimos en el objeto
+request mediante el método setAttribute("nombre_variable", nombre_variable) desde un servlet
+
+Las más utiles son las etiquetas JSTL , cuyo uso requiere 3 cosas :
+
+- Añadir la librería del conector de nuestra BBDD en la carpeta WebContent/WEB-INF/lib
+- Añadir la librería jstl.jar en la carpeta WebContent/WEB-INF/lib
+- Incluir al principio del JSP la expresión <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>,
+  la cual hace accesibles nediante la variable c todas las etiquetas JSTL
+
+En los archivos JSP podemos incluir terminos del lenguaje de expresiones denominados directivas JSP que nos 
+permiten añadir contenido, crear bucles,  estructuras condicionales... .  Estas etiquetas de expresión son
+mucho más seguras que incluir código Java directamente en la web y por lo tanto su uso es muy recomendable
+
+<jsp:include page = "fragmento.jsp"></jsp:include>
+
+Esto añade al JSP actual un fragmento de HTML contenido en fragmento.jsp
+
+<c:forEach items="${nombre_array}" var="objeto">
+    
+     ${objeto.propiedad1}
+     ${objeto.propiedad2}
+     etc...
+
+</c:forEach>
+
+
+Podemos traer también variables desde los Servlet de la siguiente manera :
+
+En el Servlet --> request.setAttribute("nombre_variable", nombre_variable) , el 1er argumento viaja al JSP
+
+En el JSP
+
+${nombre_variable} ,  este nombre_variable viene del Servlet
+
+FILTROS
+
+Los filtros son clases que ejecutan código antes de acceder a una ruta concreta
+
+Java dispone del interfaz Filter del paquete javax.servlet que debe ser implementado
+en todos las clases filtro
+
+Ej de filtro donde comprobamos que el usuario ha iniciado sesión , con el método getAttribute() del
+objeto request, vemos su contenido y comprobamos si trae el "sello" de la sesión, que puede ser
+cualquier cosa , y este es caso es "adminOK"
+
+public class FiltroAdmin implements Filter{
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+			
+		HttpServletRequest req = (HttpServletRequest)request;
+		
+		if (req.getSession().getAttribute("adminOK") != null) {
+			chain.doFilter(request, response);  ------------> Como hay sello de sesiòn, el filtro no hace nada
+		}else {
+			HttpServletResponse res = (HttpServletResponse)response;
+			res.sendRedirect("loginAdmin.jsp"); ------------> Como no hay sello de sesión, el filtro redirige
+									  a la página de login
+		}
+		
+	}//endoFilter	
+	
+}
+
+Los casting de request y response hay que hacerlos porque los que trae el método del interfaz por
+defecto son antiguos ( de las clases ServletRequest y ServletRespone) y los necesitamos de las clases
+HttpServletRequest y HttpServletResponse , que son los que tienen los métodos getParameter(), getSession(), 
+getAtribute(), etc..
+
+Los filtros se programan en una clase, pero en esta no se indica ante que rutas se va a ejecutar, estoy hay que indicarlo
+en el archivo de configuración web.xml , en Eclipse tenemos la opción de indicar que este archivo sea creado a la hora de
+crear un nuevo proyecto (si no lo tenemos creado, basta con crear un proyecto ficticio y cogerlo de ahi). En Eclipse en
+este archivo aparecen dos pestañas, debemos ir a la de Source
+
+En este archivo lo normal es indicar en el <display-name> el nombre del proyecto, los <wellcome-file> son una serie de
+páginas que Java irá buscando como la primera a cargar por defecto en el proyecto , la etiqueta <filter> es la que nos
+permite indicar las rutas de los filtros , justo despues del <wellcome-file> indicamos lo siguiente:
+
+<filter>
+	<filter-name>miFiltro</filter-name>	
+	<filter-class>nombre_paquete.nombre_filtro </filter-class>  --> Lo estamos nombrando miFiltro
+
+</filter>
+
+<filter-mapping>   
+	<filter-name>miFiltro</filter-name>
+	<url-pattern>/admin/*</url-pattern> --> con esta expresión, saltará en todas las subrutas de /admin
+
+</filter-mapping>
+
+
+Por último , algunos frame works llaman a los fitros como interceptores,  pero su función es la misma
+
+
+AREA DE ADMNISTRACION
+
+Por convención, la ruta para la administracion es /admin (www.dominio.com/admin) , antes de acceder, usaremos un filtro
+para autorizar el acceso
+
+Para acceder a la administración java dispone de la clas Filter del paquete javax.servlet
+
+Las rutas donde se ejecutan estos filtros se programan en un archivo llamado web.xml
 

@@ -80,7 +80,7 @@ PreparedStatement pst = conexion.prepareStatement(sql);
 pst.setString(1 , l.getTitulo());--> Usamos un método distinto según el tipo que almacena la BBDD
 				     setString(), setInt(), setDouble()... . Los parámetros son el 
 				     nº de posición en la SQL (empezando por 1) y el Getter con el 
-				     que traemos la información del objeto				     
+				     que traemos la información del objeto o una variable			     
 pst.setString(2 , l.getAutor());
 pst.setInt(2 , l.getPaginas());
 
@@ -98,7 +98,9 @@ Statement st = conexion.createStatement();
 
 String sql = "select * from tabla_libros";
 
-ResultSet rs = st.executeQuery(sql);
+ResultSet rs = st.executeQuery(sql);  --> El objeto de ResultSet guarda lo que viene de la BBDD como una colección de objetos,
+					  más abajo la recorremos desde el indice 1 y vamos haciendo el parseo con los métodos
+					  de la clase ResultSet para acceder correctamente al tipo de dato de cada registro
 
 while (rs.next()) {
 	System.out.println("Titulo :" + rs.getString(1) + " Autor : " + rs.getString(2) + " Paginas : " + rs.getPaginas(3) );

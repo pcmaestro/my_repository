@@ -1,18 +1,25 @@
 CREATE TABLE employees
 ( employee_number number(10) NOT NULL,
-  employee_name varchar2(50) NOT NULL,
+  employee_name VARCHAR2(50) NOT NULL,
   department_id number(10),
   salary number(6),
   CONSTRAINT employees_pk PRIMARY KEY (employee_number),
   CONSTRAINT fk_departments FOREIGN KEY (department_id) REFERENCES departments(department_id)
 );
 
-Ej.
+Ej
 
-CREATE TABLE `tabla_anuncios` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(255) NULL,
-  `precio` DECIMAL(9,2) NULL,
-  `email` VARCHAR(255) NULL,
-  `email-valido` VARCHAR(2) NULL DEFAULT 'NO',
-  PRIMARY KEY (`id`));
+CREATE TABLE tabla_coches 
+( id INT(10) NOT NULL AUTO_INCREMENT,
+  marca VARCHAR(50) NOT NULL,  
+  modelo VARCHAR(50) NOT NULL,
+  color VARCHAR(50) NOT NULL,
+  motor VARCHAR(50) NOT NULL,
+  cilindrada INT(4) NOT NULL,
+  precio INT(7) NOT NULL,
+  telefono INT(9) NOT NULL,
+  email VARCHAR(50)NOT NULL,  
+  id_categoria INT(50) NOT NULL,
+  CONSTRAINT coche_pk PRIMARY KEY (id),
+  CONSTRAINT fk_categorias FOREIGN KEY (id_categoria) REFERENCES tabla_categorias_coches(id) ON DELETE CASCADE
+ );
