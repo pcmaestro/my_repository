@@ -1,0 +1,188 @@
+Un web service es un servicio que expone al exterior la funcionalidad de una aplicación:
+
+Existen dos tipos de web services
+
+SOAP --> usan XML
+
+REST --> usan JSON
+
+Se usan para intercambiar información entre una aplicación y un servidor, o bien para 
+intercambio de información entre maquinas en sistemas distribuidos (aplicaciones troceadas
+corriendo en varias máquinas-orquetación de servicios- , aplicaciones balanceadas, replicadas, etc...)
+
+La forma más común de crear web services en Java es usando el conjunto de librerias JAXWS, que permite
+crear dichos web services usando anotaciones
+
+El web service usa métodos para interactuar con las BBDD y los DAOS,  NUNCA se definen dentro del
+web service este tipo de funcionalidades
+
+##############################    SERVICIO SOAP    ###################################################
+
+Estos web service siguen un protocolo rígido y ofrecen su información en formato XML, indicamos
+que una clase es un WebService con la anotación @WebService
+
+Creamos un proyecto con un Main y con una clase MyWebService:
+
+import javax.jws.WebService
+
+@WebService(parametros_documentacion)
+public class MyWebService{
+	
+	@WebMethod() --> esta segunda anotación es opcional, no necesaria
+	public int myServiceMethod1(variables){
+
+		métodos de conexión con BBDD, métodos de uso de DAOS, etc...
+
+	return numero_entero; --> Se suelen usar números para indicar si todo ha ido bien o no,
+				  dichos números se definen al inicio del proyecto
+
+	public int myServiceMethod2(variables){
+
+		métodos de conexión con BBDD, métodos de uso de DAOS, etc...
+
+	return numero_entero;	
+
+	}
+}	
+
+Los servicios ofrecidos serán los métodos incluidos en la clase MyWebService
+
+
+Para ofrecer este web service, en el Main del proyecto
+	
+import javax.xml.ws.Endpoint;
+
+EndPoint.publish("http://url_del_web_service:nº_puerto/lo_que_sea", new MyWebService());
+
+Seguidamente arrancamos el Main en Eclipse y iuego en un navegador podremos ver el código xml 
+generado escribiendo esto:
+
+http://url_del_web_service:nº_puerto/lo_que_sea?wsdl
+
+La terminación wsdl (web service description language) permite ver un texto XML
+que define que cosas se pueden invocar del web service, al ser SOAP un procolo rígido,
+no podemos alterar nada del documento wsdl generado
+
+Para usar el web service,  debemo llamar a su URL ,  en Eclipse debemos crear un nuevo
+proyecto, por ej clienteWebServiceProject, y sobre él botón derecho--> new --> other --> 
+WebServices --> Web Service Client --> en service definition pegamos la URL
+
+Eclipse crea el cliente web service con una tecnología llamada AXIS, veremos dentro
+del proyecto que se crea el paquete servicios y dentro de este varias clases creadas
+a partir del nombre de la clase del web service (en este caso MyWebService)
+
+
+En el Main del proyecto clienteWebServiceProject , de las nuevas clases creadas, vamos a
+instanciar la clase :
+
+ServicioMyServiceMethod1Proxy
+
+Un Proxy en un cliente web service permite usar la clase Servicio como si fuera local, 
+pero invocando realmente al web service para traer la información
+
+Seguidamente creamos un objero de la clase ServicioProxy, y para invocar al servicio remoto
+contenido en la clase MyWebService lo llamamos con la notación del punto
+
+Ej
+
+ServicioMyServiceMethod1Proxy proxy = new ServicioMyServiceMethod1Proxy();
+
+proxy.myServiceMethod1(variables)
+
+Asi pues,  si pedimos argumentos en los métodos del web service, el usuario podrá interactuar
+con las BBDD
+
+##############################    SERVICIO REST    ##############################################
+
+JAX-RS es una API de Java para servicios web REST que forma parte de JAVA EE
+
+Jersey es uno de los frameworks usados para crear servicios REST en Java:
+
+https://eclipse-ee4j.github.io/jersey/download.html
+
+Creamos un nuevo proyecto Maven y en add archetype , añadimos el group id, artifact id y version según lo
+que se indique en la web indicada
+
+También tenemos la opción de crear un DYNAMIC WEB PROJECT marcando la creación del web.xml ,  seguidamente cambiamos el tipo de 
+proyecto a MAVEN (configure - convert to Maven project) , y el pom.xml añadimos Jersey según lo anterior
+
+Jersey trae una demo de prueba comprobar que todo ha ido bien, para usarla , sobre el proyecto hacemos un Run on server 
+y aparecerá la URL http://localhost:8080/nombre_proyecto/ indicando asi que todo ha ido bien	
+
+En el pom.xml viene comentado un artifact id para usar si no necesitamos compatibilidad con jersey 2, lo usamos
+o no según necesidad , también viene comentada una opción necesaria para el soporte de JSON, la descomentamos
+
+En el web.xml dentro de la etiqueta <param-value> tendremos que ir dando de alta todos los paquetes donde
+residan clases (llamadas recursos) que contengan un servicio REST, los podemos poner todos dentro de esta etiqueta separandolos
+con comas
+
+En el servlet Jersey Web Application viene el <url-pattern> /webapi/* ,  con lo cual composición de la URL del servicio REST sería
+
+http://direccion_ip:puerto/nombre_proyecto/webapi/ruta_en_Path
+
+Y si la ruta pide parámetros
+
+http://direccion_ip:puerto/nombre_proyecto/webapi/ruta_en_path?nombre=xxxx&apellido=xxxxxx
+
+Lo primero que debemos de hacer para iniciar nuestra API REST es indicarle el Path base desde el cual estará respondiendo nuestra API. 
+Este path corresponde a la URL a partir de la cual se expondrá nuestros servicios y decora la clase que alberga los recursos:
+
+Ej
+
+Path("ruta_servicio")
+
+Y luego sus métodos también deberán contener estas anotaciones (cada método se puede exponer como un servicio independiente):
+
+@GET \ @POST \@PUT \@DELETE  --> Según venga la petición del cliente
+
+@Produces(MediaType.APPLICATION_JSON) / @Consumes(MediaType.APPLICATION_JSON)   --> En la enumeración vienen muchos formatos 
+										    para producir y consumir
+
+@QueryParam --> Esta anotación sirve para indicar que el método recibirá parámetros a traves de url 
+
+Como el formato de JSON es clave:valor, es necesario que la clase donde presentemos la información
+haga al asociación clave:valor mediante un objeto instanciado de Map
+
+Ej 
+
+ 
+import javax.ws.rs.Consumes; 
+import javax.ws.rs.GET; 
+import javax.ws.rs.Path; 
+import javax.ws.rs.Produces; 
+import javax.ws.rs.core.MediaType; 
+import javax.ws.rs.core.Response; 
+
+@Path("/hello") 
+public class Nombre_clase {               
+
+    @GET  
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Clase_producto nombre_metodo(@QueryParam("name")  String name ) {     
+		........
+
+        return producto;
+    } 
+}
+
+Parra arrancar el servicio REST en Eclipse lo hacemos con Run on Server, para hacer pruebas podemos descargar la
+aplicación POSTMAN
+
+Es importante tener en cuenta en los métodos los verbos HTML que se tienen que usar ( GET, POST...) y también que
+el header de HTML indicará los formatos que aceptan el cliente y el servidor ( JSON, XML, Multipart form data, texto plano, etc..)
+
+Si queremos enviar XML, en la clase del producto o articulo que exponemos, hay que poner encima la anotación
+@XMLrootElement
+
+Si hay problemas con los acentos y las letras ñ, en la declaración del Tipo MIME podemos hacer esto:
+
+@Consumes(MediaType.APPLICATION_JSON + "; charset = ISO-8859-1") 
+
+
+
+
+
+
+
+

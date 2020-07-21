@@ -32,7 +32,23 @@ Si el proyecto no está en su version definitiva,  en <version> aparecerá la pa
 Habrá una carpeta llamada bin donde aparecerán los bytecodes compilados de las clases del proyecto
 
 
+CREAR UN PROYECTO MAVEN
 
+File --> New --> Maven Project --> Select Workspace --> next --> arquetipo maven-archetype-quickstart
+
+Seguidamente indicamos el Group id(por ej nombre_empresa) , Artifact id(nombre_proyecto) , Package (nombre_paquete)
+
+Se agregan por defecto unas dependencias de Junit y una clase default
+
+Al guardar dependencias en el pom.xml , Eclipse descargará automáticamente las librerias y las podremos
+incluir en el proyecto haciendo import  .  La dependencia descargada aparecerá en Maven Dependencies
+
+
+ERROR EN TRANSFERENCIA DE PLUGINS APACHE
+
+Si tenemos instalado un servicdor TOMCAT y al crear o convertir un proyecto Maven aparece un error
+de transferencia de plugins en el pom.xml, vamos al proyecto y le hacemos un Run as Maven clean y luego
+un Run as Maven install, esto limpiará los errores del pom.xml
 
 
 

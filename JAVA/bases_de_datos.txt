@@ -110,6 +110,13 @@ while (rs.next()) {
 conexion.close();
 
 
+TRANSACCIONES
+
+Este termino se refiere a que las acciones se sobre distintas bases de datos se ejecuten todas o ninguna , como por ejemplo
+ir a una agencia de viajes y que no se registre la reserva del hotel hasta que esté confirmada la reserva del vuelo, la forma
+de operar sería que si no se puede reservar el avión, se haga un roll-back del registro del hotel
+
+
 
 
 

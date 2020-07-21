@@ -17,6 +17,90 @@ En Eclipse al crear un proyecto , seleccionamos Dynamic Web Project
 La lógica de negocio en los proyectos web de Java reside en los servlets, y además podemos incluir código o
 etiquetas Java en el HTML en los archivos JSP . Los servlets heredan de la clase HttpServlet
 
+Estructura del proyecto
+
+Java Resources
+		src
+			paquetes Servlets (File --> new --> Servlet)
+				Servlet2
+				Servlet2
+				etc...
+			paquetes modelo (Clases con los productos)
+				Producto1
+				Producto2
+				etc...
+
+			paquetes filtros
+				Filtro_acceso1
+				Filtro_acceso2
+				etc...
+
+			paquetes constantesSQL
+				clase constantes1
+				clase constantes2
+				etc...
+			
+			paquetes validadores
+				clase validadora1 --> Expresiones regulares
+				clase validadora2
+				etc....
+
+			paquetes daos (Data Object Access)
+				Producto1DAO  --> interfaz con los métodos que deberán tener sus DAOimpl		
+				Producto2DAO
+				
+			paquetes daosimpl
+				MasterDAO --> contiene los métodos que usarán en común los DAOimpl, como por ejemplo 
+					      la carga del driver de la BBDD y sus conexiones/desconexiones
+				Producto1DAOimpl  --> incluir constantes url/user/pass + 
+						      Objeto de Connection instanciado a null(para poder
+						      usarlo en los métodos de conexión y desconexión) +
+						      constructor que cargue el drivver de la BBDD +
+						      métodos de conexión/desconexión con BBDD + 
+				Producto2DAOimpl
+				etc...
+		       
+		       paquetes webServices
+				webservice1 class
+			        webservice2 class
+				etc...
+
+WebContent
+	index.jsp  --> Siempre es la primera página en cargar del proyecto
+	inicio.jsp
+	menu.jsp
+	accesoUserPassword.jsp  --> Incluir aqui el acceso al área de administración para que sea accesible por cualquiera
+	etc..
+
+	admin
+		index.jsp --> primera página que carga en el área de administración
+		menu.jsp
+		administracion1.jsp
+		administracion2.jsp
+		etc...
+
+	WEB-INF	
+		web.xml --> Aqui se indican las rutas de ejecución de los filtros
+		lib
+		    libreria de BBDD --> Necesaria para usar JSTL
+		    libreria JSTL  --> Etiquetas para incrustar Java de forma segura en HTML
+	
+	CSS
+		estilos.css
+	
+	JS
+		javascript.js
+
+TextPackages
+	paqueteTest1
+		test
+	paqueteTest2
+		test
+	etc..
+
+ProjectFiles
+	pom.xml --> Sólo en proyectos Maven, aqui se idican las dependencias de terceros que se instalan
+
 SERVLETS
 
 En los enlaces podemos redirigir al usuario directamente un HTML/JSP si sólo vamos a mostrar información,
@@ -87,95 +171,6 @@ todos correctos, ya que al hacerlo la página se recarga y se pierde lo escrito 
 hacer es validar por Javascript en primera instancia, mostrando errores al usuario , y cuando el Javascript valide
 y envie la información al Servlet, que este vuelva a validar de nuevo (el usuario puede saltarse el Javascript)
 
-REQUEST Y RESPONSE
-
-HTTP se basa en un modelo solicitud / respuesta, de modo que hay dos tipos de mensajes HTTP: la solicitud y la respuesta. 
-
-El navegador abre una conexión a un servidor y realiza una solicitud (request)
-El servidor procesa la solicitud del cliente y devuelve una respuesta (response)
-
-Los objetos que se usan en los Servelets son instancias de HttpServletRequest y HttpServletResponse
-
-
-ESTRUCTURA DEL PROYECTO
-
-Estructura del proyecto
-
-Java Resources
-		src
-			paquetes Servlets (File --> new --> Servlet)
-				Servlet2
-				Servlet2
-				etc...
-			paquetes modelo (Clases con los productos)
-				Producto1
-				Producto2
-				etc...
-
-			paquetes filtros
-				Filtro_acceso1
-				Filtro_acceso2
-				etc...
-
-			paquetes constantesSQL
-				clase constantes1
-				clase constantes2
-				etc...
-			
-			paquetes validadores
-				clase validadora1 --> Expresiones regulares
-				clase validadora2
-				etc....
-
-			daos (Data Object Access)
-				Producto1DAO
-				Producto1DAOimpl  --> incluir constantes url/user/pass + 
-						      Objeto de Connection instanciado a null(para poder
-						      usarlo en los métodos de conexión y desconexión) +
-						      constructor que cargue el drivver de la BBDD +
-						      métodos de conexión/desconexión con BBDD + 
-				Producto2DAO
-				Producto2DAOimpl
-WebContent
-	index.jsp  --> Siempre es la primera página en cargar del proyecto
-	inicio.jsp
-	menu.jsp
-	accesoUserPassword.jsp  --> Incluir aqui el acceso al área de administración para que sea accesible por cualquiera
-	etc..
-
-	admin
-		index.jsp --> primera página que carga en el área de administración
-		menu.jsp
-		administracion1.jsp
-		administracion2.jsp
-		etc...
-
-	WEB-INF	
-		web.xml --> Aqui se indican las rutas de ejecución de los filtros
-		lib
-		    libreria de BBDD --> Necesaria para usar JSTL
-		    libreria JSTL  --> Etiquetas para incrustar Java de forma segura en HTML
-	
-	CSS
-		estilos.css
-	
-	JS
-		javascript.js
-
-TextPackages
-	paqueteTest1
-		test
-	paqueteTest2
-		test
-	etc..
-
-ProjectFiles
-	pom.xml --> Sólo en proyectos Maven, aqui se idican las dependencias de terceros que se instalan
-	   
-
-Los DAOS contienen el código para interactuar con las BBDD, en las interfaces preparamos los métodos CRUD
-y en las clases DAOimpl además de implementar el interfaz, añadimos los métodos de conexión/desconexión con BBDD
-y las constantes con la url, el usuario y la contraseña de la BBDD
 
 Para los Servlet creamos un nuevo paquete y en el vamos creando una clase por cada uno de los Servlet.  
 
@@ -223,6 +218,78 @@ for( Anuncio a : listado){
 	out.print("texto: " + a.getTexto());		
 	out.print("</div>");
 }
+
+
+REQUEST Y RESPONSE
+
+HTTP se basa en un modelo solicitud / respuesta, de modo que hay dos tipos de mensajes HTTP: la solicitud y la respuesta. 
+
+El navegador abre una conexión a un servidor y realiza una solicitud (request)
+El servidor procesa la solicitud del cliente y devuelve una respuesta (response)
+
+Los objetos que se usan en los Servelets son instancias de HttpServletRequest y HttpServletResponse
+
+
+DAOS (Data Access Objects)
+
+Los DAOS contienen el código para interactuar con las BBDD, en las interfaces preparamos los métodos CRUD
+y en las clases DAOimpl además de implementar el interfaz, añadimos los métodos de conexión/desconexión con BBDD
+y las constantes con la url, el usuario y la contraseña de la BBDD
+
+
+Para no repetir código, se puede crear un MASTER DAO que contendrá la carga del driver de la BBDD y los métodos
+para la conexión y desconexión , este MasterDAO puede ser una clase abstracta, ya que no requiere que se instancien
+objetos, simplemente que sus métodos sean directamente accesibles
+
+Ej de MasterDAO
+
+public abstract class MasterDAO {
+	
+	private static final String URL = "jdbc:mysql://localhost:3306/bd_coches";
+
+	private static final String USER = "root";
+
+	private static final String PASSWORD = "1234";
+	
+	protected Connection conexion = null;
+	
+	public MasterDAO() {
+		System.out.println("se ejecuta el constructor de MasterDAO");
+		//Cargando el driver de MySQL
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("No se ha podido cargar el driver de la BBDD - revisar clase MasterDAO");
+			e.printStackTrace();
+		}//end carga Driver
+	}//end constructor
+	
+	protected void conectar(){
+		try {
+			conexion = DriverManager.getConnection(URL, USER, PASSWORD);
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+	}//end conectar
+	
+	protected void desconectar() {
+		try {
+			conexion.close();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		
+	}//end desconectar
+
+}//end class
+
+De esta manera en los DAOimpl podremos invocar simplemente a los métodos conectar() y desconectar() y por detrás la clase
+MasterDAO lo hará todo
+
+
+
+JSP
 
 Los JSP ( Java Server Pages) son páginas HTML con código java incrustado entre simbolos <% .... %>
 
@@ -351,6 +418,7 @@ En el JSP
 
 ${nombre_variable} ,  este nombre_variable viene del Servlet
 
+
 FILTROS
 
 Los filtros son clases que ejecutan código antes de acceder a una ruta concreta
@@ -420,6 +488,7 @@ que queramos, antes de acceder, usaremos un filtro para autorizar el acceso
 Para acceder a la administración java dispone de la clas Filter del paquete javax.servlet
 
 Las rutas donde se ejecutan estos filtros se programan en un archivo llamado web.xml
+
 
 IMAGENES
 

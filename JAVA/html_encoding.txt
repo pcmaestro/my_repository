@@ -1,0 +1,36 @@
+CODIFICACION DE ENTIDADES HTML
+
+Para evitar problemas con los juegos de caracteres, es buena práctica guardar en la BBDD los caracteres
+especiales que pueda contener el texto de una web en formato de entidades HTML
+
+Existen muchas librerias para hacer encoding HTML,  por ejemplo StringEscapeUtils:
+
+Instalación previa en Maven de la dependencia Apache Commons
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+Posteriormente, en el proyecto hacemos este import:
+
+
+import org.apache.commons.text.StringEscapeUtils;
+
+
+Y asi sería por ejemplo la clase que debemo crear
+
+public class EscapeHTML extends StringEscapeUtils {
+		
+	public String parsearEntidad(String text) {
+	         
+	        String textConverted = StringEscapeUtils.escapeHtml4(text); 
+			
+		return textConverted;
+	}
+		
+}
+
+El resultado será un texto donde letras con acentos, letras ñ , etc.. aparecerán con su representación
+en entidad HTML , el cual será guardado en la BBDD
