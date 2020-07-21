@@ -1,0 +1,33 @@
+DISPLAY
+
+Sintaxis CSS 
+display : atributo;
+
+Sintaxis JavaScript
+object.style.display = "atributo";
+
+
+--------------------   inLine   -------------------------
+
+Muestra un elemento en linea (similar a <span> ) , las propiedades de ancho y alto
+no tendrán efecto
+
+--------------------   block   --------------------------
+
+Muestra un elemento como un bloque (similar a <p>) , empieza en una nueva linea y toma
+todo el ancho del contenedor
+
+--------------------  inLineBlock   ---------------------
+
+Muestra un elemento cono inLine, pero se le puede aplicar ancho y alto, permite por ejemplo
+poner en la misma linea elementos linea y elementos bloque
+
+--------------------  none    ---------------------------
+
+Oculta el elemento
+
+
+
+Para ver otras propiedades de display :
+
+https://www.w3schools.com/cssref/pr_class_display.asp

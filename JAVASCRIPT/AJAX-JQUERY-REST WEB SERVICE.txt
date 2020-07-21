@@ -299,3 +299,12 @@ Aqui recorremos el JSON obtenido con el método each(), que es un bucle FOR
 
 
 Si se necesita importar un script de Javascript o de la web de Jquery, ver documentación del método getScript()
+
+
+
+VALIDACOIN DE FORMULARIOS MEDIANTE JQUERY VALIDATE
+
+Requiere descargar, junto con la librería de JQuery, la librería JQuery Validate
+
+http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js ( comprobar verisón)
+

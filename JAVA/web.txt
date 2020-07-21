@@ -414,10 +414,88 @@ Por último , algunos frame works llaman a los fitros como interceptores,  pero 
 
 AREA DE ADMNISTRACION
 
-Por convención, la ruta para la administracion es /admin (www.dominio.com/admin) , antes de acceder, usaremos un filtro
-para autorizar el acceso
+Por convención, la ruta para la administracion es /admin (www.dominio.com/admin) por convención, pero podemos indicar la
+que queramos, antes de acceder, usaremos un filtro para autorizar el acceso
 
 Para acceder a la administración java dispone de la clas Filter del paquete javax.servlet
 
 Las rutas donde se ejecutan estos filtros se programan en un archivo llamado web.xml
+
+IMAGENES
+
+Para subir imagenes en el <form> del JSP hay que incluir el atributo enctype ="multipart/form-data" por requerimiento
+de los navegadores
+
+Para subir la imagen usaremos un <input type = "file">
+
+En el servlet que recibirá la información del formulario, es obligatorio añadir encima a anotación :
+
+@MultipartConfig  --> requiere importación
+
+Por convención se suele poner debajo de la anotación @WebServlet
+
+Y luego totamos el "name" del formulario:
+
+import javax.servlet.http.Part;
+
+Part archivo =  request.getPart("imagen");
+
+A la hora de guardar la imagen , debemos hacerlo donde esté la aplicación desplegada , como por ejemplo
+un servidor Apache Tomcat, por lo cual en el servlet debemos programar una variable que guarde dicha
+ruta:
+
+String rutaAplacion = getServletContext().getRealPath("");
+
+En este ruta creamos la carpeta con las imagenes (si no estuviera ya creada antes) :
+
+String rutaImagenes = rutaAplicacion + File.separator + "imagenes";  --> File.separator es usado para evitar la
+									 incompatibilidad de algunos sistemas
+									 operativos con la "/"
+
+Seguidamente creamos un objeto para manejar archivos en la ruta:
+
+File f = new File(rutaImagenes);
+
+//Si no existe la ruta hasta la carpeta de imagenes, la creamos
+
+if(!f.exists()){
+	f.mkdirs();
+}
+
+Las imagenes se pueden guardar en BBDD,  pero es práctica muy extendida guardarlas en carpetas
+como la que acabamos de crear,  para ello , se extrae el id del registro creado y se nombra a la
+imagen don dicho id, para ello es necesario que la interfaz DAO del registro de objetos pida hacer
+return de un int con el id del registro recién creado,  en el DAOimpl obtendremos dicho id de la
+siguiente manera :
+
+int idGenerado = -1;
+
+PreparedStatement ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+Despues de ejecutar la Query, tomamos la id en el objeto ResultSet y la guardamos en la variable:
+
+ResultSet rs = ps.getGeneratedKeys();
+if (rs.next()) {
+    idGenerado = rs.getInt(1); --> La primera posición de la fila suele ser el id de producto
+}
+
+Y finalmente el DAOimpl hará un return idGenerado;
+
+En el Servlet donde guardamos el registro , podremos ya hacer esto :
+
+int idGenerado = cochesDAO.registrarCoche(coche);
+
+Y finalmente creamos la ruta definitiva incluyendo el nombre de la imagen:
+
+String rutaArchivo = rutaImagenes + File.separator  + idGenerado + ".jpg";
+
+Y guardamos la imagen:
+
+archivo.write(rutaArchivo);
+
+Para mostra la imagen en el JSP:
+
+img src="imagenes/${coche.id}.jpg" />  --> La carpeta imagenes se ha creado a partir de la raiz
+					   del proyecto en Tomcat
+
 

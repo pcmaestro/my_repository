@@ -1,0 +1,20 @@
+utilizar un elemento de bloque, como una capa, un párrafo, el “body”, etc... el tamaño depende del contenido. 
+Pero al definir un tamaño fijo nos puede surgir un problema: ¿qué pasa si el contenido del elemento (texto, imágenes, etc...) 
+no cabe? Entonces se produce un desbordamiento, que podemos controlar desde el estilo con la propiedad overflow. 
+Podemos darle estos valores:
+
+ 
+
+-      visible. Es la opción por omisión. El contenido sale de elemento, y puede que se solape con los elementos que haya a continuación.
+
+ 
+
+-      hidden. Lo que no quepa en el elemento, queda oculto.
+
+ 
+
+-      auto. Muestra las barras de desplazamiento en el elemento cuando sea necesario.
+
+ 
+
+-      scroll. Siempre muestra las barras de desplazamiento.

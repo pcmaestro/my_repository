@@ -1,0 +1,13 @@
+LIMIT
+
+La clausula LIMIT de MySQL limita los resultados obtenidos en la query
+
+Sintaxis
+
+LIMIT, registro_inicio, registro_fin --> Muestra desde el registro_inicio hasta el registro_f<<in
+
+LIMIT registro_fin --> Muestra desde el primer registro hasta el registro_fin
+
+Ej
+
+SELECT * FROM TABLA_COCHES LIMIT 20, 50 --> Muestra los registros desde el 20 hasta el 50

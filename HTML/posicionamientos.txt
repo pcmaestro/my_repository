@@ -1,0 +1,37 @@
+Sintaxis:
+
+position: atributo;
+
+
+STATIC (por defecto)
+Los navegadores por defecto los elementos en linea los muestran uno al lado del otro, y los elementos
+bloque los van apilando uno encima del otro
+
+RELATIVE
+Permite desplazar un elemento manipulando las propiedades top, bottom, right y left en unidades CSS,
+pero deja su espacio vacio, con lo cual no se altera la posición de los elementos adyacentes
+
+Ej
+
+div{
+    position:relative;
+    top:100px:
+    left:100px;
+}
+
+ABSOLUTE
+Igual que el anterior, se maneja con las mismas propiedades,  pero con la diferencia de que deja vacío
+su espacio, con lo cual los elementos adyacentes se recolocan
+
+FIXED
+Fija un elemento en la pantalla, al hacer scroll, todo se mueve menos este elemento, podemos también
+manipular su posición con top, bottom, right y left en unidades CSS
+
+FLOAT
+
+Propiedad left:  Los elementos bloque se ponen en linea cada uno a la izquierda del anterior
+
+Propiedad right : Los elementos bloque se ponen en linea cada uno a la derecha del anterior
+
+
+

@@ -1,0 +1,22 @@
+LIKE
+
+El operador LIKE es util para crear buscadores:
+
+El simbolo % representa cero, uno o múltiples caracteres ( simbolo * en MS Access)
+
+El simbolo _ representa un unico caracter ( simbolo ? en MS Access)
+
+Al programar buscadores podemos combinar estos simbolos con variables, si se combina el %
+puede ocurrir que la variable contenta una cadena vacía, en cuyo caso es como si el LIKE
+no estuviera , y por lo tanto se muestran todos los resultados, o que la variable contenga
+un string, en cuyo caso se aplicará el filtro del LIKE
+
+
+LIKE Operator			Description
+WHERE CustomerName LIKE 'a%'	Finds any values that start with "a"
+WHERE CustomerName LIKE '%a'	Finds any values that end with "a"
+WHERE CustomerName LIKE '%or%'	Finds any values that have "or" in any position
+WHERE CustomerName LIKE '_r%'	Finds any values that have "r" in the second position
+WHERE CustomerName LIKE 'a_%'	Finds any values that start with "a" and are at least 2 characters in length
+WHERE CustomerName LIKE 'a__%'	Finds any values that start with "a" and are at least 3 characters in length
+WHERE ContactName LIKE 'a%o'	Finds any values that start with "a" and ends with "o"

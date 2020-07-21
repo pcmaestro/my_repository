@@ -1,5 +1,8 @@
+ENUMERACIONES
+
 Un enum es una clase especial para agrupar constantes, no permite instanciar objetos ni heredar
-de ella
+de ella , su utilidad es limitar los posibles valores que podria tener una variable (solo podrá
+tener los indicados en la enumeración)
 
 En enum (enumerations) puede tener métodos y propiedades, pero sus variables son constantes,
 esto quiere decir que el escenario de uso de este tipo de clases es cuando vamos
@@ -7,7 +10,7 @@ a tener unas constantes con valores inmutables como nombres de colores, nombres 
 meses, etc...
 
 Las constantes de un enum son "public", "static" y "final" (inmutables) , y la ventana es que
-no hay que darles un valor
+no hay que darles un valor , por convención se expresan en mayusculas
 
 enum Level {
   LOW,
