@@ -101,6 +101,16 @@ TextPackages
 ProjectFiles
 	pom.xml --> Sólo en proyectos Maven, aqui se idican las dependencias de terceros que se instalan
 
+
+INDEX.JSP
+La primer página de carga es el index.jsp ( o las definidas en el web.xml) , en esta página no hay código HTML,
+con lo cual hay que redireccionar hacia la primera ruta o servlet de la aplicación web
+
+Ej
+
+<jsp:forward page="inicio" />
+
+
 SERVLETS
 
 En los enlaces podemos redirigir al usuario directamente un HTML/JSP si sólo vamos a mostrar información,

@@ -14,7 +14,12 @@ La forma más común de crear web services en Java es usando el conjunto de libr
 crear dichos web services usando anotaciones
 
 El web service usa métodos para interactuar con las BBDD y los DAOS,  NUNCA se definen dentro del
-web service este tipo de funcionalidades
+web service este tipo de funcionalidades , con lo cual la estructura sería unos DAOS para trabajar
+con la BBDD, unos controladores que usan los DAOS, y unos recursos expuestos en la clase del web
+service que llaman a los controladores
+
+Los web service se exponen mediante una URL denominada URI (universal resource identifyer)
+
 
 ##############################    SERVICIO SOAP    ###################################################
 
@@ -94,6 +99,8 @@ con las BBDD
 
 ##############################    SERVICIO REST    ##############################################
 
+CONFIGURACION
+
 JAX-RS es una API de Java para servicios web REST que forma parte de JAVA EE
 
 Jersey es uno de los frameworks usados para crear servicios REST en Java:
@@ -124,6 +131,19 @@ Y si la ruta pide parámetros
 
 http://direccion_ip:puerto/nombre_proyecto/webapi/ruta_en_path?nombre=xxxx&apellido=xxxxxx
 
+Parra arrancar el servicio REST en Eclipse lo hacemos con Run on Server, para hacer pruebas podemos descargar la
+aplicación POSTMAN
+
+ARCHIVO WADL
+
+Si llamamos nuestro servicio REST con el verbo HTML OPTIONS, obtendremos un archivo en formato XML que contiene
+los métodos disponibles en la clase que alberga el servicio REST, es un documento similar al wsdl de SOAP, podemos
+verlo por ejemplo llamando al servicio REST desde la herramienta POSTMAN usando el método OPTIONS
+
+
+
+ANOTACIONES
+
 Lo primero que debemos de hacer para iniciar nuestra API REST es indicarle el Path base desde el cual estará respondiendo nuestra API. 
 Este path corresponde a la URL a partir de la cual se expondrá nuestros servicios y decora la clase que alberga los recursos:
 
@@ -138,7 +158,7 @@ Y luego sus métodos también deberán contener estas anotaciones (cada método 
 @Produces(MediaType.APPLICATION_JSON) / @Consumes(MediaType.APPLICATION_JSON)   --> En la enumeración vienen muchos formatos 
 										    para producir y consumir
 
-@QueryParam --> Esta anotación sirve para indicar que el método recibirá parámetros a traves de url 
+@QueryParam --> Esta anotación sirve para indicar que el método recibirá parámetros a traves de url a través de ? y &
 
 Como el formato de JSON es clave:valor, es necesario que la clase donde presentemos la información
 haga al asociación clave:valor mediante un objeto instanciado de Map
@@ -166,8 +186,32 @@ public class Nombre_clase {
     } 
 }
 
-Parra arrancar el servicio REST en Eclipse lo hacemos con Run on Server, para hacer pruebas podemos descargar la
-aplicación POSTMAN
+La anotación @Path() es anidable, esto quiere decir que en la clase podemos tener un Path, y luego cada
+método puede tener el suyo, de tal manera que la construcción de la URL quedería asi:
+
+/path_clase/path_metodo
+
+
+En la URL, a parte de pedir parámetros con el formato indicado por la anotación @QueryParam, podemos solicitar
+directamente un valor, como por ejemplo un id de produto , esto lo hacemos añadiendo una anotación Path variable
+al método en cuestión (  @Path("{id_producto}")  )  y luego añaiendo a los parámetros del método la anotación
+@PathParam("id_producto")
+
+Ej
+    @Path("{id_producto}")
+    @GET  
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Clase_producto nombre_metodo(@PathParam("id_producto") int id_producto ) {     
+		
+	código para obtener el producto por su id.....
+
+        return producto;
+    } 
+}
+ 
+
+CONTENIDO DE LOS HEADERS HTML
 
 Es importante tener en cuenta en los métodos los verbos HTML que se tienen que usar ( GET, POST...) y también que
 el header de HTML indicará los formatos que aceptan el cliente y el servidor ( JSON, XML, Multipart form data, texto plano, etc..)
@@ -178,6 +222,145 @@ Si queremos enviar XML, en la clase del producto o articulo que exponemos, hay q
 Si hay problemas con los acentos y las letras ñ, en la declaración del Tipo MIME podemos hacer esto:
 
 @Consumes(MediaType.APPLICATION_JSON + "; charset = ISO-8859-1") 
+
+
+Podemos incluso hacer que un mismo método devuelva su información en varios formatos distintos
+
+Ej
+
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLITACION_XML, MediaType.TEXT_PLAIN})
+
+En este caso la información se le servirá al cliente en función de lo que venga en la cabecera de su
+HTTP Request
+
+
+GETION DE EXCEPCIONES
+
+Si la URL de nuestro servicio REST requiere de la introducción de algún valor con ? o & , y no viene nada
+o biene mal , nos interesa manejar lo que visualiza el cliente, para ello tenemos la opción de incluir la 
+anotación @DefaultValue("cualquier_string") en los parámetros del método (también llamado recurso) , evaluar
+luego con un IF si viene el valor correcto en la URL , y si no, que se ejecute el DefaultValue()
+
+Ej
+
+    @GET  
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Clase_producto nombre_metodo(@DefaultValue("INDEFINIDO")(@QueryParam("name") String name ) {     
+		
+	if(name.equals("INDEFINIDO"){
+		return accion_para_mostrar_el_error
+	}else{
+		código para obtener el producto por el valor de name...
+        	return producto;
+    } 
+}
+
+En este caso la variable "name" tiene por defecto el valor "INDEFINIDO", salvo que lo cambien el QueryParam
+
+
+INSERT
+
+Como ya hemos visto manejando las anotaciones @DefaultValue y @QueryParam podemos dar a una variable un valor
+por defecto y luego que el cliente lo modifique a través de la URL al hacer su request , en el caso de que la
+información venga a través de un formulario HTML, el valor ser recoge con @FormParam() , de esta manera podriamos
+por ejemplo crear un nuevo cliente en una tienda online de la siguiente manera:
+
+
+Ej
+
+@Path("nuevo-cliente")
+@POST
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+@Produces(MediaType.TEXT_PLANE)
+public String crearCliente(@DefaultValue("")@FormParam("nombre") String nombre, 
+			 @DefaultValue("")@FormParam("apellido") String apellido){
+
+	código que llama al objeto que crea un nuevo cliente. cuyo constructor requiere
+	los parámetros nombre y apellido...
+
+	return "Usuario creado correctamente";
+}
+
+
+Lo normal es que el usuario se registre a través de un formulario HTML,  si pues el formato que traerá el body del 
+HTML Request será x-www-form-urlencoded , que consiste en un conjunto de claves:valor, de ahi que en este ejemplo 
+el servicio REST consume el MediaType.APPLICATION_FORM_URLENCODED_TYPE
+
+
+Es MUY RECOMENDABLE que si la clase que contiene el servicio REST tiene varios métodos, y todos van a necesitar
+interacturar con la base de datos, que se cree un único objeto gestor de datos de tipo private static al inicio de 
+la clase que haga esas labores para que todos los métodos lo usen, asi evitamos que dicho objeto se instancie cada vez
+que se use un método distinto, lo cual hace perder eficiencia y puede provocar además duplicidades
+
+
+Puede ocurrir que la petición no venga de un formulario web, y que venga por ejemplo en formato JSON,  en ese caso
+el método consumirá MediaType.APPLITATION_JSON y en los argumentos del método bastará ya pasarle simplemente una instancia
+del objeto que se desea registrar sin más anotaciones
+
+
+DELETE
+
+En este caso podemos decorar el método con @POST o @DELETE según venga la petición en el request , en el Path recibimos
+el id del objeto a borrar -- @Path({"id_brrar"}) --  , el tipo de MediaType a consumir,  el métood recibe en sus
+argumentos el id con @PathParam("id_borrar") y la llamada al objeto gestor de datos para que lo elimine, con una comprobación
+previa de si el id existe.  También podemos hacer esto recibiendo el id en un QueryParam
+
+
+UPDATE
+Igual que el anterior, pero con @POST o @PUT
+
+
+ARRAYS
+
+Los datos que lleguen de los formularios web o de JSON pueden venir incluidos en un array, para por ejemplo, procesar un lote
+de objetos , lo más probable es que en este caso vengan en un JSON
+
+Ej
+
+@PATH("/proceso-lote")
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN + "; charset = ISO-8859-1")
+public String procesarLote(List<String> lote){
+
+	if(lote.size() == 0){
+	   return "No se ha recibido ningún dato";
+	}else{
+	   código para procesar el lote...
+	   return "Lote procesado correctamente";
+}
+
+Si se recibiera a través de formularios
+
+@PATH("/proceso-lote")
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN + "; charset = ISO-8859-1")
+public String procesarLote(@DefaultValue("nulo")(@FormParam("lote") List<String> lote){
+
+	if(lote.size() == 1 && lote.get(0).equals("nulo")){
+	   return "No se ha recibido ningún dato";
+	}else{
+	   código para procesar el lote...
+	   return "Lote procesado correctamente";
+}
+
+
+####################################   MICROSERVICIOS   ##############################################
+
+La arquitectura de microservicios divide un trozos una aplicación y la divide en diversas aplicaciones(microservicios)
+que tienen su propios esquemas de bases de datos ,  y que se comunican entre ellas mediante servicios REST
+
+Esta arquitectura permite minimizar el riesgo en los evolutivos, al hacerse de forma independiente en cada microservicio,
+se puede crear cada mini-aplicación en una tecnología distinta y hacerlas interoperables mediante los servicios REST,
+si algo falla,  falla sólo una parte, se pueden introducir evolutivos parando sólo una parte del total de la aplicación,
+se pueden ir incorporando nuevos microservicios según la necesidad, lo cual hace la aplicación total fácilmente
+escalable, etc...
+
+
+
+
 
 
 
