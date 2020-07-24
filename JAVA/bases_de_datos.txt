@@ -1,6 +1,10 @@
 
 IMPORTANTE - Los contenidos que vienen de las bases de datos tienen un indice que empieza por 1
 
+IMPORTANTE- En este txt se describe el proceso de conexión, operación y desconexión, pero con la clase DataSourse se puede
+	    llegar a tener un poolxºº	 de X conexiones activas es escenarios de gran concurrencia en la BBDD, ver documentación 
+	    si fuera necesario
+
 
 CONECTORES JDBC
 

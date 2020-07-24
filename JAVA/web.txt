@@ -14,6 +14,8 @@ DYNAMIC WEB PROJECT
 
 En Eclipse al crear un proyecto , seleccionamos Dynamic Web Project
 
+El servidor crea un contexto único para la nueva web app, 
+
 La lógica de negocio en los proyectos web de Java reside en los servlets, y además podemos incluir código o
 etiquetas Java en el HTML en los archivos JSP . Los servlets heredan de la clase HttpServlet
 

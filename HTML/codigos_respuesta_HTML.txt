@@ -1,0 +1,25 @@
+1XX - informativos
+
+2XX - Exito 
+	200 - ok
+	201 - created
+	202 - accepted
+	204 - no content
+
+3XX - Redirecciones
+	301 - moved permanently
+	302 - found
+	304 - not modified
+
+4XX - Error en cliente
+	400 - bad request
+	401 - unathorized
+	403 - forbidden
+	404 - not found
+	405 - method not allowed
+
+5XX - Error en servidor
+	500 - internal server error
+	501 - not implemented
+	502 - bad gateway
+	503 - service unavaliable

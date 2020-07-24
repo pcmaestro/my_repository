@@ -1,0 +1,44 @@
+Las herramientas de testing mas usadas son las sigueintes:
+
+
+JUnit -  Pruebas de código
+
+Selenium - Pruebas de interfaz (simula accesos de usuario, pulsar botones, etc...)
+
+SoapUI / Jersey Test Framework -  Pruebas de integración (prueba a la vez varias capas de una misma aplicación, 
+				  en este caso de servicios web)
+
+JMeter -  Pruebas de estress
+
+
+
+JUNIT
+
+Es un framework que permite hacer pruebas unitarias , para usarlo en Eclipse hay que habilitar el panel de JUnit
+en Window - show view - others - JUnit 
+
+Dentro de Eclipse , creamos un paquete de testing y dentro  creamos un nuevo JUnit test case al que llamaremos por ej
+Clase_a_comprobarTesting , esto nos crea una clase que contiene un método con la anotación @Test , hay métodos
+con la anotación @Before, estos se usan para inicializar variables/objetos antes de ejecutar el @Test y por
+lo tanto deben ir escritos antes que este
+
+Los métodos de JUnit comparan un resultado esperado con el que devuelve el método testeado
+
+Asi pues en una clsae JUnit podemos declarar como propiedad un objeto de la clase que queremos testear,
+en @Before instanciamos dicho objeto y en @Test probamos uno de sus métodos, commprobando si el resultado
+es el esperado con assertEquals() , podemos hacer un método @Test por cada método de la clase que estamos
+comprobando .Es importante tener en cuenta que el método assertEquals() no comprueba la coincidencia entre objetos, 
+sino entre datos primitivos o String
+
+Para comprobar Arrays usaremos el método assertArrayEquals() , para comprobar booleanos tenemos los métodos
+assertTrue() y assertFalse() , para comprobar null usaremos assertNull() , para comprobar si dos objetos son
+instancias de la misma referencia usaremos assertSame() / assertNotSame()
+
+Se puede también comprobar el tiempo de ejecución de un método anotándolo de esta manera
+
+@Test (timeout = milisegundos)
+
+Este método dará resultado correcto si se ejecuta en menos de 5 segundos
+
+
+
