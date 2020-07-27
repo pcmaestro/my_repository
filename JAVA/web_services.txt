@@ -117,56 +117,69 @@ Jersey es uno de los frameworks usados para crear servicios REST en Java:
 https://eclipse-ee4j.github.io/jersey/download.html
 
 
-Podemos configurar manualmente el proyecto incluendo en WEB-INF/lib las librerías desde la URL del framework, o bien
-podemos incluirlas a través de MAVEN:
+Creamos un DYNAMYC WEB PROJECT y luego lo convertimos a MAVEN, en el pom.xml incluimos las dependencias del framework
+JERSEY para crear servicios REST, y de la libreria JACKSON para serializar JSON
 
+
+MODO SERVDIOR
+
+	<dependencies>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.19.1</version>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.27</version>
 		</dependency>
-
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-servlet</artifactId>
-			<version>1.19.1</version>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.27</version>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>2.27</version>
+		</dependency>
+	</dependencies>
 
-Creamos un nuevo proyecto Maven y en add archetype , añadimos el group id, artifact id y version según lo
-que se indique en la web indicada
-
-También tenemos la opción de crear un DYNAMIC WEB PROJECT marcando la creación del web.xml ,  seguidamente cambiamos el tipo de 
-proyecto a MAVEN (configure - convert to Maven project) , y el pom.xml añadimos Jersey según lo anterior
-
-Jersey trae una demo de prueba comprobar que todo ha ido bien, para usarla , sobre el proyecto hacemos un Run on server 
-y aparecerá la URL http://localhost:8080/nombre_proyecto/ indicando asi que todo ha ido bien	
-
-En el pom.xml viene comentado un artifact id para usar si no necesitamos compatibilidad con jersey 2, lo usamos
-o no según necesidad , también viene comentada una opción necesaria para el soporte de JSON, la descomentamos
-
-En el web.xml dentro de la etiqueta <param-value> tendremos que ir dando de alta todos los paquetes donde
-residan clases (llamadas recursos) que contengan un servicio REST, los podemos poner todos dentro de esta etiqueta separandolos
-con punto y coma
-
-Ej web.xml con servlet Jersey + paquete de recursos + url pattern
-
-
-	<servlet>
-		<description>JAX-RS Tools Generated - Do not modify</description>
-		<servlet-name>jaxrs-servlet</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.mipaquete.test.services</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+MODO CLIENTE
 	
-	<servlet-mapping>
-		<servlet-name>jaxrs-servlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
+	<dependencies>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client<artifactId>
+			<version>2.29.1</version>
+		<dependency>
+	
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.27</version>
+		</dependency>	
+	</dependencies>
 
+
+En el web.xml debemos incluir el servlet de nuestro servicio REST, dentro de la etiqueta <param-value> tendremos que ir dando 
+de alta todos los paquetes donde residan clases (llamadas recursos) que contengan un servicio REST, los podemos poner todos 
+dentro de esta etiqueta separandolos con punto y coma, EN <url-pattern> incluiremo la ruta raiz del servicio REST, el
+simbolo * indica que cualquier subruta será atendida por atendida por el servicio REST
+
+  <servlet>
+	<servlet-name>Jersey REST Service</servlet-name>
+	<servlet-class>
+		org.glassfish.jersey.servlet.ServletContainer
+	</servlet-class>
+	<init-param>
+		<param-name>
+			jersey.config.server.provider.packages
+		</param-name>
+		<param-value>com</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Jersey REST Service</servlet-name>
+		<url-pattern>/servicios/*</url-pattern>
+	</servlet-mapping>
 
 Si usamos Servlet 3.0, en lugar de la configuración anterior en el web.xml, podemos tener esta clase:
 
@@ -187,7 +200,7 @@ Y si la ruta pide parámetros
 
 	http://direccion_ip:puerto/nombre_proyecto/ruta_en_web.xml/ruta_en_Path?nombre=xxxx&apellido=xxxxxx
 
-Parra arrancar el servicio REST en Eclipse lo hacemos con Run on Server, para hacer pruebas podemos descargar la
+Para arrancar el servicio REST en Eclipse lo hacemos con Run on Server, para hacer pruebas podemos descargar la
 aplicación POSTMAN
 
 
@@ -291,24 +304,45 @@ Ej  @Produces({"application/json", "application/xml"})
 
 SERIALIZACION JSON
 
-JAXS-RS dispone de un serlializador JSON llamado JAXB,  pero hay uno externo llamado Jackson que es muy recomendable añadir
-al proyecto Maven , para ello lo añadimos en el <param-value> del web.xml junto con los paqueste de los recursos
+La librería Jackson se utiliza para serializar objetos en formato JSON,  en Maven la cargamos con esta dependencia
 
-<init-param>
-	<param-name>com.sun.jersey.config.property.packages</param-name>
-	<param-value>com.mipaquete.test.services;com.fasterxml.jackson.jaxrs.json</param-value>
-</init-param>
+<dependency>
+	<groupId>org.glassfish.jersey.media</groupId>
+	<artifactId>jersey-media-json-jackson</artifactId>
+	<version>2.27</version>
+</dependency>
 
-Las últimas distribuciones de Jersey ya traen Jackson de serie
+SERIALIZACION XML
+
+Existe también una librería Jackson para trabajar con XML
+
+<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-xml</artifactId>
+    <version>2.9.8</version>
+</dependency>
+
+Pero en este caso además, en el método en el cual deseamos devolver XML, es necesario usar un objeto de la clase
+XmlMapper
+
+Ej
+
+	@GET
+	@Path("xml")
+	@Produces(MediaType.APPLICATION_XML)
+	public String metodoxml() throws JsonProcessingException {
+		Coche c = new Coche("Ferrari", "F60", "rojo");
+		XmlMapper xmlMapper = new XmlMapper();
+		String xml = xmlMapper.writeValueAsString(c);
+		
+		return xml;
+	}
  
 
 CONTENIDO DE LOS HEADERS HTML
 
 Es importante tener en cuenta en los métodos los verbos HTML que se tienen que usar ( GET, POST...) y también que
 el header de HTML indicará los formatos que aceptan el cliente y el servidor ( JSON, XML, Multipart form data, texto plano, etc..)
-
-Si queremos enviar XML, en la clase del producto o articulo que exponemos, hay que poner encima la anotación
-@XMLrootElement
 
 Si hay problemas con los acentos y las letras ñ, en la declaración del Tipo MIME podemos hacer esto:
 
@@ -322,10 +356,7 @@ Ej
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLITACION_XML, MediaType.TEXT_PLAIN})
 
 En este caso la información se le servirá al cliente en función de lo que venga en la cabecera de su
-HTTP Request
-
-
-
+HTTP Request en el campo "Accept"
 
 
 INSERT
@@ -541,6 +572,7 @@ public class CommonExceptionMapper implements ExceptionMapper<Exception>{
 
 	]
 }
+
 En este ejemplo manejamos la excepción Exception, que es la superclase padre de todas las excepciones en Java, 
 con lo cual la respuesta sería la misma para cualquier tipo de excepción, pero nosotros podemos adaptar el método
 a cualquier tipo de excepción,  guardamoe en log la excepción ocurrida y devolvemos en el return un error 500 en 
@@ -619,10 +651,6 @@ public void deleteUser() throws Exception{
 	ClientResponse response = resource.path("users/1").accept("application/json").delete(ClientResponse.class);
 
 	Assert.assertEquals(Status.NO_CONTENT.getStatusCode(), response.getStatus());
-st
-
-
-
 
 }
 
