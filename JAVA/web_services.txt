@@ -474,7 +474,9 @@ CLIENTE REST
 Si un servicio REST tiene varios recursos (o sea métodos de la clase publicada) , cada uno tendrá un @Path() ,  con Java podemos
 acceder exclusivamente a un determinado recurso a través de su @Path
 
-Ej Cargamos la URI del servicio, pero la respuesta pedimos que sólo cargue el usuario con id = 1
+Ej Cargamos la URI del servicio, pero la respuesta pedimos que sólo cargue el usuario con id = 1 , trabajos sólo con JSON
+
+
 
 Client cliente = Client.create();
 
@@ -510,6 +512,29 @@ La clase JSONObject es genérica y se usa para recibir JSON sea cual sea el form
 
 La clase Assert la usamos para comprobar el mensaje HTML de respuesta y lo usamos para guardar el nº de página que
 Twitter aporto como lugar donde se encuentra el tweet localizado
+
+
+Código para que el ciente REST trabaje con otros formatos (incluido JSON)
+
+
+public class HelloWorld{
+	
+	public static void main(String[] args){
+		
+		String uri = "http://localhost:8080/servicios/helloworld;
+		ClientConfig config = new ClientConfig();
+		Client client = ClientBuilder.newClient(config);
+		WebTarget target = client.target(uri);
+		
+		String response = target.request().accept(MediaType.TEXT_HTML).get(String.class); --> Indiamos el tipo MIME y el Objeto.class
+										    		      que esperamos recibir, el método en este
+												      caso es get(), pero puede ser cualquier
+												      otro admitido en los headers HTML
+		
+		System.out.println(response);
+	{
+
+}
 
 
 SUBIR FICHEROS AL SERVIDOR
