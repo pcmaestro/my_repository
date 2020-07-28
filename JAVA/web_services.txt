@@ -464,6 +464,15 @@ etc...
 Las manipulaciones de la URI y las devoluciones de códigos con Response requieren de la ejecución adicional del método build()
 
 
+La clase Response tiene tres métodos:
+
+getEntity() - Devuelve el objeto que queremos convertir en el body de un mensaje HTTP
+
+getStatus() - Devuelve el código de respuesta HTTP
+
+getMetadata() -  Devuelve un MultivaluedMap de los headers HTTP
+
+
 Ver ejemplos CRUD con Response en :
 
 https://github.com/borillo/java-roadshow-rest/blob/master/examples/jersey-simple/src/com/decharlas/test/services/UserResource.java

@@ -1,0 +1,16 @@
+CONEXION A MYSQL EN MS-DOS Y CREACION DE USUARIO
+
+Añadimos la ruta de la carpeta \bin de MySQL a las variables de entorno del sistema
+
+Abrimos CMD :
+
+mysql -u root -p
+Enter password: ****
+
+Creamos el nuevo usuario:
+
+CREATE USER 'mysqluser'@'localhost' IDENTIFIED BY 'mypassword';
+
+Le damos permisos para las acciones que puede llevar a cabo :
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON bd_nombre.* TO 'mysqluser'@'localhost';

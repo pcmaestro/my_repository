@@ -4,7 +4,7 @@
 	200 - ok
 	201 - created
 	202 - accepted
-	204 - no content
+	204 - no content (respuesta exitosa después de borrar algo)		
 
 3XX - Redirecciones
 	301 - moved permanently
@@ -17,6 +17,7 @@
 	403 - forbidden
 	404 - not found
 	405 - method not allowed
+	410 - gone (juesto después de ser borrado)
 
 5XX - Error en servidor
 	500 - internal server error

@@ -9,39 +9,59 @@ IMPORTANTE- En este txt se describe el proceso de conexión, operación y descon
 CONECTORES JDBC
 
 Debemos descargar e instalar una libreria JDBC del fabricante (conector) para la base de datos,  la mejor forma de hacerlo es
-a través de MAVEN
+a través de MAVEN:
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.21</version>
+		</dependency>
 
 
-Una vez hemos incorporado la libreria a nuestro proyecto (ver maven.txt) , debemos preparar el Main para cargarla
+Una vez hemos incorporado la libreria a nuestro proyecto (ver maven.txt) , debemos preparar el Main o una clase MasterDAO para
+cargara
 
-import java.sql.Connection
-import java.sql.DriverManager
+Ej  clase MasterDAO, de la cual deberán heredar los DAOimpl que usemos para trabajar con la BBDD
 
-public static void main(String[] args){
+package daos;
 
-	//Cargamos la librería
-	try{
-		Class.forName("com.mysql.cj.jdbc.Driver");
+import java.sql.Connection; 
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-		//Establecemos conexión con la BBDD con el interfaz Connection, ejemplo con MySQL
-		String url = "jdbc:mysql://direccion_ip:3306/bd_java_libros";
-		String usuario = ("nombre_usuario");
-		String password = ("contraseña");
-
-		Connection conexion = DriverManager.getConnection(url, usuario, password);
-
-		incluir Statement.... / incluir PreparedStatement....
-
-	}catch (ClassNotFound Exception e){
-		e.printStackTrace();
-		System.out.println("Error al cargar el driver");
-
-	}catch (SQL Exception e){
-		e.printStackTrace();
-		System.out.println("Error a conectar con la BBDD o al ejecutar la SQL");
+public class MasterDAO {	
+	
+	private String URL = "jdbc:mysql://localhost:3306/bd_coches?serverTimezone=UTC";
+	private String USER = "mysqluser";
+	private String PASS = "1234";		
+	protected Connection conexion;
+	
+	public void conectar() {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");			
+			conexion = DriverManager.getConnection(URL, USER, PASS);
+			System.out.println("Conexion con BBDD establecida");				
+			} catch (ClassNotFoundException e) {
+				System.out.println("Error al cargar el driver de la BBDD");
+				e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("Error al conectar con la BBDD");
+				e.printStackTrace();
+			}
+			
+	}//end conectar
+	
+	public void desconectar() {
+		
+		try {
+			conexion.close();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
 	}
-
-}
+	
+}//end class
 
 
 La interacción con la BBDD la haremos a través de la creación de un paquete de DAOS (Data Object Access) y
