@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Compra-venta de móviles de segunda mano </title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'estilos.css') }}" />
+
+</head>
+
+<body>
+
+    <div id="header">
+        <h1> PORTAL DE COMPRA-VENTA DE TERMINALES MOVILES DE SEGUNDA MANO </h1>
+    </div>
+
+    <div id="registro">
+        <a href="registrar-anuncio">REGISTRA UN ANUNCIO</a>
+    </div>
+
+    <div id="anuncios">
+        <table>
+            
+            <caption> <h2>Anuncios disponibles</h2> </caption>
+
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Color</th>
+                <th>Pantalla</th>
+                <th>Memoria</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Nombre de contacto</th>
+                <th>Teléfono de contacto</th>
+                <th>Email de contacto</th>
+                <th>Email validado</th>
+            </tr>
+            {% for a in var_anuncios:  %}
+
+            <tr>
+                <td>{{a[0]}}</td>
+                <td>{{a[1]}}</td>
+                <td>{{a[2]}}</td>
+                <td>{{a[3]}}</td>
+                <td>{{a[4]}}</td>
+                <td>{{a[5]}}</td>
+                <td>{{a[6]}}</td>
+                <td>{{a[7]}}</td>
+                <td>{{a[8]}}</td>
+                <td>{{a[9]}}</td>
+                <td>{{a[10]}}</td>
+            </tr>
+
+            {%endfor%}
+  
+        </table>
+    </div>
+</body>
+
+</html>
