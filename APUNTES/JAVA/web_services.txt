@@ -1,0 +1,728 @@
+Un web service es un servicio que expone al exterior la funcionalidad de una aplicación:
+
+Existen dos tipos de web services
+
+SOAP --> usan XML
+
+REST --> usan JSON
+
+Se usan para intercambiar información entre una aplicación y un servidor, o bien para 
+intercambio de información entre maquinas en sistemas distribuidos (aplicaciones troceadas
+corriendo en varias máquinas-orquetación de servicios- , aplicaciones balanceadas, replicadas, etc...)
+
+La forma más común de crear web services en Java es usando el conjunto de librerias JAXWS, que permite
+crear dichos web services usando anotaciones
+
+El web service uspara métodos para interactuar con las BBDD y los DAOS,  NUNCA se definen dentro del
+web service este tipo de funcionalidades , con lo cual la estructura sería unos DAOS para trabajar
+con la BBDD, unos controladores que usan los DAOS, y unos recursos expuestos en la clase del web
+service que llaman a los controladores
+
+Los web service se exponen mediante una URL denominada URI (universal resource identifyer)
+
+En Linux,  podemos obtener la información de un servicio REST mediante el comando curl:
+
+ej
+
+curl -X GET http://www.google.es
+
+curl -X GET -H "Accept:application/json" http://www.google.es  --> Enviamos la cabecera solicitando formato JSON
+
+
+
+##############################    SERVICIO SOAP (JAX-WS)   ###################################################
+
+Estos web service siguen un protocolo rígido y ofrecen su información en formato XML, indicamos
+que una clase es un WebService con la anotación @WebService
+
+Creamos un proyecto con un Main y con una clase MyWebService:
+
+import javax.jws.WebService
+
+@WebService(parametros_documentacion)
+public class MyWebService{
+	
+	@WebMethod() --> esta segunda anotación es opcional, no necesaria
+	public int myServiceMethod1(variables){
+
+		métodos de conexión con BBDD, métodos de uso de DAOS, etc...
+
+	return numero_entero; --> Se suelen usar números para indicar si todo ha ido bien o no,
+				  dichos números se definen al inicio del proyecto
+
+	public int myServiceMethod2(variables){
+
+		métodos de conexión con BBDD, métodos de uso de DAOS, etc...
+
+	return numero_entero;	
+
+	}
+}	
+
+Los servicios ofrecidos serán los métodos incluidos en la clase MyWebService
+
+
+Para ofrecer este web service, en el Main del proyecto
+	
+import javax.xml.ws.Endpoint;
+
+EndPoint.publish("http://url_del_web_service:nº_puerto/lo_que_sea", new MyWebService());
+
+Seguidamente arrancamos el Main en Eclipse y iuego en un navegador podremos ver el código xml 
+generado escribiendo esto:
+
+http://url_del_web_service:nº_puerto/lo_que_sea?wsdl
+
+La terminación wsdl (web service description language) permite ver un texto XML
+que define que cosas se pueden invocar del web service, al ser SOAP un procolo rígido,
+no podemos alterar nada del documento wsdl generado
+
+Para usar el web service,  debemo llamar a su URL ,  en Eclipse debemos crear un nuevo
+proyecto, por ej clienteWebServiceProject, y sobre él botón derecho--> new --> other --> 
+WebServices --> Web Service Client --> en service definition pegamos la URL
+
+Eclipse crea el cliente web service con una tecnología llamada AXIS, veremos dentro
+del proyecto que se crea el paquete servicios y dentro de este varias clases creadas
+a partir del nombre de la clase del web service (en este caso MyWebService)
+
+
+En el Main del proyecto clienteWebServiceProject , de las nuevas clases creadas, vamos a
+instanciar la clase :
+
+ServicioMyServiceMethod1Proxy
+
+Un Proxy en un cliente web service permite usar la clase Servicio como si fuera local, 
+pero invocando realmente al web service para traer la información
+
+Seguidamente creamos un objero de la clase ServicioProxy, y para invocar al servicio remoto
+contenido en la clase MyWebService lo llamamos con la notación del punto
+
+Ej
+
+ServicioMyServiceMethod1Proxy proxy = new ServicioMyServiceMethod1Proxy();
+
+proxy.myServiceMethod1(variables)
+
+Asi pues,  si pedimos argumentos en los métodos del web service, el usuario podrá interactuar
+con las BBDD
+
+##############################    SERVICIO REST (JAX-RS + JERSEY)  ##############################################
+
+CONFIGURACION
+
+JAX-RS es una API de Java para servicios web REST que forma parte de JAVA EE
+
+Jersey es uno de los frameworks usados para crear servicios REST en Java:
+
+https://eclipse-ee4j.github.io/jersey/download.html
+
+
+Creamos un DYNAMYC WEB PROJECT y luego lo convertimos a MAVEN, en el pom.xml incluimos las dependencias del framework
+JERSEY para crear servicios REST, y de la libreria JACKSON para serializar JSON
+
+
+MODO SERVDIOR
+
+	<dependencies>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.27</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.27</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>2.27</version>
+		</dependency>
+	</dependencies>
+
+MODO CLIENTE
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client<artifactId>
+			<version>2.29.1</version>
+		<dependency>
+	
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.27</version>
+		</dependency>	
+	</dependencies>
+
+
+En el web.xml debemos incluir el servlet de nuestro servicio REST, dentro de la etiqueta <param-value> tendremos que ir dando 
+de alta todos los paquetes donde residan clases (llamadas recursos) que contengan un servicio REST, los podemos poner todos 
+dentro de esta etiqueta separandolos con punto y coma, EN <url-pattern> incluiremo la ruta raiz del servicio REST, el
+simbolo * indica que cualquier subruta será atendida por atendida por el servicio REST
+
+  <servlet>
+	<servlet-name>Jersey REST Service</servlet-name>
+	<servlet-class>
+		org.glassfish.jersey.servlet.ServletContainer
+	</servlet-class>
+	<init-param>
+		<param-name>
+			jersey.config.server.provider.packages
+		</param-name>
+		<param-value>com</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Jersey REST Service</servlet-name>
+		<url-pattern>/servicios/*</url-pattern>
+	</servlet-mapping>
+
+Si usamos Servlet 3.0, en lugar de la configuración anterior en el web.xml, podemos tener esta clase:
+
+@ApplicationPath("nombre_ruta")
+public class MyApplication extends PackagesResourceConfig{
+	
+	public MyApplitacion(){
+		super("com.mipaquete.test.services"); --> Si hay más de un paquete, lo separamos con comas	
+	}
+
+}
+
+La composición de la URL del servicio REST sería
+
+http://direccion_ip:puerto/nombre_proyecto/ruta_en_web.xml/ruta_en_Path	
+
+Y si la ruta pide parámetros
+
+	http://direccion_ip:puerto/nombre_proyecto/ruta_en_web.xml/ruta_en_Path?nombre=xxxx&apellido=xxxxxx
+
+Para arrancar el servicio REST en Eclipse lo hacemos con Run on Server, para hacer pruebas podemos descargar la
+aplicación POSTMAN
+
+
+ARCHIVO WADL
+
+Si llamamos nuestro servicio REST con el verbo HTML OPTIONS, obtendremos un archivo en formato XML que contiene
+los métodos disponibles en la clase que alberga el servicio REST, es un documento similar al wsdl de SOAP, podemos
+verlo por ejemplo llamando al servicio REST desde la herramienta POSTMAN usando el método OPTIONS
+
+ESTRUCTURA DEL SERVICIO REST
+
+com.lo_que_sea.model
+	Object
+
+com.lo_que_sea.daos
+	MasterDAO
+	ObjectDAO	
+
+com.lo_que_sea.controllers
+	ObjetcDAOImpl
+
+com.lo_que_sea.services
+	MyObjectResources
+
+
+
+ANOTACIONES
+
+Lo primero que debemos de hacer para iniciar nuestra API REST es indicarle el Path base desde el cual estará respondiendo nuestra API. 
+Este path corresponde a la URL a partir de la cual se expondrá nuestros servicios y decora la clase que alberga los recursos:
+
+Ej
+
+Path("ruta_servicio")
+
+Y luego sus métodos también deberán contener estas anotaciones (cada método se puede exponer como un servicio independiente):
+
+@GET \ @POST \@PUT \@DELETE  --> Según venga la petición del cliente
+
+@Produces(MediaType.APPLICATION_JSON) / @Consumes(MediaType.APPLICATION_JSON)   --> En la enumeración vienen muchos formatos 
+										    para producir y consumir
+
+@QueryParam --> Esta anotación sirve para indicar que el método recibirá parámetros a traves de url a través de ? y &
+
+Como el formato de JSON es clave:valor, es necesario que la clase donde presentemos la información
+haga al asociación clave:valor mediante un objeto instanciado de Map
+
+Ej 
+
+ 
+import javax.ws.rs.Consumes; 
+import javax.ws.rs.GET; 
+import javax.ws.rs.Path; 
+import javax.ws.rs.Produces; 
+import javax.ws.rs.core.MediaType; 
+import javax.ws.rs.core.Response; 
+
+@Path("/hello") 
+public class Nombre_clase {               
+
+    @GET  
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Clase_producto nombre_metodo(@QueryParam("name")  String name ) {     
+		........
+
+        return producto;
+    } 
+}
+
+La anotación @Path() es anidable, esto quiere decir que en la clase podemos tener un Path, y luego cada
+método puede tener el suyo, de tal manera que la construcción de la URL quedería asi:
+
+/path_clase/path_metodo
+
+
+En la URL, a parte de pedir parámetros con el formato indicado por la anotación @QueryParam, podemos solicitar
+directamente un valor, como por ejemplo un id de produto , esto lo hacemos añadiendo una anotación Path variable
+al método en cuestión (  @Path("{id_producto}")  )  y luego añadiendo a los parámetros del método la anotación
+@PathParam("id_producto") ,  OJO la importación debe ser javax.ws.rs.PathParam
+
+Ej
+    @Path("{id_producto}")
+    @GET  
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Clase_producto nombre_metodo(@PathParam("id_producto") int id_producto ) {     
+		
+	código para obtener el producto por su id.....
+
+        return producto;
+    } 
+}
+
+
+La anotación @Produces() permite también expresar los MIME en formato de array, con lo cual un mismo método podemos hacer
+que sea capaz de serializar en varios formatos distintos
+
+Ej  @Produces({"application/json", "application/xml"})
+
+
+SERIALIZACION JSON
+
+La librería Jackson se utiliza para serializar objetos en formato JSON,  en Maven la cargamos con esta dependencia
+
+<dependency>
+	<groupId>org.glassfish.jersey.media</groupId>
+	<artifactId>jersey-media-json-jackson</artifactId>
+	<version>2.27</version>
+</dependency>
+
+SERIALIZACION XML
+
+Existe también una librería Jackson para trabajar con XML
+
+<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-xml</artifactId>
+    <version>2.9.8</version>
+</dependency>
+
+Pero en este caso además, en el método en el cual deseamos devolver XML, es necesario usar un objeto de la clase
+XmlMapper
+
+Ej
+
+	@GET
+	@Path("xml")
+	@Produces(MediaType.APPLICATION_XML)
+	public String metodoxml() throws JsonProcessingException {
+		Coche c = new Coche("Ferrari", "F60", "rojo");
+		XmlMapper xmlMapper = new XmlMapper();
+		String xml = xmlMapper.writeValueAsString(c);
+		
+		return xml;
+	}
+ 
+
+CONTENIDO DE LOS HEADERS HTML
+
+Es importante tener en cuenta en los métodos los verbos HTML que se tienen que usar ( GET, POST...) y también que
+el header de HTML indicará los formatos que aceptan el cliente y el servidor ( JSON, XML, Multipart form data, texto plano, etc..)
+
+Si hay problemas con los acentos y las letras ñ, en la declaración del Tipo MIME podemos hacer esto:
+
+@Consumes(MediaType.APPLICATION_JSON + "; charset = ISO-8859-1") 
+
+
+Podemos incluso hacer que un mismo método devuelva su información en varios formatos distintos
+
+Ej
+
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLITACION_XML, MediaType.TEXT_PLAIN})
+
+En este caso la información se le servirá al cliente en función de lo que venga en la cabecera de su
+HTTP Request en el campo "Accept"
+
+
+INSERT
+
+Como ya hemos visto manejando las anotaciones @DefaultValue y @QueryParam podemos dar a una variable un valor
+por defecto y luego que el cliente lo modifique a través de la URL al hacer su request , en el caso de que la
+información venga a través de un formulario HTML, el valor ser recoge con @FormParam() , de esta manera podriamos
+por ejemplo crear un nuevo cliente en una tienda online de la siguiente manera:
+
+
+Ej
+
+@Path("nuevo-cliente")
+@POST
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+@Produces(MediaType.TEXT_PLANE)
+public String crearCliente(@DefaultValue("")@FormParam("nombre") String nombre, 
+			 @DefaultValue("")@FormParam("apellido") String apellido){
+
+	código que llama al objeto que crea un nuevo cliente. cuyo constructor requiere
+	los parámetros nombre y apellido...
+
+	return "Usuario creado correctamente";
+}
+
+
+Lo normal es que el usuario se registre a través de un formulario HTML,  si pues el formato que traerá el body del 
+HTML Request será x-www-form-urlencoded , que consiste en un conjunto de claves:valor, de ahi que en este ejemplo 
+el servicio REST consume el MediaType.APPLICATION_FORM_URLENCODED_TYPE
+
+
+Es MUY RECOMENDABLE que si la clase que contiene el servicio REST tiene varios métodos, y todos van a necesitar
+interacturar con la base de datos, que se cree un único objeto gestor de datos de tipo private static al inicio de 
+la clase que haga esas labores para que todos los métodos lo usen, asi evitamos que dicho objeto se instancie cada vez
+que se use un método distinto, lo cual hace perder eficiencia y puede provocar además duplicidades
+
+
+Puede ocurrir que la petición no venga de un formulario web, y que venga por ejemplo en formato JSON,  en ese caso
+el método consumirá MediaType.APPLITATION_JSON y en los argumentos del método bastará ya pasarle simplemente una instancia
+del objeto que se desea registrar sin más anotaciones
+
+
+DELETE
+
+En este caso podemos decorar el método con @POST o @DELETE según venga la petición en el request , en el Path recibimos
+el id del objeto a borrar -- @Path({"id_brrar"}) --  , el tipo de MediaType a consumir,  el métood recibe en sus
+argumentos el id con @PathParam("id_borrar") y la llamada al objeto gestor de datos para que lo elimine, con una comprobación
+previa de si el id existe.  También podemos hacer esto recibiendo el id en un QueryParam
+
+
+UPDATE
+Igual que el anterior, pero con @POST o @PUT
+
+
+ARRAYS
+
+Los datos que lleguen de los formularios web o de JSON pueden venir incluidos en un array, para por ejemplo, procesar un lote
+de objetos , lo más probable es que en este caso vengan en un JSON
+
+Ej
+
+@PATH("/proceso-lote")
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN + "; charset = ISO-8859-1")
+public String procesarLote(List<String> lote){
+
+	if(lote.size() == 0){
+	   return "No se ha recibido ningún dato";
+	}else{
+	   código para procesar el lote...
+	   return "Lote procesado correctamente";
+}
+
+Si se recibiera a través de formularios
+
+@PATH("/proceso-lote")
+@POST
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN + "; charset = ISO-8859-1")
+public String procesarLote(@DefaultValue("nulo")(@FormParam("lote") List<String> lote){
+
+	if(lote.size() == 1 && lote.get(0).equals("nulo")){
+	   return "No se ha recibido ningún dato";
+	}else{
+	   código para procesar el lote...
+	   return "Lote procesado correctamente";
+}
+
+RESPONSE
+
+La clase Response nos permite modular las respuestas que da nuestro servicio REST y amoldarlas al modelo de números de respuesta
+de HTTP (200, 400, 500, etc...)	 
+
+Ej
+
+return Response.ok() --> código 200
+
+return Response.created() --> código 201
+
+return Response.noContent() --> còdigo 204 (respuesta que se suele dar tras borrar un elemento)
+
+etc...
+
+Las manipulaciones de la URI y las devoluciones de códigos con Response requieren de la ejecución adicional del método build()
+
+
+La clase Response tiene tres métodos:
+
+getEntity() - Devuelve el objeto que queremos convertir en el body de un mensaje HTTP
+
+getStatus() - Devuelve el código de respuesta HTTP
+
+getMetadata() -  Devuelve un MultivaluedMap de los headers HTTP
+
+
+Ver ejemplos CRUD con Response en :
+
+https://github.com/borillo/java-roadshow-rest/blob/master/examples/jersey-simple/src/com/decharlas/test/services/UserResource.java
+
+
+CLIENTE REST
+
+Si un servicio REST tiene varios recursos (o sea métodos de la clase publicada) , cada uno tendrá un @Path() ,  con Java podemos
+acceder exclusivamente a un determinado recurso a través de su @Path
+
+Ej Cargamos la URI del servicio, pero la respuesta pedimos que sólo cargue el usuario con id = 1 , trabajos sólo con JSON
+
+
+
+Client cliente = Client.create();
+
+WebResource recurso = cliente.resource("http://localhost:8080/jersey-maven/rest");
+
+ClientResponse respuesta = recurso.path("/users/1").get(ClientResponse.class); --> Método get, si fuera otro sería post, put...
+
+User usuario = respuesta.getEntity(User.class); --> Si viene un String, seria String.class, lo que hacemos es indicar como
+						    viene la información, en este caso es un objeto de User, y en base a eso
+						    construimos un objeto local con la información que viene del servicio REST
+
+
+Ejemplo de cliente para traer tweets del API de Twitter:
+
+
+Client client = Client.create();
+
+client.addFilter(new LoggingFilter());
+
+WebResource resource = client.resource("http://search.twitter.com");
+
+ClientResponse response = resource.path("search.json").queryParam("q", "oracle+roadshow").get(ClientResponse.class);
+
+JSONObject data = response.getEntity(JSONObject.class);
+
+Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
+Assert.assertEquals(1, data.getInt("page");
+
+En este ejemplo el simbolo + equivale a un espcio en blanco, lo que hacemos es pasar como parámetros palabras clave
+para que el API de twitter busque si hay algo relacionado en el contenido de algún tweet
+
+La clase JSONObject es genérica y se usa para recibir JSON sea cual sea el formato que se le ha dado a la información
+
+La clase Assert la usamos para comprobar el mensaje HTML de respuesta y lo usamos para guardar el nº de página que
+Twitter aporto como lugar donde se encuentra el tweet localizado
+
+
+Código para que el ciente REST trabaje con otros formatos (incluido JSON)
+
+
+public class HelloWorld{
+	
+	public static void main(String[] args){
+		
+		String uri = "http://localhost:8080/servicios/helloworld;
+		ClientConfig config = new ClientConfig();
+		Client client = ClientBuilder.newClient(config);
+		WebTarget target = client.target(uri);
+		
+		String response = target.request().accept(MediaType.TEXT_HTML).get(String.class); --> Indiamos el tipo MIME y el Objeto.class
+										    		      que esperamos recibir, el método en este
+												      caso es get(), pero puede ser cualquier
+												      otro admitido en los headers HTML
+		
+		System.out.println(response);
+	{
+
+}
+
+
+SUBIR FICHEROS AL SERVIDOR
+
+Para poder subir ficheros mediante un servicio REST, en el pom.xml es neceario que esté esta dependencia:
+
+<dependency>
+	<groupId>com.sun.jersey.contribs</groupId>
+	<artifactId>jersey-multipart</artifactId>
+	<version>$(jersey.version)</version>
+</dependency>
+
+Podemos ofrecer un recurso que permita subir un fichero al servidor en una clase similar a esta:
+
+@Path("documents")
+public class DocumentResource{
+
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public void uploadFile(@FormDataParam("file") InputStream uploadedInputStream,  
+			       @FormDataParam("file") FormDataContentDisposition fileDetail){
+
+		String uploadedFileLocation = "/tmp/" + fileDetail.getFileName();
+
+	}
+
+	private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation){
+
+		try{
+		     OutPutStream out = new FileOutPutStream(new File(uploadedFileLocation) ) 
+
+		}catch{
+
+		}
+	
+	}
+
+}
+
+Los dos parámetros que recibe el método uploadFile() son el archivo (que viene como objeto de InputStream) y
+el tipo MIME (objeto de FormDataContentDisposition) , que siempre será "application/multipart_form_data" y
+que trae también el nombre del archivo
+
+
+
+
+GESTION DE EXCEPCIONES
+
+
+Existe un interfaz llamado ExceptionMap para interceptar excepciones , para manjera excepciones debemos usar una
+clase con la anotación @Provider
+
+@Provider
+public class CommonExceptionMapper implements ExceptionMapper<Exception>{
+		
+	@Override
+	public Response toRespone(Exception exception){
+		log.error("Handled by ExceptionMapper", exception);
+		return Response.serverError().type(MediaType.TEXT_PLAIN).entity(exception.getMessage()).build();	
+
+	]
+}
+
+En este ejemplo manejamos la excepción Exception, que es la superclase padre de todas las excepciones en Java, 
+con lo cual la respuesta sería la misma para cualquier tipo de excepción, pero nosotros podemos adaptar el método
+a cualquier tipo de excepción,  guardamoe en log la excepción ocurrida y devolvemos en el return un error 500 en 
+texto plano  ( puede ser por ejemplo un JSON con determinado formato de informacion)
+
+
+Si la URL de nuestro servicio REST requiere de la introducción de algún valor con ? o & , y no viene nada
+o biene mal , nos interesa manejar lo que visualiza el cliente, para ello tenemos la opción de incluir la 
+anotación @DefaultValue("cualquier_string") en los parámetros del método (también llamado recurso) , evaluar
+luego con un IF si viene el valor correcto en la URL , y si no, que se ejecute el DefaultValue()
+
+Ej
+
+    @GET  
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Clase_producto nombre_metodo(@DefaultValue("INDEFINIDO")(@QueryParam("name") String name ) {     
+		
+	if(name.equals("INDEFINIDO"){
+		return accion_para_mostrar_el_error
+	}else{
+		código para obtener el producto por el valor de name...
+        	return producto;
+    } 
+}
+
+En este caso la variable "name" tiene por defecto el valor "INDEFINIDO", salvo que lo cambien el QueryParam
+
+
+JERSEY TEST FRAMEWORK
+
+Requiere añadir al pom.xml las siguientes dependencias
+
+<dependency>
+	<groupId>com.sun.jersey.jersey-test-framework</groupId>
+	<artifactId>jersey-test-framework-core</artifactId>
+	<version>1.14</version>
+</dependency>
+
+<dependency>
+	<groupId>com.sun.jersey.jersey-test-framework</groupId>
+	<artifactId>jersey-test-framework-grizzly</artifactId>
+	<version>1.14</version>
+</dependency>
+
+La segunda dependencia instala un contenedor para hacer el testing llamado Grizzly que es un mini-servidor
+muy ligero y util para estas funciones
+
+Para arrancar dicho contenedor, es necesario crear una clase como esta, que testearía una hipotética clase
+de servicio REST llamada UsersResource residente en el paquete com.mipaquete.services:
+
+public class UsersResourceTest extends JerseyTest{
+
+	private WebResource resource;
+
+	public UsersResourceTest(){
+		super(new WebAppDescriptor.Builder("com.mipaquete.services").contextParam("webAppRootKey", "jersey-maven.root")
+		   .servletClass(ServletContainer.class).build();
+
+		this.resource = resource();
+	}
+
+	@Override
+	protected TestContainerFactory getTestContainerFactory() {
+		return new GrizzlyTestWebContainerFactory();
+
+	}
+
+}
+
+Y para definir el test hay que crear esta otra clase , como por ejemplo esta que comprueba el método deleteUser():
+
+@Test
+public void deleteUser() throws Exception{
+
+	ClientResponse response = resource.path("users/1").accept("application/json").delete(ClientResponse.class);
+
+	Assert.assertEquals(Status.NO_CONTENT.getStatusCode(), response.getStatus());
+
+}
+
+
+OTRAS FUNCIONALIDADES
+
+Hypermedia - Consiste en enriquecer el servicio REST con funcionalidades extra como por ej paginación
+
+Seguridad -  Hay módulos para OAuth, SSL, etc...
+
+Logging - Se puede generar un log de eventos
+
+Soporte para Spring Framework
+
+etc...
+
+
+
+
+####################################   MICROSERVICIOS   ##############################################
+
+La arquitectura de microservicios divide un trozos una aplicación y la divide en diversas aplicaciones(microservicios)
+que tienen su propios esquemas de bases de datos ,  y que se comunican entre ellas mediante servicios REST
+
+Esta arquitectura permite minimizar el riesgo en los evolutivos, al hacerse de forma independiente en cada microservicio,
+se puede crear cada mini-aplicación en una tecnología distinta y hacerlas interoperables mediante los servicios REST,
+si algo falla,  falla sólo una parte, se pueden introducir evolutivos parando sólo una parte del total de la aplicación,
+se pueden ir incorporando nuevos microservicios según la necesidad, lo cual hace la aplicación total fácilmente
+escalable, etc...
+
+
+
+
+
+
+
+
+
+
+
+

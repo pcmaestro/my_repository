@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;ejercicio05ventanaDiferencias/paisaje.png&apos; to &apos;imagen.png&apos;" description="Rename resource &apos;paisaje.png&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="paisaje.png" name="imagen.png" stamp="1584440910588" updateReferences="true"/>
-</session>

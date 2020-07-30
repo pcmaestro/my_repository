@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;ejerciciosPythonDiario/ejerciciosParte3/ejercicio2/funciones/__init__.py&apos; to &apos;seleccionDigitos.py&apos;" description="Rename resource &apos;__init__.py&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="ejerciciosParte3/ejercicio2/funciones/__init__.py" name="seleccionDigitos.py" stamp="1584965342227" updateReferences="true"/>
-</session>
