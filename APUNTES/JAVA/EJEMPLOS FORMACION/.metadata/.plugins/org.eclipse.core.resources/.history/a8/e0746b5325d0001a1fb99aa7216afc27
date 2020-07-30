@@ -1,0 +1,6 @@
+package daos;
+
+public class MasterDAO {
+
+	Class.forName("com.mysql.cj.jdbc.Driver");
+}

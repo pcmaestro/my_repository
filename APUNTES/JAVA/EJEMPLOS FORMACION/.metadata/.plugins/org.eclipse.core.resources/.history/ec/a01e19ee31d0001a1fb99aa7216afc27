@@ -1,0 +1,6 @@
+package daos;
+
+public interface CocheDAO {
+	
+	public insert(Coche c);
+}

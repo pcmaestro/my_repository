@@ -1,0 +1,64 @@
+package vista;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JList;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+public class PanelListado extends JPanel {
+	private JButton botonListado;
+	private JButton botonModificar;
+	private JTable table;
+
+	/**
+	 * Create the panel.
+	 */
+	public PanelListado() {
+		setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("LISTADO DE COCHES");
+		lblNewLabel.setBounds(278, 26, 144, 19);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		add(lblNewLabel);
+		
+		botonListado = new JButton("LISTAR");
+		botonListado.setBounds(171, 384, 128, 36);
+		add(botonListado);
+		
+		botonModificar = new JButton("MODIFICAR");
+		botonModificar.setBounds(423, 384, 109, 36);
+		add(botonModificar);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"MARCA", "MODELO", "COLOR", "MOTOR", "CILINDRADA", "PRECIO"
+			}
+		));
+		table.setBounds(60, 65, 600, 295);
+		add(table);
+
+	}
+
+	public JButton getBotonListado() {
+		return botonListado;
+	}
+
+	}
+	public JButton getBotonModificar() {
+		return botonModificar;
+	}
+	public JTable getTable() {
+		return table;
+	}
+}

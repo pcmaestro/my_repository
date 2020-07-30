@@ -1,0 +1,23 @@
+package com.restservice;
+
+import java.util.Map;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Path("prueba")
+public class Resource {
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Map<Integer, String> recursoUno() {
+		
+		Map var = {1, "el primero"};
+		
+		return var;	
+		
+	}
+
+}

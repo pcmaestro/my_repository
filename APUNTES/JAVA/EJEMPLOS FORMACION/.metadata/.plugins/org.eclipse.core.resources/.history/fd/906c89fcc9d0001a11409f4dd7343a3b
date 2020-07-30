@@ -1,0 +1,12 @@
+package sql;
+
+public class Query {
+	
+	private static final String select = "select * from tabla_coches;";
+
+	public static String getSelect() {
+		return select;
+	}
+	
+	
+}

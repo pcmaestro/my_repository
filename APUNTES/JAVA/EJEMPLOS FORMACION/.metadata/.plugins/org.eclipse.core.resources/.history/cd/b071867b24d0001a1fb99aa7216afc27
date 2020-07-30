@@ -1,0 +1,20 @@
+package com;
+
+
+
+
+public class Coche {
+	private int id;
+	private String marca;
+	private String modelo;
+	private String color;
+	private String motor;
+	private int cilindrada;
+	private int precio;
+	private int telefono;
+	private String email;
+	private int id_categoria;
+	
+	
+	
+}

@@ -1,0 +1,45 @@
+package daos;
+
+import java.util.List;
+
+import model.Coche;
+
+public class CocheDAOImpl implements CochesDAO {
+
+	@Override
+	public int registrarCoche(Coche c) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Coche> obtenerCoches(String marca, String modelo, String color, int comienzo, int cuantos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void borrarCoche(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Coche obtenerCochePorId(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void guardarCambiosCoche(Coche c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int totalCoches(String marca, String modelo, String color) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

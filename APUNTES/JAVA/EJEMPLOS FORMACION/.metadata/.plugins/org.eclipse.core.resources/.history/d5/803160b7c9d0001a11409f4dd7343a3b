@@ -1,0 +1,12 @@
+package daos;
+
+import java.util.ArrayList;
+
+import model.Coche;
+
+public interface CocheDAO {
+	
+	public ArrayList<Coche> obtenerCoches();
+	
+	public void registrarCoche();
+}

@@ -1,0 +1,7 @@
+package constantesSQL;
+
+public class ConstanteSQL {
+	
+	private String insert;
+
+}

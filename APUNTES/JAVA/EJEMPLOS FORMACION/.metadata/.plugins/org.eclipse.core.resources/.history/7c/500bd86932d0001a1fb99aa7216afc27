@@ -1,0 +1,8 @@
+package daos;
+
+import model.Coche;
+
+public interface CocheDAO {
+	
+	public ArrayList<Coche c> obtenerCoches();
+}

@@ -1,0 +1,16 @@
+package daos;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class MasterDAO {
+
+	private Class.forName("com.mysql.cj.jdbc.Driver");)
+	
+	private String URL = "jdbc:mysql://localhost:3306/bd_coches");	
+	private String USER = "root";
+	private String PASS = "1234";
+	
+	protected Connection conexion = DriverManager.getConnection(URL, USER, PASS);
+	
+}

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="wizardPage">
+		<list key="groupId">
+			<item value="aplicacionREST"/>
+			<item value="ejemploRest"/>
+			<item value="restful-project"/>
+			<item value="rest5"/>
+			<item value="rest4"/>
+			<item value="ejemploREST"/>
+			<item value="ApiRestFull"/>
+			<item value="apiRest"/>
+			<item value="apiRestFull"/>
+			<item value="cursojava14archivos"/>
+			<item value="portalCochesSegundaMano"/>
+			<item value="package cursojava31jdbcMaven"/>
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+			<item value="aplicacionREST"/>
+			<item value="ejemploRest"/>
+			<item value="restful-project"/>
+			<item value="rest5"/>
+			<item value="rest4"/>
+			<item value="ejemploREST"/>
+			<item value="ApiRestFull"/>
+			<item value="apiRest"/>
+			<item value="apiRestFull"/>
+			<item value="cursojava14archivos"/>
+			<item value="portalCochesSegundaMano"/>
+			<item value="package cursojava31jdbcMaven"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardLocationPage">
+		<list key="location">
+			<item value="C:\Users\localuser\eclipse-workspace\restful-project"/>
+			<item value="C:\Users\localuser\eclipse-workspace\restService\pom.xml"/>
+			<item value="C:\Users\localuser\eclipse-workspace"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArchetypePage">
+		<item key="catalog" value="All Catalogs"/>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="Maven2ProjectWizardArchifactPage">
+		<list key="package">
+			<item value="rest.service"/>
+			<item value="com.restfull.new_rest_project"/>
+			<item value="com.restfull.servuce"/>
+		</list>
+		<list key="groupId">
+			<item value="rest"/>
+			<item value="com.restfull"/>
+		</list>
+		<list key="artifactId">
+			<item value="service"/>
+			<item value="new-rest-project"/>
+			<item value="servuce"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="MavenProjectWizardArtifactPage">
+		<list key="groupId">
+		</list>
+		<list key="name">
+		</list>
+		<list key="artifactId">
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+		<list key="ciManagementUrl">
+		</list>
+		<list key="ciManagementSystem">
+		</list>
+		<list key="issueManagementSystem">
+		</list>
+		<list key="issueManagementUrl">
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="org.eclipse.m2e.core.ui.internal.dialogs.MavenRepositorySearchDialog">
+		<item key="width" value="480"/>
+		<item key="height" value="531"/>
+		<item key="x" value="443"/>
+		<item key="y" value="12"/>
+	</section>
+	<section name="org.eclipse.m2e.core.ui.internal.wizards.CustomArchetypeDialog">
+		<list key="archetypeGroupId">
+			<item value="org.glassfish.jersey.archetypes"/>
+		</list>
+		<list key="archetypeArtifactId">
+			<item value="jersey-quickstart-webapp"/>
+			<item value="jersey.quickstart-webapp"/>
+		</list>
+		<list key="archetypeVersion">
+			<item value="2.31"/>
+		</list>
+		<list key="repositoryUrl">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.ui.internal.dialogs.EditDependencyDialog">
+		<item key="width" value="480"/>
+		<item key="height" value="450"/>
+		<item key="x" value="443"/>
+		<item key="y" value="64"/>
+	</section>
+	<section name="org.eclipse.m2e.editor.dialogs.ManageDependenciesDialog">
+		<item key="width" value="659"/>
+		<item key="height" value="450"/>
+		<item key="x" value="354"/>
+		<item key="y" value="64"/>
+	</section>
+</section>

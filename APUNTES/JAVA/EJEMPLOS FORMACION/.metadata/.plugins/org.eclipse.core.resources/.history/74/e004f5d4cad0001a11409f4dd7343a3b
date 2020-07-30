@@ -1,0 +1,14 @@
+package sql;
+
+public class Query {
+	
+	private static final String select = "select * from tabla_coches;";
+	private static final String insert = "insert into tabla_coches (marca, modelo, color, motor, cilindrada, precio, telefono, email, id_categoria)"+
+										 "values (?,?,?,?,?,?,?,?,?);";
+
+	public static String getSelect() {
+		return select;
+	}
+	
+	
+}

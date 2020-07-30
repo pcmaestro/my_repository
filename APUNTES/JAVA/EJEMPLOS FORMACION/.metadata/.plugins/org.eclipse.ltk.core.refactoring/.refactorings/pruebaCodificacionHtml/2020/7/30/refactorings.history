@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;CosasConMaven.pruebaCodificacionHtml.App.java&apos; to &apos;EscapeHTML.java&apos;&#x0D;&#x0A;- Original project: &apos;pruebaCodificacionHtml&apos;&#x0D;&#x0A;- Original element: &apos;CosasConMaven.pruebaCodificacionHtml.App.java&apos;&#x0D;&#x0A;- Renamed element: &apos;CosasConMaven.pruebaCodificacionHtml.EscapeHTML.java&apos;" description="Rename compilation unit &apos;App.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;CosasConMaven.pruebaCodificacionHtml{App.java" name="EscapeHTML.java" references="false" stamp="1595327975591" version="1.0"/>
+</session>

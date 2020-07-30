@@ -1,0 +1,58 @@
+package vista;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JList;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+
+public class PanelListado extends JPanel {
+	private JButton botonListado;
+	private JTabbedPane tabbedPane;
+	private JButton botonModificar;
+
+	/**
+	 * Create the panel.
+	 */
+	public PanelListado() {
+		setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("LISTADO DE COCHES");
+		lblNewLabel.setBounds(278, 26, 144, 19);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		add(lblNewLabel);
+		
+		botonListado = new JButton("LISTAR");
+		botonListado.setBounds(171, 384, 128, 36);
+		add(botonListado);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(50, 66, 598, 298);
+		add(scrollPane);
+		
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		scrollPane.setViewportView(tabbedPane);
+		
+		botonModificar = new JButton("MODIFICAR");
+		botonModificar.setBounds(423, 384, 109, 36);
+		add(botonModificar);
+
+	}
+	public JList getList() {
+		return list;
+	}
+	public JButton getBotonListado() {
+		return botonListado;
+	}
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+	public JButton getBtnNewButton() {
+		return botonModificar;
+	}
+}

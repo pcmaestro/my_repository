@@ -1,0 +1,9 @@
+package daos;
+
+public class CocheDAO {
+	
+	public insert(Coche c) {
+		
+	}
+
+}

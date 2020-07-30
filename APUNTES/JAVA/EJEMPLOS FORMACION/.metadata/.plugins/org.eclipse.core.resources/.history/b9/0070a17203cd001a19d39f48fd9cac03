@@ -1,0 +1,10 @@
+package constantesSQL;
+
+public class ConstanteSQL {
+	
+	private String insert;
+	private String update;
+	private String select;
+	private String delete;
+
+}

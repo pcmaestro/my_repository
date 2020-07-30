@@ -1,0 +1,44 @@
+package vista;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JList;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+
+public class PanelListado extends JPanel {
+	private JList list;
+	private JButton botonListado;
+
+	/**
+	 * Create the panel.
+	 */
+	public PanelListado() {
+		setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("LISTADO DE COCHES");
+		lblNewLabel.setBounds(278, 26, 144, 19);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		add(lblNewLabel);
+		
+		list = new JList();
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		list.setBackground(Color.WHITE);
+		list.setBounds(47, 365, 600, -285);
+		add(list);
+		
+		botonListado = new JButton("LISTAR");
+		botonListado.setBounds(293, 382, 109, 36);
+		add(botonListado);
+
+	}
+	public JList getList() {
+		return list;
+	}
+	public JButton getBotonListado() {
+		return botonListado;
+	}
+}

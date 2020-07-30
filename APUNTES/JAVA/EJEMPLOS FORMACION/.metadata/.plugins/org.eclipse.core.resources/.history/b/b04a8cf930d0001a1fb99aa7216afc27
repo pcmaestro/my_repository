@@ -1,0 +1,7 @@
+package sql;
+
+public enum querys {
+	
+	String SELECT = "select * from tabla_coches;";
+
+}

@@ -1,0 +1,149 @@
+package gestorVentanas;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.SwingUtilities;
+
+import daos.CochesDAO;
+import daos.CochesDAOimplArchivo;
+import daos.CochesDAOimplArrayList;
+import modelo.Coche;
+import vista.PanelEdicion;
+import vista.PanelInicial;
+import vista.PanelListado;
+import vista.PanelRegistro;
+import vista.VentanaPrincipal;
+
+public class GestorVentanas implements ActionListener, ItemListener{
+	
+	
+	//Objeto ArrayList donde se guardan los coches
+	CochesDAO cochesDAO = new CochesDAOimplArchivo();
+	
+	//Objetos de la ventana principal y los paneles
+	private VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+	private PanelInicial panelInicial = new PanelInicial();
+	private PanelListado panelListado = new PanelListado();
+	private PanelRegistro panelRegistro = new PanelRegistro();
+	private PanelEdicion panelEdicion = new PanelEdicion();
+	
+	//Contenido del Combo Box
+	private String[] cilindradas = {"1.600cc", "1.800cc", "2.000cc"};
+
+	
+	public GestorVentanas() {		
+		
+		//Añadimos los Listener de eventos
+		
+		ventanaPrincipal.getMenuRegistro().addActionListener(this);
+		ventanaPrincipal.getMenuListado().addActionListener(this);
+		
+		panelListado.getBotonListado().addActionListener(this);
+		
+		panelRegistro.getInputMarca().addActionListener(this);
+		panelRegistro.getInputModelo().addActionListener(this);
+		panelRegistro.getInputColor().addActionListener(this);
+		panelRegistro.getRadioDiesel().addActionListener(this);
+		panelRegistro.getRadioGasolina().addActionListener(this);
+		panelRegistro.getComboCilindrada().addActionListener(this);
+		panelRegistro.getInputPrecio().addActionListener(this);
+		panelRegistro.getBotonRegistrar().addActionListener(this);
+		
+		//Añadimos el contenido del Combo Box		
+		for (String i : cilindradas) {
+			panelRegistro.getComboCilindrada().addItem(i);
+		}
+		
+		panelEdicion.getInputMarca().addActionListener(this);
+		panelEdicion.getInputModelo().addActionListener(this);
+		panelEdicion.getInputColor().addActionListener(this);
+		panelEdicion.getRadioDiesel().addActionListener(this);
+		panelEdicion.getRadioGasolina().addActionListener(this);
+		panelEdicion.getComboCilindrada().addActionListener(this);
+		panelEdicion.getInputPrecio().addActionListener(this);
+		panelEdicion.getBotonEditar().addActionListener(this);
+		panelEdicion.getBotonBorrar().addActionListener(this);	
+		
+		
+		//Indicamos el panel que cargará inicialmente
+		ventanaPrincipal.setContentPane(panelInicial);
+		
+		//Hacemos visible la ventana principal
+		ventanaPrincipal.setVisible(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		Object elementoSeleccionado = e.getSource();
+		
+		//Menú
+		
+		if(elementoSeleccionado == ventanaPrincipal.getMenuRegistro()){
+			ventanaPrincipal.setContentPane(panelRegistro);
+		}else if(elementoSeleccionado == ventanaPrincipal.getMenuListado()){
+			ventanaPrincipal.setContentPane(panelListado);
+		}
+		
+		if(elementoSeleccionado == panelRegistro.getBotonRegistrar()) {
+			String marca = panelRegistro.getInputMarca().getText();
+			String modelo = panelRegistro.getInputModelo().getText();
+			String color = panelRegistro.getInputColor().getText();	
+		
+			ButtonGroup grupoRadio = new ButtonGroup();
+			grupoRadio.add(panelRegistro.getRadioDiesel());
+			grupoRadio.add(panelRegistro.getRadioGasolina());
+			
+			String motor = null;
+			
+			if(panelRegistro.getRadioDiesel().isSelected()) {
+				motor = "Diesel";
+			}else if(panelRegistro.getRadioGasolina().isSelected()) {
+				motor = "Gasolina";
+			}
+
+			int indiceSeleccionado = panelRegistro.getComboCilindrada().getSelectedIndex();
+			String cilindrada = cilindradas[indiceSeleccionado];			
+			
+			String precio = panelRegistro.getInputPrecio().getText();
+			
+			Coche coche = new Coche(marca, modelo, color, motor, cilindrada, precio);
+			
+			cochesDAO.registrarCoche(coche);
+			
+		}//end if
+		
+		if(elementoSeleccionado == panelListado.getBotonListado()) {
+			
+			String[] columnas = {"MARCA", "MODELO", "COLOR", "MOTOR", "CILINDRADA", "PRECIO"};
+			JTable tabla = panelListado.getTabbedPane();
+			
+			
+		}
+		
+		SwingUtilities.updateComponentTreeUI(ventanaPrincipal);
+		
+	}
+
+	private Object getRadioGasolina() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Object getRadioDiesel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
