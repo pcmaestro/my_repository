@@ -1,0 +1,87 @@
+El API de JAX-RS permite trabajar con formatos JSON e incluso XML
+	
+Los archivos JSON son representaciones de objetos en formato texto de pares
+clave:valor,  donde el valor puede ser un Array
+
+
+Para trabajar con el modelo de objetos de JAX-RS en formatos JSON debenmos
+instalar en el proyecto esta dependencia Maven
+
+<dependency>
+	<groupId>org.glassfish</groupId>
+	<artifactId>javax.json</artifactId>
+	<version>1.1.2</version>
+</dependency>
+
+Según la funcionalidad, estas son las clases que trae la librería
+
+Instanciar servicios de procesamiento -  Json, JsonBuilder, JsonArrayBuilder
+
+Leer o escribir flujos en JSON - JsonReader, JsonWriter
+
+Representación de objetos JSON = JsonValue, JsonStructure, JsonObject, JsonArray
+				 JsonString, JsonNumber
+
+Excepciones de procesamiento JSON - JsonException
+
+Ej creación de objeto JSON
+
+private static JsonObject CrearObjetoJson(){
+
+	JsonObjectBuilder builder = new JsonProviderImpl().createObjectBuilder();
+
+	builder.add("nombre", "Paco")
+	       .add("apellido, "Martinez")
+               .add("edad":70);
+
+	JsonObject objJson = builder.build();
+
+	return objJson;
+
+}
+
+Ej creación de Array JSON
+
+private static JsonArray CrearArrayJson(){
+
+	JsonArrayBuilder builderArray = new JsonProviderImpl().createArrayBuidler();
+
+	builder.add("lunes")
+               .add("martes")
+               .add("miercoles")
+               .add("jueves")
+               .add("viernes")
+               .add("sabado")           
+               .add("domingo");
+
+	JsonArray arrayJson = builder.build();
+
+	return arrayJson;
+
+}
+
+Si tratara de un array de objetos, estos deben ser JsonObject , con lo cual primero habría que hacer el parseo de
+ellos a Json y luego incluirlos en el JsonArray (se puede combinar buider.add() con un bucle for)
+
+
+Ej Leer archivos JSON
+
+Supongamos que queremos leer el objeto objJson que trae nombre, apellido y edad
+
+private static void leerObjetoJson(){
+
+	String archivo = "home/user/archivo.json";
+	
+	try ( JsonReader lectorJson = JsonProviderImpl().createReader(new FileReader(archivo)) ){
+	   
+		JsonObject productoJson = lectorJson.readObject();
+		String nombre = productoJson.getString("nombre");
+		double precio = productoJson.getJsonNumber("precio");
+
+	}catch FileNotFoundException e{
+
+	    e.printStackTrace();
+
+	}
+
+}

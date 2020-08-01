@@ -348,6 +348,8 @@ Si hay problemas con los acentos y las letras ñ, en la declaración del Tipo MI
 
 @Consumes(MediaType.APPLICATION_JSON + "; charset = ISO-8859-1") 
 
+@Consumes(MediaType.APPLICATION_JSON + "; charset = UTF-8") 
+
 
 Podemos incluso hacer que un mismo método devuelva su información en varios formatos distintos
 

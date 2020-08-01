@@ -1,0 +1,5 @@
+La propiedad vertical-align se usa para alinear verticalmente elementos situados en
+una misma linea, por ejemplo, si tenemos una caja mas alta que otra y ambas ocupan
+una misma linea ( una al lado de la otra) , por defecto la más pequeña se queda
+en la parte baja de la linea, pero con vertical-align:top la podemos situar en la
+parte superior de la línea

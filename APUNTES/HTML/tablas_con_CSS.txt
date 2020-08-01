@@ -1,3 +1,19 @@
+
+APUNTES ADICIONALES
+
+line-height - propiedad para establecer el alto de las lineas de la tabla
+
+overflow-y:scroll -  si incluimos la tabla en un div, se muestra el scroll vertical
+
+tr:nth-child(even) - Aplica un estilo determinado a las lineas pares 
+
+tr:nth-child(odd) - Aplica un estido determinado a las lineas impares
+
+
+
+
+..................................................................................
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

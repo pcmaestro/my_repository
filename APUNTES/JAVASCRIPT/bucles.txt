@@ -12,6 +12,12 @@ for(var i in Array){		//Recorre siempre el índice desde la posición cero
 	codigo a ejecutar;
 	}
 
+o también :
+
+for(var i of Array){		//Recorre siempre el índice desde la posición cero
+	codigo a ejecutar;
+	}
+
 BUCLES CONDICIONALES:
 
 Este bucle while no itera hasta que no se cumple la condición:

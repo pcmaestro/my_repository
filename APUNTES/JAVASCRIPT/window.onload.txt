@@ -1,0 +1,18 @@
+Podemos inicializar las variables que vayamos a usar al abrir una ventana del navegador
+tomando los elementos del DOM por su id, JavaScritp guardará esas varibles en memoria
+y luego las podremos usar en cualquier función posterior , también podemos incluir
+funciones que queremos que se ejecuten al cargar la página
+
+Las variables que inicalicemos de esta manera deben estar declaradas sin inicializar
+en las funciones donde vayamos a usarlas
+
+Ej
+
+window.onload = function(){
+
+	var variable1 = document.getElementById("id");	
+
+	listarAriculos();
+
+	mostrarCantidadStock();
+}

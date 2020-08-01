@@ -1,7 +1,24 @@
 ACCESO A TRAVES DEL DOM
 
 El DOM organiza los formularios como un Array y por tanto se podrian acceder con los métodos
-de los Array, pero lo eficaz es hacerlo por name o su id.
+de los Array, pero también podemos hacerlo por name o su id.
+
+Por ejemplo, para acceder como un Array disponemos de la clase URLsearchParams, si instanciamos
+un objeto de ella, podemos ir almacenando los datos de los formularios en un mapa de clave:valor,
+para ello guardamos por ej el <form> mediante su id en una variable llamada formVar y vamos accediendo
+a los formularios tomandolos por us id
+
+Ej
+
+var formDatos = new URLsearchParams();
+
+formDatos.set("nombre", formVar["nombre"].value);
+formDatos.set("apellido", formVar["apellido"].value);
+
+En este ejemplo hemos tomado el nombre y el apellido y los hemos metido en formato clave:valor dentro
+del mapa formDatos, luego con formDatos.get("clave") podemos por ejemplo validar cualquier input
+o incluso podemos enviar directamente el objeto formDatos a través de AJAX mediante el método
+xhttp.send(formDatos) --> Requiere añadir xhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded")
 
 El objeto document permite acceder directamente a los formularios por su name de esta manera :
 

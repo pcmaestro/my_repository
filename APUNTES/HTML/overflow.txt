@@ -17,4 +17,4 @@ Podemos darle estos valores:
 
  
 
--      scroll. Siempre muestra las barras de desplazamiento.
+-      scroll. Siempre muestra las barras de desplazamiento (overflow-y:scroll para sólo scroll vertical)

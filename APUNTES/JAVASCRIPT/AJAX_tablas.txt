@@ -1,0 +1,63 @@
+Podemos añadir tablas al DOM trayendo la información desde el backend
+
+Supongamos que en el backend existe una ruta qtue devuelve en formato JSON
+un listado de artículos y que queremos presentar en la web de forma asincrona
+dicho listado
+
+Primer paso,  cremos la función que inserta las lineas de la tabla en esta esctructura
+
+<table>
+    <thead>
+	<tr>
+           <th>columna1</th>
+	   <th>columna2</th>
+           <th>columna3</th>   
+    </thead>
+    <tbody id = "tbody">
+
+    </tbody>
+</table>
+
+El <tbody> lo tenemos en blanco,  en JavaScript lo tomamos por us id en una variable
+llamada tbodyArticulos , la x representa al objeto cuyas propiedades aparecerán en las
+celdas
+
+function listarArticulos(objetoJSON){
+    
+    var articulos = objetoJSON.map( function(x) {
+
+	return "<tr>"
+		+ "<td>" + x.propiedad1 + "</td>"
+		+ "<td>" + x.propiedad2 + "</td>"
+		+ "<td>" + x.propiedad3 + "</td>"
+		+ "</tr>"
+
+    });
+    
+    var contenidoTBody = "";
+
+    for (articulo of articulos){
+	
+	contenidoTBody += articulo;
+    }
+
+    tbodyArticulos.innerHTML = contenidoTbody;
+
+}
+
+Segundo paso , creamos la función AJAX que llama al servidor y le pasamos la función anterior
+
+function getArticulos(){
+
+	xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "http://192.168.1.45:8080/rest/listar-articulos");
+	xhttp.responseType = "json";
+	xhttp.send();
+	xhttp.onreadystatechange = function(){
+		if(xhttp.readyState == 4 && xhttp.status == 200){
+			listarArticulos(xhttp.response);
+		{
+	{
+
+}
+

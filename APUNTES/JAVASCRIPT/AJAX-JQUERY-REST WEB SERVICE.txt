@@ -12,13 +12,18 @@ Los métodos habituales para interactuar con el servidor son GET y POST
 
 
 
-Invocación del recurso en el servidor (método open) :
+Invocación del recurso en el servidor (método open, usará los verbos GET, POST, PUT, DELETE) :
 
 variable.open("GET", http//urlAccesoRecurso + posibleVariable, true, user, password) -->  ( Método, URL,  modo asíncrono - true o false -, usuario, contraseña)
 
 Podemos establecer cabeceras en las peticiones :
 
-setRequestHeader();
+setRequestHeader("Accept", "application/json"); --> También podemos usar xhttp.responseType("json") en cuyo caso la respuesta vendrá en el método
+					            xhttp.response (según lo que pida responseType, así vendrá en response) 
+
+setRequestHeader("content-type", "application/x-www-form-urlencoded");
+
+
 
 
 
@@ -46,6 +51,30 @@ Y también estos status :
 El típico error 404 proviene del código de error que aparece en la línea de status del header HTML , 404, que signfica not found o no encontrado. 
 En general los códigos 200 indican respuestas correctas, los códigos 300 indican redirecciones, los códigos 400 problemas con la petición 
 y los códigos 500 problemas del servidor.
+
+
+La respuesta la procesamos con el método responseText (sólo response si hemos indicado lo que esperamos con responseType) , podemos obtener 
+información de los header de la respuesta del servidor mediante los métodos getResponseHeader() y getAllResponseHeaders()
+
+
+Ej
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("demo").innerHTML =
+    this.getAllResponseHeaders();
+  }
+};
+
+Si necesitamos pintar un resultado en una caja de texto o un textarea, podemos hacerlo de esta manera:
+
+Supongamos que tenemos un textarea or su id en inputTextArea
+
+inputTextArea.value = xhttp.responseText;
+
+
+
 
 Ejemplo de uso :
 
@@ -83,6 +112,48 @@ ourRequest.onload = function show(){
 
 };
 ourRequest.send();
+
+OTRO EJEMPLO
+
+LLamada a un servicio REST para actualziar el nº de articulos de un inventario que mostramos en la web
+
+function getNumeroArticulos(){
+
+	var xhttp = new XMLHttpRequest();
+	
+	xhhtp.open("GET", "http://192.168.1.25:8080/servicio-rest/recurso/obtener-inventario");
+	setRequestHeader("Accept", "text/plain");
+	xhttp.send();
+	xhttp.onreadystatechange = function(){
+		if(xhttp.readyState == 4 && xhttp.status == 200){
+			funcionActualizarNumeroArticulos(xhttp.responseText); --> función callback que atiende la respuesta
+		}
+	
+	}
+}
+
+
+OTRO EJEMPLO
+
+Envio de datos de formularios a un servicio REST, tomando el form por su id en la variable formVar y guardando los datos
+como clave:valor en un objeto de URLsearchParams
+
+function crearUsuario(){
+	var formDatos = new URLsearchParams();
+
+	formDatos.set("nombre", formVar["nombre"].value);
+	formDatos.set("apellido", formVar["apellido"].value);
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "http://192.168.1.45:8080/rest/crear-usuario");	
+	xhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+	xhttp.send(formDatos);
+	xhttp.onreadystatechange = function(){
+		if(xhttp.readyState == 4 && xhttp.status == 200){
+			obtenerUsuarioCreado(xhttp.responseText);
+		}
+	}
+}
 
 
 ####################### USANDO JQUERY  ############################################################

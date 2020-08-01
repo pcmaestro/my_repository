@@ -1,0 +1,4 @@
+
+sintaxis
+
+hsl("codigo_color", "saturacion%", "luminosidad%) --> Ver herramienta hsl en www3schools

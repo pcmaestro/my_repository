@@ -1,0 +1,8 @@
+En CSS3 podemos tomar un determiado elemento según sus atributos
+
+Ej
+
+.clase1 input[type = "button"] {backgroound-color:blue;}
+
+En este ejemplo tomamos todos los elementos de la clase 1 , y dentro a los input que tengan
+como atributo el type = "button" les aplicamos un color de fondo azul

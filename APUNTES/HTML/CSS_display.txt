@@ -20,7 +20,8 @@ todo el ancho del contenedor
 --------------------  inLineBlock   ---------------------
 
 Muestra un elemento cono inLine, pero se le puede aplicar ancho y alto, permite por ejemplo
-poner en la misma linea elementos linea y elementos bloque
+poner en la misma linea elementos linea y elementos bloque , si por ej dos cajas no caben
+en la misma linea al achicarse el viewport, se colocan en modo block (comportamiento responsive)
 
 --------------------  none    ---------------------------
 
