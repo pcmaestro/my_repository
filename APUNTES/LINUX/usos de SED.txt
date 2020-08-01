@@ -1,0 +1,10 @@
+Usos de SED
+
+sed -i '2d' filename.txt BORRA LA LINEA NUMERO 2 EN filename.tx
+sed -i '/^$/d' filename.txt   BORRA LINEAS EN BLANCO
+sed -i '/comentario1/d' filename.txt BORRA LAS LINEAS QUE CONTENGAN "comentario1"
+sed -i 's/comentario1/comentario2/g' filename.txt CAMBIA UNA CADENA DE CARACTERES POR OTRA EN TODAS LAS LINEAS
+sed -i '2 s/comentario1/comentario2/g' filename.txt CAMBIA UNA CADENA DE CARACTERES POR OTRA EN LA LINEA 2
+sed -i 's/comentario1//g' filename.txt BORRA "comentario1" EN TODAS LAS LINEAS
+sed -i '2 s/comentario1//g' filename.txt BORRA "comentario1" EN LA LINEA 2
+
