@@ -49,7 +49,7 @@ puede haber a su vez métodos abstractos (sin cuerpo) y métodos normales. No ob
 abstractas pueden disponer de métodos para crear instancias , debemos ver su documentación para
 ver que tienen disponible
 
-En baso de que una clase abstracta a demás tenga métodos abstractos, estos deben ser implementados
+En caso de que una clase abstracta además tenga métodos abstractos, estos deben ser implementados
 obligatoriamente por la clase hija
 
 abstract class Animal {
@@ -117,8 +117,9 @@ METODOS
 
 Los métodos son funciones contenidas en las clases
 
-Podemos añadir junto con el modificador, el tipo de dato que contendrá (String, double, int...) , pero
-tenemos la opción de no indicar ningún tipo de dato usando "void"
+Podemos añadir junto con el modificador, el tipo de dato que contendrá (String, double, int...) que puede ser
+incluso un objeto de una determinada clase,  en estos casos es obligado devolver un return , pero tenemos la 
+opción de no indicar ningún tipo de dato usando "void", en cuyo caso no será obligatorio el return
 
 La sintáxis sería esta:
 
@@ -138,7 +139,7 @@ Podemos pedir parámetros para ejecutar el método:
 
 public class Perro{
 
-    public void coger_pelota(String pelota){
+    public String coger_pelota(String pelota){
 
 	if(pelota){
 		System.out.println("ir a por la pelota");
@@ -147,9 +148,6 @@ public class Perro{
 	}
 }
 
-Si queremos que un método (función) devuelva un valor, debemos usar la setencia return,  pero debemos
-tener en cuenta que ya no podemos usar el modificador "void" , habrá que indicar el tipo de dato
-primario que queremos que devuelva (String, boolean, double, float, int...)
 
 Sobrecarga de métodos:
 
@@ -216,7 +214,7 @@ defecto de Java, salvo que creemos también un segundo constructor que no pida a
 
 SUPER()
 
-En el caso de Herencia,  las instanciar un objeto de la clase hija , si la clase padre tiene más de
+En el caso de Herencia,  al instanciar un objeto de la clase hija , si la clase padre tiene más de
 un constructor , por ejemplo uno que pide argumentos y otro que no , podemos seleccionar cual de ellos
 ejecutar mediante el método super()
 
@@ -405,8 +403,7 @@ IMPORTANTE - Los métodos del interfaz son un contenido mínimo que debe tener l
 	     Animal chiguagua = new AnimalImplPerro(); --> Unicamente podrá contener los métodos definidos en el interface
 	     
 
-Existe interfaces para atender eventos ( ver documentación ) que indican los métodos que hay que deben
-disponer
+Existe interfaces para atender eventos ( ver documentación ) que indican los métodos de los cuales deben disponer
 
 interface Animal {
   public void animalSound(); // interface method (does not have a body)

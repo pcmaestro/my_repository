@@ -132,4 +132,40 @@ public class MyClass extends Thread {
 }
 
 TIEMPO DE ESPERA
-Podemos hacer "dormir" un hilo mediante el método Thread.sleep(milisegundos)
+
+Podemos hacer "dormir" un hilo mediante el método Thread.sleep(milisegundos) , el cual requiere ser rodeado con
+Try-catch
+
+
+SINCRONIZACION
+
+Cuando más de un hilo debe usar el recurso compartido, es necesario asesgurar que no habrá dos hilos a la vez
+haciendo uso del mismo, o si un hilo depende del evento disparado por otro hilo distinto, el primero debe permanecer
+a la espera de dicho evento. La ejecución de hilos es arbitraria y esto es algo que necesitamos controlar , siendo
+deseable que un hilo no se ejecute mientras no haya terminado el anterior
+
+La clase Thread tiene un método llamado getName() que nos permite saber el nombre interno asignado por el API de Java
+a un determinado hilo, esto es util para hacer análisis de concurrencia y sincronización
+
+El método encargado de que un hilo no empìece mientras el anterior no haya finalizado es join() 
+
+Ej
+
+hilo1.start()
+hilo1.join()
+hilo2.start()
+hilo2.join()
+
+En este caso, el hilo2 no empezará hasta que no haya finalizado por completo el hilo1
+
+El método join() arroja un InterruptedException, con lo cual requiere ser rodeado con un Try-catch
+
+
+Otra forma de sincronizar es añadir a la clase de donde instanciamos un hilo2 un constructor que pida
+como parámetro otro hilo1, al hacer esto , mientras no finalice hilo1 , no arrancará hilo2
+
+MiHilo2 hilo2 = new MiHilo2(hilo1);
+
+
+
+

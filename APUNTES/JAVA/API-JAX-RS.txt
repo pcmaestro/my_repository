@@ -85,3 +85,35 @@ private static void leerObjetoJson(){
 	}
 
 }
+
+TRABAJAR CON XML
+
+Para que JAX-RS puede trabajar con XML, en la clase cuyo contenido necesitemos representar en formato
+XML, es necesario indicar la anotación @XmlRootElement
+
+
+CLIENTE USANDO EL API JAX-RS
+
+Pasos:
+
+-Instanciar un objeto de la clase Client (Client cliente) --> Objeto muy pesado, no abusar de su instanciación
+-Configurar el cliente con un destino (cliente.target)
+-Crear una petición basada en el destino (request())
+-invocar la petición (get, put, update, delete)
+-Cerrar cliente --> Cerrar sólo cuando se hayan hecho todas las llamadas, abrir y cerrar es muy costoso en recursos
+
+En este ejemplo usamos el método GET y el producto será una instancia de la clase String,  añadimos el parámetro "clave" a la URI
+añadiendo el método queryParam()
+
+try{
+    Client cliente = ClientBuilder.newClient();
+    
+    String producto = cliente.target(http://ruta_servicio_rest).queryParam("clave", valor).request(MediaType.APPLICATION_JSON).get(String.class);
+
+    cliente.close();
+
+}catch (Exception e){
+    e.printStackTrace();
+    
+    
+    

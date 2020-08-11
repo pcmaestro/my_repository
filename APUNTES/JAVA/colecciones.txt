@@ -8,6 +8,30 @@ También podemos hacer que su contenido sean objetos de la clase Object, lo cual
 incluir objetos que sean de diferentes tipos de datos. Luego haría falta hacer un casting a un 
 determinado tipo de dato para mostrarlos
 
+INTERFAZ LIST
+
+Todas los tipos de array implementan la interfaz List , con lo cual es muy corriente hacer la
+declaración mediante List:
+
+List<String> lista = new LinkedList<String>();
+
+INTERFAZ MAP
+
+Todas las colecciones basadas en clave:valor implementan la intefaz Map
+
+Map<Integer, String> mapa = new HasMap<Integer, String>();
+
+
+INTERFAZ SET
+
+Un set es una colección que no puede contener elementos duplicados,  todos deben ser el mismo tipo de dato, sus implementaciones
+mas habituales son el HashSet y el TreeSet
+
+Set<Integer> set = new HashSet<Integer>();
+
+
+
+#############################################  IMPLEMENTACIONES DE LIST  ######################################################
 
 ARRAY
 
@@ -43,148 +67,6 @@ int[] secuencia = {1,2,3,4,5,6,7,8,9,10}
 
 System.out.println(secuencia[0]) --> 1
 
-
-HASHTABLES / HASHMAPS (diccionarios)
-
-Ambos implementan el interface Map
-
-El HasTable almacena pares de clave=valor
-
-import java.util.Hashtable;
-
-Hashtable<integer, String> semana = new Hashtable<integer, String>();
-
-semana.put(22, "lunes)
-semana.put(23, "martes")
-semana.put(24, "miercoles")
-
-System.out.println(semana.get(23)); -->  martes
-
-Los elementos de las claves y de los valores pueden ser cualquier dato primario admitido en Java
-
-Los métodos de los HashTables son :
-
-put("clave", "valor") --> añade un objeto
-
-get("clave") --> recupera el valor de la clave
-
-remove("clave") --> elimina un objeto
-
-clear() --> elimina todos los objetos
-
-size() --> devuelve la cantidad de pares clave=valor
-
-
-Para comprobar el contenido , es necesario recurrir a la clase Enumeration junto con el método elements()
-
-Hashtable contenedor=new Hashtable();
-
-Enumeration enumeration = contenedor.elements();
-while (enumeration.hasMoreElements()) {
-  System.out.println(""+"claves del HashTable: " + enumeration.nextElement());
-}
-
-E igualmente para comprobar las claves junto en el método keys()
-
-Enumeration llaves = contenedor.keys();
-while (llaves.hasMoreElements()) {
-  System.out.println(""+"claves del HashTable: " + llaves.nextElement());
-}
-
-Para interarlo , debemos usar un bucle FOR-EACH , con el método Keyset() para obtener las claves, y el
-método values() para obtener sólo sus valores:
-
-for (String i : capitalCities.keySet()) {
-  System.out.println(i);
-}
-
-Si combinamos en la iteración el método get() con el método keyset() , conseguiremos la clave + valor
-
-for (String i : capitalCities.keySet()) {
-  System.out.println("key: " + i + " value: " + capitalCities.get(i));
-}
-
-Si el HashTable no contiene Strings, será necesario indicar el tipo de datos usando las "clases envolventes", 
-Integer, Boolean, Character, Double:
-
-HashMap<String, Integer> people = new HashMap<String, Integer>();
-
-
-Un HashMap tiene las mismas caracteristicas y métodos del HashTable , 
-
-import.util.HashMap
-
-Estas son las direfencias entre ambos:
-
-HashMap --> Permite un null key y cualquier cantidad de null values
-HashTable --> No permite ningún null ni en clave ni en valor
-
-HashTable --> Debe usarse en aplicaciones multi-thread, ya que todos sus métodos son sincronizados
-HashMap --> No debe usarse en aplicaciones multi-thread
-
-HasTable --> Se considera legacy class y su uso está decayendo
-HashMap --> Al no tener métodos sincronizados, tiene mejor rendimiento, y por tanto es mas usado
-
-HASHSET
-
-Es una colección donde todos los objetos son únicos (no pueden estar repetidos)
-
-import java.util.HashSet;
-
-HashSet<String> cars = new HashSet<String>();
-
-Métodos
-
-add("item") --> añade un objeto
-contains("item") --> devuelve true o false
-remove("item") --> borra un elemento
-clear() --> borra todos los elementos
-size() --> devuelve la cantidad de elementos
-
-Podemos recorrer el HashSet con un bucle FOR-EACH
-
-Al igual que el resto de colecciones, sus elementos son objetos, si son diferentes de String, debemos
-usar "clases envolventes" al declararlo : Integer, Boolean, Double, Character....
-
-
-
-MATRICES MULTIDIMENSIONALES
-
-int[][] lista = new int[2][3];  --> Array que contiene a su vez dos array, los cuales tienen 3
-				    elementos cada uno
-
-Graficamente esto sería una tabla de 2 filas y 3 columnas
-
-lista[0][0] = 10;	lista[0][1] = 20;	lista[0][2] = 30 ;
-lista[1][0] = 15;	lista[1][1] = 25;	lista[1][2] = 35 ;
-
-System.out.println(lista[1][1]) --> 25
-
-Podemos declarar directamente el array bidimensional:
-
-int[][] lista = { 
-	{10,20,30}, 
-	{15,25,35}
-};
-
-Podemos añadir los niveles de profundidad que necesitemos:
-
-int[][][] lista = {
-
-	{	
-		{10,20,30}, 
-		{15,25,35}
-
-	},
-	
-	{
-		{40,50,60},
-		{45,55,65}
-	}
-
-};
-
-System.out.println(lista[1][0][2]) --> 60
 
 
 ARRAYLIST
@@ -295,17 +177,191 @@ LinkedList --> Cuando sólo usamos la lista para iterar a través de ella, o cua
 	       de manera frecuente acceder a objetos del principio o el interior de la lista
 
 
-HASHMAPS
+MATRICES MULTIDIMENSIONALES
 
-//PENDIENTE BUSCAR INFORMACION
+int[][] lista = new int[2][3];  --> Array que contiene a su vez dos array, los cuales tienen 3
+				    elementos cada uno
+
+Graficamente esto sería una tabla de 2 filas y 3 columnas
+
+lista[0][0] = 10;	lista[0][1] = 20;	lista[0][2] = 30 ;
+lista[1][0] = 15;	lista[1][1] = 25;	lista[1][2] = 35 ;
+
+System.out.println(lista[1][1]) --> 25
+
+Podemos declarar directamente el array bidimensional:
+
+int[][] lista = { 
+	{10,20,30}, 
+	{15,25,35}
+};
+
+Podemos añadir los niveles de profundidad que necesitemos:
+
+int[][][] lista = {
+
+	{	
+		{10,20,30}, 
+		{15,25,35}
+
+	},
+	
+	{
+		{40,50,60},
+		{45,55,65}
+	}
+
+};
+
+System.out.println(lista[1][0][2]) --> 60
 
 
-INTERFAZ LIST
 
-Todas los tipos de array implementan la interfaz List , con lo cual es muy corriente hacer la
-declaración mediante List:
+##########################################   IMPLEMENTACIONES DE MAP   ###################################################3
 
-List<String> lista = new LinkedList<String>();
+
+HASHTABLES / HASHMAPS / TREEMAPS (diccionarios)
+
+Ambos implementan el interface Map
+
+El HashTable almacena pares de clave=valor
+
+import java.util.Hashtable;
+
+Hashtable<integer, String> semana = new Hashtable<integer, String>();
+
+semana.put(22, "lunes)
+semana.put(23, "martes")
+semana.put(24, "miercoles")
+
+System.out.println(semana.get(23)); -->  martes
+
+Los elementos de las claves y de los valores pueden ser cualquier dato primario admitido en Java
+
+Los métodos de los HashTables son :
+
+put("clave", "valor") --> añade un objeto
+
+get("clave") --> recupera el valor de la clave
+
+remove("clave") --> elimina un objeto
+
+clear() --> elimina todos los objetos
+
+size() --> devuelve la cantidad de pares clave=valor
+
+firstEntry() --> Devuelve la primera entrada
+
+lastEntry() --> Devuelve la última entrada
+
+
+Para comprobar el contenido , es necesario recurrir a la clase Enumeration junto con el método elements()
+
+Hashtable contenedor=new Hashtable();
+
+Enumeration enumeration = contenedor.elements();
+while (enumeration.hasMoreElements()) {
+  System.out.println(""+"claves del HashTable: " + enumeration.nextElement());
+}
+
+E igualmente para comprobar las claves junto en el método keys()
+
+Enumeration llaves = contenedor.keys();
+while (llaves.hasMoreElements()) {
+  System.out.println(""+"claves del HashTable: " + llaves.nextElement());
+}
+
+Para interarlo , debemos usar un bucle FOR-EACH , con el método Keyset() para obtener las claves, y el
+método values() para obtener sólo sus valores:
+
+for (String i : capitalCities.keySet()) {
+  System.out.println(i);
+}
+
+Si combinamos en la iteración el método get() con el método keyset() , conseguiremos la clave + valor
+
+for (String i : capitalCities.keySet()) {
+  System.out.println("key: " + i + " value: " + capitalCities.get(i));
+}
+
+Si el HashTable no contiene Strings, será necesario indicar el tipo de datos usando las "clases envolventes", 
+Integer, Boolean, Character, Double:
+
+HashMap<String, Integer> people = new HashMap<String, Integer>();
+
+
+Un HashMap tiene las mismas caracteristicas y métodos del HashTable , 
+
+import.util.HashMap
+
+Estas son las direfencias entre ambos:
+
+HashMap --> Permite un null key y cualquier cantidad de null values
+HashTable --> No permite ningún null ni en clave ni en valor
+
+HashTable --> Debe usarse en aplicaciones multi-thread, ya que todos sus métodos son sincronizados
+HashMap --> No debe usarse en aplicaciones multi-thread
+
+HasTable --> Se considera legacy class y su uso está decayendo
+HashMap --> Al no tener métodos sincronizados, tiene mejor rendimiento, y por tanto es mas usado
+
+
+TREEMAP
+
+Es una implementación de MAP ordenada y mutable
+
+Para iterar a través del Treemap
+
+for (Entry<Integer, String> entry : treeMap.entrySet()) {
+    System.out.print(entry + " "); //prints 1=one 4=four 10=ten 12=twelve 
+}
+
+o bién
+
+Iterator<Entry<Integer, String>> iter = treeMap.entrySet().iterator();
+while (iter.hasNext()) {
+    System.out.print(iter.next() + " "); //prints 1=one 4=four 10=ten 12=twelve 
+}
+
+Al iterar las entradas se van mostrando en orden natural, no en orden de inserción
+
+
+##################################   IMPLEMEMTACIONES DE SET Y SORTEDSET  #####################################################
+
+HASHSET (SET)
+
+Es una colección donde todos los objetos son únicos (no pueden estar repetidos) , no garantiza el orden
+
+import java.util.HashSet;
+
+HashSet<String> cars = new HashSet<String>();
+
+Métodos
+
+add("item") --> añade un objeto
+contains("item") --> devuelve true o false
+remove("item") --> borra un elemento
+clear() --> borra todos los elementos
+size() --> devuelve la cantidad de elementos
+isEmpty() --> devuelve true si está vacío
+contains(elemento) --> devuelve true si existe el elemento
+
+Podemos recorrer el HashSet con un bucle FOR-EACH
+
+Al igual que el resto de colecciones, sus elementos son objetos, si son diferentes de String, debemos
+usar "clases envolventes" al declararlo : Integer, Boolean, Double, Character....
+
+TREESET (SORTEDSET)
+
+Al igual que en HashSet ,  sus elementos no pueden estar repetidos y se mantiene el orden natural (de menor a mayor),
+también se puede definir su orden implementando l
+
+
+LINKEDHASHSET
+
+No permite elementos duplicados,  pero los elementos se ordenan según su orden de inserción
+
+
 
 
 

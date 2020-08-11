@@ -1,0 +1,63 @@
+El threading permite ejecutar varios subprocesos a la vez, cada subproceso será un hilo
+
+USANDO EL MODULO THREADING
+
+importamos el módulo de threading
+
+import threading
+
+Supongamos la existencia de la función mi_funcion() , la incluiremos dentro de un hilo de
+esta manera, en target invocamos la funcion, y en args le pasamos argumentos como lista
+
+hilo = threading.Thread(target = mi_funcion, args = [argumento1, argumento2, etc..])
+
+Iniciamos el hilo de esta manera
+
+hilo.start()
+
+Habrá que invocar la función start() para cada hilo que necesitemos ejecutar
+
+
+El uso de hilos puede ayudar a reducir el tiempo de ejecución de tareas muy pesadas, diviendo
+estas en varios hilos.  Hay que tener en cuenta que no sabemos nunca en que orden se ejecutarán
+los hilos, con lo cual si debemos concatenar sus resultados en , por ejemplo, una lista, tendremos
+que ordenarla. Es corriete crear una lista vacia y luego mediante un bucle for ir rellenandola
+con el resultado de ejecución de cada hilo, ordenando con sort() finalmente dicha lista, como se
+habia indicado antes
+
+Ej usando 5 hilos
+
+def mi_funcion():
+    return "Hacer algo"
+
+hilos = []
+
+for t in range(5):
+    t = threading.Thread(target = mi_funcion)
+    t.start()    
+    hilos.append(t)
+    time.sleep(1000)
+
+for hilo in hilos:
+    hilo.join()
+
+
+
+Para asegurarnos de que los hilos no se pisan, podemos añadir un retardo entre uno y otro mediante:
+
+import time
+
+time.sleep(milisegundos)
+
+Y para asegurar que el siguiente hilo no se ejecuta mientras no finalice el actual (sincronización de hilos)
+
+hilo1.join()  --> hilo2 no se iniciará hasta que no finalice hilo1
+
+
+USANDO EL MODULO CONCURRENT.FUTURES
+
+import concurrent.futures
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    resultados = executor.map(mi_funcion, argumento1)
+

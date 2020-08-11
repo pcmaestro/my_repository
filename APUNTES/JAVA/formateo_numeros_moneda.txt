@@ -1,0 +1,27 @@
+DECIMAL FORMAT
+
+La clase DecimalFormat usa patrones de formateo, en este caso usamos el de separador de miles
+con dos decimales
+
+import java.text.DecimalFormat;
+
+
+
+public class NewClass {
+    
+    public static void main(String[] args){
+        
+        DecimalFormat formateador = new DecimalFormat("#,###.##");
+        
+        double numero = 156789456.67890;
+        
+        String valor_formateado = formateador.format(numero);
+        
+        valor_formateado.replace(".", "@").replace(",", ".").replace("@", ",");
+        
+        System.out.println(valor_formateado);
+    }
+    
+}
+
+El resultado en consola será 156.789.456,68

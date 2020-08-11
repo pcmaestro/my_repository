@@ -9,6 +9,9 @@ ahora = time()
 
 Se suele usar para medir el tiempo transcurrido entre dos puntos de un proceso
 
+t0 = time.time()
+t1 = time.time() - t0
+
 #Este es el método que nos permite formatear y convertir a string las fechas y las horas
 
 string_fecha = ahora.strftime("%d/%m/%Y, %H:%M:%S")	resultado --> 17/04/2020, 13:39:40

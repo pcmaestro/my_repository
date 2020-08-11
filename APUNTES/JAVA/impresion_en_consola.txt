@@ -1,3 +1,13 @@
 System.out.println(nombre_variable);
 
 en Eclipse con Syso + ctrl + espacio crea la linea completa
+
+System.out.printf(string formateado)
+
+Este segundo método permite imprimir en consolo un string con
+un determinado formato
+
+Ej las variables nombre_producto y precio_producto contienen el nombre
+y el precio con dos decimales
+
+System.out.printf("El producto se llama %d y su precio es %10.2f", nombre_producto, precio_producto)

@@ -8,6 +8,9 @@ POST --> Para enviar información
 En el caso de POST, si queremos subir archivos (por ej imágenes) , hay que añadir
 el atributo enctype="multipart/form-data">
 
+Los widgets tipo input text y textarea podemos usarlos para presentar información
+con el atributo readonly = "readonly"
+
 
 
 <!DOCTYPE html>
