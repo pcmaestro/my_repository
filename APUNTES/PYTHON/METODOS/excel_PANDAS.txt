@@ -8,7 +8,7 @@ LEER ARCHIVOS EXCEL
 
 import pandas as pd
 
-#Leemos la primera hoja de un excel
+#Leemos la primera hoja de un excel, Pandas la guarda en un objeto con formato tabla llamado Dataframe
 
 peliculas = pd.read_excel("movies.xls")
 
@@ -38,9 +38,53 @@ while fila < 10:
     print("")
     fila += 1
 
+LEER UNA CELDA
+
+El método iloc se utiliza en los DataFrames para seleccionar los elementos en base a su ubicación. Un Datafrane es una
+representación de datos en formato tabla
+
+Su sintaxis es data.iloc[<filas>, <columnas>], donde <filas> y <columnas> son la posición de las filas y columnas que 
+se desean seleccionar en el orden que aparecen en el objeto. En un DataFrame cada una de las filas tiene un número que 
+va desde 0 hasta el total de filas menos uno. Siendo iloc el método que permite seleccionar los datos en base a estos 
+números. Lo mismo que aplica a las columnas.
+
+import pandas as pd
+
+df = pd.read_excel("home/user/my_excel.xlsx)
+
+valor_celda = df.iloc(fila, columna) --> indices empezando por cero, en cada argumento se puede incluir a una lista para
+					 para seleccionar varias celdas
+
+
+LEER UNA FILA ENTERA
+
+En iloc hay dos argumentos filas y columnas. En caso de que se omita el segundo, se seleccionarán todas las columnas de la fila. 
+Así para seleccionar diferentes filas se puede utilizar:
+
+df.iloc[0]  --> primera fila
+df.iloc[-1] --> ultima fila
+
+LEER UNA COLUMNA ENTERA
+
+Igualmente con el método iloc,  para seleccionar una columna se tiene que utilizar : como primer parámetro, lo que indica todos, y 
+el índice de esta como segundo. Así se puede hacer
+
+df.iloc[:,0]  --> primera columna
+df.iloc[:, -1] --> ultima columna
+
+LEER UNA SELECCION DE FILAS Y COLUMNAS
+
+Igualmente con el método iloc:
+
+
+df.iloc[0:5] # Primeras cinco filas
+df.iloc[:, 0:5] # Primeras cinco columnas
+df.iloc[[0,2,1]]  # Primera, tercera y segunda filas
+df.iloc[:, [0,2,1]]  # Primera, tercera y segunda columnas
+
 ESCRIBIR ARCHIVOS EXCEL
 
-Los datos los pasamos a través de un diccionario , la vale será el encabezado de columna, y el valor una lista
+Los datos los pasamos a través de un diccionario , la clave será el encabezado de columna, y el valor una lista
 con los datos que habrá en dicha columna
 
 import pandas as pd

@@ -25,7 +25,7 @@ diccionario["h"] = diccionario.pop["h2"]
 
 ELIMINAR UN REGISTRO
 
-Para eliminar una pareja clave:valor , usaremos la sentencia del mencionando la clave
+Para eliminar una pareja clave:valor , usaremos la palabra reservada del mencionando la clave
 
 del diccionario["h2"]
 
@@ -40,7 +40,7 @@ variable = diccionario.get("d", "clave vacia") , en este caso si la clave "d" no
 
 METODOS KEYS() Y VALUES()
 
-Sirven respectivamente para obtener sólo las claves o sólo los valores del diccionar
+Sirven respectivamente para obtener sólo las claves o sólo los valores del diccionario
 
 ORDENAR DICCIONARIOS
 Hay que hacerlo usando un bucle for

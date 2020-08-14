@@ -46,7 +46,7 @@ Elimina un elemento por su valor o su número X en el indice ,  list.remove(elem
 
 COUNT
 
-Cuenta las veces que un mismo elemento aparece en la listan
+Cuenta las veces que un mismo elemento aparece en la lista
 
 INDEX
 
@@ -67,7 +67,7 @@ for index, elemento in enumerate(lista, 0):
 2 "tres"
 3 "cuatro"
 
-SENTENCIA DELej
+SENTENCIA DEL
 
 Elimina toda la lista,  del lista
 

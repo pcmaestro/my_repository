@@ -1,4 +1,4 @@
-LECTURA Y ESCRITURA DE ARCHVIOS
+LECTURA Y ESCRITURA DE ARCHIVOS
 
 La apertura de ficheros TXT requiere que el archivo esté en la misma ruta que el módulo Python
 a ejecutar, o bien hay que darle al programa la ruta completa de su ubicación ( con barras / )
